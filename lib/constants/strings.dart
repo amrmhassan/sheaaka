@@ -1,0 +1,1 @@
+const String productImageHeroTag = 'productImageHeroTag';

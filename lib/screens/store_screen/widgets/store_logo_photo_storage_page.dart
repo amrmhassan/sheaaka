@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
+import 'package:project/constants/sizes.dart';
+import 'package:project/screens/store_screen/store_screen.dart';
+
+class StoreLogoPhotoStorePage extends StatelessWidget {
+  const StoreLogoPhotoStorePage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: -storeLogoRadius / 2,
+      right: kHPad / 2,
+      child: Container(
+        height: storeLogoRadius,
+        width: storeLogoRadius,
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(500),
+          border: Border.all(
+            width: .5,
+            style: BorderStyle.solid,
+            color: kPrimaryColor,
+          ),
+        ),
+        //* this container is just to fix the border issue
+        child: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(500),
+          ),
+          child: Image.asset(
+            'assets/images/trader.jpg',
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+}
