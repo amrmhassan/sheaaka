@@ -27,29 +27,56 @@ class WishlistScreen extends StatelessWidget {
             ),
           ),
           VSpace(factor: .5),
-          SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
+          WishListsNames(),
+          VSpace(),
+          Container(
+            height: 120,
+            width: double.infinity,
+            color: Colors.red,
             child: Row(
               children: [
-                HSpace(),
-                AddWishListButton(),
-                HSpace(factor: .5),
-                WishListName(
-                  title: 'الكل',
+                Image.asset(
+                  'assets/images/3.jpg',
+                  fit: BoxFit.cover,
+                  width: 120,
                 ),
-                WishListName(
-                  title: 'فرح أخويا',
-                  active: true,
-                ),
-                WishListName(
-                  title: 'شنط العيال',
-                ),
-                WishListName(
-                  title: 'تحويش البدلة',
-                ),
+                Text('dkfjdk'),
               ],
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class WishListsNames extends StatelessWidget {
+  const WishListsNames({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          HSpace(),
+          AddWishListButton(),
+          HSpace(factor: .5),
+          WishListName(
+            title: 'الكل',
+          ),
+          WishListName(
+            title: 'فرح أخويا',
+            active: true,
+          ),
+          WishListName(
+            title: 'شنط العيال',
+          ),
+          WishListName(
+            title: 'تحويش البدلة',
           ),
         ],
       ),
@@ -74,8 +101,8 @@ class WishListName extends StatelessWidget {
       onTap: () {},
       margin: EdgeInsets.only(left: kHPad / 2.5),
       padding: EdgeInsets.symmetric(
-        horizontal: kHPad,
-        vertical: kHPad / 2.5,
+        horizontal: kHPad / 2,
+        vertical: kHPad / 3,
       ),
       child: Text(
         title,
