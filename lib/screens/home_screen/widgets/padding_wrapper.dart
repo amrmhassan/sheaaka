@@ -7,17 +7,20 @@ class PaddingWrapper extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
   final double? width;
+  final Color? color;
 
   const PaddingWrapper({
     Key? key,
     required this.child,
     this.width,
     this.padding,
+    this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: color,
       width: width,
       padding: padding ??
           EdgeInsets.symmetric(
