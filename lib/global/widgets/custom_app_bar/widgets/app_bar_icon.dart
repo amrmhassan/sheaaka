@@ -5,10 +5,15 @@ import 'package:project/constants/sizes.dart';
 class AppBarIcon extends StatelessWidget {
   final String iconName;
   final VoidCallback onTap;
+  final Color? backgroundColor;
+  final Color? color;
+
   const AppBarIcon({
     Key? key,
     required this.onTap,
     required this.iconName,
+    this.backgroundColor,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -21,12 +26,12 @@ class AppBarIcon extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(1000),
-          color: kLightColor,
+          color: backgroundColor ?? kLightColor,
         ),
         child: Image.asset(
           'assets/icons/$iconName.png',
           width: 25,
-          color: kBlackColor,
+          color: color ?? kBlackColor,
         ),
       ),
     );

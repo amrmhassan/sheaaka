@@ -8,6 +8,9 @@ class PaddingWrapper extends StatelessWidget {
   final EdgeInsets? padding;
   final double? width;
   final Color? color;
+  final double? height;
+  final BoxDecoration? decoration;
+  final Alignment? alignment;
 
   const PaddingWrapper({
     Key? key,
@@ -15,6 +18,9 @@ class PaddingWrapper extends StatelessWidget {
     this.width,
     this.padding,
     this.color,
+    this.decoration,
+    this.height,
+    this.alignment,
   }) : super(key: key);
 
   @override
@@ -22,6 +28,9 @@ class PaddingWrapper extends StatelessWidget {
     return Container(
       color: color,
       width: width,
+      height: height,
+      alignment: alignment,
+      decoration: decoration,
       padding: padding ??
           EdgeInsets.symmetric(
             horizontal: kHPad,

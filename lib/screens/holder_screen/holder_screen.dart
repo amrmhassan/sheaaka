@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
+import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
 
@@ -23,15 +25,48 @@ class _HolderScreenState extends State<HolderScreen> {
     });
   }
 
+//? this will change the appbar of the holder screen according to the current active nav bar index
+  Widget appBarGenerator() {
+    if (activeIndex == 1) {
+      return CustomAppBar(
+        home: true,
+        title: 'أنواع',
+      );
+    } else if (activeIndex == 2) {
+      return CustomAppBar(
+        home: true,
+        title: 'المحلات',
+      );
+    } else if (activeIndex == 3) {
+      return CustomAppBar(
+        title: 'قوائم التمني',
+        home: true,
+        leftContent: Row(
+          children: [
+            ShareWishlistIcon(),
+            HomeAppBarLeftContent(),
+          ],
+        ),
+      );
+    } else if (activeIndex == 4) {
+      return CustomAppBar(
+        home: true,
+        title: 'محلات قريبة',
+      );
+    } else {
+      return CustomAppBar(
+        title: 'شياكة',
+        home: true,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
       child: Column(
         children: [
-          CustomAppBar(
-            title: 'شياكة',
-            home: true,
-          ),
+          appBarGenerator(),
           Expanded(
             child: navBarIconsList[activeIndex].widget,
           ),

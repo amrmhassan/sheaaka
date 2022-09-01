@@ -13,6 +13,7 @@ class ButtonWrapper extends StatelessWidget {
   final bool splash;
   final EdgeInsets? margin;
   final Alignment? alignment;
+  final Clip? clipBehavior;
 
   const ButtonWrapper({
     Key? key,
@@ -27,12 +28,13 @@ class ButtonWrapper extends StatelessWidget {
     this.splash = true,
     this.margin,
     this.alignment,
+    this.clipBehavior,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: clipBehavior ?? Clip.hardEdge,
       alignment: alignment,
       margin: margin,
       decoration: decoration ??

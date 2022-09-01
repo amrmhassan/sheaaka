@@ -45,6 +45,11 @@ const TextStyle h3LiteTextStyle = TextStyle(
   fontSize: h3TextSize,
   fontFamily: 'Cairo',
 );
+const TextStyle h3InactiveTextStyle = TextStyle(
+  fontSize: h3TextSize,
+  fontFamily: 'Cairo',
+  color: kInActiveTextColor,
+);
 const TextStyle h3LightTextStyle = TextStyle(
   fontSize: h3TextSize,
   color: Colors.white,

@@ -7,6 +7,7 @@ import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
+import 'package:project/screens/search_screen/search_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 
 bool testing = false;
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         CartScreen.routeName: (context) => CartScreen(),
         StoreScreen.routeName: (context) => StoreScreen(),
         ProfileScreen.routeName: (context) => ProfileScreen(),
+        SearchScreen.routeName: (context) => SearchScreen(),
       },
     );
   }
