@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
 
 class StoreProductsType extends StatelessWidget {
+  final Color? color;
+  final String? title;
   const StoreProductsType({
     Key? key,
+    this.color,
+    this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'محل ملابس رياضية',
-      style: h4TextStyleInactive,
+      title ?? 'محل ملابس رياضية',
+      style: h4TextStyleInactive.copyWith(color: color),
     );
   }
 }

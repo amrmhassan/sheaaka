@@ -17,7 +17,7 @@ class HolderScreen extends StatefulWidget {
 }
 
 class _HolderScreenState extends State<HolderScreen> {
-  int activeIndex = 0;
+  int activeIndex = 4;
 
   void setActiveIndex(int index) {
     setState(() {
