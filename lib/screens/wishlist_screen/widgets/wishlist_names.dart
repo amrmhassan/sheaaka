@@ -6,8 +6,10 @@ import 'package:project/screens/wishlist_screen/widgets/add_wishlist_button.dart
 import 'package:project/screens/wishlist_screen/widgets/wishlist_name.dart';
 
 class WishListsNames extends StatelessWidget {
+  final bool allowIndent;
   const WishListsNames({
     Key? key,
+    this.allowIndent = true,
   }) : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class WishListsNames extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          HSpace(),
+          if (allowIndent) HSpace(),
           AddWishListButton(),
           HSpace(factor: .5),
           WishListName(
