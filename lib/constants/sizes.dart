@@ -25,3 +25,4 @@ const double roundIconRadius = 60;
 //? border radius
 const double smallBorderRadius = 5;
 const double mediumBorderRadius = 10;
+const double largeBorderRadius = 20;

@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
+import 'package:project/global/widgets/product_filters/product_filters.dart';
 
 class FiltersIcon extends StatelessWidget {
   const FiltersIcon({
@@ -13,7 +14,13 @@ class FiltersIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: () {
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: ((context) => ProductFiltersModal()),
+        );
+      },
       width: mediumIconSize + largePadding * 2,
       height: mediumIconSize + largePadding * 2,
       backgroundColor: Colors.transparent,

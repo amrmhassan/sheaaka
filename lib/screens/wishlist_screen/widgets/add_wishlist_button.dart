@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
+import 'package:project/global/widgets/product_filters/product_filters.dart';
 
 class AddWishListButton extends StatelessWidget {
   const AddWishListButton({
@@ -13,7 +14,10 @@ class AddWishListButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: () {
+        showModalBottomSheet(
+            context: context, builder: (ctx) => ProductFiltersModal());
+      },
       backgroundColor: Colors.transparent,
       padding: EdgeInsets.all(mediumPadding),
       decoration: BoxDecoration(

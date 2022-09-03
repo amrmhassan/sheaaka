@@ -17,14 +17,5 @@ const Color kRedTextColor = Colors.red;
 //? icons colors
 const Color kDangerColor = Colors.red;
 
-//? product Colors
-const List<Color> productColors = [
-  Color(0xffffffff),
-  Color(0xff000000),
-  Color(0xffF55669),
-  Color(0xffF3CF51),
-  Color(0xff709DF2),
-];
-
 //? buttons colors
 const Color kMainButtonColor = Colors.black;

@@ -123,7 +123,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   FreeColoredSpace(
-                    number: 5,
+                    number: 50,
                     margin: 5,
                   ),
                 ],

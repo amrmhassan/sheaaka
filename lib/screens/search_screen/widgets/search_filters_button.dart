@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/global/widgets/product_filters/product_filters.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class SearchFiltersButton extends StatelessWidget {
@@ -19,7 +21,15 @@ class SearchFiltersButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       borderRadius: 0,
       backgroundColor: Colors.transparent,
-      onTap: () {},
+      onTap: () {
+        //! you have other show.... functions you can try them
+        //! showBottomSheet
+        showModalBottomSheet(
+          context: context,
+          builder: (ctx) => ProductFiltersModal(),
+          backgroundColor: Colors.transparent,
+        );
+      },
       child: PaddingWrapper(
         padding: EdgeInsets.symmetric(
           horizontal: kHPad / 3,

@@ -14,6 +14,7 @@ class ButtonWrapper extends StatelessWidget {
   final EdgeInsets? margin;
   final Alignment? alignment;
   final Clip? clipBehavior;
+  final bool active;
 
   const ButtonWrapper({
     Key? key,
@@ -29,6 +30,7 @@ class ButtonWrapper extends StatelessWidget {
     this.margin,
     this.alignment,
     this.clipBehavior,
+    this.active = true,
   }) : super(key: key);
 
   @override
@@ -45,7 +47,7 @@ class ButtonWrapper extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap,
+          onTap: active ? onTap : null,
           child: Container(
             alignment: Alignment.center,
             padding: padding,

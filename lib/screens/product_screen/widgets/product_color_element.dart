@@ -18,7 +18,7 @@ class ProductColorElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(largePadding),
+      padding: EdgeInsets.all(largePadding * 1.2),
       width: largeIconSize,
       height: largeIconSize,
       margin: EdgeInsets.only(left: mediumPadding),
