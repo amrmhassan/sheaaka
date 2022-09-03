@@ -8,6 +8,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_p_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/profile_screen/widgets/copy_rights.dart';
 import 'package:project/screens/profile_screen/widgets/open_store_dashboard_button.dart';
 import 'package:project/screens/profile_screen/widgets/policy_part.dart';
@@ -30,9 +31,14 @@ class ProfileScreen extends StatelessWidget {
             CustomAppBar(
               boundRightIconWidth: true,
               title: 'حسابي',
-              rightIcon: Image.asset(
-                'assets/icons/logout.png',
-                color: kDangerColor,
+              rightIcon: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, LoginScreen.routeName);
+                },
+                child: Image.asset(
+                  'assets/icons/logout.png',
+                  color: kDangerColor,
+                ),
               ),
             ),
             VSpace(),
