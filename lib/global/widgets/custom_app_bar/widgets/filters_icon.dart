@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/global/widgets/product_filters/product_filters.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
+import 'package:project/global/widgets/modals/product_filter_modal.dart';
 
 class FiltersIcon extends StatelessWidget {
   const FiltersIcon({
@@ -18,7 +19,11 @@ class FiltersIcon extends StatelessWidget {
         showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
-          builder: ((context) => ProductFiltersModal()),
+          builder: (context) => ModalWrapper(
+            applyButtonTitle: 'تطبيق الفلتر',
+            onApply: () {},
+            child: ProductFiltersModal(),
+          ),
         );
       },
       width: mediumIconSize + largePadding * 2,

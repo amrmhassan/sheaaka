@@ -11,18 +11,24 @@ class CustomFormInput extends StatelessWidget {
   final String title;
   final String iconName;
   final String? trailingIconName;
+  final Color? color;
+  final Color? borderColor;
+  final EdgeInsets? padding;
 
   const CustomFormInput({
     Key? key,
     required this.iconName,
     required this.title,
     this.trailingIconName,
+    this.color,
+    this.borderColor,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
-      padding: EdgeInsets.symmetric(horizontal: kHPad),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: kHPad / 2,
@@ -30,14 +36,14 @@ class CustomFormInput extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(smallBorderRadius),
-          border: Border.all(width: 1, color: kBlackColor),
+          border: Border.all(width: 1, color: borderColor ?? kBlackColor),
         ),
         child: Row(
           children: [
             Image.asset(
               'assets/icons/$iconName.png',
               width: mediumIconSize,
-              color: kBlackColor,
+              color: color ?? kBlackColor,
             ),
             HSpace(factor: .5),
             Expanded(

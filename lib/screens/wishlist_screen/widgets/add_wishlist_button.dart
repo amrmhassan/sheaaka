@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/global/widgets/product_filters/product_filters.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
+import 'package:project/global/widgets/modals/add_wishlist_modal.dart';
 
 class AddWishListButton extends StatelessWidget {
   const AddWishListButton({
@@ -16,7 +17,14 @@ class AddWishListButton extends StatelessWidget {
     return ButtonWrapper(
       onTap: () {
         showModalBottomSheet(
-            context: context, builder: (ctx) => ProductFiltersModal());
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (ctx) => ModalWrapper(
+            applyButtonTitle: 'إضافة',
+            child: AddWishlistModal(),
+            onApply: () {},
+          ),
+        );
       },
       backgroundColor: Colors.transparent,
       padding: EdgeInsets.all(mediumPadding),

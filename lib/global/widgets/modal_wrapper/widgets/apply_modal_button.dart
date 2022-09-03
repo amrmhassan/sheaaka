@@ -6,9 +6,14 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 
-class ApplyFilterButton extends StatelessWidget {
-  const ApplyFilterButton({
+class ApplyModalButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final String title;
+
+  const ApplyModalButton({
     Key? key,
+    required this.onTap,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -17,9 +22,9 @@ class ApplyFilterButton extends StatelessWidget {
       width: double.infinity,
       backgroundColor: kPrimaryColor,
       padding: EdgeInsets.symmetric(vertical: kVPad / 2),
-      onTap: () {},
+      onTap: onTap,
       child: Text(
-        'تطبيق الفلتر',
+        title,
         style: h3LiteTextStyle.copyWith(color: Colors.white),
       ),
     );
