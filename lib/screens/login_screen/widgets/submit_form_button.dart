@@ -5,14 +5,13 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
-class LoginButton extends StatelessWidget {
+class SubmitFormButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const LoginButton({
+  const SubmitFormButton({
     Key? key,
     required this.onTap,
     required this.title,

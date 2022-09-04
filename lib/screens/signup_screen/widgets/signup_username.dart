@@ -4,17 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
-import 'package:project/screens/login_screen/widgets/dont_have_account.dart';
+import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/form_promo_with_logo.dart';
-import 'package:project/screens/login_screen/widgets/login_button.dart';
+import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/social_account_header.dart';
 import 'package:project/screens/login_screen/widgets/social_button.dart';
 import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
-class SignUpStep1 extends StatelessWidget {
-  const SignUpStep1({
+class SignUpUsername extends StatelessWidget {
+  final VoidCallback setActiveSignUpStep;
+  const SignUpUsername({
     Key? key,
+    required this.setActiveSignUpStep,
   }) : super(key: key);
 
   @override
@@ -42,9 +44,9 @@ class SignUpStep1 extends StatelessWidget {
               borderColor: kSecondaryColor,
             ),
             VSpace(factor: 2),
-            LoginButton(
+            SubmitFormButton(
               title: 'التالي',
-              onTap: () {},
+              onTap: setActiveSignUpStep,
             ),
             VSpace(),
             SocialAccountsHeader(
@@ -67,7 +69,7 @@ class SignUpStep1 extends StatelessWidget {
               ],
             ),
             VSpace(),
-            DontHaveAccount(
+            TitleSubtitle(
               title: 'لديك حساب',
               subTitle: 'تسجيل الدخول',
               textAlign: TextAlign.center,

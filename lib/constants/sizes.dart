@@ -14,6 +14,7 @@ const double h5TextSize = 12;
 const double h6TextSize = 10;
 
 //? icons
+const double ultraSmallIconSize = 15;
 const double smallIconSize = 20;
 const double mediumIconSize = 30;
 const double largeIconSize = 40;

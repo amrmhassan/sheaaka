@@ -11,9 +11,11 @@ class CustomFormInput extends StatelessWidget {
   final String title;
   final String iconName;
   final String? trailingIconName;
+  final Widget? trailingIconWidget;
   final Color? color;
   final Color? borderColor;
   final EdgeInsets? padding;
+  final Color? trailingIconColor;
 
   const CustomFormInput({
     Key? key,
@@ -23,6 +25,8 @@ class CustomFormInput extends StatelessWidget {
     this.color,
     this.borderColor,
     this.padding,
+    this.trailingIconWidget,
+    this.trailingIconColor,
   }) : super(key: key);
 
   @override
@@ -59,8 +63,9 @@ class CustomFormInput extends StatelessWidget {
               Image.asset(
                 'assets/icons/$trailingIconName.png',
                 width: mediumIconSize,
-                color: kSecondaryColor,
+                color: trailingIconColor ?? kSecondaryColor,
               ),
+            if (trailingIconWidget != null) trailingIconWidget!
           ],
         ),
       ),

@@ -6,24 +6,26 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
-class DontHaveAccount extends StatelessWidget {
+class TitleSubtitle extends StatelessWidget {
   final String? title;
   final String? subTitle;
   final TextAlign? textAlign;
   final VoidCallback onTap;
+  final EdgeInsets? padding;
 
-  const DontHaveAccount({
+  const TitleSubtitle({
     Key? key,
     this.textAlign,
     this.subTitle,
     this.title,
     required this.onTap,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
-      padding: EdgeInsets.symmetric(horizontal: kHPad),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: SizedBox(
         width: double.infinity,
         child: GestureDetector(
