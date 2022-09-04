@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/login_screen/widgets/dont_have_account.dart';
@@ -24,11 +25,16 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             VSpace(),
-            FormHeaderWithLogo(),
+            FormHeaderWithLogo(
+              iconName: 'login',
+              title: 'شياكة',
+            ),
             VSpace(factor: 2),
             Column(
               children: [
-                FormPromoWithLogo(),
+                FormPromoWithLogo(
+                  title: 'تسجيل الدخول',
+                ),
                 VSpace(factor: .5),
                 CustomFormInput(
                   title: 'الايميل',
@@ -41,9 +47,17 @@ class LoginScreen extends StatelessWidget {
                   trailingIconName: 'view',
                 ),
                 VSpace(),
-                LoginButton(),
+                LoginButton(
+                  title: 'تسجيل الدخول',
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, HolderScreen.routeName);
+                  },
+                ),
                 VSpace(),
-                DontHaveAccount(),
+                DontHaveAccount(
+                  onTap: () {},
+                ),
               ],
             ),
             VSpace(factor: 2),

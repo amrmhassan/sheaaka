@@ -9,6 +9,7 @@ import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
 import 'package:project/screens/search_screen/search_screen.dart';
+import 'package:project/screens/signup_screen/signup_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 
 bool testing = false;
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: HolderScreen.routeName,
+      initialRoute: SignUpScreen.routeName,
       routes: {
         HolderScreen.routeName: (context) => HolderScreen(),
         ProductScreen.routeName: (context) => ProductScreen(),
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ProfileScreen.routeName: (context) => ProfileScreen(),
         SearchScreen.routeName: (context) => SearchScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
+        SignUpScreen.routeName: (context) => SignUpScreen(),
       },
     );
   }

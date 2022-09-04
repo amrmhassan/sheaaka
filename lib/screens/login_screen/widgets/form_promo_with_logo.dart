@@ -7,8 +7,11 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 
 class FormPromoWithLogo extends StatelessWidget {
+  final String title;
+
   const FormPromoWithLogo({
     Key? key,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class FormPromoWithLogo extends StatelessWidget {
         ),
         HSpace(factor: .5),
         Text(
-          'تسجيل الدخول',
+          title,
           style: h3TextStyle,
         )
       ],

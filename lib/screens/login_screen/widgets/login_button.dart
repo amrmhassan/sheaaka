@@ -9,8 +9,13 @@ import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class LoginButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
   const LoginButton({
     Key? key,
+    required this.onTap,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -20,11 +25,9 @@ class LoginButton extends StatelessWidget {
       child: ButtonWrapper(
         padding: EdgeInsets.symmetric(vertical: kVPad / 2),
         backgroundColor: kBlackColor,
-        onTap: () {
-          Navigator.pushReplacementNamed(context, HolderScreen.routeName);
-        },
+        onTap: onTap,
         child: Text(
-          'تسجيل الدخول',
+          title,
           style: h3LiteTextStyle.copyWith(color: Colors.white),
         ),
       ),

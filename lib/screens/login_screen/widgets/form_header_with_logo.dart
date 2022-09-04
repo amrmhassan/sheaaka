@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
 
 class FormHeaderWithLogo extends StatelessWidget {
+  final String iconName;
+  final String? title;
   const FormHeaderWithLogo({
     Key? key,
+    required this.iconName,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -14,18 +18,19 @@ class FormHeaderWithLogo extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 200,
+          height: 180,
           alignment: Alignment.bottomCenter,
           child: Image.asset(
-            'assets/icons/login.png',
-            width: 200,
+            'assets/icons/$iconName.png',
+            width: 180,
             fit: BoxFit.cover,
           ),
         ),
-        Text(
-          'شياكة',
-          style: h1TextStyle,
-        ),
+        if (title != null)
+          Text(
+            title.toString(),
+            style: h1TextStyle,
+          ),
       ],
     );
   }

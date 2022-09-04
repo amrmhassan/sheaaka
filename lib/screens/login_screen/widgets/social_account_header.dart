@@ -7,8 +7,13 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 
 class SocialAccountsHeader extends StatelessWidget {
+  final String? title;
+  final Color? color;
+
   const SocialAccountsHeader({
     Key? key,
+    this.color,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -23,8 +28,8 @@ class SocialAccountsHeader extends StatelessWidget {
         ),
         HSpace(factor: .5),
         Text(
-          'تسجيل باستخدام',
-          style: h5LiteTextStyle,
+          title ?? 'تسجيل باستخدام',
+          style: h5LiteTextStyle.copyWith(color: color),
         ),
         HSpace(factor: .5),
         Expanded(
