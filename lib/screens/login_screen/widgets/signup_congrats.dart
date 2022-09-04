@@ -7,6 +7,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
+import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 
 class SignUpCongrats extends StatelessWidget {
   const SignUpCongrats({Key? key}) : super(key: key);
@@ -29,7 +30,10 @@ class SignUpCongrats extends StatelessWidget {
               VSpace(),
               TitleSubtitle(
                 padding: EdgeInsets.zero,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(
+                      context, SignUpStoreScreen.routeName);
+                },
                 title: 'هل أنت تاجر؟ ',
                 subTitle: 'إنشاء متجر',
               )

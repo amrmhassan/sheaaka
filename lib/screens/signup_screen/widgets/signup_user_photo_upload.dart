@@ -7,6 +7,9 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 
+//? if the user is a trader he can't add a personal photo
+//? before adding the user photo the button will be تخطي
+//? after adding the photo it will be التالي
 class SignUpUserPhotoUpload extends StatelessWidget {
   final VoidCallback setActiveSignUpStep;
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
@@ -73,7 +74,9 @@ class SignUpUsername extends StatelessWidget {
               title: 'لديك حساب',
               subTitle: 'تسجيل الدخول',
               textAlign: TextAlign.center,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
             ),
           ],
         ),

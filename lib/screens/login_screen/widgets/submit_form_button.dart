@@ -10,17 +10,19 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 class SubmitFormButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final EdgeInsets? padding;
 
   const SubmitFormButton({
     Key? key,
     required this.onTap,
+    this.padding,
     required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
-      padding: EdgeInsets.symmetric(horizontal: kHPad),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: ButtonWrapper(
         padding: EdgeInsets.symmetric(vertical: kVPad / 2),
         backgroundColor: kBlackColor,

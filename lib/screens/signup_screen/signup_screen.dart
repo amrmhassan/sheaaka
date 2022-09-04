@@ -10,32 +10,6 @@ import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
 import 'package:project/screens/signup_screen/widgets/signup_user_photo_upload.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
 
-Widget getSignupStep(int i, Function(int i) setActiveIndex) {
-  if (i == 0) {
-    return SignUpUsername(
-      setActiveSignUpStep: () => setActiveIndex(1),
-    );
-  } else if (i == 1) {
-    return SignUpEmailPassword(
-      setActiveSignUpStep: () => setActiveIndex(2),
-    );
-  } else if (i == 2) {
-    return SignUpEmailVerification(
-      setActiveSignUpStep: () => setActiveIndex(3),
-    );
-  } else if (i == 3) {
-    return SignUpUserPhotoUpload(
-      setActiveSignUpStep: () => setActiveIndex(4),
-    );
-  } else if (i == 4) {
-    return SignUpLastStep(
-      setActiveSignUpStep: () => setActiveIndex(5),
-    );
-  } else {
-    return SignUpCongrats();
-  }
-}
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
   static const String routeName = '/signup-screen';
@@ -50,6 +24,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       activeStepIndex = i;
     });
+  }
+
+  Widget getSignupStep(int i, Function(int i) setActiveIndex) {
+    if (i == 0) {
+      return SignUpUsername(
+        setActiveSignUpStep: () => setActiveIndex(1),
+      );
+    } else if (i == 1) {
+      return SignUpEmailPassword(
+        setActiveSignUpStep: () => setActiveIndex(2),
+      );
+    } else if (i == 2) {
+      return SignUpEmailVerification(
+        setActiveSignUpStep: () => setActiveIndex(3),
+      );
+    } else if (i == 3) {
+      return SignUpUserPhotoUpload(
+        setActiveSignUpStep: () => setActiveIndex(4),
+      );
+    } else if (i == 4) {
+      return SignUpLastStep(
+        setActiveSignUpStep: () => setActiveIndex(5),
+      );
+    } else {
+      return SignUpCongrats();
+    }
   }
 
   @override

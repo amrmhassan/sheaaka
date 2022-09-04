@@ -12,6 +12,7 @@ import 'package:project/screens/login_screen/widgets/form_promo_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/social_account_header.dart';
 import 'package:project/screens/login_screen/widgets/social_button.dart';
+import 'package:project/screens/signup_screen/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -56,7 +57,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 VSpace(),
                 TitleSubtitle(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                        context, SignUpScreen.routeName);
+                  },
                 ),
               ],
             ),
