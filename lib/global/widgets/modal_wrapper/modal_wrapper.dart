@@ -13,6 +13,7 @@ class ModalWrapper extends StatelessWidget {
   final VoidCallback onApply;
   final String applyButtonTitle;
   final bool showApplyModalButton;
+  final Color? color;
 
   const ModalWrapper({
     Key? key,
@@ -20,13 +21,14 @@ class ModalWrapper extends StatelessWidget {
     required this.onApply,
     required this.applyButtonTitle,
     this.showApplyModalButton = true,
+    this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color ?? Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(largeBorderRadius),
           topRight: Radius.circular(largeBorderRadius),

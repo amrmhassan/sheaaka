@@ -20,7 +20,7 @@ class InnerPagesAppBar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: boundRightIconWidth ? 25 : null,
+          width: boundRightIconWidth ? roundIconRadius : null,
           child: rightIcon,
         ),
         Expanded(

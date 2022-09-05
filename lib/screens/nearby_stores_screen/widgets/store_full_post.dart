@@ -10,6 +10,7 @@ import 'package:project/helpers/responsive.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/store_distance.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/trader_photo_on_store_post.dart';
+import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_products_type.dart';
 
 class StoreFullPost extends StatelessWidget {
@@ -19,60 +20,65 @@ class StoreFullPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 250,
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/images/store.jpg',
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  color: Colors.black.withOpacity(.5),
-                  width: Responsive.getWidth(context),
-                  child: PaddingWrapper(
-                    alignment: Alignment.topRight,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        VSpace(factor: .5),
-                        Text(
-                          'نيو فاشون',
-                          style: h3TextStyle.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            StoreProductsType(
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, StoreScreen.routeName);
+      },
+      child: Column(
+        children: [
+          SizedBox(
+            height: 250,
+            child: Stack(
+              children: [
+                Image.asset(
+                  'assets/images/store.jpg',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    color: Colors.black.withOpacity(.5),
+                    width: Responsive.getWidth(context),
+                    child: PaddingWrapper(
+                      alignment: Alignment.topRight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          VSpace(factor: .5),
+                          Text(
+                            'نيو فاشون',
+                            style: h3TextStyle.copyWith(
                               color: Colors.white,
-                              title: 'ملابس شباب',
                             ),
-                            HSpace(),
-                            Rating(color: Colors.white),
-                            HSpace(),
-                            NOfFollowers(num: 5, color: Colors.white),
-                            Spacer(),
-                            StoreDistance(),
-                          ],
-                        ),
-                        VSpace(factor: .4),
-                      ],
+                          ),
+                          Row(
+                            children: [
+                              StoreProductsType(
+                                color: Colors.white,
+                                title: 'ملابس شباب',
+                              ),
+                              HSpace(),
+                              Rating(color: Colors.white),
+                              HSpace(),
+                              NOfFollowers(num: 5, color: Colors.white),
+                              Spacer(),
+                              StoreDistance(),
+                            ],
+                          ),
+                          VSpace(factor: .4),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              TraderPhotoOnStorePost(),
-            ],
+                TraderPhotoOnStorePost(),
+              ],
+            ),
           ),
-        ),
-        VSpace(factor: .5),
-      ],
+          VSpace(factor: .5),
+        ],
+      ),
     );
   }
 }

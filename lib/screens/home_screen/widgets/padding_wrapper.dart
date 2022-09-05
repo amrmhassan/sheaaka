@@ -11,6 +11,7 @@ class PaddingWrapper extends StatelessWidget {
   final double? height;
   final BoxDecoration? decoration;
   final Alignment? alignment;
+  final EdgeInsets? margin;
 
   const PaddingWrapper({
     Key? key,
@@ -21,11 +22,13 @@ class PaddingWrapper extends StatelessWidget {
     this.decoration,
     this.height,
     this.alignment,
+    this.margin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       color: color,
       width: width,
       height: height,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
+import 'package:project/screens/comments_screen/comments_screen.dart';
 
 class OpenProductCommentsButton extends StatelessWidget {
   const OpenProductCommentsButton({
@@ -13,7 +14,9 @@ class OpenProductCommentsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, CommentsScreen.routeName);
+      },
       width: 50,
       height: 50,
       padding: EdgeInsets.all(mediumPadding),

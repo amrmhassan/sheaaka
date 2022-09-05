@@ -5,9 +5,11 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_category_element.dart';
 
-class StoreTaps extends StatelessWidget {
-  const StoreTaps({
+class Taps extends StatelessWidget {
+  final List<Widget> taps;
+  const Taps({
     Key? key,
+    required this.taps,
   }) : super(key: key);
 
   @override
@@ -30,13 +32,7 @@ class StoreTaps extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(width: storeTitleHSpace),
-            StoreCategoryElement(active: true, title: 'الكل'),
-            StoreCategoryElement(title: 'الأشهر'),
-            StoreCategoryElement(title: 'الأفضل'),
-            SizedBox(width: storeTitleHSpace),
-          ],
+          children: taps,
         ),
       ),
     );

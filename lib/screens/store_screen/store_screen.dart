@@ -11,11 +11,12 @@ import 'package:project/global/widgets/rating.dart';
 import 'package:project/screens/store_screen/widgets/follow_store.dart';
 import 'package:project/screens/store_screen/widgets/mail_store.dart';
 import 'package:project/screens/store_screen/widgets/store_all_products_grid.dart';
+import 'package:project/screens/store_screen/widgets/store_category_element.dart';
 import 'package:project/screens/store_screen/widgets/store_name.dart';
 import 'package:project/screens/store_screen/widgets/store_offers.dart';
 import 'package:project/screens/store_screen/widgets/store_page_header.dart';
 import 'package:project/screens/store_screen/widgets/store_products_type.dart';
-import 'package:project/screens/store_screen/widgets/store_taps.dart';
+import 'package:project/screens/store_screen/widgets/taps.dart';
 
 const double storeLogoRadius = 100;
 const double storeTitleHSpace = kHPad / 2;
@@ -63,7 +64,15 @@ class StoreScreen extends StatelessWidget {
           VSpace(factor: .5),
           StoreOffers(),
           VSpace(factor: .8),
-          StoreTaps(),
+          Taps(
+            taps: [
+              SizedBox(width: storeTitleHSpace),
+              StoreCategoryElement(active: true, title: 'الكل'),
+              StoreCategoryElement(title: 'الأشهر'),
+              StoreCategoryElement(title: 'الأفضل'),
+              SizedBox(width: storeTitleHSpace),
+            ],
+          ),
           StoreAllProductsGrid(),
         ],
       ),
