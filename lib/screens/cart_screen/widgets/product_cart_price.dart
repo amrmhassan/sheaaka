@@ -40,15 +40,15 @@ class ProductCartPrice extends StatelessWidget {
             style: textStyle.copyWith(
               color: color ?? (active ? kPrimaryColor : null),
               decoration: active ? null : TextDecoration.lineThrough,
+              height: 1,
             ),
           ),
-          // TextSpan(text: ' '),
           TextSpan(
             text: 'جنيه',
             style: textStyle.copyWith(
-              decoration: active ? null : TextDecoration.lineThrough,
-              color: color,
-            ),
+                decoration: active ? null : TextDecoration.lineThrough,
+                color: color,
+                height: 1),
           ),
         ],
       ),

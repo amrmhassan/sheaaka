@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
+import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/profile_screen/widgets/profile_page_element.dart';
 
 class ProfileScreenOptions extends StatelessWidget {
@@ -32,7 +33,9 @@ class ProfileScreenOptions extends StatelessWidget {
         ProfilePageElement(
           title: "الطلبيات",
           iconName: 'clipboard',
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, OrdersScreen.routeName);
+          },
           notifyTitle: '2',
         ),
       ],

@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/screens/store_screen/store_screen.dart';
-import 'package:project/screens/store_screen/widgets/store_category_element.dart';
 
 class Taps extends StatelessWidget {
   final List<Widget> taps;

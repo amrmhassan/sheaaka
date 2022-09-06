@@ -7,8 +7,12 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 
 class CartItemsCount extends StatelessWidget {
+  final String? leading;
+  final String? count;
   const CartItemsCount({
     Key? key,
+    this.leading,
+    this.count,
   }) : super(key: key);
 
   @override
@@ -20,10 +24,10 @@ class CartItemsCount extends StatelessWidget {
         text: TextSpan(
           style: h4TextStyleInactive,
           children: [
-            TextSpan(text: 'لديك'),
+            TextSpan(text: leading ?? 'لديك'),
             TextSpan(text: ' '),
             TextSpan(
-              text: '5',
+              text: count ?? '5',
               style: h4TextStyleInactive.copyWith(color: kRedTextColor),
             ),
             TextSpan(text: ' '),
