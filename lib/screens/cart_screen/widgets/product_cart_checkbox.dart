@@ -20,7 +20,7 @@ class ProductCartCheckBox extends StatelessWidget {
       height: 22,
       padding: EdgeInsets.all(smallPadding),
       decoration: BoxDecoration(
-        color: !checked ? null : kSecondaryColor,
+        color: !checked ? null : kPrimaryColor,
         borderRadius: BorderRadius.circular(smallBorderRadius),
         border: !checked ? Border.all(width: 2, color: kSecondaryColor) : null,
       ),

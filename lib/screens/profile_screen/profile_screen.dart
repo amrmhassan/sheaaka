@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_p_space.dart';
@@ -31,14 +32,13 @@ class ProfileScreen extends StatelessWidget {
             CustomAppBar(
               boundRightIconWidth: true,
               title: 'حسابي',
-              rightIcon: GestureDetector(
+              rightIcon: AppBarIcon(
                 onTap: () {
                   Navigator.pushNamed(context, LoginScreen.routeName);
                 },
-                child: Image.asset(
-                  'assets/icons/logout.png',
-                  color: kDangerColor,
-                ),
+                iconName: 'logout',
+                backgroundColor: Colors.transparent,
+                color: Colors.red,
               ),
             ),
             VSpace(),

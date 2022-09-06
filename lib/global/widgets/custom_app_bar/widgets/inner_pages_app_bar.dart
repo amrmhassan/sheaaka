@@ -8,21 +8,24 @@ import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart'
 class InnerPagesAppBar extends StatelessWidget {
   final Widget? rightIcon;
   final String? title;
-  final bool boundRightIconWidth;
+
   const InnerPagesAppBar({
     Key? key,
     this.title,
     this.rightIcon,
-    required this.boundRightIconWidth,
   }) : super(key: key);
 
   Widget getAppBarChild(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: boundRightIconWidth ? roundIconRadius : null,
-          child: rightIcon,
-        ),
+        rightIcon != null
+            ? SizedBox(
+                width: roundIconRadius,
+                child: rightIcon,
+              )
+            : SizedBox(
+                width: roundIconRadius,
+              ),
         Expanded(
           child: Text(
             title ?? '',

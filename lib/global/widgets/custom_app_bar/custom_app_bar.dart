@@ -31,7 +31,6 @@ class CustomAppBar extends StatelessWidget {
         : InnerPagesAppBar(
             title: title,
             rightIcon: rightIcon,
-            boundRightIconWidth: boundRightIconWidth,
           );
   }
 }
