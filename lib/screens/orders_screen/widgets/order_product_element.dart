@@ -14,6 +14,7 @@ import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_quantity.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_quantity_controller_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_size.dart';
+import 'package:project/screens/track_order_screen/track_order_screen.dart';
 
 class OrderProductElement extends StatelessWidget {
   const OrderProductElement({
@@ -34,7 +35,9 @@ class OrderProductElement extends StatelessWidget {
           // textDirection: TextDirection.rtl,
           children: [
             ProductCartImage(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, TrackOrderScreen.routeName);
+              },
             ),
             HSpace(),
             Expanded(

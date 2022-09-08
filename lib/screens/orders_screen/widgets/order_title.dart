@@ -51,6 +51,7 @@ class OrderTitle extends StatelessWidget {
                 width: 1,
               ),
             ),
+            HSpace(factor: .4),
             ProductCartPrice(
               fontSize: 14,
             ),
