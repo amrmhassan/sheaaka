@@ -30,7 +30,7 @@ class _HolderScreenState extends State<HolderScreen> {
     if (activeIndex == 1) {
       return CustomAppBar(
         home: true,
-        title: 'الفئات',
+        title: 'التصنيفات',
       );
     } else if (activeIndex == 2) {
       return CustomAppBar(

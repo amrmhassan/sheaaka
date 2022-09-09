@@ -13,12 +13,13 @@ class CategoryItemsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GridView(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: kHPad),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: kHPad,
+          mainAxisSpacing: kHPad / 2,
           crossAxisSpacing: kHPad,
           crossAxisCount: 2,
-          childAspectRatio: 2.7,
+          childAspectRatio: 2.9,
         ),
         children: [
           CategoryItem(
