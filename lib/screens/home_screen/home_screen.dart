@@ -6,6 +6,9 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
 
+//? this screen will have the newest products, offers , ads etc...
+//? and it's filters will be applied to these products
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
     Key? key,

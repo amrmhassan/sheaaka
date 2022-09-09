@@ -5,7 +5,6 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
-import 'package:project/global/widgets/v_space.dart';
 
 class TrackingItem extends StatelessWidget {
   final bool active;

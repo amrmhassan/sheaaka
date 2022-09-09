@@ -7,11 +7,15 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/group_header.dart';
 import 'package:project/global/widgets/h_line.dart';
-import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/categories_screen/widgets/category_customer_type_container.dart';
 import 'package:project/screens/categories_screen/widgets/category_items_grid.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+
+//? this screen will only have filters techniques like gender, clothes category
+//? it won't have any product cards right now
+//? you can see how to make filters from SheIn app
+//! this screen will be a big filter, and it will be applied to all products
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -32,36 +36,61 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         VSpace(factor: .5),
         HLine(),
         VSpace(),
+        // GroupHeader(
+        //   title: 'الأنواع',
+        //   subTitle: 'الكل',
+        //   onTap: () {},
+        // ),
+        CategoryCustomerTypeContainer(),
+        VSpace(),
         GroupHeader(
           title: 'الفئات',
           subTitle: 'الكل',
           onTap: () {},
         ),
-        VSpace(factor: .5),
-        CategoryCustomerTypeContainer(),
-        VSpace(factor: 1.5),
         CategoryItemsGrid(),
         VSpace(factor: .5),
-        GroupHeader(onTap: () {}, subTitle: 'subTitle', title: 'title'),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(bottom: kVPad),
-            child: Row(
-              children: [
-                HSpace(),
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(smallBorderRadius),
-                    ),
-                  ),
-                ),
-              ],
+        PaddingWrapper(
+          child: ButtonWrapper(
+            backgroundColor: kPrimaryColor,
+            padding:
+                EdgeInsets.symmetric(horizontal: kHPad, vertical: kVPad / 2),
+            onTap: () {},
+            child: Text(
+              'عرض',
+              style: h3LiteTextStyle.copyWith(color: Colors.white),
             ),
           ),
         ),
+        VSpace(),
+        // GroupHeader(onTap: () {}, subTitle: 'subTitle', title: 'title'),
+        // Expanded(
+        //   child: Container(
+        //     padding: EdgeInsets.only(bottom: kVPad),
+        //     child: Row(
+        //       children: [
+        //         HSpace(),
+        //         AspectRatio(
+        //           aspectRatio: 1,
+        //           child: Container(
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(smallBorderRadius),
+        //             ),
+        //             child: Stack(
+        //               children: [
+        //                 Image.asset(
+        //                   'assets/images/3.jpg',
+        //                   height: 200,
+        //                   fit: BoxFit.cover,
+        //                 )
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
