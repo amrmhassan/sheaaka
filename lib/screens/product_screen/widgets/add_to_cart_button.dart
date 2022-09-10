@@ -7,14 +7,17 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 
 class AddToCartButton extends StatelessWidget {
+  final bool active;
   const AddToCartButton({
     Key? key,
+    this.active = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ButtonWrapper(
+        active: active,
         onTap: () {},
         backgroundColor: kPrimaryColor,
         padding: EdgeInsets.symmetric(vertical: kVPad / 2),

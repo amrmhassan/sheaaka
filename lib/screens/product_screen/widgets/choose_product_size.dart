@@ -6,24 +6,26 @@ import 'package:project/screens/product_screen/widgets/product_props_choose.dart
 import 'package:project/screens/product_screen/widgets/product_size_element.dart';
 
 class ChooseProductSize extends StatelessWidget {
-  final List<Sizes> availableSizes;
+  final List<Sizes>? availableSizes;
   const ChooseProductSize({
     Key? key,
-    required this.availableSizes,
+    this.availableSizes,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ProductPropsChoose(
-      title: 'الحجم',
-      child: Row(
-        children: availableSizes
-            .map((e) => ProductSizeElement(
-                  size: e,
-                  active: e == Sizes.m,
-                ))
-            .toList(),
-      ),
-    );
+    return availableSizes == null
+        ? SizedBox()
+        : ProductPropsChoose(
+            title: 'الحجم',
+            child: Row(
+              children: availableSizes!
+                  .map((e) => ProductSizeElement(
+                        size: e,
+                        active: e == Sizes.m,
+                      ))
+                  .toList(),
+            ),
+          );
   }
 }

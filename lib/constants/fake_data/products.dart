@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:project/constants/fake_data/stores.dart';
+import 'package:project/constants/product_constants.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
 
@@ -16,6 +17,7 @@ List<ProductModel> homeProducts = [
       Sizes.m,
       Sizes.l,
     ],
+    availableColors: productColors,
     fullDesc:
         'وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا ',
     shortDesc: 'قميص ابيض فاتح جميل اوي',
@@ -62,11 +64,6 @@ List<ProductModel> homeProducts = [
     name: 'منتج ثالث',
     price: 669,
     lovesNumber: 20,
-    availableSize: [
-      Sizes.s,
-      Sizes.m,
-      Sizes.xxxl,
-    ],
     store: storeModel_1,
     shortDesc: 'قميص ابيض فاتح جميل اوي',
     imagesPath: [
@@ -75,6 +72,7 @@ List<ProductModel> homeProducts = [
       'assets/images/3.jpg',
     ],
     createdAt: DateTime.now(),
+    availableColors: productColors,
     hasOffer: true,
     offerEnd: DateTime.now().add(Duration(days: 5)),
   ),

@@ -16,12 +16,11 @@ import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/product_screen/widgets/add_to_cart_button.dart';
-import 'package:project/screens/product_screen/widgets/choose_product_color.dart';
-import 'package:project/screens/product_screen/widgets/choose_product_size.dart';
 import 'package:project/screens/product_screen/widgets/open_product_comments_button.dart';
 import 'package:project/screens/product_screen/widgets/product_description_text.dart';
 import 'package:project/screens/product_screen/widgets/product_name.dart';
 import 'package:project/global/widgets/rating.dart';
+import 'package:project/screens/product_screen/widgets/product_size_color.dart';
 import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
 import 'package:project/utils/bools.dart';
 
@@ -93,7 +92,6 @@ class ProductScreen extends StatelessWidget {
                     ],
                   ),
                   VSpace(factor: .5),
-                  //? this will take
                   ImageSliderDotsContainer(
                     activeDot: activeDot,
                     count: productModel.imagesPath.length,
@@ -154,16 +152,7 @@ class ProductScreen extends StatelessWidget {
                         productModel.remainingNumber != null &&
                                 productModel.remainingNumber! < 1
                             ? SizedBox()
-                            : Column(
-                                children: [
-                                  ChooseProductSize(
-                                    availableSizes: productModel.availableSize,
-                                  ),
-                                  VSpace(factor: .5),
-                                  ChooseProductColor(),
-                                  VSpace(factor: .5),
-                                ],
-                              ),
+                            : ProductSizeColor(productModel: productModel),
                       ],
                     ),
                   ),
@@ -182,7 +171,9 @@ class ProductScreen extends StatelessWidget {
             ),
             child: Row(
               children: [
-                AddToCartButton(),
+                AddToCartButton(
+                  active: addToCartActiveButton(productModel.remainingNumber),
+                ),
                 HSpace(factor: .5),
                 OpenProductCommentsButton(),
               ],
@@ -191,5 +182,15 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool addToCartActiveButton(int? v) {
+    if (v == null) {
+      return true;
+    } else if (v > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
