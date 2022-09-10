@@ -2,6 +2,7 @@
 
 import 'package:project/constants/fake_data/stores.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/models/types.dart';
 
 List<ProductModel> homeProducts = [
   ProductModel(
@@ -10,6 +11,11 @@ List<ProductModel> homeProducts = [
     oldPrice: 200,
     lovesNumber: 10,
     rating: 4.5,
+    availableSize: [
+      Sizes.s,
+      Sizes.m,
+      Sizes.l,
+    ],
     fullDesc:
         'وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا ',
     shortDesc: 'قميص ابيض فاتح جميل اوي',
@@ -31,6 +37,11 @@ List<ProductModel> homeProducts = [
   ProductModel(
     name: 'منتج ثاني',
     lovesNumber: 20,
+    availableSize: [
+      Sizes.s,
+      Sizes.m,
+      Sizes.xxl,
+    ],
     price: 50,
     store: storeModel_1,
     fullDesc:
@@ -45,12 +56,17 @@ List<ProductModel> homeProducts = [
     hasOffer: true,
     offerEnd: DateTime.now().add(Duration(days: 5)),
     brand: 'Adidas',
-    remainingNumber: 1,
+    remainingNumber: 0,
   ),
   ProductModel(
     name: 'منتج ثالث',
     price: 669,
     lovesNumber: 20,
+    availableSize: [
+      Sizes.s,
+      Sizes.m,
+      Sizes.xxxl,
+    ],
     store: storeModel_1,
     shortDesc: 'قميص ابيض فاتح جميل اوي',
     imagesPath: [

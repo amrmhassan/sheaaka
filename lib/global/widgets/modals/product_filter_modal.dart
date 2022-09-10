@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/fake_data/products.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/choose_product_type.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/product_screen/widgets/choose_product_color.dart';
@@ -15,7 +16,9 @@ class ProductFiltersModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ChooseProductSize(),
+        ChooseProductSize(
+          availableSizes: homeProducts[0].availableSize,
+        ),
         VSpace(),
         ChooseProductColor(),
         VSpace(),

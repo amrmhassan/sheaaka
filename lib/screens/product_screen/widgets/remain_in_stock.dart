@@ -29,27 +29,32 @@ class RemainInStock extends StatelessWidget {
       color: kDangerColor,
       fontWeight: FontWeight.bold,
     );
-    return RichText(
-      text: TextSpan(
-        style: h4TextStyle.copyWith(
-          color: kActiveTextColor,
-          fontWeight: FontWeight.normal,
-        ),
-        children: [
-          TextSpan(text: 'باقي'),
-          TextSpan(text: ' '),
-          if (!(num == 1 || num == 2))
-            TextSpan(
-              text: num.toString(),
-              style: dangerTextStyle,
+    return num < 1
+        ? Text(
+            'المنتج غير متوفر حاليا',
+            style: h4LiteTextStyle.copyWith(color: kDangerColor),
+          )
+        : RichText(
+            text: TextSpan(
+              style: h4TextStyle.copyWith(
+                color: kActiveTextColor,
+                fontWeight: FontWeight.normal,
+              ),
+              children: [
+                TextSpan(text: 'باقي'),
+                TextSpan(text: ' '),
+                if (!(num == 1 || num == 2))
+                  TextSpan(
+                    text: num.toString(),
+                    style: dangerTextStyle,
+                  ),
+                TextSpan(text: ' '),
+                TextSpan(
+                  text: pluralString(num),
+                  style: num == 1 || num == 2 ? dangerTextStyle : null,
+                ),
+              ],
             ),
-          TextSpan(text: ' '),
-          TextSpan(
-            text: pluralString(num),
-            style: num == 1 || num == 2 ? dangerTextStyle : null,
-          ),
-        ],
-      ),
-    );
+          );
   }
 }

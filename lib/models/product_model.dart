@@ -1,4 +1,5 @@
 import 'package:project/models/store_model.dart';
+import 'package:project/models/types.dart';
 
 class ProductModel {
   final String name;
@@ -6,6 +7,8 @@ class ProductModel {
   final List<String> imagesPath;
   final int lovesNumber;
   final double price;
+  final List<Sizes> availableSize;
+
   final int? nOfComments;
   final double? rating;
   final double? oldPrice;
@@ -26,6 +29,7 @@ class ProductModel {
     required this.createdAt,
     required this.lovesNumber,
     required this.price,
+    required this.availableSize,
     this.nOfComments,
     this.rating,
     this.oldPrice,

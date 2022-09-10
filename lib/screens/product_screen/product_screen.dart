@@ -95,8 +95,9 @@ class ProductScreen extends StatelessWidget {
                   VSpace(factor: .5),
                   //? this will take
                   ImageSliderDotsContainer(
-                      activeDot: activeDot,
-                      count: productModel.imagesPath.length),
+                    activeDot: activeDot,
+                    count: productModel.imagesPath.length,
+                  ),
                   VSpace(factor: .5),
                   PaddingWrapper(
                     child: Column(
@@ -150,10 +151,19 @@ class ProductScreen extends StatelessWidget {
                           desc: productModel.fullDesc ?? 'لا يوجد وصف',
                         ),
                         VSpace(factor: .5),
-                        ChooseProductSize(),
-                        VSpace(factor: .5),
-                        ChooseProductColor(),
-                        VSpace(factor: .5),
+                        productModel.remainingNumber != null &&
+                                productModel.remainingNumber! < 1
+                            ? SizedBox()
+                            : Column(
+                                children: [
+                                  ChooseProductSize(
+                                    availableSizes: productModel.availableSize,
+                                  ),
+                                  VSpace(factor: .5),
+                                  ChooseProductColor(),
+                                  VSpace(factor: .5),
+                                ],
+                              ),
                       ],
                     ),
                   ),
