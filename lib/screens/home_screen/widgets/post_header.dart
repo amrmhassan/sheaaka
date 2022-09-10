@@ -8,8 +8,13 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/home_screen/widgets/trader_photo.dart';
 
 class PostHeader extends StatelessWidget {
+  final String logoImagePath;
+  final String storeName;
+
   const PostHeader({
     Key? key,
+    required this.logoImagePath,
+    required this.storeName,
   }) : super(key: key);
 
   @override
@@ -17,12 +22,12 @@ class PostHeader extends StatelessWidget {
     return PaddingWrapper(
       child: Row(
         children: [
-          TraderPhoto(),
+          TraderPhoto(logoImagePath: logoImagePath),
           HSpace(
             factor: 0.5,
           ),
           Text(
-            'نيو فاشون',
+            storeName,
             style: h3TextStyle,
           ),
           Spacer(),

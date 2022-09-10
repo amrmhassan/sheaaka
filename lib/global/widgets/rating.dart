@@ -7,9 +7,11 @@ import 'package:project/constants/styles.dart';
 
 class Rating extends StatelessWidget {
   final Color? color;
+  final double? rating;
   const Rating({
     Key? key,
     this.color,
+    this.rating,
   }) : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class Rating extends StatelessWidget {
     return Row(
       children: [
         Text(
-          '4.8',
+          rating.toString(),
           style: h4LiteTextStyle.copyWith(color: color),
         ),
         Image.asset(

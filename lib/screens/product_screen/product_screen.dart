@@ -11,6 +11,7 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/n_of_comments.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -22,15 +23,20 @@ import 'package:project/screens/product_screen/widgets/product_description_text.
 import 'package:project/screens/product_screen/widgets/product_name.dart';
 import 'package:project/global/widgets/rating.dart';
 import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
+import 'package:project/utils/bools.dart';
 
 class ProductScreen extends StatelessWidget {
+  final int activeDot = 0;
+
   const ProductScreen({Key? key}) : super(key: key);
   static const String routeName = '/product-screen';
 
   @override
   Widget build(BuildContext context) {
+    final productModel =
+        ModalRoute.of(context)!.settings.arguments as ProductModel;
     var image = Image.asset(
-      'assets/images/3.jpg',
+      productModel.imagesPath[0],
       width: double.infinity,
       fit: BoxFit.cover,
     );
@@ -52,7 +58,12 @@ class ProductScreen extends StatelessWidget {
                         children: [
                           CustomAppBar(
                             rightIcon: AppBarIcon(
-                              iconName: 'book-mark',
+                              color: boolifyNull(productModel.bookMark)
+                                  ? kPrimaryColor
+                                  : kBlackColor,
+                              iconName: boolifyNull(productModel.bookMark)
+                                  ? 'bookmark'
+                                  : 'book-mark',
                               onTap: () {
                                 Navigator.pop(context);
                               },
@@ -61,26 +72,31 @@ class ProductScreen extends StatelessWidget {
                           // Spacer(),
                         ],
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: kHPad / 1.5,
-                            vertical: kVPad / 3,
-                          ),
-                          alignment: Alignment.bottomLeft,
-                          color: kLightColor,
-                          child: Text(
-                            'Firewood',
-                            style: h3TextStyle,
-                          ),
-                        ),
-                      ),
+                      (productModel.brand == null)
+                          ? SizedBox()
+                          : Positioned(
+                              bottom: 0,
+                              left: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: kHPad / 1.5,
+                                  vertical: kVPad / 3,
+                                ),
+                                alignment: Alignment.bottomLeft,
+                                color: kLightColor,
+                                child: Text(
+                                  productModel.brand ?? '',
+                                  style: h3TextStyle,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                   VSpace(factor: .5),
-                  ImageSliderDotsContainer(),
+                  //? this will take
+                  ImageSliderDotsContainer(
+                      activeDot: activeDot,
+                      count: productModel.imagesPath.length),
                   VSpace(factor: .5),
                   PaddingWrapper(
                     child: Column(
@@ -89,31 +105,50 @@ class ProductScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ProductName(),
-                            Spacer(),
-                            ProductCartPrice(
-                              active: false,
-                              color: kInActiveTextColor,
-                              fontSize: 12,
+                            ProductName(
+                              name: productModel.name,
                             ),
+                            Spacer(),
+                            productModel.oldPrice == null
+                                ? SizedBox()
+                                : ProductCartPrice(
+                                    active: false,
+                                    color: kInActiveTextColor,
+                                    fontSize: 12,
+                                    price: productModel.oldPrice!,
+                                  ),
                             HSpace(factor: .3),
                             ProductCartPrice(
                               fontWeight: FontWeight.bold,
                               fontSize: h2TextSize,
+                              price: productModel.price,
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            RemainInStock(num: 11),
+                            productModel.remainingNumber == null
+                                ? SizedBox()
+                                : RemainInStock(
+                                    num: productModel.remainingNumber!),
                             Spacer(),
-                            Rating(),
-                            HSpace(factor: .5),
-                            NOfComments(num: 5),
+                            productModel.rating == null
+                                ? SizedBox()
+                                : Rating(
+                                    rating: productModel.rating,
+                                  ),
+                            productModel.nOfComments == null
+                                ? SizedBox()
+                                : HSpace(factor: .5),
+                            productModel.nOfComments == null
+                                ? SizedBox()
+                                : NOfComments(num: productModel.nOfComments!),
                           ],
                         ),
                         VSpace(factor: .5),
-                        ProductDescriptionText(),
+                        ProductDescriptionText(
+                          desc: productModel.fullDesc ?? 'لا يوجد وصف',
+                        ),
                         VSpace(factor: .5),
                         ChooseProductSize(),
                         VSpace(factor: .5),

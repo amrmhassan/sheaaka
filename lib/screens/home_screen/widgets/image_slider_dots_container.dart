@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dot.dart';
 
 class ImageSliderDotsContainer extends StatelessWidget {
+  final int count;
+  final int activeDot;
+
   const ImageSliderDotsContainer({
     Key? key,
+    required this.count,
+    required this.activeDot,
   }) : super(key: key);
 
   @override
@@ -13,13 +18,13 @@ class ImageSliderDotsContainer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ImageSliderDot(active: true),
-        ImageSliderDot(),
-        ImageSliderDot(),
-        ImageSliderDot(),
-        ImageSliderDot(last: true),
-      ],
+      children: List.generate(
+        count,
+        (index) => ImageSliderDot(
+          active: index == activeDot,
+          last: index == count,
+        ),
+      ),
     );
   }
 }

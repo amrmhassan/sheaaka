@@ -14,7 +14,7 @@ class ProductCartPrice extends StatelessWidget {
 
   const ProductCartPrice({
     Key? key,
-    this.price = 149.99,
+    required this.price,
     this.fontWeight,
     this.fontSize,
     this.active = true,
@@ -43,6 +43,7 @@ class ProductCartPrice extends StatelessWidget {
               height: 1,
             ),
           ),
+          TextSpan(text: ' '),
           TextSpan(
             text: 'جنيه',
             style: textStyle.copyWith(

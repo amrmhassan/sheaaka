@@ -61,7 +61,9 @@ class OrderProductElement extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     // textDirection: TextDirection.rtl,
                     children: [
-                      ProductCartPrice(),
+                      ProductCartPrice(
+                        price: 50,
+                      ),
                       HSpace(factor: 0.5),
                       Dot(),
                       HSpace(factor: 0.5),

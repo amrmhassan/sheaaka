@@ -54,6 +54,7 @@ class OrderTitle extends StatelessWidget {
             HSpace(factor: .4),
             ProductCartPrice(
               fontSize: 14,
+              price: 20,
             ),
             HSpace(factor: .5),
             Image.asset(
@@ -61,7 +62,7 @@ class OrderTitle extends StatelessWidget {
                   ? 'assets/icons/down-arrow.png'
                   : 'assets/icons/left-arrow.png',
               width: smallIconSize,
-            )
+            ),
           ],
         ),
       ),

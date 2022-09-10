@@ -15,6 +15,7 @@ import 'package:project/screens/signup_screen/signup_screen.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
+import 'package:project/screens/trend_screen/trend_screen.dart';
 
 bool testing = false;
 void main(List<String> args) {
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         CommentsScreen.routeName: (context) => CommentsScreen(),
         OrdersScreen.routeName: (context) => OrdersScreen(),
         TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
+        TrendScreen.routeName: (context) => TrendScreen(),
       },
     );
   }

@@ -7,7 +7,11 @@ import 'package:project/constants/trader_photo.dart';
 import 'package:project/utils/borders.dart';
 
 class TraderPhoto extends StatelessWidget {
-  const TraderPhoto({Key? key}) : super(key: key);
+  final String logoImagePath;
+  const TraderPhoto({
+    Key? key,
+    required this.logoImagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class TraderPhoto extends StatelessWidget {
           border: Border.all(width: 1 / 2, color: kBlackColor),
         ),
         child: Image.asset(
-          'assets/images/trader.jpg',
+          logoImagePath,
           fit: BoxFit.cover,
         ),
       ),

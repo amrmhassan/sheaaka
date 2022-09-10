@@ -5,8 +5,13 @@ import 'package:project/constants/styles.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class PostInfo extends StatelessWidget {
+  final String name;
+  final String? shortDescription;
+
   const PostInfo({
     Key? key,
+    required this.name,
+    this.shortDescription,
   }) : super(key: key);
 
   @override
@@ -16,11 +21,11 @@ class PostInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'قميص أبيض فاتح',
+            name,
             style: h3TextStyle,
           ),
           Text(
-            'قميص أبيض فاتح اللون للرجال',
+            shortDescription ?? '',
             style: h4TextStyleInactive,
           ),
         ],

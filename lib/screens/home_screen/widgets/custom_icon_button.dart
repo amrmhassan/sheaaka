@@ -6,12 +6,14 @@ class CustomIconButton extends StatelessWidget {
   final String iconName;
   final VoidCallback onTap;
   final double? width;
+  final Color? color;
 
   const CustomIconButton({
     Key? key,
     required this.iconName,
     required this.onTap,
     this.width,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class CustomIconButton extends StatelessWidget {
       child: Image.asset(
         'assets/icons/$iconName.png',
         width: width ?? mediumIconSize,
-        color: kBlackColor,
+        color: color ?? kBlackColor,
       ),
     );
   }
