@@ -7,6 +7,7 @@ import 'package:project/models/types.dart';
 
 List<ProductModel> homeProducts = [
   ProductModel(
+    id: 'dlfjkdljflk',
     name: 'منتج أول',
     price: 144.5,
     oldPrice: 200,
@@ -37,6 +38,7 @@ List<ProductModel> homeProducts = [
     nOfComments: 50,
   ),
   ProductModel(
+    id: 'sljdfoiwe',
     name: 'منتج ثاني',
     lovesNumber: 20,
     availableSize: [
@@ -61,6 +63,7 @@ List<ProductModel> homeProducts = [
     remainingNumber: 0,
   ),
   ProductModel(
+    id: 'aldjfaloisd',
     name: 'منتج ثالث',
     price: 669,
     lovesNumber: 20,

@@ -12,6 +12,7 @@ import 'package:project/global/widgets/n_of_comments.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/providers/home_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -23,6 +24,7 @@ import 'package:project/global/widgets/rating.dart';
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
 import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
 import 'package:project/utils/bools.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
   final int activeDot = 0;
@@ -32,8 +34,9 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productModel =
-        ModalRoute.of(context)!.settings.arguments as ProductModel;
+    final productModelId = ModalRoute.of(context)!.settings.arguments as String;
+    var productModel =
+        Provider.of<HomeProvider>(context).findProductById(productModelId);
     var image = Image.asset(
       productModel.imagesPath[0],
       width: double.infinity,
@@ -64,11 +67,14 @@ class ProductScreen extends StatelessWidget {
                                   ? 'bookmark'
                                   : 'book-mark',
                               onTap: () {
-                                Navigator.pop(context);
+                                print('object');
+                                Provider.of<HomeProvider>(
+                                  context,
+                                  listen: false,
+                                ).toggleWishListProduct(productModel.id);
                               },
                             ),
                           ),
-                          // Spacer(),
                         ],
                       ),
                       (productModel.brand == null)

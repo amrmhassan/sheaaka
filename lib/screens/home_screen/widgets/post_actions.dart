@@ -5,20 +5,24 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/modals/add_to_wishlist_modal.dart';
+import 'package:project/providers/home_provider.dart';
 import 'package:project/screens/home_screen/widgets/custom_icon_button.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/utils/bools.dart';
+import 'package:provider/provider.dart';
 
 class PostActions extends StatelessWidget {
   final bool? bookMarked;
   final bool? loved;
   final int lovesNumber;
+  final String id;
 
   const PostActions({
     Key? key,
     this.bookMarked,
     this.loved,
     required this.lovesNumber,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -30,17 +34,22 @@ class PostActions extends StatelessWidget {
           boolifyNull(bookMarked)
               ? CustomIconButton(
                   iconName: 'bookmark',
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<HomeProvider>(context, listen: false)
+                        .toggleWishListProduct(id);
+                  },
                   color: kPrimaryColor,
                 )
               : CustomIconButton(
                   iconName: 'book-mark',
                   onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (ctx) => AddToWishlistModal(),
-                    );
+                    Provider.of<HomeProvider>(context, listen: false)
+                        .toggleWishListProduct(id);
+                    // showModalBottomSheet(
+                    //   context: context,
+                    //   backgroundColor: Colors.transparent,
+                    //   builder: (ctx) => AddToWishlistModal(),
+                    // );
                   }),
           Spacer(),
           CustomIconButton(iconName: 'share', onTap: () {}),
@@ -51,10 +60,18 @@ class PostActions extends StatelessWidget {
               boolifyNull(loved)
                   ? CustomIconButton(
                       iconName: 'heart2',
-                      onTap: () {},
+                      onTap: () {
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .toggleFavProduct(id);
+                      },
                       color: kLoveColor,
                     )
-                  : CustomIconButton(iconName: 'heart', onTap: () {}),
+                  : CustomIconButton(
+                      iconName: 'heart',
+                      onTap: () {
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .toggleFavProduct(id);
+                      }),
               Text(
                 lovesNumber.toString(),
                 textAlign: TextAlign.justify,

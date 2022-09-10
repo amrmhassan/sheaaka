@@ -3,28 +3,30 @@ import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 
 class ProductModel {
-  final String name;
-  final StoreModel store;
-  final List<String> imagesPath;
-  final int lovesNumber;
-  final double price;
+  String id;
+  String name;
+  StoreModel store;
+  List<String> imagesPath;
+  int lovesNumber;
+  double price;
 
-  final List<Sizes>? availableSize;
-  final List<Color>? availableColors;
-  final int? nOfComments;
-  final double? rating;
-  final double? oldPrice;
-  final int? remainingNumber;
-  final String? brand;
-  final DateTime createdAt;
-  final String? fullDesc;
-  final String? shortDesc;
-  final bool? favorite;
-  final bool? bookMark;
-  final bool? hasOffer;
-  final DateTime? offerEnd;
+  List<Sizes>? availableSize;
+  List<Color>? availableColors;
+  int? nOfComments;
+  double? rating;
+  double? oldPrice;
+  int? remainingNumber;
+  String? brand;
+  DateTime createdAt;
+  String? fullDesc;
+  String? shortDesc;
+  bool? favorite;
+  bool? bookMark;
+  bool? hasOffer;
+  DateTime? offerEnd;
 
-  const ProductModel({
+  ProductModel({
+    required this.id,
     required this.name,
     required this.store,
     required this.imagesPath,

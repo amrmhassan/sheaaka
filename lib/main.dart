@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:project/providers/home_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
@@ -16,6 +17,7 @@ import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
+import 'package:provider/provider.dart';
 
 bool testing = false;
 void main(List<String> args) {
@@ -27,46 +29,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale("ar", "AE"),
-      ],
-      locale: Locale("ar", "AE"),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: TextTheme(
-          bodyText1: TextStyle(
-            fontFamily: 'Cairo',
-            color: kActiveTextColor,
-          ),
-          bodyText2: TextStyle(
-            fontFamily: 'Cairo',
-            color: kActiveTextColor,
+    return ChangeNotifierProvider(
+      create: (ctx) => HomeProvider(),
+      child: MaterialApp(
+        localizationsDelegates: [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale("ar", "AE"),
+        ],
+        locale: Locale("ar", "AE"),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(
+              fontFamily: 'Cairo',
+              color: kActiveTextColor,
+            ),
+            bodyText2: TextStyle(
+              fontFamily: 'Cairo',
+              color: kActiveTextColor,
+            ),
           ),
         ),
+        initialRoute: HolderScreen.routeName,
+        routes: {
+          HolderScreen.routeName: (context) => HolderScreen(),
+          ProductScreen.routeName: (context) => ProductScreen(),
+          CartScreen.routeName: (context) => CartScreen(),
+          StoreScreen.routeName: (context) => StoreScreen(),
+          ProfileScreen.routeName: (context) => ProfileScreen(),
+          SearchScreen.routeName: (context) => SearchScreen(),
+          LoginScreen.routeName: (context) => LoginScreen(),
+          SignUpScreen.routeName: (context) => SignUpScreen(),
+          SignUpStoreScreen.routeName: (context) => SignUpStoreScreen(),
+          CommentsScreen.routeName: (context) => CommentsScreen(),
+          OrdersScreen.routeName: (context) => OrdersScreen(),
+          TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
+          TrendScreen.routeName: (context) => TrendScreen(),
+        },
       ),
-      initialRoute: HolderScreen.routeName,
-      routes: {
-        HolderScreen.routeName: (context) => HolderScreen(),
-        ProductScreen.routeName: (context) => ProductScreen(),
-        CartScreen.routeName: (context) => CartScreen(),
-        StoreScreen.routeName: (context) => StoreScreen(),
-        ProfileScreen.routeName: (context) => ProfileScreen(),
-        SearchScreen.routeName: (context) => SearchScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        SignUpScreen.routeName: (context) => SignUpScreen(),
-        SignUpStoreScreen.routeName: (context) => SignUpStoreScreen(),
-        CommentsScreen.routeName: (context) => CommentsScreen(),
-        OrdersScreen.routeName: (context) => OrdersScreen(),
-        TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
-        TrendScreen.routeName: (context) => TrendScreen(),
-      },
     );
   }
 }

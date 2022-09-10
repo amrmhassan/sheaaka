@@ -27,7 +27,7 @@ class FullPost extends StatelessWidget {
         Navigator.pushNamed(
           context,
           ProductScreen.routeName,
-          arguments: fullPostModel,
+          arguments: fullPostModel.id,
         );
       },
       child: Container(
@@ -71,6 +71,7 @@ class FullPost extends StatelessWidget {
               bookMarked: fullPostModel.bookMark,
               loved: fullPostModel.favorite,
               lovesNumber: fullPostModel.lovesNumber,
+              id: fullPostModel.id,
             ),
             //? this will take product info , product short description
             PostInfo(
