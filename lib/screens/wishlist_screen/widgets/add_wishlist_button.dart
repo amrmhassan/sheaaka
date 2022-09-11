@@ -6,11 +6,25 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/modals/add_wishlist_modal.dart';
+import 'package:project/providers/whishlists_provider.dart';
+import 'package:provider/provider.dart';
 
-class AddWishListButton extends StatelessWidget {
+class AddWishListButton extends StatefulWidget {
   const AddWishListButton({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<AddWishListButton> createState() => _AddWishListButtonState();
+}
+
+class _AddWishListButtonState extends State<AddWishListButton> {
+  String wishListName = '';
+  void setWishListName(String n) {
+    setState(() {
+      wishListName = n;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +35,14 @@ class AddWishListButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           builder: (ctx) => ModalWrapper(
             applyButtonTitle: 'إضافة',
-            child: AddWishlistModal(),
-            onApply: () {},
+            child: AddWishlistModal(
+              setWishListName: setWishListName,
+            ),
+            onApply: () {
+              Provider.of<WishListsProvider>(context, listen: false)
+                  .addWishList(wishListName);
+              Navigator.pop(context);
+            },
           ),
         );
       },

@@ -7,8 +7,10 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 
 class AddWishlistModal extends StatelessWidget {
+  final Function(String n) setWishListName;
   const AddWishlistModal({
     Key? key,
+    required this.setWishListName,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class AddWishlistModal extends StatelessWidget {
         ),
         VSpace(),
         CustomFormInput(
+          onChange: setWishListName,
           padding: EdgeInsets.zero,
           iconName: 'pen',
           title: 'اسم القائمة',

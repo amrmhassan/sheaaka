@@ -1,15 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:project/constants/brands_constants.dart';
+import 'package:project/constants/fake_data/brands_constants.dart';
 import 'package:project/constants/fake_data/stores.dart';
 import 'package:project/constants/product_constants.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
+import 'package:uuid/uuid.dart';
 
 List<ProductModel> allProducts = [
 //? product 1
   ProductModel(
-    id: 'dlfjkdljflk',
+    id: Uuid().v4(),
     name: 'منتج أول',
     price: 144.5,
     oldPrice: 200,
@@ -41,7 +42,7 @@ List<ProductModel> allProducts = [
   ),
 //? product 2
   ProductModel(
-    id: 'sljdfoiwe',
+    id: Uuid().v4(),
     name: 'منتج ثاني',
     lovesNumber: 20,
     availableSize: [
@@ -67,7 +68,7 @@ List<ProductModel> allProducts = [
   ),
 //? product 3
   ProductModel(
-    id: 'aldjfaloisd',
+    id: Uuid().v4(),
     name: 'منتج ثالث',
     price: 669,
     lovesNumber: 20,

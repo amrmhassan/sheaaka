@@ -10,6 +10,7 @@ class ProductModel {
   List<String> imagesPath;
   int lovesNumber;
   double price;
+  String? wishListId;
 
   BrandModel? brand;
   List<Sizes>? availableSize;
@@ -34,6 +35,7 @@ class ProductModel {
     required this.createdAt,
     required this.lovesNumber,
     required this.price,
+    this.wishListId,
     this.brand,
     this.availableSize,
     this.nOfComments,

@@ -10,6 +10,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 class CustomFormInput extends StatelessWidget {
   final String title;
   final String iconName;
+  final Function(String v)? onChange;
   final String? trailingIconName;
   final Widget? trailingIconWidget;
   final Color? color;
@@ -21,6 +22,7 @@ class CustomFormInput extends StatelessWidget {
     Key? key,
     required this.iconName,
     required this.title,
+    this.onChange,
     this.trailingIconName,
     this.color,
     this.borderColor,
@@ -52,6 +54,7 @@ class CustomFormInput extends StatelessWidget {
             HSpace(factor: .5),
             Expanded(
               child: TextField(
+                onChanged: onChange,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: title,
