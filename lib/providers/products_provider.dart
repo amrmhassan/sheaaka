@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/fake_data/products.dart';
 import 'package:project/models/product_model.dart';
 
-class HomeProvider extends ChangeNotifier {
-  List<ProductModel> products = [...homeProducts];
+class ProductsProvider extends ChangeNotifier {
+  List<ProductModel> products = [...allProducts];
 
 //? to toggle a product love
   void toggleFavProduct(String id) {
@@ -36,5 +36,10 @@ class HomeProvider extends ChangeNotifier {
   //? get a product with id
   ProductModel findProductById(String id) {
     return products.firstWhere((element) => id == element.id);
+  }
+
+  //? to get the wishlist products
+  List<ProductModel> getWhishListProducts() {
+    return products.where((element) => element.bookMark == true).toList();
   }
 }

@@ -17,7 +17,7 @@ class ProductFiltersModal extends StatelessWidget {
     return Column(
       children: [
         ChooseProductSize(
-          availableSizes: homeProducts[0].availableSize,
+          availableSizes: allProducts[0].availableSize,
         ),
         VSpace(),
         ChooseProductColor(),

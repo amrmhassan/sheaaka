@@ -6,14 +6,17 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/rating.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/wishlist_screen/widgets/brand.dart';
 import 'package:project/screens/wishlist_screen/widgets/h_post_desc.dart';
 import 'package:project/screens/wishlist_screen/widgets/h_post_info.dart';
 
 class HorizontalPost extends StatelessWidget {
+  final ProductModel product;
   const HorizontalPost({
     Key? key,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class HorizontalPost extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            'assets/images/3.jpg',
+            product.imagesPath[0],
             fit: BoxFit.cover,
             width: 130,
             alignment: Alignment.topCenter,
@@ -36,16 +39,27 @@ class HorizontalPost extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  HPostInfo(),
+                  HPostInfo(
+                    name: product.name,
+                    storeName: product.store.name,
+                  ),
                   VSpace(factor: .1),
-                  HPostDesc(),
+                  HPostDesc(
+                    desc: product.fullDesc,
+                  ),
                   VSpace(factor: .7),
                   Row(
                     children: [
-                      Brand(),
+                      Brand(
+                        brand: product.brand,
+                      ),
                       Spacer(),
-                      Rating(),
+                      if (product.rating != null)
+                        Rating(
+                          rating: product.rating,
+                        ),
                     ],
                   )
                 ],

@@ -14,15 +14,7 @@ class SearchingResults extends StatelessWidget {
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
-          children: [
-            HorizontalPost(),
-            HorizontalPost(),
-            HorizontalPost(),
-            HorizontalPost(),
-            HorizontalPost(),
-            HorizontalPost(),
-            HorizontalPost(),
-          ],
+          children: [],
         ),
       ),
     );

@@ -1,18 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/free_colored_space.dart';
 import 'package:project/global/widgets/h_space.dart';
-import 'package:project/global/widgets/n_of_comments.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/product_model.dart';
-import 'package:project/providers/home_provider.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -20,10 +14,9 @@ import 'package:project/screens/product_screen/widgets/add_to_cart_button.dart';
 import 'package:project/screens/product_screen/widgets/open_product_comments_button.dart';
 import 'package:project/screens/product_screen/widgets/product_description_text.dart';
 import 'package:project/screens/product_screen/widgets/product_name.dart';
-import 'package:project/global/widgets/rating.dart';
+import 'package:project/screens/product_screen/widgets/product_screen_app_bar.dart';
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
-import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
-import 'package:project/utils/bools.dart';
+import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -36,7 +29,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final productModelId = ModalRoute.of(context)!.settings.arguments as String;
     var productModel =
-        Provider.of<HomeProvider>(context).findProductById(productModelId);
+        Provider.of<ProductsProvider>(context).findProductById(productModelId);
     var image = Image.asset(
       productModel.imagesPath[0],
       width: double.infinity,
@@ -58,43 +51,13 @@ class ProductScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomAppBar(
-                            rightIcon: AppBarIcon(
-                              color: boolifyNull(productModel.bookMark)
-                                  ? kPrimaryColor
-                                  : kBlackColor,
-                              iconName: boolifyNull(productModel.bookMark)
-                                  ? 'bookmark'
-                                  : 'book-mark',
-                              onTap: () {
-                                print('object');
-                                Provider.of<HomeProvider>(
-                                  context,
-                                  listen: false,
-                                ).toggleWishListProduct(productModel.id);
-                              },
-                            ),
+                          ProductScreenAppBar(
+                            bookMark: productModel.bookMark,
+                            id: productModel.id,
                           ),
                         ],
                       ),
-                      (productModel.brand == null)
-                          ? SizedBox()
-                          : Positioned(
-                              bottom: 0,
-                              left: 0,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: kHPad / 1.5,
-                                  vertical: kVPad / 3,
-                                ),
-                                alignment: Alignment.bottomLeft,
-                                color: kLightColor,
-                                child: Text(
-                                  productModel.brand ?? '',
-                                  style: h3TextStyle,
-                                ),
-                              ),
-                            ),
+                      handleShowBrand(productModel),
                     ],
                   ),
                   VSpace(factor: .5),
@@ -107,6 +70,7 @@ class ProductScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        //? this row is for the name, price
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -114,14 +78,7 @@ class ProductScreen extends StatelessWidget {
                               name: productModel.name,
                             ),
                             Spacer(),
-                            productModel.oldPrice == null
-                                ? SizedBox()
-                                : ProductCartPrice(
-                                    active: false,
-                                    color: kInActiveTextColor,
-                                    fontSize: 12,
-                                    price: productModel.oldPrice!,
-                                  ),
+                            handleShowOldPrice(productModel),
                             HSpace(factor: .3),
                             ProductCartPrice(
                               fontWeight: FontWeight.bold,
@@ -130,26 +87,8 @@ class ProductScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            productModel.remainingNumber == null
-                                ? SizedBox()
-                                : RemainInStock(
-                                    num: productModel.remainingNumber!),
-                            Spacer(),
-                            productModel.rating == null
-                                ? SizedBox()
-                                : Rating(
-                                    rating: productModel.rating,
-                                  ),
-                            productModel.nOfComments == null
-                                ? SizedBox()
-                                : HSpace(factor: .5),
-                            productModel.nOfComments == null
-                                ? SizedBox()
-                                : NOfComments(num: productModel.nOfComments!),
-                          ],
-                        ),
+                        //? this row is for remaining in stock, rating, number of comments
+                        handleSecondaryProductInfo(productModel),
                         VSpace(factor: .5),
                         ProductDescriptionText(
                           desc: productModel.fullDesc ?? 'لا يوجد وصف',
@@ -188,15 +127,5 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  bool addToCartActiveButton(int? v) {
-    if (v == null) {
-      return true;
-    } else if (v > 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

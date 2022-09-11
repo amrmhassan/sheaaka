@@ -5,7 +5,7 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/modals/add_to_wishlist_modal.dart';
-import 'package:project/providers/home_provider.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/custom_icon_button.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/utils/bools.dart';
@@ -35,7 +35,7 @@ class PostActions extends StatelessWidget {
               ? CustomIconButton(
                   iconName: 'bookmark',
                   onTap: () {
-                    Provider.of<HomeProvider>(context, listen: false)
+                    Provider.of<ProductsProvider>(context, listen: false)
                         .toggleWishListProduct(id);
                   },
                   color: kPrimaryColor,
@@ -43,7 +43,7 @@ class PostActions extends StatelessWidget {
               : CustomIconButton(
                   iconName: 'book-mark',
                   onTap: () {
-                    Provider.of<HomeProvider>(context, listen: false)
+                    Provider.of<ProductsProvider>(context, listen: false)
                         .toggleWishListProduct(id);
                     // showModalBottomSheet(
                     //   context: context,
@@ -61,7 +61,7 @@ class PostActions extends StatelessWidget {
                   ? CustomIconButton(
                       iconName: 'heart2',
                       onTap: () {
-                        Provider.of<HomeProvider>(context, listen: false)
+                        Provider.of<ProductsProvider>(context, listen: false)
                             .toggleFavProduct(id);
                       },
                       color: kLoveColor,
@@ -69,7 +69,7 @@ class PostActions extends StatelessWidget {
                   : CustomIconButton(
                       iconName: 'heart',
                       onTap: () {
-                        Provider.of<HomeProvider>(context, listen: false)
+                        Provider.of<ProductsProvider>(context, listen: false)
                             .toggleFavProduct(id);
                       }),
               Text(

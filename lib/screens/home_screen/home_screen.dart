@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/providers/home_provider.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homeProvider = Provider.of<HomeProvider>(context);
+    var productsProvider = Provider.of<ProductsProvider>(context);
     return Column(
       children: [
         VSpace(),
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                ...homeProvider.products
+                ...productsProvider.products
                     .map((product) => FullPost(fullPostModel: product))
                     .toList(),
                 VSpace(factor: .5),

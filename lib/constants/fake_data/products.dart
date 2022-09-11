@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:project/constants/brands_constants.dart';
 import 'package:project/constants/fake_data/stores.dart';
 import 'package:project/constants/product_constants.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
 
-List<ProductModel> homeProducts = [
+List<ProductModel> allProducts = [
+//? product 1
   ProductModel(
     id: 'dlfjkdljflk',
     name: 'منتج أول',
@@ -33,10 +35,11 @@ List<ProductModel> homeProducts = [
     offerEnd: DateTime.now().add(Duration(days: 5)),
     bookMark: true,
     favorite: true,
-    brand: 'Firewood',
+    brand: firewoodBrand,
     remainingNumber: 5,
     nOfComments: 50,
   ),
+//? product 2
   ProductModel(
     id: 'sljdfoiwe',
     name: 'منتج ثاني',
@@ -52,16 +55,17 @@ List<ProductModel> homeProducts = [
         'وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا وصف كتير هنا ',
     shortDesc: 'قميص ابيض فاتح جميل اوي',
     imagesPath: [
-      'assets/images/1.jpg',
       'assets/images/2.jpg',
+      'assets/images/1.jpg',
       'assets/images/3.jpg',
     ],
     createdAt: DateTime.now(),
     hasOffer: true,
     offerEnd: DateTime.now().add(Duration(days: 5)),
-    brand: 'Adidas',
+    brand: adidasBrand,
     remainingNumber: 0,
   ),
+//? product 3
   ProductModel(
     id: 'aldjfaloisd',
     name: 'منتج ثالث',
@@ -70,13 +74,14 @@ List<ProductModel> homeProducts = [
     store: storeModel_1,
     shortDesc: 'قميص ابيض فاتح جميل اوي',
     imagesPath: [
+      'assets/images/3.jpg',
       'assets/images/1.jpg',
       'assets/images/2.jpg',
-      'assets/images/3.jpg',
     ],
     createdAt: DateTime.now(),
     availableColors: productColors,
     hasOffer: true,
     offerEnd: DateTime.now().add(Duration(days: 5)),
   ),
+//?
 ];

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/brand_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 
@@ -10,13 +11,13 @@ class ProductModel {
   int lovesNumber;
   double price;
 
+  BrandModel? brand;
   List<Sizes>? availableSize;
   List<Color>? availableColors;
   int? nOfComments;
   double? rating;
   double? oldPrice;
   int? remainingNumber;
-  String? brand;
   DateTime createdAt;
   String? fullDesc;
   String? shortDesc;
@@ -33,12 +34,12 @@ class ProductModel {
     required this.createdAt,
     required this.lovesNumber,
     required this.price,
+    this.brand,
     this.availableSize,
     this.nOfComments,
     this.rating,
     this.oldPrice,
     this.remainingNumber,
-    this.brand,
     this.bookMark,
     this.hasOffer,
     this.offerEnd,

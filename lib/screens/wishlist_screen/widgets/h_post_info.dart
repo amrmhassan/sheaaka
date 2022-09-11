@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
 
 class HPostInfo extends StatelessWidget {
+  final String name;
+  final String storeName;
   const HPostInfo({
     Key? key,
+    required this.name,
+    required this.storeName,
   }) : super(key: key);
 
   @override
@@ -14,11 +18,11 @@ class HPostInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'تيشيرت أصفر',
+          name,
           style: h3TextStyle,
         ),
         Text(
-          'نيو فاشون',
+          storeName,
           style: h4LiteTextStyle,
         ),
       ],
