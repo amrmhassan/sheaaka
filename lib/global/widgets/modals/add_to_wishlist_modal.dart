@@ -8,14 +8,16 @@ import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 
 class AddToWishlistModal extends StatelessWidget {
+  final VoidCallback onApply;
   const AddToWishlistModal({
     Key? key,
+    required this.onApply,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ModalWrapper(
-      onApply: () {},
+      onApply: onApply,
       applyButtonTitle: 'إضافة',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

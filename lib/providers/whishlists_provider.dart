@@ -18,7 +18,6 @@ class WishListsProvider extends ChangeNotifier {
       createdAt: DateTime.now(),
     );
     wishLists.add(w);
-    print(wishLists.length);
     notifyListeners();
   }
 

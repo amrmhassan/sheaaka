@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
-import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -20,11 +19,12 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
 
-    var wishlistProducts =
-        productsProvider.getWhishListProducts(defaultWhishlists[0].id);
     var wishListProvider = Provider.of<WishListsProvider>(context);
+    var wishlistProducts = productsProvider
+        .getWhishListProducts(wishListProvider.activeWishListId);
     var activeWishListProducts = wishlistProducts.where(
         ((element) => element.wishListId == wishListProvider.activeWishListId));
+
     return Container(
       alignment: Alignment.topRight,
       child: Column(

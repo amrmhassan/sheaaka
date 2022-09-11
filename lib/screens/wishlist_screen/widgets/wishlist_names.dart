@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:project/providers/whishlists_provider.dart';

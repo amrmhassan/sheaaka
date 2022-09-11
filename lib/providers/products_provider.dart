@@ -30,6 +30,13 @@ class ProductsProvider extends ChangeNotifier {
       product.wishListId = null;
     }
     products.insert(index, product);
+    // try {
+    //   print(products.firstWhere((element) => element.wishListId != null).name);
+    //   print(whishListId);
+    // } catch (e) {
+    //   print('error');
+    // }
+
     notifyListeners();
   }
 
