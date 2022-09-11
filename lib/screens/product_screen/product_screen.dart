@@ -52,7 +52,7 @@ class ProductScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProductScreenAppBar(
-                            bookMark: productModel.bookMark,
+                            bookMark: productModel.wishListId != null,
                             id: productModel.id,
                           ),
                         ],

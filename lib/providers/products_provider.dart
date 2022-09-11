@@ -20,14 +20,14 @@ class ProductsProvider extends ChangeNotifier {
   }
 
 //? to toggle a pro
-  void toggleWishListProduct(String id) {
+  void toggleWishListProduct(String id, String whishListId) {
     int index = products.indexWhere((element) => element.id == id);
     ProductModel product = products[index];
     products.removeAt(index);
-    if (product.bookMark == null || product.bookMark == false) {
-      product.bookMark = true;
+    if (product.wishListId == null) {
+      product.wishListId = whishListId;
     } else {
-      product.bookMark = false;
+      product.wishListId = null;
     }
     products.insert(index, product);
     notifyListeners();
@@ -39,7 +39,9 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //? to get the wishlist products
-  List<ProductModel> getWhishListProducts() {
-    return products.where((element) => element.bookMark == true).toList();
+  List<ProductModel> getWhishListProducts(String wishListId) {
+    return products
+        .where((element) => element.wishListId == wishListId)
+        .toList();
   }
 }

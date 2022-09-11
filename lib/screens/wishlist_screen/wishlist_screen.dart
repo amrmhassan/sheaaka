@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/wishlist_screen/widgets/horizontal_post.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,12 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
-    var wishlistProducts = productsProvider.getWhishListProducts();
+
+    var wishlistProducts =
+        productsProvider.getWhishListProducts(defaultWhishlists[0].id);
+    var wishListProvider = Provider.of<WishListsProvider>(context);
+    var activeWishListProducts = wishlistProducts.where(
+        ((element) => element.wishListId == wishListProvider.activeWishListId));
     return Container(
       alignment: Alignment.topRight,
       child: Column(
@@ -27,7 +34,7 @@ class WishlistScreen extends StatelessWidget {
           WishListsNames(),
           VSpace(),
           Expanded(
-            child: wishlistProducts.isEmpty
+            child: activeWishListProducts.isEmpty
                 ? Container(
                     alignment: Alignment.center,
                     child: Column(
@@ -48,7 +55,7 @@ class WishlistScreen extends StatelessWidget {
                 : SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     child: Column(
-                      children: wishlistProducts
+                      children: activeWishListProducts
                           .map((product) => HorizontalPost(product: product))
                           .toList(),
                     ),

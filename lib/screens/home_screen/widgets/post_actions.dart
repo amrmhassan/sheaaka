@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/modals/add_to_wishlist_modal.dart';
@@ -36,7 +37,7 @@ class PostActions extends StatelessWidget {
                   iconName: 'bookmark',
                   onTap: () {
                     Provider.of<ProductsProvider>(context, listen: false)
-                        .toggleWishListProduct(id);
+                        .toggleWishListProduct(id, defaultWhishlists[0].id);
                   },
                   color: kPrimaryColor,
                 )
@@ -44,7 +45,7 @@ class PostActions extends StatelessWidget {
                   iconName: 'book-mark',
                   onTap: () {
                     Provider.of<ProductsProvider>(context, listen: false)
-                        .toggleWishListProduct(id);
+                        .toggleWishListProduct(id, defaultWhishlists[0].id);
                     // showModalBottomSheet(
                     //   context: context,
                     //   backgroundColor: Colors.transparent,

@@ -2,6 +2,7 @@
 
 import 'package:project/constants/fake_data/brands_constants.dart';
 import 'package:project/constants/fake_data/stores.dart';
+import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/constants/product_constants.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
@@ -34,7 +35,7 @@ List<ProductModel> allProducts = [
     createdAt: DateTime.now(),
     hasOffer: true,
     offerEnd: DateTime.now().add(Duration(days: 5)),
-    bookMark: true,
+    wishListId: defaultWhishlists[0].id,
     favorite: true,
     brand: firewoodBrand,
     remainingNumber: 5,

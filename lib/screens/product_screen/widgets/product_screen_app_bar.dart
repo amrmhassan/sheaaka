@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/fake_data/wishlists.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/providers/products_provider.dart';
@@ -25,7 +26,7 @@ class ProductScreenAppBar extends StatelessWidget {
           Provider.of<ProductsProvider>(
             context,
             listen: false,
-          ).toggleWishListProduct(id);
+          ).toggleWishListProduct(id, defaultWhishlists[0].id);
         },
       ),
     );

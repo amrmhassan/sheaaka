@@ -23,7 +23,6 @@ class ProductModel {
   String? fullDesc;
   String? shortDesc;
   bool? favorite;
-  bool? bookMark;
   bool? hasOffer;
   DateTime? offerEnd;
 
@@ -42,7 +41,6 @@ class ProductModel {
     this.rating,
     this.oldPrice,
     this.remainingNumber,
-    this.bookMark,
     this.hasOffer,
     this.offerEnd,
     this.favorite,

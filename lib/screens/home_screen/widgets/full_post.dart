@@ -68,7 +68,7 @@ class FullPost extends StatelessWidget {
                 count: fullPostModel.imagesPath.length, activeDot: activeDot),
             //? this will take the favorite bool, bookmark bool
             PostActions(
-              bookMarked: fullPostModel.bookMark,
+              bookMarked: fullPostModel.wishListId != null,
               loved: fullPostModel.favorite,
               lovesNumber: fullPostModel.lovesNumber,
               id: fullPostModel.id,
