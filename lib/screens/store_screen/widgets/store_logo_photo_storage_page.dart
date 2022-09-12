@@ -4,8 +4,10 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 
 class StoreLogoPhotoStorePage extends StatelessWidget {
+  final String imagePath;
   const StoreLogoPhotoStorePage({
     Key? key,
+    required this.imagePath,
   }) : super(key: key);
 
   @override
@@ -33,9 +35,10 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
             borderRadius: BorderRadius.circular(500),
           ),
           child: Image.asset(
-            'assets/images/trader.jpg',
+            imagePath,
             width: double.infinity,
             fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
           ),
         ),
       ),

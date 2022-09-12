@@ -11,7 +11,7 @@ import 'package:project/screens/wishlist_screen/widgets/horizontal_post.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 import 'package:provider/provider.dart';
 
-//! filtering wish list products according to their name will be done here in the local state, not the provider state
+//! it is lagging ,so fix this
 class WishlistScreen extends StatelessWidget {
   const WishlistScreen({Key? key}) : super(key: key);
 

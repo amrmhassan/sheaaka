@@ -7,20 +7,31 @@ import 'package:project/utils/borders.dart';
 
 const double _radius = 80;
 const double _storeWidth = 3;
-const double _borderPercentage = .40;
+// const double _borderPercentage = .40;
 
 class StoreOfferPhoto extends StatelessWidget {
+  final String imagePath;
+  final DateTime createdAt;
+  final DateTime endAt;
+
   const StoreOfferPhoto({
     Key? key,
+    required this.imagePath,
+    required this.createdAt,
+    required this.endAt,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int allDuration = endAt.difference(createdAt).inMinutes;
+    int remainingDuration = endAt.difference(DateTime.now()).inMinutes;
+    double ratio = remainingDuration / allDuration;
+
     return DottedBorder(
       borderType: BorderType.Circle,
       padding: EdgeInsets.zero,
       color: kPrimaryColor,
-      dashPattern: getPattern(_borderPercentage, _radius),
+      dashPattern: getPattern(ratio, _radius),
       strokeCap: StrokeCap.round,
       strokeWidth: _storeWidth,
       child: Container(
@@ -38,7 +49,7 @@ class StoreOfferPhoto extends StatelessWidget {
             borderRadius: BorderRadius.circular(1000),
           ),
           child: Image.asset(
-            'assets/images/1.jpg',
+            imagePath,
             // width: double.infinity,
             fit: BoxFit.cover,
           ),

@@ -15,8 +15,8 @@ class StoreProductsType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title ?? 'محل ملابس رياضية',
-      style: h4TextStyleInactive.copyWith(color: color),
+      title ?? 'لا يوجد وصف',
+      style: h4TextStyleInactive.copyWith(color: color, height: 1),
     );
   }
 }

@@ -39,8 +39,10 @@ class _AddWishListButtonState extends State<AddWishListButton> {
               setWishListName: setWishListName,
             ),
             onApply: () {
-              Provider.of<WishListsProvider>(context, listen: false)
-                  .addWishList(wishListName);
+              if (wishListName.isNotEmpty) {
+                Provider.of<WishListsProvider>(context, listen: false)
+                    .addWishList(wishListName);
+              }
               Navigator.pop(context);
             },
           ),

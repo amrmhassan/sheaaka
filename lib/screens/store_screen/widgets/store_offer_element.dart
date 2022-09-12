@@ -4,38 +4,41 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/screens/store_screen/widgets/store_offer_photo.dart';
 
-const double _margin = kHPad;
-
 class StoreOfferElement extends StatelessWidget {
-  final bool start;
-
+  final OfferModel offer;
   const StoreOfferElement({
     Key? key,
-    this.start = false,
+    required this.offer,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        left: _margin,
-        right: start ? _margin : 0,
-      ),
-      child: Column(
-        children: [
-          StoreOfferPhoto(),
-          VSpace(factor: .4),
-          Text(
-            'شيرت بولو',
-            style: h4TextStyle.copyWith(
-              height: 1,
-              fontWeight: FontWeight.w500,
+    return offer.endAt.isBefore(DateTime.now())
+        ? SizedBox()
+        : Container(
+            margin: EdgeInsets.only(
+              left: kHPad / 2,
             ),
-          ),
-        ],
-      ),
-    );
+            child: Column(
+              children: [
+                StoreOfferPhoto(
+                  imagePath: offer.imagePath,
+                  createdAt: offer.createdAt,
+                  endAt: offer.endAt,
+                ),
+                VSpace(factor: .4),
+                Text(
+                  offer.title,
+                  style: h4TextStyle.copyWith(
+                    height: 1,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 }

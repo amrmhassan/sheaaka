@@ -43,6 +43,7 @@ class TraderPhoto extends StatelessWidget {
         child: Image.asset(
           logoImagePath,
           fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
         ),
       ),
     );

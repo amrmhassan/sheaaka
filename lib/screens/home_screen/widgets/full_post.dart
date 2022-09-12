@@ -37,7 +37,11 @@ class FullPost extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, StoreScreen.routeName);
+                Navigator.pushNamed(
+                  context,
+                  StoreScreen.routeName,
+                  arguments: fullPostModel.store.id,
+                );
               },
               //? this will take the store logo and the store name
               child: PostHeader(
