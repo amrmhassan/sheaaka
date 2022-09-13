@@ -25,7 +25,7 @@ class TraderPhotoOnStorePost extends StatelessWidget {
           ),
           clipBehavior: Clip.hardEdge,
           child: Image.asset(
-            'assets/images/trader.jpg',
+            'assets/images/trader1.jpg',
             width: double.infinity,
             fit: BoxFit.cover,
           ),

@@ -31,7 +31,7 @@ class StoreFullPost extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  'assets/images/store.jpg',
+                  'assets/images/store1.jpg',
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),

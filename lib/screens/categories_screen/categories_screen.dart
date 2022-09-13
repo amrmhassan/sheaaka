@@ -50,18 +50,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
         CategoryItemsGrid(),
         VSpace(factor: .5),
-        PaddingWrapper(
-          child: ButtonWrapper(
-            backgroundColor: kPrimaryColor,
-            padding:
-                EdgeInsets.symmetric(horizontal: kHPad, vertical: kVPad / 2),
-            onTap: () {},
-            child: Text(
-              'عرض',
-              style: h3LiteTextStyle.copyWith(color: Colors.white),
-            ),
-          ),
-        ),
+        // PaddingWrapper(
+        //   child: ButtonWrapper(
+        //     backgroundColor: kPrimaryColor,
+        //     padding:
+        //         EdgeInsets.symmetric(horizontal: kHPad, vertical: kVPad / 2),
+        //     onTap: () {},
+        //     child: Text(
+        //       'عرض',
+        //       style: h3LiteTextStyle.copyWith(color: Colors.white),
+        //     ),
+        //   ),
+        // ),
         VSpace(),
         // GroupHeader(onTap: () {}, subTitle: 'subTitle', title: 'title'),
         // Expanded(

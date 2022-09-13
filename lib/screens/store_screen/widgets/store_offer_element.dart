@@ -16,9 +16,8 @@ class StoreOfferElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return offer.endAt.isBefore(DateTime.now())
-        ? SizedBox()
-        : Container(
+    return offer.active
+        ? Container(
             margin: EdgeInsets.only(
               left: kHPad / 2,
             ),
@@ -39,6 +38,7 @@ class StoreOfferElement extends StatelessWidget {
                 ),
               ],
             ),
-          );
+          )
+        : SizedBox();
   }
 }

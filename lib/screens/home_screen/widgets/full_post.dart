@@ -47,6 +47,9 @@ class FullPost extends StatelessWidget {
               child: PostHeader(
                 logoImagePath: fullPostModel.store.logoImagePath,
                 storeName: fullPostModel.store.name,
+                offersNumber: fullPostModel.store.offers
+                    .where((element) => element.active)
+                    .length,
               ),
             ),
             VSpace(factor: 0.5),

@@ -10,11 +10,13 @@ import 'package:project/screens/home_screen/widgets/trader_photo.dart';
 class PostHeader extends StatelessWidget {
   final String logoImagePath;
   final String storeName;
+  final int offersNumber;
 
   const PostHeader({
     Key? key,
     required this.logoImagePath,
     required this.storeName,
+    required this.offersNumber,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,10 @@ class PostHeader extends StatelessWidget {
     return PaddingWrapper(
       child: Row(
         children: [
-          TraderPhoto(logoImagePath: logoImagePath),
+          TraderPhoto(
+            logoImagePath: logoImagePath,
+            offersNumber: offersNumber,
+          ),
           HSpace(
             factor: 0.5,
           ),

@@ -47,6 +47,13 @@ List<StoreModel> stores = [
     name: 'محل تالت',
     logoImagePath: 'assets/images/trader3.jpg',
     followers: 60,
-    offers: [],
+    offers: [
+      OfferModel(
+        imagePath: 'assets/images/1.jpg',
+        title: 'عرض جامد',
+        createdAt: DateTime.parse("2022-09-10"),
+        endAt: DateTime.parse("2022-09-20"),
+      ),
+    ],
   ),
 ];

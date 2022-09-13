@@ -8,15 +8,18 @@ import 'package:project/utils/borders.dart';
 
 class TraderPhoto extends StatelessWidget {
   final String logoImagePath;
+  final int offersNumber;
   const TraderPhoto({
     Key? key,
     required this.logoImagePath,
+    required this.offersNumber,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
-      color: kPrimaryColor,
+      color:
+          offersNumber == 0 ? kSecondaryColor.withOpacity(.5) : kPrimaryColor,
       borderType: BorderType.Circle,
       strokeWidth: 2,
       padding: EdgeInsets.all(bigCirclePadding),
@@ -25,7 +28,7 @@ class TraderPhoto extends StatelessWidget {
       dashPattern: [
         getDashLength(
           gapLength,
-          nOfSections,
+          offersNumber,
           smallCircleRadius,
           bigCirclePadding,
         ),

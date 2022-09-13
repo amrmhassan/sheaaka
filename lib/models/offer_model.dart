@@ -3,11 +3,14 @@ class OfferModel {
   final String imagePath;
   final DateTime createdAt;
   final DateTime endAt;
+  late bool active;
 
-  const OfferModel({
+  OfferModel({
     required this.imagePath,
     required this.title,
     required this.createdAt,
     required this.endAt,
-  });
+  }) {
+    active = endAt.isAfter(DateTime.now());
+  }
 }
