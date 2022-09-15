@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/models/offer_model.dart';
 
 class StoreModel {
@@ -9,6 +10,7 @@ class StoreModel {
   final double? rating;
   final String? desc;
   final List<OfferModel> offers;
+  final LatLng location;
 
   const StoreModel({
     required this.id,
@@ -17,6 +19,7 @@ class StoreModel {
     required this.followers,
     required this.name,
     required this.offers,
+    required this.location,
     this.desc,
     this.rating,
   });

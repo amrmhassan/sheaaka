@@ -1,1 +1,1 @@
-# start transforming the whole project into the responsive design
+# make a function to create a mass of random data, stores, products, offers

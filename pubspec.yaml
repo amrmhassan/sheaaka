@@ -39,6 +39,10 @@ dependencies:
   dotted_border: ^2.0.0+2
   provider: ^6.0.3
   uuid: ^3.0.6
+  location: ^4.4.0
+  geocoding: ^2.0.5
+  geolocator: ^9.0.1
+  google_maps_flutter: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +69,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/images/fake/
     - assets/icons/catIcons/
     - assets/fonts/
 
