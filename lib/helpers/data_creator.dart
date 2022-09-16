@@ -85,7 +85,7 @@ class DataCreator {
     double latitude = Random().nextDouble() + 30;
     double longitude = Random().nextDouble() + 31;
     LatLng location = LatLng(latitude, longitude);
-    String desc = makeName(100);
+    String desc = makeName(10);
     double rating = Random().nextInt(4) + Random().nextDouble();
 
     return StoreModel(

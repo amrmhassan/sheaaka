@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/utils/general_utils.dart';
 
 class NOfFollowers extends StatelessWidget {
   final int num;
@@ -19,7 +20,7 @@ class NOfFollowers extends StatelessWidget {
         style: h4TextStyleInactive.copyWith(color: color),
         children: [
           TextSpan(
-            text: num.toString(),
+            text: lovesToString(num),
           ),
           TextSpan(text: ' '),
           TextSpan(

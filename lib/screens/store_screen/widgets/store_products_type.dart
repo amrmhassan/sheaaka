@@ -16,7 +16,10 @@ class StoreProductsType extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title ?? 'لا يوجد وصف',
-      style: h4TextStyleInactive.copyWith(color: color, height: 1),
+      style: h4TextStyleInactive.copyWith(
+        color: color,
+        height: 1,
+      ),
     );
   }
 }

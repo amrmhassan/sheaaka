@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/products_provider.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends StatelessWidget {
         HLine(),
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.only(bottom: kVPad / 2),
             physics: BouncingScrollPhysics(),
             itemCount: productsProvider.products.length,
             itemBuilder: (context, index) => FullPost(
@@ -34,7 +36,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        VSpace(factor: .5),
       ],
     );
   }

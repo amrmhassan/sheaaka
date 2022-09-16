@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 
 class TraderPhotoOnStorePost extends StatelessWidget {
+  final String logoPath;
   const TraderPhotoOnStorePost({
     Key? key,
+    required this.logoPath,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,7 @@ class TraderPhotoOnStorePost extends StatelessWidget {
           ),
           clipBehavior: Clip.hardEdge,
           child: Image.asset(
-            'assets/images/trader1.jpg',
+            logoPath,
             width: double.infinity,
             fit: BoxFit.cover,
           ),

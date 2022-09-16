@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/locations.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/n_of_followers.dart';
 import 'package:project/global/widgets/rating.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
+import 'package:project/models/store_model.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/store_distance.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/trader_photo_on_store_post.dart';
@@ -14,15 +16,11 @@ import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_products_type.dart';
 
 class StoreFullPost extends StatelessWidget {
-  // final String name;
-  // final String logoImagePath;
-  // final String coverImagePath;
-  // final double distance;
-  // final String desc;
-  // final String rating;
+  final StoreModel storeModel;
 
   const StoreFullPost({
     Key? key,
+    required this.storeModel,
   }) : super(key: key);
 
   @override
@@ -38,7 +36,7 @@ class StoreFullPost extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  'assets/images/store1.jpg',
+                  storeModel.coverImagePath,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -54,7 +52,7 @@ class StoreFullPost extends StatelessWidget {
                         children: [
                           VSpace(factor: .5),
                           Text(
-                            'نيو فاشون',
+                            storeModel.name,
                             style: h3TextStyle.copyWith(
                               color: Colors.white,
                             ),
@@ -63,14 +61,23 @@ class StoreFullPost extends StatelessWidget {
                             children: [
                               StoreProductsType(
                                 color: Colors.white,
-                                title: 'ملابس شباب',
+                                title: storeModel.desc,
                               ),
                               HSpace(),
-                              Rating(color: Colors.white),
-                              HSpace(),
-                              NOfFollowers(num: 5, color: Colors.white),
+                              Rating(
+                                color: Colors.white,
+                                rating: storeModel.rating,
+                              ),
                               Spacer(),
-                              StoreDistance(),
+                              NOfFollowers(
+                                num: storeModel.followers,
+                                color: Colors.white,
+                              ),
+                              HSpace(),
+                              StoreDistance(
+                                storeLocation: storeModel.location,
+                                currentLocation: myLocation,
+                              ),
                             ],
                           ),
                           VSpace(factor: .4),
@@ -79,7 +86,9 @@ class StoreFullPost extends StatelessWidget {
                     ),
                   ),
                 ),
-                TraderPhotoOnStorePost(),
+                TraderPhotoOnStorePost(
+                  logoPath: storeModel.logoImagePath,
+                ),
               ],
             ),
           ),
