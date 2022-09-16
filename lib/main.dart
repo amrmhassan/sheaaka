@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:project/helpers/data_creator.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    startTest();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => ProductsProvider()),

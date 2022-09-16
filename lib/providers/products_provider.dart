@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project/constants/fake_data/products.dart';
+import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
-  List<ProductModel> products = [...allProducts];
+  List<ProductModel> products = [...dc.fProducts];
 
 //? to toggle a product love
   void toggleFavProduct(String id) {
