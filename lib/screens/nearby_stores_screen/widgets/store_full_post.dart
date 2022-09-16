@@ -27,7 +27,8 @@ class StoreFullPost extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, StoreScreen.routeName);
+        Navigator.pushNamed(context, StoreScreen.routeName,
+            arguments: storeModel.id);
       },
       child: Column(
         children: [
