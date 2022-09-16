@@ -9,6 +9,7 @@ import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
 //? to create fast bool random
@@ -144,8 +145,42 @@ ProductModel makeProductModel(StoreModel store, [String? wishListId]) {
   );
 }
 
+//? to make a random wishlist model
+WishListModel makeWishListModel() {
+  String id = Uuid().v4();
+  String name = makeName(5);
+  DateTime createdAt = DateTime.now().subtract(Duration(days: r(50)));
+
+  return WishListModel(
+    id: id,
+    name: name,
+    createdAt: createdAt,
+  );
+}
+
 //? to test the above functions
 void startTest() {
-  StoreModel s = makeStoreModel();
-  List<ProductModel> p = List.generate(10, (index) => makeProductModel(s));
+  DateTime before = DateTime.now();
+  //? a list of 50 offers
+  List<OfferModel> offers = List.generate(
+    50,
+    (index) => makeStoreOffer(),
+  );
+  //? a list of 5 wishlist
+  List<WishListModel> wishlists = List.generate(
+    5,
+    (index) => makeWishListModel(),
+  );
+  //? a list of 50 store models
+  List<StoreModel> stores = List.generate(50, (index) => makeStoreModel());
+  //? a list of 200 products
+  List<ProductModel> products = List.generate(
+    200,
+    (i) => makeProductModel(
+      stores[r(stores.length)],
+      wishlists[r(wishlists.length)].id,
+    ),
+  );
+  DateTime after = DateTime.now();
+  Duration duration = after.difference(before);
 }
