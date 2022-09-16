@@ -8,6 +8,7 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/custom_icon_button.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/utils/bools.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/screens_utils/post_actions_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +59,7 @@ class PostActions extends StatelessWidget {
                             .toggleFavProduct(id);
                       }),
               Text(
-                lovesNumber.toString(),
+                lovesToString(lovesNumber),
                 textAlign: TextAlign.justify,
                 style: h4TextStyleInactive.copyWith(height: 1),
               )

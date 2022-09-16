@@ -8,6 +8,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
+import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/product_screen/widgets/add_to_cart_button.dart';
@@ -19,22 +20,27 @@ import 'package:project/screens/product_screen/widgets/product_size_color.dart';
 import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
-class ProductScreen extends StatelessWidget {
-  final int activeDot = 0;
-
+class ProductScreen extends StatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
   static const String routeName = '/product-screen';
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  int activeDot = 0;
+  void setActiveDot(int i) {
+    setState(() {
+      activeDot = i;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final productModelId = ModalRoute.of(context)!.settings.arguments as String;
     var productModel =
         Provider.of<ProductsProvider>(context).findProductById(productModelId);
-    var image = Image.asset(
-      productModel.imagesPath[0],
-      width: double.infinity,
-      fit: BoxFit.cover,
-    );
     return ScreensWrapper(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +53,9 @@ class ProductScreen extends StatelessWidget {
                   Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      image,
+                      FullPostImage(
+                          imagesPath: productModel.imagesPath,
+                          setActiveDot: setActiveDot),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

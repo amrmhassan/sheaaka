@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/utils/general_utils.dart';
 
 class Rating extends StatelessWidget {
   final Color? color;
@@ -19,7 +20,7 @@ class Rating extends StatelessWidget {
     return Row(
       children: [
         Text(
-          rating!.toStringAsFixed(1),
+          doubleToString(rating!, 1),
           style: h4LiteTextStyle.copyWith(color: color),
         ),
         Image.asset(

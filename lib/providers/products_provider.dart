@@ -12,8 +12,10 @@ class ProductsProvider extends ChangeNotifier {
     products.removeAt(index);
     if (product.favorite == null || product.favorite == false) {
       product.favorite = true;
+      product.lovesNumber += 1;
     } else {
       product.favorite = false;
+      product.lovesNumber -= 1;
     }
     products.insert(index, product);
     notifyListeners();
@@ -30,12 +32,6 @@ class ProductsProvider extends ChangeNotifier {
       product.wishListId = null;
     }
     products.insert(index, product);
-    // try {
-    //   print(products.firstWhere((element) => element.wishListId != null).name);
-    //   print(whishListId);
-    // } catch (e) {
-    //   print('error');
-    // }
 
     notifyListeners();
   }

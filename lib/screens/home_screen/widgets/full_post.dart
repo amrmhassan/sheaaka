@@ -26,7 +26,7 @@ class FullPost extends StatefulWidget {
 
 class _FullPostState extends State<FullPost> {
   int activeDot = 0;
-  void setActiveImage(int i) {
+  void setActiveDot(int i) {
     setState(() {
       activeDot = i;
     });
@@ -71,7 +71,7 @@ class _FullPostState extends State<FullPost> {
                 //? this will take the products images
                 FullPostImage(
                   imagesPath: widget.fullPostModel.imagesPath,
-                  setActiveDot: setActiveImage,
+                  setActiveDot: setActiveDot,
                 ),
                 //? this will take the offer bool and the offer end date
                 if (showOfferTimer())
