@@ -148,7 +148,7 @@ class DataCreator {
         Sizes.xl,
         Sizes.xxl,
       ],
-      offerEnd: offerEnd,
+      offerEnd: rb() ? null : offerEnd,
       oldPrice: oldPrice,
       wishListId: rb() ? wishListId : null,
     );

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
@@ -63,10 +64,10 @@ class FullPost extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 //? this will take the offer bool and the offer end date
-                OfferTimer(
-                  offerEndDate: fullPostModel.offerEnd,
-                  hasOffer: fullPostModel.hasOffer,
-                ),
+                if (showOfferTimer())
+                  OfferTimer(
+                    offerEndDate: fullPostModel.offerEnd,
+                  ),
               ],
             ),
             VSpace(factor: .3),
@@ -89,5 +90,17 @@ class FullPost extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool showOfferTimer() {
+    if (fullPostModel.hasOffer == null) {
+      return false;
+    } else if (fullPostModel.offerEnd == null) {
+      return false;
+    } else if (DateTime.now().isAfter(fullPostModel.offerEnd!)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

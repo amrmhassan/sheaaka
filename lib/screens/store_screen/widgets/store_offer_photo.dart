@@ -52,6 +52,8 @@ class StoreOfferPhoto extends StatelessWidget {
             imagePath,
             // width: double.infinity,
             fit: BoxFit.cover,
+            width: double.infinity,
+            alignment: Alignment.topCenter,
           ),
         ),
       ),

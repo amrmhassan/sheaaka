@@ -26,18 +26,15 @@ class HomeScreen extends StatelessWidget {
         VSpace(),
         HLine(),
         Expanded(
-          child: SingleChildScrollView(
+          child: ListView.builder(
             physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                ...productsProvider.products
-                    .map((product) => FullPost(fullPostModel: product))
-                    .toList(),
-                VSpace(factor: .5),
-              ],
+            itemCount: productsProvider.products.length,
+            itemBuilder: (context, index) => FullPost(
+              fullPostModel: productsProvider.products[index],
             ),
           ),
         ),
+        VSpace(factor: .5),
       ],
     );
   }

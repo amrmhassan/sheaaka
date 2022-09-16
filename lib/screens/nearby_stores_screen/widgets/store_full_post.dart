@@ -14,6 +14,13 @@ import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_products_type.dart';
 
 class StoreFullPost extends StatelessWidget {
+  // final String name;
+  // final String logoImagePath;
+  // final String coverImagePath;
+  // final double distance;
+  // final String desc;
+  // final String rating;
+
   const StoreFullPost({
     Key? key,
   }) : super(key: key);
