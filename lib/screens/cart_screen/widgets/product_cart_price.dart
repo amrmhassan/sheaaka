@@ -36,7 +36,7 @@ class ProductCartPrice extends StatelessWidget {
             ),
         children: [
           TextSpan(
-            text: price.toString(),
+            text: price.toStringAsFixed(2),
             style: textStyle.copyWith(
               color: color ?? (active ? kPrimaryColor : null),
               decoration: active ? null : TextDecoration.lineThrough,

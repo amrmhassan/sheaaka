@@ -19,7 +19,7 @@ class Rating extends StatelessWidget {
     return Row(
       children: [
         Text(
-          rating!.toStringAsFixed(2),
+          rating!.toStringAsFixed(1),
           style: h4LiteTextStyle.copyWith(color: color),
         ),
         Image.asset(

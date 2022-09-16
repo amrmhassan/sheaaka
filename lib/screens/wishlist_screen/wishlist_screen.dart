@@ -52,15 +52,13 @@ class WishlistScreen extends StatelessWidget {
                       ],
                     ),
                   )
-                : SingleChildScrollView(
+                : ListView.builder(
                     physics: BouncingScrollPhysics(),
-                    child: Column(
-                      children: activeWishListProducts
-                          .map((product) => HorizontalPost(product: product))
-                          .toList(),
-                    ),
+                    itemCount: activeWishListProducts.length,
+                    itemBuilder: (context, index) => HorizontalPost(
+                        product: activeWishListProducts.toList()[index]),
                   ),
-          )
+          ),
         ],
       ),
     );

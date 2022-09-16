@@ -8,6 +8,7 @@ import 'package:project/global/widgets/rating.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/wishlist_screen/widgets/brand.dart';
 import 'package:project/screens/wishlist_screen/widgets/h_post_desc.dart';
 import 'package:project/screens/wishlist_screen/widgets/h_post_info.dart';
@@ -22,7 +23,10 @@ class HorizontalPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, ProductScreen.routeName,
+            arguments: product.id);
+      },
       margin: EdgeInsets.only(bottom: kVPad),
       height: 130,
       backgroundColor: kLightColor.withOpacity(.3),
