@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
-import 'package:project/helpers/data_creator.dart';
-import 'package:project/providers/products_provider.dart';
-import 'package:project/utils/bools.dart';
-import 'package:provider/provider.dart';
+import 'package:project/utils/screens_utils/post_actions_utils.dart';
 
 class ProductScreenAppBar extends StatelessWidget {
   final bool? bookMark;
@@ -19,16 +14,7 @@ class ProductScreenAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppBar(
-      rightIcon: AppBarIcon(
-        color: boolifyNull(bookMark) ? kPrimaryColor : kBlackColor,
-        iconName: boolifyNull(bookMark) ? 'bookmark' : 'book-mark',
-        onTap: () {
-          Provider.of<ProductsProvider>(
-            context,
-            listen: false,
-          ).toggleWishListProduct(id, dc.fWishlists[0].id);
-        },
-      ),
+      rightIcon: handleShowBookMarkButtonAppBarIcon(context, id, bookMark),
     );
   }
 }

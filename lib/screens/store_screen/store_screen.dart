@@ -97,7 +97,7 @@ class StoreScreen extends StatelessWidget {
                 SizedBox(width: storeTitleHSpace),
               ],
             ),
-            StoreAllProductsGrid(),
+            StoreAllProductsGrid(storeId: storeId),
           ],
         ),
       ),

@@ -1,17 +1,25 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
+import 'package:project/models/product_model.dart';
+import 'package:project/providers/products_provider.dart';
+import 'package:project/screens/product_screen/product_screen.dart';
+import 'package:provider/provider.dart';
 
 class StoreAllProductsGrid extends StatelessWidget {
+  final String storeId;
   const StoreAllProductsGrid({
     Key? key,
+    required this.storeId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //! make the whole page to scroll and stop the grid from scrolling
     //! make the taps to float in the of the screen when reaching the top while scrolling
+
+    var productsProvider = Provider.of<ProductsProvider>(context);
+    List<ProductModel> storeProducts =
+        productsProvider.getStoreProducts(storeId);
     return GridView.count(
       // padding: EdgeInsets.symmetric(vertical: kVPad),
       physics: NeverScrollableScrollPhysics(),
@@ -22,17 +30,40 @@ class StoreAllProductsGrid extends StatelessWidget {
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       children: List.generate(
-        12,
-        (index) => Container(
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            // borderRadius: BorderRadius.circular(smallBorderRadius),
-            border: Border.all(
-              width: 1,
-              color: kSecondaryColor.withOpacity(.1),
-            ),
-          ),
+        storeProducts.length,
+        (index) => StoreProductCardSquare(
+          imagePath: storeProducts[index].imagesPath[0],
+          productId: storeProducts[index].id,
         ),
+      ),
+    );
+  }
+}
+
+class StoreProductCardSquare extends StatelessWidget {
+  final String productId;
+  final String imagePath;
+  const StoreProductCardSquare({
+    Key? key,
+    required this.productId,
+    required this.imagePath,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          ProductScreen.routeName,
+          arguments: productId,
+        );
+      },
+      child: Image.asset(
+        imagePath,
+        width: double.infinity,
+        alignment: Alignment.topCenter,
+        fit: BoxFit.cover,
       ),
     );
   }

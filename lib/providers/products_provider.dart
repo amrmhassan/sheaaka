@@ -22,7 +22,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
 //? to toggle a pro
-  void toggleWishListProduct(String id, String whishListId) {
+  void toggleWishListProduct(String id, [String? whishListId]) {
     int index = products.indexWhere((element) => element.id == id);
     ProductModel product = products[index];
     products.removeAt(index);
@@ -46,5 +46,10 @@ class ProductsProvider extends ChangeNotifier {
     return products
         .where((element) => element.wishListId == wishListId)
         .toList();
+  }
+
+  //? get store products
+  List<ProductModel> getStoreProducts(String storeId) {
+    return products.where((element) => element.store.id == storeId).toList();
   }
 }

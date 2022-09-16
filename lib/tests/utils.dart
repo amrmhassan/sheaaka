@@ -20,7 +20,4 @@ String doubleToString(double d, [int roundTo = 2]) {
   return s.join();
 }
 
-void main(List<String> args) {
-  String s = lovesToString(1049);
-  print(s);
-}
+void main(List<String> args) {}
