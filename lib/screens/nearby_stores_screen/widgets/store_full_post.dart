@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/locations.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/n_of_followers.dart';
@@ -17,10 +17,12 @@ import 'package:project/screens/store_screen/widgets/store_products_type.dart';
 
 class StoreFullPost extends StatelessWidget {
   final StoreModel storeModel;
+  final LatLng myLocation;
 
   const StoreFullPost({
     Key? key,
     required this.storeModel,
+    required this.myLocation,
   }) : super(key: key);
 
   @override

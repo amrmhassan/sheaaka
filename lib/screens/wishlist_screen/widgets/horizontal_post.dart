@@ -27,6 +27,7 @@ class HorizontalPost extends StatelessWidget {
         Navigator.pushNamed(context, ProductScreen.routeName,
             arguments: product.id);
       },
+      borderRadius: 0,
       margin: EdgeInsets.only(bottom: kVPad),
       height: 130,
       backgroundColor: kLightColor.withOpacity(.3),

@@ -57,7 +57,8 @@ class PostActions extends StatelessWidget {
                       onTap: () {
                         Provider.of<ProductsProvider>(context, listen: false)
                             .toggleFavProduct(id);
-                      }),
+                      },
+                    ),
               Text(
                 lovesToString(lovesNumber),
                 textAlign: TextAlign.justify,

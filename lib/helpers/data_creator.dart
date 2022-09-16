@@ -77,8 +77,9 @@ class DataCreator {
   StoreModel makeStoreModel() {
     String id = Uuid().v4();
     int imgNum = r(10) + 1;
+    int logoNum = r(10) + 1;
     String coverImagePath = 'assets/images/fake/store$imgNum.jpg';
-    String logoImagePath = 'assets/images/fake/trader$imgNum.jpg';
+    String logoImagePath = 'assets/images/fake/trader$logoNum.jpg';
     int followers = r(50000);
     String name = makeName(10);
     List<OfferModel> offers = List.generate(r(10), (index) => makeStoreOffer());
