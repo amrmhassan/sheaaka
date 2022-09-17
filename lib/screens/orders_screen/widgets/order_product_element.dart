@@ -95,7 +95,9 @@ class OrderProductElement extends StatelessWidget {
                       ProductCartQuantityControllerButton(
                           onTap: () {}, iconPath: 'assets/icons/minus1.png'),
                       Spacer(),
-                      DeleteProductFromCartButton(),
+                      DeleteProductFromCartButton(
+                        cartItemId: 'kj',
+                      ),
                     ],
                   ),
                 ],

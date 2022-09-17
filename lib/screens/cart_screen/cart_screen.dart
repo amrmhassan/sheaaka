@@ -38,41 +38,41 @@ class CartScreen extends StatelessWidget {
                         child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
-                            children: [
-                              ...cartProvider.cartItems.map(
-                                (element) {
-                                  bool last =
-                                      cartProvider.cartItems.first == element;
-                                  return CartProductWrapper(
-                                    cartItemModel: element,
-                                    showAfterSeparator: last,
-                                    cartItemId: element.id,
-                                  );
-                                },
-                              ),
-                              VSpace(),
-                            ],
+                            children: cartProvider.cartItems.map(
+                              (element) {
+                                // bool first =
+                                //     cartProvider.cartItems.first == element;
+                                return CartProductWrapper(
+                                  cartItemModel: element,
+                                  // showAfterSeparator: first,
+                                  cartItemId: element.id,
+                                );
+                              },
+                            ).toList(),
                           ),
                         ),
                       ),
-                      CartSummary(),
+                      if (cartProvider.getSelectedCartItems.isNotEmpty)
+                        CartSummary(),
                     ],
                   ),
                 )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'عربة التسوق فارغة',
-                          style: h4TextStyleInactive,
+              : Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'عربة التسوق فارغة',
+                            style: h4TextStyleInactive,
+                          ),
                         ),
                       ),
-                    ),
-                    Spacer(),
-                    Image.asset('assets/icons/shopping-cart.png')
-                  ],
+                      Spacer(),
+                      Image.asset('assets/icons/shopping-cart.png')
+                    ],
+                  ),
                 ),
         ],
       ),

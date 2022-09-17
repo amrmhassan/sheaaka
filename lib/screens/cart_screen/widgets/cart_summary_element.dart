@@ -11,7 +11,7 @@ class CartSummaryElement extends StatelessWidget {
   const CartSummaryElement({
     Key? key,
     this.title = 'السعر',
-    this.price = 149.99,
+    required this.price,
   }) : super(key: key);
 
   @override

@@ -6,7 +6,6 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/screens/categories_screen/widgets/category_customer_type_container.dart';
 import 'package:project/screens/orders_screen/widgets/order.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -27,8 +26,8 @@ class OrdersScreen extends StatelessWidget {
             ),
           ),
           VSpace(),
-          CategoryCustomerTypeContainer(),
-          VSpace(),
+          // CategoryCustomerTypeContainer(),
+          // VSpace(),
           Expanded(
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),

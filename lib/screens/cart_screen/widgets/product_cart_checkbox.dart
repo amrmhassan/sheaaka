@@ -7,10 +7,12 @@ import 'package:project/global/widgets/button_wrapper.dart';
 
 class ProductCartCheckBox extends StatelessWidget {
   final bool checked;
+  final VoidCallback? onTap;
 
   const ProductCartCheckBox({
     Key? key,
     this.checked = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class ProductCartCheckBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(smallBorderRadius),
         border: !checked ? Border.all(width: 2, color: kSecondaryColor) : null,
       ),
-      onTap: () {},
+      onTap: onTap,
       child: checked
           ? Image.asset(
               'assets/icons/check-mark.png',

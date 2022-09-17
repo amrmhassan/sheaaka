@@ -57,7 +57,29 @@ class CartProvider extends ChangeNotifier {
 
 //? toggle select cart item
   void toggleSelectCartItem(String cartItemId) {
-    print('this will toggle select cart item');
+    int index = cartItems.indexWhere((element) => element.id == cartItemId);
+    CartItemModel c = cartItems[index];
+    c.selected = !c.selected;
+    cartItems[index] = c;
+    notifyListeners();
+  }
+
+  //? delete cart item
+  void deleteCartItem(String cartItemId) {
+    cartItems.removeWhere((element) => element.id == cartItemId);
+    notifyListeners();
+  }
+
+  //? get the whole cart price(selected products only)
+  double getCartPrice() {
+    return cartItems.where((element) => element.selected).fold(
+        0,
+        (previousValue, element) =>
+            previousValue + element.productPrice * element.quantity);
+  }
+
+  List<CartItemModel> get getSelectedCartItems {
+    return cartItems.where((element) => element.selected).toList();
   }
 
   bool productAddedToCart(String productId) {

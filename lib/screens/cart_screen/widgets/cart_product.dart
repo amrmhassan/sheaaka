@@ -56,6 +56,10 @@ class CartProduct extends StatelessWidget {
                   Spacer(),
                   ProductCartCheckBox(
                     checked: selected,
+                    onTap: () {
+                      Provider.of<CartProvider>(context, listen: false)
+                          .toggleSelectCartItem(cartItemModel.id);
+                    },
                   ),
                 ],
               ),
@@ -65,7 +69,7 @@ class CartProduct extends StatelessWidget {
                 // textDirection: TextDirection.rtl,
                 children: [
                   ProductCartPrice(
-                    price: 144,
+                    price: cartItemModel.productPrice,
                   ),
                   HSpace(factor: 0.5),
                   Dot(),
@@ -104,7 +108,7 @@ class CartProduct extends StatelessWidget {
                     iconPath: 'assets/icons/minus1.png',
                   ),
                   Spacer(),
-                  DeleteProductFromCartButton(),
+                  DeleteProductFromCartButton(cartItemId: cartItemModel.id),
                 ],
               ),
             ],
