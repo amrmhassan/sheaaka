@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
 
 class ProductCartQuantity extends StatelessWidget {
-  const ProductCartQuantity({
-    Key? key,
-  }) : super(key: key);
+  final int quantity;
+  const ProductCartQuantity({Key? key, required this.quantity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '2',
+      quantity.toString(),
       style: h3TextStyle,
     );
   }

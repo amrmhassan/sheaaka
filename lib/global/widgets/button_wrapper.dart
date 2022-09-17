@@ -5,7 +5,8 @@ class ButtonWrapper extends StatelessWidget {
   final double? width;
   final double? height;
   final Widget? child;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final Color? backgroundColor;
   final double borderRadius;
   final EdgeInsets? padding;
@@ -18,7 +19,8 @@ class ButtonWrapper extends StatelessWidget {
 
   const ButtonWrapper({
     Key? key,
-    required this.onTap,
+    this.onTap,
+    this.onLongPress,
     required this.child,
     this.width,
     this.height,
@@ -47,6 +49,7 @@ class ButtonWrapper extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          onLongPress: onLongPress,
           onTap: active ? onTap : null,
           child: Container(
             alignment: Alignment.center,

@@ -5,6 +5,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/dot.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/cart_screen/widgets/cart_products_separator.dart';
 import 'package:project/screens/cart_screen/widgets/delete_product_from_cart_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_color.dart';
@@ -35,6 +36,7 @@ class OrderProductElement extends StatelessWidget {
           // textDirection: TextDirection.rtl,
           children: [
             ProductCartImage(
+              imagePath: 'assets/images/1.jpg',
               onTap: () {
                 Navigator.pushNamed(context, TrackOrderScreen.routeName);
               },
@@ -48,7 +50,9 @@ class OrderProductElement extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ProductCartName(),
+                      ProductCartName(
+                        name: 'testing name',
+                      ),
                       Spacer(),
                       Text(
                         storeName,
@@ -67,24 +71,29 @@ class OrderProductElement extends StatelessWidget {
                       HSpace(factor: 0.5),
                       Dot(),
                       HSpace(factor: 0.5),
-                      ProductCartSize(),
+                      ProductCartSize(
+                        size: Sizes.m,
+                      ),
                       HSpace(factor: 0.5),
                       Dot(),
                       HSpace(factor: 0.5),
-                      ProductCartColor(),
+                      ProductCartColor(
+                        color: Colors.blue,
+                      ),
                     ],
                   ),
                   VSpace(),
                   Row(
                     children: [
                       ProductCartQuantityControllerButton(
+                        onTap: () {},
                         iconPath: 'assets/icons/plus.png',
                       ),
                       HSpace(),
-                      ProductCartQuantity(),
+                      ProductCartQuantity(quantity: 1),
                       HSpace(),
                       ProductCartQuantityControllerButton(
-                          iconPath: 'assets/icons/minus1.png'),
+                          onTap: () {}, iconPath: 'assets/icons/minus1.png'),
                       Spacer(),
                       DeleteProductFromCartButton(),
                     ],

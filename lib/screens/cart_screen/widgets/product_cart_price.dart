@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/tests/utils.dart';
 
 class ProductCartPrice extends StatelessWidget {
   final FontWeight? fontWeight;
@@ -36,7 +37,7 @@ class ProductCartPrice extends StatelessWidget {
             ),
         children: [
           TextSpan(
-            text: price.toStringAsFixed(2),
+            text: doubleToString(price),
             style: textStyle.copyWith(
               color: color ?? (active ? kPrimaryColor : null),
               decoration: active ? null : TextDecoration.lineThrough,

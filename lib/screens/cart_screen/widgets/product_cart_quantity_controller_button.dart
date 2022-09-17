@@ -7,9 +7,12 @@ import 'package:project/global/widgets/button_wrapper.dart';
 
 class ProductCartQuantityControllerButton extends StatelessWidget {
   final String iconPath;
+  final VoidCallback onTap;
+
   const ProductCartQuantityControllerButton({
     Key? key,
     required this.iconPath,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -20,7 +23,7 @@ class ProductCartQuantityControllerButton extends StatelessWidget {
       borderRadius: 100,
       padding: EdgeInsets.all(mediumPadding),
       backgroundColor: kSecondaryColor.withOpacity(0.1),
-      onTap: () {},
+      onTap: onTap,
       child: Image.asset(
         iconPath,
         color: kBlackColor,

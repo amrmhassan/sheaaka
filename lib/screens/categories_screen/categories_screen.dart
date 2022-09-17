@@ -40,7 +40,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         VSpace(),
         GroupHeader(
           title: 'الفئات',
-          subTitle: 'الكل',
+          subTitle: 'إضافة',
           onTap: () {},
         ),
         CategoryItemsGrid(),

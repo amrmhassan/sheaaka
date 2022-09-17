@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:project/global/widgets/dot.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/cart_item_model.dart';
+import 'package:project/providers/cart_provider.dart';
 import 'package:project/screens/cart_screen/widgets/delete_product_from_cart_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_color.dart';
@@ -14,13 +16,17 @@ import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_quantity.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_quantity_controller_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_size.dart';
+import 'package:project/screens/product_screen/product_screen.dart';
+import 'package:provider/provider.dart';
 
 class CartProduct extends StatelessWidget {
   final bool selected;
+  final CartItemModel cartItemModel;
 
   const CartProduct({
     Key? key,
     this.selected = true,
+    required this.cartItemModel,
   }) : super(key: key);
 
   @override
@@ -29,7 +35,13 @@ class CartProduct extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       // textDirection: TextDirection.rtl,
       children: [
-        ProductCartImage(),
+        ProductCartImage(
+          imagePath: cartItemModel.productImage,
+          onTap: () {
+            Navigator.pushNamed(context, ProductScreen.routeName,
+                arguments: cartItemModel.productId);
+          },
+        ),
         HSpace(),
         Expanded(
           child: Column(
@@ -38,7 +50,9 @@ class CartProduct extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ProductCartName(),
+                  ProductCartName(
+                    name: cartItemModel.productName,
+                  ),
                   Spacer(),
                   ProductCartCheckBox(
                     checked: selected,
@@ -56,23 +70,39 @@ class CartProduct extends StatelessWidget {
                   HSpace(factor: 0.5),
                   Dot(),
                   HSpace(factor: 0.5),
-                  ProductCartSize(),
+                  ProductCartSize(
+                    size: cartItemModel.size,
+                  ),
                   HSpace(factor: 0.5),
                   Dot(),
                   HSpace(factor: 0.5),
-                  ProductCartColor(),
+                  ProductCartColor(
+                    color: cartItemModel.color,
+                  ),
                 ],
               ),
               VSpace(),
               Row(
                 children: [
                   ProductCartQuantityControllerButton(
-                      iconPath: 'assets/icons/plus.png'),
+                    onTap: () {
+                      Provider.of<CartProvider>(context, listen: false)
+                          .cartItemIncreaseQuantity(cartItemModel.id);
+                    },
+                    iconPath: 'assets/icons/plus.png',
+                  ),
                   HSpace(),
-                  ProductCartQuantity(),
+                  ProductCartQuantity(
+                    quantity: cartItemModel.quantity,
+                  ),
                   HSpace(),
                   ProductCartQuantityControllerButton(
-                      iconPath: 'assets/icons/minus1.png'),
+                    onTap: () {
+                      Provider.of<CartProvider>(context, listen: false)
+                          .cartItemDecreaseQuantity(cartItemModel.id);
+                    },
+                    iconPath: 'assets/icons/minus1.png',
+                  ),
                   Spacer(),
                   DeleteProductFromCartButton(),
                 ],

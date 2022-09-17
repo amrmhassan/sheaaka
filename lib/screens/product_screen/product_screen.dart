@@ -6,6 +6,7 @@ import 'package:project/global/widgets/free_colored_space.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
@@ -30,6 +31,8 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   int activeDot = 0;
+  // int? activeSizeIndex = 0;
+  // int? activeColorIndex = 0;
   void setActiveDot(int i) {
     setState(() {
       activeDot = i;
@@ -41,6 +44,9 @@ class _ProductScreenState extends State<ProductScreen> {
     final productModelId = ModalRoute.of(context)!.settings.arguments as String;
     var productModel =
         Provider.of<ProductsProvider>(context).findProductById(productModelId);
+
+    var cartProvider = Provider.of<CartProvider>(context);
+    bool addedToCart = cartProvider.productAddedToCart(productModelId);
     return ScreensWrapper(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +131,10 @@ class _ProductScreenState extends State<ProductScreen> {
             child: Row(
               children: [
                 AddToCartButton(
-                  active: addToCartActiveButton(productModel.remainingNumber),
+                  productModel: productModel,
+                  active: addToCartActiveButton(productModel.remainingNumber) &&
+                      !addedToCart,
+                  title: addedToCart ? 'موجود في السلة' : null,
                 ),
                 HSpace(factor: .5),
                 OpenProductCommentsButton(),

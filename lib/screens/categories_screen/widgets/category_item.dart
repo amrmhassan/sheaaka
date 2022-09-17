@@ -8,13 +8,13 @@ import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 
 class CategoryItem extends StatelessWidget {
-  final String iconName;
+  final String iconPath;
   final VoidCallback? onTap;
   final String title;
 
   const CategoryItem({
     Key? key,
-    required this.iconName,
+    required this.iconPath,
     this.onTap,
     required this.title,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class CategoryItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Image.asset('assets/icons/catIcons/$iconName.png'),
+          Image.asset(iconPath),
           HSpace(factor: .7),
           Text(
             title,

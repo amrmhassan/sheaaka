@@ -7,6 +7,8 @@ import 'package:uuid/uuid.dart';
 
 class WishListsProvider extends ChangeNotifier {
   List<WishListModel> wishLists = [...dc.fWishlists];
+  // List<WishListItemModel> wishlistItems = [];
+
   String activeWishListId = dc.fWishlists[0].id;
 
 //? for adding a new wishlist
@@ -26,4 +28,19 @@ class WishListsProvider extends ChangeNotifier {
     activeWishListId = id;
     notifyListeners();
   }
+
+  // // for adding a new wishlist item
+  // void addWishlistItem(String productId, String wishListId) {
+  //   String id = Uuid().v4();
+  //   DateTime createdAt = DateTime.now();
+  //   wishlistItems.add(
+  //     WishListItemModel(
+  //       id: id,
+  //       createdAt: createdAt,
+  //       productId: productId,
+  //       wishListId: wishListId,
+  //     ),
+  //   );
+  //   notifyListeners();
+  // }
 }

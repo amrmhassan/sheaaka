@@ -1,1 +1,1 @@
-# make a function to create a mass of random data, stores, products, offers
+# create a wishlist item(product id, wishlist id, create at , id, )

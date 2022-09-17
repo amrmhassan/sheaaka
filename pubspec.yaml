@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^9.0.1
   google_maps_flutter: ^2.2.0
   carousel_slider: ^4.1.1
+  palette_generator: ^0.3.3+2
 
 dev_dependencies:
   flutter_test:

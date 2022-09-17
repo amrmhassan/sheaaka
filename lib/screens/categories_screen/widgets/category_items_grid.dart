@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/screens/categories_screen/widgets/category_item.dart';
 
@@ -21,40 +22,9 @@ class CategoryItemsGrid extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 2.9,
         ),
-        children: [
-          CategoryItem(
-            iconName: 'shirt',
-            title: 'تيشيرت',
-          ),
-          CategoryItem(
-            iconName: 'polo-shirt',
-            title: 'بولو',
-          ),
-          CategoryItem(
-            iconName: 'trousers',
-            title: 'شروال',
-          ),
-          CategoryItem(
-            iconName: 'jeans',
-            title: 'جينز',
-          ),
-          CategoryItem(
-            iconName: 'cloth',
-            title: 'قميص',
-          ),
-          CategoryItem(
-            iconName: 'shorts',
-            title: 'شورت',
-          ),
-          CategoryItem(
-            iconName: 'socks',
-            title: 'جوارب',
-          ),
-          CategoryItem(
-            iconName: 'baseball-cap',
-            title: 'قبعة',
-          ),
-        ],
+        children: categories
+            .map((e) => CategoryItem(iconPath: e.icon, title: e.title))
+            .toList(),
       ),
     );
   }

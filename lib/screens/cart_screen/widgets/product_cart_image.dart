@@ -6,9 +6,11 @@ import 'package:project/global/widgets/button_wrapper.dart';
 
 class ProductCartImage extends StatelessWidget {
   final VoidCallback? onTap;
+  final String imagePath;
   const ProductCartImage({
     Key? key,
     this.onTap,
+    required this.imagePath,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class ProductCartImage extends StatelessWidget {
     return Stack(
       children: [
         Image.asset(
-          'assets/images/1.jpg',
+          imagePath,
           width: 130,
           height: 130,
           alignment: Alignment.topCenter,
