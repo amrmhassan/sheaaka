@@ -12,10 +12,10 @@ import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
-const int storesNumber = 10;
-const int productsNumber = 10;
-const int wishlistsNumber = 5;
-const int offersNumber = 2;
+int storesNumber = 10;
+int productsNumber = 10;
+int wishlistsNumber = 5;
+int offersNumber = 2;
 
 class DataCreator {
   List<ProductModel> fProducts = [];

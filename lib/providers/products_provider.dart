@@ -3,6 +3,11 @@ import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
+  void refresh() {
+    products = [...dc.fProducts];
+    notifyListeners();
+  }
+
   List<ProductModel> products = [...dc.fProducts];
 
 //? to get the home products after applying its filters

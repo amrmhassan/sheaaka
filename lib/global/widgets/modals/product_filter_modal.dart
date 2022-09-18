@@ -36,7 +36,7 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
+        OnlyOffersFilter(
           onTap: () {
             Provider.of<ProductsProvider>(context, listen: false)
                 .toggleOnlyOffers();
@@ -44,21 +44,7 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
               onlyOffersLocal = !onlyOffersLocal;
             });
           },
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'عروض فقط',
-                    style: h2TextStyle,
-                  ),
-                  Spacer(),
-                  ProductCartCheckBox(checked: onlyOffersLocal, onTap: () {}),
-                ],
-              ),
-              VSpace(factor: .5),
-            ],
-          ),
+          onlyOffersLocal: onlyOffersLocal,
         ),
         HLine(),
         VSpace(factor: .5),
@@ -70,6 +56,41 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
         VSpace(),
         ChooseProductType(),
       ],
+    );
+  }
+}
+
+class OnlyOffersFilter extends StatelessWidget {
+  final VoidCallback onTap;
+  final bool onlyOffersLocal;
+  const OnlyOffersFilter({
+    super.key,
+    required this.onTap,
+    required this.onlyOffersLocal,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  'عروض فقط',
+                  style: h2TextStyle,
+                ),
+                Spacer(),
+                ProductCartCheckBox(checked: onlyOffersLocal),
+              ],
+            ),
+            VSpace(factor: .5),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,11 @@ import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/store_model.dart';
 
 class StoreProvider extends ChangeNotifier {
+  void refresh() {
+    stores = [...dc.fStores];
+    notifyListeners();
+  }
+
   List<StoreModel> stores = [...dc.fStores];
 
   StoreModel getStoreById(String id) {

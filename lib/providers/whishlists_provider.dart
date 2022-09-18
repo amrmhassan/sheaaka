@@ -6,6 +6,12 @@ import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
 class WishListsProvider extends ChangeNotifier {
+  void refresh() {
+    wishLists = [...dc.fWishlists];
+    activeWishListId = wishLists[0].id;
+    notifyListeners();
+  }
+
   List<WishListModel> wishLists = [...dc.fWishlists];
   // List<WishListItemModel> wishlistItems = [];
 

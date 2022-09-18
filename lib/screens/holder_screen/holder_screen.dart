@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
+import 'package:project/screens/holder_screen/widgets/random_creator_cheats_open.dart';
 
 class HolderScreen extends StatefulWidget {
   const HolderScreen({Key? key}) : super(key: key);
@@ -69,16 +72,21 @@ class _HolderScreenState extends State<HolderScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: Column(
+      child: Stack(
         children: [
-          appBarGenerator(),
-          Expanded(
-            child: navBarIconsList[activeIndex].widget,
+          Column(
+            children: [
+              appBarGenerator(),
+              Expanded(
+                child: navBarIconsList[activeIndex].widget,
+              ),
+              NavBar(
+                activeIndex: activeIndex,
+                setActiveIndex: setActiveIndex,
+              ),
+            ],
           ),
-          NavBar(
-            activeIndex: activeIndex,
-            setActiveIndex: setActiveIndex,
-          ),
+          if (allowRandomCreatorCheats) RandomCreatorCheatOpen(),
         ],
       ),
     );
