@@ -12,6 +12,11 @@ import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
+const int storesNumber = 10;
+const int productsNumber = 10;
+const int wishlistsNumber = 5;
+const int offersNumber = 2;
+
 class DataCreator {
   List<ProductModel> fProducts = [];
   List<StoreModel> fStores = [];
@@ -190,17 +195,17 @@ class DataCreator {
   }
 
   void createData() {
-    //? creating 50 stores
-    fStores = List.generate(50, (index) => makeStoreModel());
-    //? make 200 products
+    //? creating stores
+    fStores = List.generate(storesNumber, (index) => makeStoreModel());
+    //? make products
     fProducts = List.generate(
-      200,
+      productsNumber,
       (index) => makeProductModel(
         fStores[r(fStores.length)],
       ),
     );
-    //? making 50 offers and add them to products and stores
-    fOffers = List.generate(200, (index) {
+    //? making offers and add them to products and stores
+    fOffers = List.generate(offersNumber, (index) {
       ProductModel rp = fProducts[r(fProducts.length)];
       OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
       addOfferToProduct(offer.id, rp.id, offer.endAt);
@@ -209,7 +214,7 @@ class DataCreator {
     });
 
     //? making 5 wishlist
-    fWishlists = List.generate(5, (index) {
+    fWishlists = List.generate(wishlistsNumber, (index) {
       WishListModel w = makeWishListModel();
 
       return w;

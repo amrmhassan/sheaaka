@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
+    var homeProducts = productsProvider.homeProducts;
     return Column(
       children: [
         VSpace(),
@@ -30,9 +31,9 @@ class HomeScreen extends StatelessWidget {
           child: ListView.builder(
             padding: EdgeInsets.only(bottom: kVPad / 2),
             physics: BouncingScrollPhysics(),
-            itemCount: productsProvider.products.length,
+            itemCount: homeProducts.length,
             itemBuilder: (context, index) => FullPost(
-              fullPostModel: productsProvider.products[index],
+              fullPostModel: homeProducts[index],
             ),
           ),
         ),

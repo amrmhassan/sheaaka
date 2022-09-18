@@ -5,6 +5,29 @@ import 'package:project/models/product_model.dart';
 class ProductsProvider extends ChangeNotifier {
   List<ProductModel> products = [...dc.fProducts];
 
+//? to get the home products after applying its filters
+  List<ProductModel> get homeProducts {
+    if (onlyOffers) {
+      return products
+          .where((element) =>
+              element.offerEnd != null &&
+              element.offerEnd!.isAfter(DateTime.now()))
+          .toList();
+    }
+    return [...products];
+  }
+
+//@ only offers filter
+  bool onlyOffers = false;
+  void toggleOnlyOffers() {
+    onlyOffers = !onlyOffers;
+  }
+
+  //@ applying filters
+  void applyHomeFilters() {
+    notifyListeners();
+  }
+
 //? to toggle a product love
   void toggleFavProduct(String id) {
     int index = products.indexWhere((element) => element.id == id);

@@ -16,14 +16,14 @@ class ChooseProductType extends StatelessWidget {
         child: Row(
           children: [
             ProductTypeElement(
+              title: 'شبابي',
+            ),
+            ProductTypeElement(
               active: true,
               title: 'رجالي',
             ),
             ProductTypeElement(
               title: 'حريمي',
-            ),
-            ProductTypeElement(
-              title: 'أطفالي',
             ),
             ProductTypeElement(
               title: 'أطفالي',

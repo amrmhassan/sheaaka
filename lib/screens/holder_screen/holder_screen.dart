@@ -27,7 +27,12 @@ class _HolderScreenState extends State<HolderScreen> {
 
 //? this will change the appbar of the holder screen according to the current active nav bar index
   Widget appBarGenerator() {
-    if (activeIndex == 1) {
+    if (activeIndex == 0) {
+      return CustomAppBar(
+        title: 'شياكة',
+        home: true,
+      );
+    } else if (activeIndex == 1) {
       return CustomAppBar(
         home: true,
         title: 'التصنيفات',

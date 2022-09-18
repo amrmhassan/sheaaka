@@ -48,7 +48,12 @@ class ModalWrapper extends StatelessWidget {
           child,
           VSpace(factor: 2),
           if (showApplyModalButton)
-            ApplyModalButton(onTap: onApply, title: applyButtonTitle),
+            ApplyModalButton(
+                onTap: () {
+                  onApply();
+                  Navigator.pop(context);
+                },
+                title: applyButtonTitle),
           if (showApplyModalButton) VSpace(factor: 2),
         ],
       ),

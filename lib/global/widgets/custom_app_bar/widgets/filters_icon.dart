@@ -6,6 +6,8 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/modals/product_filter_modal.dart';
+import 'package:project/providers/products_provider.dart';
+import 'package:provider/provider.dart';
 
 class FiltersIcon extends StatelessWidget {
   const FiltersIcon({
@@ -21,7 +23,10 @@ class FiltersIcon extends StatelessWidget {
           context: context,
           builder: (context) => ModalWrapper(
             applyButtonTitle: 'تطبيق الفلتر',
-            onApply: () {},
+            onApply: () {
+              Provider.of<ProductsProvider>(context, listen: false)
+                  .applyHomeFilters();
+            },
             child: ProductFiltersModal(),
           ),
         );
