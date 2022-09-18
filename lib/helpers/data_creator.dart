@@ -21,17 +21,17 @@ class DataCreator {
   DataCreator() {
     createData();
   }
-//? to create fast bool random
+  //? to create fast bool random
   bool rb() {
     return Random().nextBool();
   }
 
-//? to create random int
+  //? to create random int
   int r(int l) {
     return Random().nextInt(l);
   }
 
-//? to create random names in arabic with length
+  //? to create random names in arabic with length
   String makeName(int length) {
     String l = 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي';
     List<String> letters = l.split('');
@@ -43,7 +43,12 @@ class DataCreator {
     return n.join();
   }
 
-//? to create random names in english with length
+  //? get random number of a list
+  List<dynamic> getRandomList(List<dynamic> list, int n) {
+    return List.generate(n, (index) => list[r(list.length)]);
+  }
+
+  //? to create random names in english with length
   String makeEnglishName(int length) {
     String l = 'abcdefghijklmnopqrstuvwxyz';
     List<String> letters = l.split('');
@@ -55,12 +60,9 @@ class DataCreator {
     return n.join();
   }
 
-//? to create random store offer model
-  OfferModel makeStoreOffer() {
+  //? to create random store offer model
+  OfferModel makeStoreOffer(String imagePath, String title) {
     String id = Uuid().v4();
-    int imgNum = r(10) + 1;
-    String imagePath = 'assets/images/fake/$imgNum.jpg';
-    String title = makeName(5);
     DateTime createdAt = DateTime.now().subtract(Duration(days: r(10)));
     DateTime endAt = createdAt.add(Duration(days: r(5)));
 
@@ -73,7 +75,7 @@ class DataCreator {
     );
   }
 
-//? to create random store model
+  //? to create random store model
   StoreModel makeStoreModel() {
     String id = Uuid().v4();
     int imgNum = r(10) + 1;
@@ -82,7 +84,6 @@ class DataCreator {
     String logoImagePath = 'assets/images/fake/trader$logoNum.jpg';
     int followers = r(50000);
     String name = makeName(10);
-    List<OfferModel> offers = List.generate(r(10), (index) => makeStoreOffer());
     double latitude = Random().nextDouble() + 30;
     double longitude = Random().nextDouble() + 31;
     LatLng location = LatLng(latitude, longitude);
@@ -95,15 +96,22 @@ class DataCreator {
       logoImagePath: logoImagePath,
       followers: followers,
       name: name,
-      offers: offers,
+      offers: [],
       location: location,
       desc: desc,
       rating: rating,
     );
   }
 
-//? to create random product model
-  ProductModel makeProductModel(StoreModel store, [String? wishListId]) {
+  void addOfferToStore(OfferModel offer, String storeId) {
+    int i = fStores.indexWhere((element) => element.id == storeId);
+    var s = fStores[i];
+    s.offers.add(offer);
+    fStores[i] = s;
+  }
+
+  //? to create random product model
+  ProductModel makeProductModel(StoreModel store) {
     String id = Uuid().v4();
     String name = makeName(6);
     DateTime createdAt = DateTime.now().subtract(Duration(days: r(50)));
@@ -124,7 +132,6 @@ class DataCreator {
       (index) =>
           Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
     );
-    DateTime offerEnd = DateTime.now().add(Duration(days: r(10)));
     double oldPrice = Random().nextDouble() + Random().nextInt(200);
 
     return ProductModel(
@@ -149,13 +156,13 @@ class DataCreator {
         Sizes.xl,
         Sizes.xxl,
       ],
-      offerEnd: rb() ? null : offerEnd,
+      offerEnd: null,
       oldPrice: oldPrice,
-      wishListId: rb() ? wishListId : null,
+      wishListId: null,
     );
   }
 
-//? to make a random wishlist model
+  //? to make a random wishlist model
   WishListModel makeWishListModel() {
     String id = Uuid().v4();
     String name = makeName(5);
@@ -168,28 +175,88 @@ class DataCreator {
     );
   }
 
+  void addOfferToProduct(String offerId, String productId, DateTime endAt) {
+    int i = fProducts.indexWhere((element) => element.id == productId);
+    ProductModel p = fProducts[i];
+    p.offerEnd = endAt;
+    fProducts[i] = p;
+  }
+
+  void addProductToWishList(String wishListId, String productId) {
+    int i = fProducts.indexWhere((element) => element.id == productId);
+    ProductModel p = fProducts[i];
+    p.wishListId = wishListId;
+    fProducts[i] = p;
+  }
+
   void createData() {
-//? a list of 50 offers
-    fOffers = List.generate(
-      50,
-      (index) => makeStoreOffer(),
-    );
-//? a list of 5 wishlist
-    fWishlists = List.generate(
-      5,
-      (index) => makeWishListModel(),
-    );
-//? a list of 50 store models
+    //? creating 50 stores
     fStores = List.generate(50, (index) => makeStoreModel());
-//? a list of 200 products
+    //? make 200 products
     fProducts = List.generate(
       200,
-      (i) => makeProductModel(
+      (index) => makeProductModel(
         fStores[r(fStores.length)],
-        fWishlists[r(fWishlists.length)].id,
       ),
     );
+    //? making 50 offers and add them to products and stores
+    fOffers = List.generate(200, (index) {
+      ProductModel rp = fProducts[r(fProducts.length)];
+      OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
+      addOfferToProduct(offer.id, rp.id, offer.endAt);
+      addOfferToStore(offer, rp.store.id);
+      return offer;
+    });
+
+    //? making 5 wishlist
+    fWishlists = List.generate(5, (index) {
+      WishListModel w = makeWishListModel();
+
+      return w;
+    });
+
+    for (var i = 0; i < 100; i++) {
+      if (rb()) {
+        ProductModel p = fProducts[r(fProducts.length)];
+        WishListModel w = fWishlists[r(fWishlists.length)];
+        addProductToWishList(w.id, p.id);
+      }
+    }
   }
 }
 
 DataCreator dc = DataCreator();
+
+// //? a list of 50 offers
+// fOffers = List.generate(
+//   50,
+//   (index) => makeStoreOffer(),
+// );
+
+// //? a list of 5 wishlist
+// fWishlists = List.generate(
+//   2,
+//   (index) => makeWishListModel(),
+// );
+
+// //? a list of 50 store models
+
+// fStores = List.generate(
+//   5,
+//   (index) => makeStoreModel(
+//     rb() ? getRandomList(fOffers, r(20)) as List<OfferModel> : [],
+//   ),
+// );
+
+// //? a list of 10 products
+// fProducts = List.generate(
+//   10,
+//   (i) {
+//     int random = r(fStores.length);
+//     return makeProductModel(
+//       fStores[random],
+//       fOffers[random].createdAt,
+//       fWishlists[r(fWishlists.length)].id,
+//     );
+//   },
+// );
