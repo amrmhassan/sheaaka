@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
+import 'package:project/screens/search_screen/search_screen.dart';
 import 'package:provider/provider.dart';
 
 //? this screen will have the newest products, offers , ads etc...
@@ -24,7 +26,12 @@ class HomeScreen extends StatelessWidget {
     return Column(
       children: [
         VSpace(),
-        OpenSearchBox(),
+        OpenSearchBox(
+          onTap: () {
+            Navigator.pushNamed(context, SearchScreen.routeName,
+                arguments: SearchTypes.product);
+          },
+        ),
         VSpace(),
         HLine(),
         Expanded(

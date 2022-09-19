@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/products_search_provider.dart';
@@ -21,23 +22,27 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   String searchQuery = '';
-  void startSearch(String value) {
+  void startSearch(String value, SearchTypes searchType) {
     if (value.isNotEmpty) {
-      Provider.of<ProductsSearchProvider>(
-        context,
-        listen: false,
-      ).applySearch(value);
+      if (searchType == SearchTypes.product) {
+        Provider.of<ProductsSearchProvider>(
+          context,
+          listen: false,
+        ).applySearch(value);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    SearchTypes searchType =
+        ModalRoute.of(context)!.settings.arguments! as SearchTypes;
     return ScreensWrapper(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchBox(
-            startSearch: startSearch,
+            startSearch: () => startSearch(searchQuery, searchType),
             updateSearchQuery: (value) {
               setState(() {
                 searchQuery = value;
@@ -51,7 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 Expanded(
                   child: StartSearchButton(
-                    onTap: () => startSearch(searchQuery),
+                    onTap: () => startSearch(searchQuery, searchType),
                     searchQuery: searchQuery,
                   ),
                 ),

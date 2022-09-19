@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/screens/search_screen/search_screen.dart';
 
 class OpenSearchBox extends StatelessWidget {
+  final VoidCallback onTap;
   const OpenSearchBox({
     Key? key,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, SearchScreen.routeName);
-      },
+      onTap: onTap,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: kHPad * 2),
         height: 45,

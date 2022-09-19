@@ -10,7 +10,7 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class SearchBox extends StatelessWidget {
-  final Function(String value) startSearch;
+  final VoidCallback startSearch;
   final Function(String value) updateSearchQuery;
   const SearchBox({
     Key? key,
@@ -51,7 +51,7 @@ class SearchBox extends StatelessWidget {
               },
               keyboardType: TextInputType.url,
               autofocus: true,
-              onSubmitted: startSearch,
+              onSubmitted: (v) => startSearch(),
               decoration: InputDecoration(
                 hintText: 'قم بالبحث هنا...',
                 hintStyle: h3InactiveTextStyle,
