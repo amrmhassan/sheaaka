@@ -5,6 +5,7 @@ import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/products_search_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
@@ -18,6 +19,7 @@ import 'package:project/screens/search_screen/search_screen.dart';
 import 'package:project/screens/signup_screen/signup_screen.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
+import 'package:project/screens/testing_screen/testing_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => WishListsProvider()),
         ChangeNotifierProvider(create: (ctx) => StoreProvider()),
         ChangeNotifierProvider(create: (ctx) => CartProvider()),
+        ChangeNotifierProvider(create: (ctx) => ProductsSearchProvider()),
       ],
       child: MaterialApp(
         localizationsDelegates: [
@@ -63,8 +66,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: HolderScreen.routeName,
+        initialRoute:
+            testing ? TestingScreen.routeName : HolderScreen.routeName,
         routes: {
+          TestingScreen.routeName: (context) => TestingScreen(),
           HolderScreen.routeName: (context) => HolderScreen(),
           ProductScreen.routeName: (context) => ProductScreen(),
           CartScreen.routeName: (context) => CartScreen(),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:project/utils/borders.dart';
 
 class TestingScreen extends StatelessWidget {
+  static String routeName = '/testing-screen';
   const TestingScreen({Key? key}) : super(key: key);
 
   @override

@@ -38,7 +38,6 @@ Widget handleShowBookMarkButton(
                     ).activeWishListId;
                     Provider.of<ProductsProvider>(context, listen: false)
                         .toggleWishListProduct(id, activeWishListId);
-                    Navigator.pop(context);
                   },
                 ),
               );

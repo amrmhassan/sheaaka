@@ -13,9 +13,9 @@ import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
 int storesNumber = 10;
-int productsNumber = 10;
+int productsNumber = 16;
 int wishlistsNumber = 5;
-int offersNumber = 2;
+int offersNumber = 15;
 
 class DataCreator {
   List<ProductModel> fProducts = [];
@@ -180,7 +180,7 @@ class DataCreator {
     );
   }
 
-  void addOfferToProduct(String offerId, String productId, DateTime endAt) {
+  void addOfferToProduct(String productId, DateTime endAt) {
     int i = fProducts.indexWhere((element) => element.id == productId);
     ProductModel p = fProducts[i];
     p.offerEnd = endAt;
@@ -208,7 +208,7 @@ class DataCreator {
     fOffers = List.generate(offersNumber, (index) {
       ProductModel rp = fProducts[r(fProducts.length)];
       OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
-      addOfferToProduct(offer.id, rp.id, offer.endAt);
+      addOfferToProduct(rp.id, offer.endAt);
       addOfferToStore(offer, rp.store.id);
       return offer;
     });

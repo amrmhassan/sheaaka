@@ -52,7 +52,8 @@ class ButtonWrapper extends StatelessWidget {
           onLongPress: onLongPress,
           onTap: active ? onTap : null,
           child: Container(
-            alignment: Alignment.center,
+            //! this caused a UI error, if something like that happened again just fix this line
+            alignment: alignment ?? Alignment.center,
             padding: padding,
             width: width,
             height: height,

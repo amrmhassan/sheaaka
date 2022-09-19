@@ -10,8 +10,12 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class SearchBox extends StatelessWidget {
+  final Function(String value) startSearch;
+  final Function(String value) updateSearchQuery;
   const SearchBox({
     Key? key,
+    required this.startSearch,
+    required this.updateSearchQuery,
   }) : super(key: key);
 
   @override
@@ -42,8 +46,12 @@ class SearchBox extends StatelessWidget {
           HSpace(),
           Expanded(
             child: TextField(
+              onChanged: (value) {
+                updateSearchQuery(value);
+              },
               keyboardType: TextInputType.url,
               autofocus: true,
+              onSubmitted: startSearch,
               decoration: InputDecoration(
                 hintText: 'قم بالبحث هنا...',
                 hintStyle: h3InactiveTextStyle,
