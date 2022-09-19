@@ -2,14 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/locations.dart';
-import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/helpers/responsive.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
+import 'package:project/screens/nearby_stores_screen/widgets/open_stores_map_button.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/store_full_post.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +28,9 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
   void initState() {
     scrollController.addListener(() {
       double s = scrollController.position.extentAfter;
+      double i = scrollController.position.extentBefore;
 
+      if (i < Responsive.getHeight(context) / 2) return;
       if (s > currentScrollPosition && !mapsButtonActive) {
         //? scrolling down
         setState(() {
@@ -85,37 +86,5 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
         ],
       ),
     );
-  }
-}
-
-class OpenStoresMapButton extends StatelessWidget {
-  final bool active;
-  const OpenStoresMapButton({
-    Key? key,
-    required this.active,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return active
-        ? Positioned(
-            bottom: kVPad,
-            right: kHPad,
-            child: ButtonWrapper(
-              padding: EdgeInsets.all(largePadding),
-              onTap: () {},
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(500),
-                color: kLightColor,
-                boxShadow: [defaultBoxShadow],
-              ),
-              child: Image.asset(
-                'assets/icons/map1.png',
-              ),
-            ),
-          )
-        : SizedBox();
   }
 }

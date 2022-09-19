@@ -4,7 +4,6 @@ import 'package:project/models/cart_item_model.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/screens/cart_screen/widgets/cart_product.dart';
 import 'package:project/screens/cart_screen/widgets/cart_products_separator.dart';
-import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
 class CartProductWrapper extends StatelessWidget {
