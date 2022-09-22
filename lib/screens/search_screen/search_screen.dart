@@ -28,7 +28,12 @@ class _SearchScreenState extends State<SearchScreen> {
         Provider.of<ProductsSearchProvider>(
           context,
           listen: false,
-        ).applySearch(value);
+        ).applySearchProducts(value);
+      } else if (searchType == SearchTypes.store) {
+        Provider.of<ProductsSearchProvider>(
+          context,
+          listen: false,
+        ).applySearchStores(value);
       }
     }
   }
@@ -65,7 +70,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           VSpace(),
-          SearchingResults(),
+          SearchingResults(
+            searchType: searchType,
+          ),
         ],
       ),
     );

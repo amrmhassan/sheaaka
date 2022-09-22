@@ -55,13 +55,13 @@ class OfferTimer extends StatelessWidget {
     int inMinutes = diff.inMinutes;
     int inSeconds = diff.inSeconds;
     if (inDays > 1) {
-      return '$inDays D';
+      return '${inDays}Days';
     } else if (inHours > 1) {
-      return "$inHours H";
+      return "${inHours}Hours";
     } else if (inMinutes > 1) {
-      return '$inMinutes M';
+      return '${inMinutes}Minutes';
     } else {
-      return '$inSeconds S';
+      return '${inSeconds}Seconds';
     }
   }
 }
