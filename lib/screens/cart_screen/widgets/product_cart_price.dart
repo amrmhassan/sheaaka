@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/tests/utils.dart';
+import 'package:project/utils/general_utils.dart';
 
 class ProductCartPrice extends StatelessWidget {
   final FontWeight? fontWeight;

@@ -150,7 +150,7 @@ class DataCreator {
       createdAt: createdAt,
       lovesNumber: lovesNumber,
       price: price,
-      brand: BrandModel(name: brandName),
+      brand: BrandModel(name: brandName, id: Uuid().v4()),
       nOfComments: nOfComments,
       favorite: rb(),
       hasOffer: rb(),

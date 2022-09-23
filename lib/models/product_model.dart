@@ -56,16 +56,33 @@ class ProductModel {
     this.availableColors,
   });
 
-  @override
-  String toString() {
-    // TODO: implement toString
-    return super.toString();
-  }
-
-  Map<String, String> toJSON() {
+  Map<String, dynamic> toJSON() {
+    List<String>? sizesConverted = availableSize?.map((e) => e.name).toList();
+    List<int>? colorsConverted = availableColors?.map((e) => e.value).toList();
     return {
       idString: id,
       nameString: name,
+      storeIdString: storeId,
+      storeLogoString: storeLogo,
+      storeNameString: storeName,
+      storeActiveOffersString: storeActiveOffers,
+      imagesPathString: imagesPath,
+      createdAtString: createdAt,
+      lovesNumberString: lovesNumber,
+      priceString: price,
+      wishListIdString: wishListId,
+      brandString: brand?.toJSON(),
+      availableSizeString: sizesConverted,
+      nOfCommentsString: nOfComments,
+      ratingString: rating,
+      oldPriceString: oldPrice,
+      remainingNumberString: remainingNumber,
+      hasOfferString: hasOffer,
+      offerEndString: offerEnd,
+      favoriteString: favorite,
+      fullDescString: fullDesc,
+      shortDescString: shortDesc,
+      availableColorsString: colorsConverted,
     };
   }
 }

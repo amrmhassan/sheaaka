@@ -1,13 +1,19 @@
-import 'package:project/models/brand_model.dart';
+// ignore_for_file: prefer_const_constructors
 
-const BrandModel emptyBrand = BrandModel(
+import 'package:project/models/brand_model.dart';
+import 'package:uuid/uuid.dart';
+
+BrandModel emptyBrand = BrandModel(
+  id: Uuid().v4(),
   name: '',
   icon: 'assets/icons/brand-image.png',
 );
-const BrandModel adidasBrand = BrandModel(
+BrandModel adidasBrand = BrandModel(
+  id: Uuid().v4(),
   name: 'Adidas',
   icon: 'assets/icons/adidas.png',
 );
-const BrandModel firewoodBrand = BrandModel(
+BrandModel firewoodBrand = BrandModel(
+  id: Uuid().v4(),
   name: 'Firewood',
 );
