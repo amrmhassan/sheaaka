@@ -23,9 +23,10 @@ import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/testing_screen/testing_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
+import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:provider/provider.dart';
 
-bool testing = true;
+bool testing = false;
 Future main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
           OrdersScreen.routeName: (context) => OrdersScreen(),
           TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
           TrendScreen.routeName: (context) => TrendScreen(),
+          UploadDataScreen.routeName: (context) => UploadDataScreen(),
         },
       ),
     );

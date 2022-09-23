@@ -24,6 +24,7 @@ class AddWishlistModal extends StatelessWidget {
         ),
         VSpace(),
         CustomFormInput(
+          autoFocus: true,
           onChange: setWishListName,
           padding: EdgeInsets.zero,
           iconName: 'pen',

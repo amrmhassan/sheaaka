@@ -17,6 +17,7 @@ class CustomFormInput extends StatelessWidget {
   final Color? borderColor;
   final EdgeInsets? padding;
   final Color? trailingIconColor;
+  final bool autoFocus;
 
   const CustomFormInput({
     Key? key,
@@ -29,6 +30,7 @@ class CustomFormInput extends StatelessWidget {
     this.padding,
     this.trailingIconWidget,
     this.trailingIconColor,
+    this.autoFocus = false,
   }) : super(key: key);
 
   @override
@@ -55,6 +57,7 @@ class CustomFormInput extends StatelessWidget {
             Expanded(
               child: TextField(
                 onChanged: onChange,
+                autofocus: autoFocus,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: title,

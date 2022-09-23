@@ -27,6 +27,11 @@ class ModalWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        right: kHPad,
+        left: kHPad,
+      ),
       decoration: BoxDecoration(
         color: color ?? Colors.white,
         borderRadius: BorderRadius.only(

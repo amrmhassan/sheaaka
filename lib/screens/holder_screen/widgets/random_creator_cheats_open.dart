@@ -36,6 +36,7 @@ class _RandomCreatorCheatOpenState extends State<RandomCreatorCheatOpen> {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
+          isScrollControlled: true,
           backgroundColor: Colors.transparent,
           context: context,
           builder: (ctx) => ModalWrapper(

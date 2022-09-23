@@ -19,6 +19,7 @@ class FiltersIcon extends StatelessWidget {
     return ButtonWrapper(
       onTap: () {
         showModalBottomSheet(
+          isScrollControlled: true,
           backgroundColor: Colors.transparent,
           context: context,
           builder: (context) => ModalWrapper(

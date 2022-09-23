@@ -28,6 +28,7 @@ Widget handleShowBookMarkButton(
             iconName: 'book-mark',
             onTap: () {
               showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (ctx) => AddToWishlistModal(
@@ -61,6 +62,7 @@ Widget handleShowBookMarkButtonAppBarIcon(
             iconName: 'book-mark',
             onTap: () {
               showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 backgroundColor: Colors.transparent,
                 builder: (ctx) => AddToWishlistModal(

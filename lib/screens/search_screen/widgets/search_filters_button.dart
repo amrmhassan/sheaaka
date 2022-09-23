@@ -25,6 +25,7 @@ class SearchFiltersButton extends StatelessWidget {
         //! you have other show.... functions you can try them
         //! showBottomSheet
         showModalBottomSheet(
+          isScrollControlled: true,
           context: context,
           builder: (context) => ModalWrapper(
             applyButtonTitle: 'تطبيق الفلتر',

@@ -31,6 +31,7 @@ class _AddWishListButtonState extends State<AddWishListButton> {
     return ButtonWrapper(
       onTap: () {
         showModalBottomSheet(
+          isScrollControlled: true,
           context: context,
           backgroundColor: Colors.transparent,
           builder: (ctx) => ModalWrapper(
