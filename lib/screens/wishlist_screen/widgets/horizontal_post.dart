@@ -48,7 +48,7 @@ class HorizontalPost extends StatelessWidget {
                 children: [
                   HPostInfo(
                     name: product.name,
-                    storeName: product.store.name,
+                    storeName: product.storeName,
                   ),
                   VSpace(factor: .1),
                   HPostDesc(

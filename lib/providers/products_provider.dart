@@ -78,6 +78,6 @@ class ProductsProvider extends ChangeNotifier {
 
   //? get store products
   List<ProductModel> getStoreProducts(String storeId) {
-    return products.where((element) => element.store.id == storeId).toList();
+    return products.where((element) => element.storeId == storeId).toList();
   }
 }

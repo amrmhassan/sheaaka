@@ -25,7 +25,7 @@ import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:provider/provider.dart';
 
-bool testing = false;
+bool testing = true;
 Future main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

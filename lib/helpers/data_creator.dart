@@ -142,8 +142,11 @@ class DataCreator {
     return ProductModel(
       id: id,
       name: name,
-      store: store,
+      storeId: store.id,
+      storeName: store.name,
+      storeLogo: store.logoImagePath,
       imagesPath: imagesPath,
+      storeActiveOffers: store.offers.where((element) => element.active).length,
       createdAt: createdAt,
       lovesNumber: lovesNumber,
       price: price,
@@ -209,7 +212,7 @@ class DataCreator {
       ProductModel rp = fProducts[r(fProducts.length)];
       OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
       addOfferToProduct(rp.id, offer.endAt);
-      addOfferToStore(offer, rp.store.id);
+      addOfferToStore(offer, rp.storeId);
       return offer;
     });
 

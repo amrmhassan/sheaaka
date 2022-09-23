@@ -52,16 +52,14 @@ class _FullPostState extends State<FullPost> {
                 Navigator.pushNamed(
                   context,
                   StoreScreen.routeName,
-                  arguments: widget.fullPostModel.store.id,
+                  arguments: widget.fullPostModel.storeId,
                 );
               },
               //? this will take the store logo and the store name
               child: PostHeader(
-                logoImagePath: widget.fullPostModel.store.logoImagePath,
-                storeName: widget.fullPostModel.store.name,
-                offersNumber: widget.fullPostModel.store.offers
-                    .where((element) => element.active)
-                    .length,
+                logoImagePath: widget.fullPostModel.storeLogo,
+                storeName: widget.fullPostModel.storeName,
+                offersNumber: widget.fullPostModel.storeActiveOffers,
               ),
             ),
             VSpace(factor: 0.5),
