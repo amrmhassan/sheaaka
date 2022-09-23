@@ -1,47 +1,122 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
-import 'package:dotted_border/dotted_border.dart';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:project/utils/borders.dart';
 
-class TestingScreen extends StatelessWidget {
-  static String routeName = '/testing-screen';
-  const TestingScreen({Key? key}) : super(key: key);
+class User {
+  final String id;
+  final String name;
+  const User({
+    required this.id,
+    required this.name,
+  });
+}
+
+class TestingScreen extends StatefulWidget {
+  static const String routeName = '/testing-screen';
+  const TestingScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<TestingScreen> createState() => _TestingScreenState();
+}
+
+class _TestingScreenState extends State<TestingScreen> {
+  bool _loading = false;
+  List<User> users = [];
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
+
+  Future<void> createDataFireStore() async {
+    var ref = FirebaseFirestore.instance;
+    String id = Random().nextInt(5000).toString();
+    String name = 'name$id';
+    print('START--------------------');
+    print(id);
+    ref.collection('users').doc(id).set({'name': name, 'id': id});
+    print('DONE--------------------');
+  }
+
+  Future<void> createData() async {
+    String id = Random().nextInt(5000).toString();
+    String name = 'name$id';
+    await ref.child('/users').child(id).set({'name': name, 'id': id});
+  }
+
+  Future<void> getData() async {
+    setState(() {
+      _loading = true;
+    });
+    List<User> u = [];
+    var res = await ref.child('/users').get();
+    var body = res.children;
+    u = body.map((e) {
+      String id = e.child('id').value.toString();
+      String name = e.child('name').value.toString();
+      return User(id: id, name: name);
+    }).toList();
+    setState(() {
+      users = u;
+      _loading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.green,
-        alignment: Alignment.center,
-        child: DottedBorder(
-          borderType: BorderType.Circle,
-          color: Colors.red,
-          padding: EdgeInsets.zero,
-          strokeWidth: 8,
-          dashPattern: getPattern(.75, 100),
-          child: Container(
-            clipBehavior: Clip.hardEdge,
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(500),
-            ),
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(500),
-              ),
-              child: Image.asset(
-                'assets/images/3.jpg',
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+          ),
+          ElevatedButton(
+            onPressed: createData,
+            child: Text('Add Data'),
+          ),
+          ElevatedButton(
+            onPressed: getData,
+            child: Text('Get Data'),
+          ),
+          Text(users.length.toString()),
+          SizedBox(height: 20),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: _loading
+                  ? Text('Loading')
+                  : Column(
+                      children: users
+                          .map(
+                            (e) => Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 20,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(e.name),
+                                  Spacer(),
+                                  Text(e.id),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

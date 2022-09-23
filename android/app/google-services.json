@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "339385684924",
+    "firebase_url": "https://sheaka-sheaka-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "sheaka-sheaka",
+    "storage_bucket": "sheaka-sheaka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339385684924:android:264c50631385cab51491b9",
+        "android_client_info": {
+          "package_name": "com.amh.sheeaka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339385684924-9itqkqk4afkpgo0449882ftllciqv7ah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa6HvTbPLYZ3wr_bGwVT2u36YSHLxdRhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339385684924-9itqkqk4afkpgo0449882ftllciqv7ah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339385684924:android:71e8d4ba11982c471491b9",
+        "android_client_info": {
+          "package_name": "com.example.database_tester"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339385684924-9itqkqk4afkpgo0449882ftllciqv7ah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa6HvTbPLYZ3wr_bGwVT2u36YSHLxdRhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339385684924-9itqkqk4afkpgo0449882ftllciqv7ah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

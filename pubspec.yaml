@@ -45,6 +45,10 @@ dependencies:
   google_maps_flutter: ^2.2.0
   carousel_slider: ^4.1.1
   palette_generator: ^0.3.3+2
+  cloud_firestore: ^3.4.9
+  firebase_core: ^1.23.0
+  http: ^0.13.5
+  firebase_database: ^9.1.5
 
 dev_dependencies:
   flutter_test:
