@@ -18,4 +18,16 @@ class BrandModel {
       iconString: icon,
     };
   }
+
+  static BrandModel fromJSON(Map<String, dynamic> brand) {
+    String idDOC = brand[idString];
+    String nameDOC = brand[nameString];
+    String? iconsDOC = brand[iconString];
+
+    return BrandModel(
+      id: idDOC,
+      name: nameDOC,
+      icon: iconsDOC,
+    );
+  }
 }

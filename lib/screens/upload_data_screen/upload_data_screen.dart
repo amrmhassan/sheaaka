@@ -25,7 +25,10 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
       });
 
       for (var p in DataCreator().fProducts) {
-        await ref.collection(productsCollectionName).doc(p.id).set(p.toJSON());
+        await ref
+            .collection(smallProductsCollectionName)
+            .doc(p.id)
+            .set(p.toJSON());
       }
 
       setState(() {
@@ -37,7 +40,7 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
       setState(() {
         uploading = true;
       });
-      var res = await ref.collection(productsCollectionName).get();
+      var res = await ref.collection(smallProductsCollectionName).get();
 
       setState(() {
         dataLength = res.docs.length.toString();

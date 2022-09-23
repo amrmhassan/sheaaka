@@ -26,7 +26,7 @@ import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:provider/provider.dart';
 
-bool testing = false;
+bool testing = true;
 Future main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -72,6 +72,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute:
             testing ? TestingScreen.routeName : HolderScreen.routeName,
+        // initialRoute: UploadDataScreen.routeName,
         routes: {
           TestingScreen.routeName: (context) => TestingScreen(),
           HolderScreen.routeName: (context) => HolderScreen(),
