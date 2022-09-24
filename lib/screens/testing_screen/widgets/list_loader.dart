@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 
+//? list loader constants
 const double maxLoaderRadius = 100;
 const double radiusFactor = 2;
 
@@ -11,25 +12,30 @@ const double marginFactor = 5;
 
 const rotationSpeedFactor = 100;
 
-class TestingScreen extends StatefulWidget {
-  static String routeName = '/testing-screen';
+class ListLoader extends StatefulWidget {
+  final List<Widget> children;
+  final int? itemCount;
+  final Widget Function(BuildContext, int) itemBuilder;
 
-  const TestingScreen({super.key});
+  const ListLoader({
+    super.key,
+    required this.itemCount,
+    required this.itemBuilder,
+    required this.children,
+  });
 
   @override
-  State<TestingScreen> createState() => _TestingScreenState();
+  State<ListLoader> createState() => _ListLoaderState();
 }
 
-class _TestingScreenState extends State<TestingScreen> {
+class _ListLoaderState extends State<ListLoader> {
   ScrollController scrollController = ScrollController();
-  GlobalKey key = GlobalKey();
+  GlobalKey listViewKey = GlobalKey();
+  GlobalKey listViewSizedBoxKey = GlobalKey();
+  double? hiddenListHeight;
 
   double topScrollSpace = 0;
   double bottomScrollSpace = 0;
-
-  final int listChildrenNumber = 20;
-  final double childHeight = 50;
-  final double margin = 10;
 
 //? get topOpacity
   double get topOpacity {
@@ -51,10 +57,10 @@ class _TestingScreenState extends State<TestingScreen> {
     return bottomScrollSpace / rotationSpeedFactor;
   }
 
-//? this will calculate the full list height
-  double getListFullHeight() {
-    return (childHeight + margin) * listChildrenNumber;
-  }
+// //? get full list height
+//   double get fullListHeight {
+
+//   }
 
   //? this will return the top circle top margin
   double get topMargin {
@@ -109,13 +115,20 @@ class _TestingScreenState extends State<TestingScreen> {
       extentAfter = scrollController.position.extentAfter;
       //* this will return the height of the list that is hidden above the full list height
       extentBefore = scrollController.position.extentBefore;
+      if (hiddenListHeight == null) {
+        setState(() {
+          hiddenListHeight = extentAfter;
+        });
+      }
+
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         //* the height of the list viewport that is show in the screen
-        double listHeight = key.currentContext!.size!.height;
+        // double listHeight = listViewKey.currentContext!.size!.height;
         //* the height of the full list (height of its children and their paddings, margins, etc)
-        double fullListHeight = getListFullHeight();
+        // double fullListHeight = hiddenListHeight! + listHeight;
+
         //* the difference of between the full list height and the list height
-        double heightDifference = fullListHeight - listHeight;
+        // double heightDifference = hiddenListHeight!;
         //? fixed after and fixed before are some helper variables to calculate the space the list will
         //? stretch because its bouncy nature
         //? topScrollSpace = space hidden under the full list height - height difference
@@ -136,8 +149,8 @@ class _TestingScreenState extends State<TestingScreen> {
         //# |    topScrollSpace    |
         //# |----------------------|
         setState(() {
-          topScrollSpace = extentAfter - heightDifference;
-          bottomScrollSpace = extentBefore - heightDifference;
+          topScrollSpace = extentAfter - hiddenListHeight!;
+          bottomScrollSpace = extentBefore - hiddenListHeight!;
         });
       });
     });
@@ -151,53 +164,47 @@ class _TestingScreenState extends State<TestingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.topCenter,
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        SizedBox(
+          key: listViewSizedBoxKey,
+          child: ListView.builder(
+            key: listViewKey,
+            controller: scrollController,
+            physics: BouncingScrollPhysics(),
+            itemCount: widget.itemCount,
+            itemBuilder: widget.itemBuilder,
+          ),
+        ),
+        Column(
           children: [
-            ListView.builder(
-              key: key,
-              controller: scrollController,
-              physics: BouncingScrollPhysics(),
-              itemCount: listChildrenNumber,
-              itemBuilder: ((context, index) => Container(
-                    height: childHeight,
-                    color: Colors.red,
-                    margin: EdgeInsets.only(bottom: margin),
-                    width: double.infinity,
-                  )),
+            SizedBox(
+              height: topMargin,
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: topMargin,
-                ),
-                LoaderArrow(
-                  radius: topLoaderRadius,
-                  opacity: topOpacity,
-                  rotation: topRotation,
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              child: Column(
-                children: [
-                  LoaderArrow(
-                    radius: bottomLoaderRadius,
-                    opacity: bottomOpacity,
-                    rotation: bottomRotation,
-                  ),
-                  SizedBox(
-                    height: bottomMargin,
-                  )
-                ],
-              ),
+            LoaderArrow(
+              radius: topLoaderRadius,
+              opacity: topOpacity,
+              rotation: topRotation,
             ),
           ],
         ),
-      ),
+        Positioned(
+          bottom: 0,
+          child: Column(
+            children: [
+              LoaderArrow(
+                radius: bottomLoaderRadius,
+                opacity: bottomOpacity,
+                rotation: bottomRotation,
+              ),
+              SizedBox(
+                height: bottomMargin,
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

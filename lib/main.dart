@@ -12,6 +12,7 @@ import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
+import 'package:project/screens/list_loading_screen/list_loading_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
@@ -26,7 +27,7 @@ import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:provider/provider.dart';
 
-bool testing = true;
+bool testing = false;
 Future main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         initialRoute:
-            testing ? TestingScreen.routeName : HolderScreen.routeName,
+            testing ? TestingScreen.routeName : ListLoadingScreen.routeName,
         // initialRoute: UploadDataScreen.routeName,
         routes: {
           TestingScreen.routeName: (context) => TestingScreen(),
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
           TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
           TrendScreen.routeName: (context) => TrendScreen(),
           UploadDataScreen.routeName: (context) => UploadDataScreen(),
+          ListLoadingScreen.routeName: (context) => ListLoadingScreen(),
         },
       ),
     );
