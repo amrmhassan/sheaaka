@@ -13,15 +13,17 @@ const double marginFactor = 5;
 const rotationSpeedFactor = 100;
 
 class ListLoader extends StatefulWidget {
-  final List<Widget> children;
+  // final List<Widget> children;
   final int? itemCount;
+  final EdgeInsets? padding;
   final Widget Function(BuildContext, int) itemBuilder;
 
   const ListLoader({
     super.key,
     required this.itemCount,
     required this.itemBuilder,
-    required this.children,
+    // required this.children,
+    this.padding,
   });
 
   @override
@@ -170,6 +172,7 @@ class _ListLoaderState extends State<ListLoader> {
         SizedBox(
           key: listViewSizedBoxKey,
           child: ListView.builder(
+            padding: widget.padding,
             key: listViewKey,
             controller: scrollController,
             physics: BouncingScrollPhysics(),

@@ -65,9 +65,6 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
                       itemBuilder: (context, index) => FullPost(
                         fullPostModel: products[index],
                       ),
-                      children: products
-                          .map((e) => FullPost(fullPostModel: e))
-                          .toList(),
                     ),
                   ),
                   Row(
