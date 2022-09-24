@@ -13,7 +13,7 @@ import 'package:project/models/whishlist_model.dart';
 import 'package:uuid/uuid.dart';
 
 int storesNumber = 10;
-int productsNumber = 16;
+int productsNumber = 5;
 int wishlistsNumber = 5;
 int offersNumber = 15;
 

@@ -9,6 +9,7 @@ import 'package:project/models/product_model.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/testing_screen/widgets/list_loader.dart';
+import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 
 class ListLoadingScreen extends StatefulWidget {
   static const String routeName = '/list-loading-screen';
@@ -19,32 +20,39 @@ class ListLoadingScreen extends StatefulWidget {
 }
 
 class _ListLoadingScreenState extends State<ListLoadingScreen> {
-  List<ProductModel> products = [...dc.fProducts];
+  List<ProductModel> products = [];
   FirebaseFirestore ref = FirebaseFirestore.instance;
   int ms = 0;
   bool loading = true;
 
+//? this will fetch the products based on their created date and 10 products at a time
   Future<void> fetchData() async {
     setState(() {
       loading = true;
     });
     DateTime before = DateTime.now();
-    var res = await ref
-        .collection(smallProductsCollectionName)
-        .where(
-          nameString,
-        )
-        .get();
-    List<ProductModel> ps = [];
+    QuerySnapshot<Map<String, dynamic>> res;
+    if (products.isNotEmpty) {
+      res = await ref
+          .collection(smallProductsCollectionName)
+          .orderBy(createdAtString, descending: true)
+          .limit(10)
+          .startAfter([products.last.createdAt]).get();
+    } else {
+      res = await ref
+          .collection(smallProductsCollectionName)
+          .orderBy(createdAtString, descending: true)
+          .limit(10)
+          .get();
+    }
     for (var element in res.docs) {
       var p = ProductModel.fromJSON(element.data());
-      ps.add(p);
+      products.add(p);
     }
 
     DateTime after = DateTime.now();
     setState(() {
       loading = false;
-      products = ps;
       ms = after.difference(before).inMilliseconds;
     });
   }
@@ -59,7 +67,7 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: loading
+        child: loading && products.isEmpty
             ? Text('Loading')
             : Column(
                 children: [
@@ -85,6 +93,13 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
                           Navigator.pushNamed(context, HolderScreen.routeName);
                         },
                         child: Text('Go Home'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, UploadDataScreen.routeName);
+                        },
+                        child: Text('Add Data'),
                       ),
                     ],
                   )
