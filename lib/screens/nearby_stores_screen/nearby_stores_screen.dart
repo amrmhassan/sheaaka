@@ -26,6 +26,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
   ScrollController scrollController = ScrollController();
   bool mapsButtonActive = true;
   double currentScrollPosition = 0;
+
   @override
   void initState() {
     scrollController.addListener(() {
