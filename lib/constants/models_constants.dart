@@ -18,6 +18,7 @@ String oldPriceString = 'oldPriceString';
 String remainingNumberString = 'remainingNumberString';
 String hasOfferString = 'hasOfferString';
 String offerEndString = 'offerEndString';
+String offerStartedString = 'offerStartedString';
 String favoriteString = 'favoriteString';
 String fullDescString = 'fullDescString';
 String shortDescString = 'shortDescString';

@@ -183,10 +183,11 @@ class DataCreator {
     );
   }
 
-  void addOfferToProduct(String productId, DateTime endAt) {
+  void addOfferToProduct(String productId, DateTime endAt, DateTime startDate) {
     int i = fProducts.indexWhere((element) => element.id == productId);
     ProductModel p = fProducts[i];
     p.offerEnd = endAt;
+    p.offerStarted = startDate;
     fProducts[i] = p;
   }
 
@@ -211,7 +212,7 @@ class DataCreator {
     fOffers = List.generate(offersNumber, (index) {
       ProductModel rp = fProducts[r(fProducts.length)];
       OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
-      addOfferToProduct(rp.id, offer.endAt);
+      addOfferToProduct(rp.id, offer.endAt, offer.createdAt);
       addOfferToStore(offer, rp.storeId);
       return offer;
     });

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/brand_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
@@ -31,6 +32,7 @@ class ProductModel {
   bool? favorite;
   bool? hasOffer;
   DateTime? offerEnd;
+  DateTime? offerStarted;
 
   ProductModel({
     required this.id,
@@ -52,6 +54,7 @@ class ProductModel {
     this.remainingNumber,
     this.hasOffer,
     this.offerEnd,
+    this.offerStarted,
     this.favorite,
     this.fullDesc,
     this.shortDesc,
@@ -82,6 +85,7 @@ class ProductModel {
       remainingNumberString: remainingNumber,
       hasOfferString: hasOffer,
       offerEndString: offerEnd,
+      offerStartedString: offerStarted,
       favoriteString: favorite,
       fullDescString: fullDesc,
       shortDescString: shortDesc,
@@ -115,6 +119,8 @@ class ProductModel {
     double? rating = productDOC[ratingString] as double?;
     int? remainingNumber = productDOC[remainingNumberString] as int?;
     DateTime? offerEnd = (productDOC[offerEndString] as Timestamp?)?.toDate();
+    DateTime? offerStarted =
+        (productDOC[offerStartedString] as Timestamp?)?.toDate();
     List<Sizes>? availableSize =
         (productDOC[availableSizeString] as List<dynamic>?)
             ?.map((e) => stringToSizes(e) as Sizes)
@@ -144,6 +150,7 @@ class ProductModel {
       hasOffer: hasOffer,
       nOfComments: nOfComments,
       offerEnd: offerEnd,
+      offerStarted: offerStarted,
       oldPrice: oldPrice,
       rating: rating,
       remainingNumber: remainingNumber,
