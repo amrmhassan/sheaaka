@@ -65,6 +65,13 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var listLoader = ListLoader(
+      itemCount: products.length,
+      itemBuilder: (context, index) => FullPost(
+        fullPostModel: products[index],
+      ),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: loading && products.isEmpty
@@ -74,12 +81,7 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
                   Text(
                       'Loaded ${products.length.toString()} Products Took $ms ms'),
                   Expanded(
-                    child: ListLoader(
-                      itemCount: products.length,
-                      itemBuilder: (context, index) => FullPost(
-                        fullPostModel: products[index],
-                      ),
-                    ),
+                    child: listLoader,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
