@@ -9,7 +9,7 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
 import 'package:project/screens/search_screen/search_screen.dart';
-import 'package:project/screens/testing_screen/widgets/list_loader.dart';
+import 'package:project/screens/testing_screen/widgets/list_loader/list_loader.dart';
 import 'package:provider/provider.dart';
 
 //? this screen will have the newest products, offers , ads etc...
@@ -37,6 +37,12 @@ class HomeScreen extends StatelessWidget {
         HLine(),
         Expanded(
           child: ListLoader(
+            onReload: () {
+              print('Reloading');
+            },
+            onLoadNew: () {
+              print('Loading new');
+            },
             padding: EdgeInsets.only(bottom: kVPad / 2),
             itemCount: homeProducts.length,
             itemBuilder: (context, index) => FullPost(

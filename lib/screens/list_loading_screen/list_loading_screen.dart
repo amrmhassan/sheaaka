@@ -8,7 +8,7 @@ import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
-import 'package:project/screens/testing_screen/widgets/list_loader.dart';
+import 'package:project/screens/testing_screen/widgets/list_loader/list_loader.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 
 class ListLoadingScreen extends StatefulWidget {
@@ -66,6 +66,14 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
   @override
   Widget build(BuildContext context) {
     var listLoader = ListLoader(
+      reloadingAfterPixels: 130,
+      loadingNewAfterPixels: 50,
+      onLoadNew: () {
+        print('loading new');
+      },
+      onReload: () {
+        print('Reloading');
+      },
       itemCount: products.length,
       itemBuilder: (context, index) => FullPost(
         fullPostModel: products[index],
