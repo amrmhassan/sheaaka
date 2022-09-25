@@ -44,7 +44,7 @@ class _AddWishListButtonState extends State<AddWishListButton> {
                 Provider.of<WishListsProvider>(context, listen: false)
                     .addWishList(wishListName);
               }
-              Navigator.pop(context);
+              // Navigator.pop(ctx);
             },
           ),
         );

@@ -12,5 +12,4 @@ Future<void> getHomeProducts() async {
       .orderBy(createdAtString)
       .limit(5)
       .get();
-  print(res);
 }

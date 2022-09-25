@@ -47,7 +47,7 @@ class _FullPostState extends State<FullPost> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.fullPostModel.createdAt.toString()),
+            // Text(widget.fullPostModel.createdAt.toString()),
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(

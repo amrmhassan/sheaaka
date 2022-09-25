@@ -104,7 +104,7 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
             ],
           ),
-          if (allowRandomCreatorCheats) RandomCreatorCheatOpen(),
+          // if (allowRandomCreatorCheats) RandomCreatorCheatOpen(),
         ],
       ),
     );

@@ -7,15 +7,15 @@ import 'package:project/models/product_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
   void refresh() {
-    products = [...dc.fProducts];
+    // products = [...dc.fProducts];
     notifyListeners();
   }
 
-  List<ProductModel> products = [...dc.fProducts];
+  // List<ProductModel> products = [...dc.fProducts];
   //# HomeScreen Products
   FirebaseFirestore ref = FirebaseFirestore.instance;
   List<ProductModel> _homeProducts = [];
-  bool loadingHomeProducts = true;
+  bool loadingHomeProducts = false;
   bool loadingNextHomeProducts = false;
 
 //? to get the home products after applying its filters
@@ -81,9 +81,9 @@ class ProductsProvider extends ChangeNotifier {
 
 //? to toggle a product love
   void toggleFavProduct(String id) {
-    int index = products.indexWhere((element) => element.id == id);
-    ProductModel product = products[index];
-    products.removeAt(index);
+    int index = _homeProducts.indexWhere((element) => element.id == id);
+    ProductModel product = _homeProducts[index];
+    _homeProducts.removeAt(index);
     if (product.favorite == null || product.favorite == false) {
       product.favorite = true;
       product.lovesNumber += 1;
@@ -91,39 +91,41 @@ class ProductsProvider extends ChangeNotifier {
       product.favorite = false;
       product.lovesNumber -= 1;
     }
-    products.insert(index, product);
+    _homeProducts.insert(index, product);
     notifyListeners();
   }
 
 //? to toggle a pro
   void toggleWishListProduct(String id, [String? whishListId]) {
-    int index = products.indexWhere((element) => element.id == id);
-    ProductModel product = products[index];
-    products.removeAt(index);
+    int index = _homeProducts.indexWhere((element) => element.id == id);
+    ProductModel product = _homeProducts[index];
+    _homeProducts.removeAt(index);
     if (product.wishListId == null) {
       product.wishListId = whishListId;
     } else {
       product.wishListId = null;
     }
-    products.insert(index, product);
+    _homeProducts.insert(index, product);
 
     notifyListeners();
   }
 
   //? get a product with id
   ProductModel findProductById(String id) {
-    return products.firstWhere((element) => id == element.id);
+    return _homeProducts.firstWhere((element) => id == element.id);
   }
 
   //? to get the wishlist products
   List<ProductModel> getWhishListProducts(String wishListId) {
-    return products
+    return _homeProducts
         .where((element) => element.wishListId == wishListId)
         .toList();
   }
 
   //? get store products
   List<ProductModel> getStoreProducts(String storeId) {
-    return products.where((element) => element.storeId == storeId).toList();
+    return _homeProducts
+        .where((element) => element.storeId == storeId)
+        .toList();
   }
 }

@@ -12,7 +12,6 @@ import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
-import 'package:project/screens/list_loading_screen/list_loading_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
@@ -24,7 +23,6 @@ import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/testing_screen/testing_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
-import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:provider/provider.dart';
 
 bool testing = false;
@@ -89,8 +87,6 @@ class MyApp extends StatelessWidget {
           OrdersScreen.routeName: (context) => OrdersScreen(),
           TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
           TrendScreen.routeName: (context) => TrendScreen(),
-          UploadDataScreen.routeName: (context) => UploadDataScreen(),
-          ListLoadingScreen.routeName: (context) => ListLoadingScreen(),
         },
       ),
     );

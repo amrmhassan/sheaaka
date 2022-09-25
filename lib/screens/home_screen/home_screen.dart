@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/constants/styles.dart';
 import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -39,6 +40,7 @@ class HomeScreen extends StatelessWidget {
               HLine(),
               Expanded(
                 child: ListLoader(
+                  reloadingAfterPixels: 0,
                   onReload: () {
                     productsProvider.reloadHomeProducts();
                   },
@@ -50,8 +52,19 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) => FullPost(
                     fullPostModel: homeProducts[index],
                   ),
+                  showBottomLoader: false,
                 ),
               ),
+              if (productsProvider.loadingNextHomeProducts)
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: kVPad / 2),
+                  width: double.infinity,
+                  child: Text(
+                    'جاري التحميل',
+                    style: h3InactiveTextStyle,
+                  ),
+                )
             ],
           );
   }

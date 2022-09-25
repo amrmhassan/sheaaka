@@ -33,12 +33,14 @@ Widget handleShowBookMarkButton(
                 backgroundColor: Colors.transparent,
                 builder: (ctx) => AddToWishlistModal(
                   onApply: () {
-                    String activeWishListId = Provider.of<WishListsProvider>(
+                    String? activeWishListId = Provider.of<WishListsProvider>(
                       context,
                       listen: false,
                     ).activeWishListId;
-                    Provider.of<ProductsProvider>(context, listen: false)
-                        .toggleWishListProduct(id, activeWishListId);
+                    if (activeWishListId != null) {
+                      Provider.of<ProductsProvider>(context, listen: false)
+                          .toggleWishListProduct(id, activeWishListId);
+                    }
                   },
                 ),
               );
@@ -67,12 +69,15 @@ Widget handleShowBookMarkButtonAppBarIcon(
                 backgroundColor: Colors.transparent,
                 builder: (ctx) => AddToWishlistModal(
                   onApply: () {
-                    String activeWishListId = Provider.of<WishListsProvider>(
+                    String? activeWishListId = Provider.of<WishListsProvider>(
                       context,
                       listen: false,
                     ).activeWishListId;
-                    Provider.of<ProductsProvider>(context, listen: false)
-                        .toggleWishListProduct(id, activeWishListId);
+                    if (activeWishListId != null) {
+                      Provider.of<ProductsProvider>(context, listen: false)
+                          .toggleWishListProduct(id, activeWishListId);
+                    }
+
                     Navigator.pop(context);
                   },
                 ),

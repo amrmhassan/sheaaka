@@ -17,7 +17,7 @@ class LoadingProductsScreen extends StatefulWidget {
 }
 
 class _LoadingProductsScreenState extends State<LoadingProductsScreen> {
-  List<ProductModel> products = [...dc.fProducts];
+  List<ProductModel> products = [];
   FirebaseFirestore ref = FirebaseFirestore.instance;
   int ms = 0;
   bool loading = true;

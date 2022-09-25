@@ -5,7 +5,6 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/choose_product_type.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/helpers/data_creator.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
 import 'package:project/screens/product_screen/widgets/choose_product_color.dart';
@@ -49,7 +48,9 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
         HLine(),
         VSpace(factor: .5),
         ChooseProductSize(
-          availableSizes: dc.fProducts[0].availableSize,
+          availableSizes: Provider.of<ProductsProvider>(context, listen: false)
+              .homeProducts[0]
+              .availableSize,
         ),
         VSpace(),
         ChooseProductColor(),

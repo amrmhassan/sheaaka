@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/screens/testing_screen/widgets/list_loader/loader_arrow.dart';
 
@@ -27,6 +28,7 @@ class ListLoader extends StatefulWidget {
   final VoidCallback onLoadNew;
   final double reloadingAfterPixels;
   final double loadingNewAfterPixels;
+  final bool showBottomLoader;
 
   const ListLoader({
     super.key,
@@ -35,6 +37,7 @@ class ListLoader extends StatefulWidget {
     required this.onReload,
     required this.onLoadNew,
     this.padding,
+    this.showBottomLoader = true,
     this.reloadingAfterPixels = startReloadingAfterPixels,
     this.loadingNewAfterPixels = startLoadingNewAfterPixels,
   });
@@ -149,25 +152,33 @@ class _ListLoaderState extends State<ListLoader> {
 
 //? this will handle scrolling events(start, end ) and run the
   bool onNotificationHandler(notification) {
-    if (notification is ScrollStartNotification) {
-      //* starting scrolling
-      scrollDownValues.clear();
-      scrollUpValues.clear();
-    } else if (notification is ScrollEndNotification) {
-      //* ending scrolling
-      // for scrolling down to reach the top
-      double downLast = scrollDownValues.last;
-      double downMaxValue = scrollDownValues.reduce(max);
+    try {
+      if (notification is ScrollStartNotification) {
+        //* starting scrolling
+        scrollDownValues.clear();
+        scrollUpValues.clear();
+      } else if (notification is ScrollEndNotification) {
+        //* ending scrolling
+        // for scrolling down to reach the top
+        double downLast = scrollDownValues.last;
+        double downMaxValue = scrollDownValues.reduce(max);
 
-      if (downMaxValue > widget.reloadingAfterPixels && downLast == 0) {
-        widget.onReload();
+        if (downMaxValue > widget.reloadingAfterPixels && downLast == 0) {
+          widget.onReload();
+        }
+
+        // for scrolling up to reach the bottom
+        double upLast = scrollUpValues.last;
+        double upMaxValue = scrollUpValues.reduce(max);
+        if (upMaxValue > widget.loadingNewAfterPixels && upLast == 0) {
+          widget.onLoadNew();
+        }
       }
-
-      // for scrolling up to reach the bottom
-      double upLast = scrollUpValues.last;
-      double upMaxValue = scrollUpValues.reduce(max);
-      if (upMaxValue > widget.loadingNewAfterPixels && upLast == 0) {
-        widget.onLoadNew();
+    } catch (E) {
+      if (kDebugMode) {
+        print('------------------');
+        print(E);
+        print('------------------');
       }
     }
     return true;
@@ -207,21 +218,22 @@ class _ListLoaderState extends State<ListLoader> {
             ),
           ],
         ),
-        Positioned(
-          bottom: 0,
-          child: Column(
-            children: [
-              LoaderArrow(
-                radius: bottomLoaderRadius,
-                opacity: bottomOpacity,
-                rotation: bottomRotation,
-              ),
-              SizedBox(
-                height: bottomMargin,
-              )
-            ],
+        if (widget.showBottomLoader)
+          Positioned(
+            bottom: 0,
+            child: Column(
+              children: [
+                LoaderArrow(
+                  radius: bottomLoaderRadius,
+                  opacity: bottomOpacity,
+                  rotation: bottomRotation,
+                ),
+                SizedBox(
+                  height: bottomMargin,
+                )
+              ],
+            ),
           ),
-        ),
       ],
     );
   }
