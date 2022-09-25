@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
@@ -24,6 +23,27 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
   FirebaseFirestore ref = FirebaseFirestore.instance;
   int ms = 0;
   bool loading = true;
+
+//? this will reload and fetch data from the start
+  Future<void> reloadData() async {
+    setState(() {
+      loading = true;
+    });
+    var res = await ref
+        .collection(smallProductsCollectionName)
+        .orderBy(createdAtString, descending: true)
+        .limit(10)
+        .get();
+    List<ProductModel> productsHelper = [];
+    for (var element in res.docs) {
+      var p = ProductModel.fromJSON(element.data());
+      productsHelper.add(p);
+    }
+    setState(() {
+      loading = false;
+      products = productsHelper;
+    });
+  }
 
 //? this will fetch the products based on their created date and 10 products at a time
   Future<void> fetchData() async {
@@ -67,12 +87,30 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
   Widget build(BuildContext context) {
     var listLoader = ListLoader(
       reloadingAfterPixels: 130,
-      loadingNewAfterPixels: 50,
+      loadingNewAfterPixels: 20,
       onLoadNew: () {
-        print('loading new');
+        fetchData();
+        var snackBar = SnackBar(
+            content: Text(
+          'تحميل',
+          style: TextStyle(color: Colors.white),
+        ));
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackBar,
+        );
       },
       onReload: () {
-        print('Reloading');
+        reloadData();
+        var snackBar = SnackBar(
+            content: Text(
+          'تحميل',
+          style: TextStyle(color: Colors.white),
+        ));
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackBar,
+        );
       },
       itemCount: products.length,
       itemBuilder: (context, index) => FullPost(
@@ -86,8 +124,9 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
             ? Text('Loading')
             : Column(
                 children: [
-                  Text(
-                      'Loaded ${products.length.toString()} Products Took $ms ms'),
+                  Text(loading
+                      ? 'Loading'
+                      : 'Loaded ${products.length.toString()} Products Took $ms ms'),
                   Expanded(
                     child: listLoader,
                   ),
