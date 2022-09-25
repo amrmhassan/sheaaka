@@ -32,7 +32,6 @@ class ListLoader extends StatefulWidget {
 
 class _ListLoaderState extends State<ListLoader> {
   ScrollController scrollController = ScrollController();
-  double? hiddenListHeight;
   GlobalKey listKey = GlobalKey();
 
   double topScrollSpace = 0;
@@ -108,63 +107,20 @@ class _ListLoaderState extends State<ListLoader> {
     scrollController.removeListener(() {});
 
     scrollController.addListener(() {
+      //? this variable is the best solution for this
+      //? cause it has the hidden list view height and it doesn't change with scrolling
       double maxScrollExtent = scrollController.position.maxScrollExtent;
-      print('maxScrollExtent $maxScrollExtent');
 
       //* this will return the height of the list that is hidden under the full list height
       extentAfter = scrollController.position.extentAfter;
 
       //* this will return the height of the list that is hidden above the full list height
       extentBefore = scrollController.position.extentBefore;
-      // print('extentAfter $extentAfter');
-      // print('extentBefore $extentBefore');
 
-      hiddenListHeight ??= maxScrollExtent;
-
-      if (hiddenListHeight != null && hiddenListHeight! < maxScrollExtent) {
-        setState(() {
-          hiddenListHeight = maxScrollExtent;
-        });
-      }
-
-      // }
       setState(() {
-        // print('Here extent after$extentAfter');
-        topScrollSpace = extentAfter - hiddenListHeight!;
-        bottomScrollSpace = extentBefore - hiddenListHeight!;
+        topScrollSpace = extentAfter - maxScrollExtent;
+        bottomScrollSpace = extentBefore - maxScrollExtent;
       });
-      // double listHeight = listKey.currentContext!.size!.height;
-      // var testHeight =
-      //     listKey.currentContext.;
-      // print('listHeight $listHeight');
-      // print('testHeight $testHeight');
-      // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      //   //* the height of the list viewport that is show in the screen
-      //   //* the height of the full list (height of its children and their paddings, margins, etc)
-      //   // double fullListHeight = hiddenListHeight! + listHeight;
-
-      //   //* the difference of between the full list height and the list height
-      //   // double heightDifference = hiddenListHeight!;
-      //   //? fixed after and fixed before are some helper variables to calculate the space the list will
-      //   //? stretch because its bouncy nature
-      //   //? topScrollSpace = space hidden under the full list height - height difference
-      //   //? this demonstrate what i am trying to say
-      //   //? |----------------------|
-      //   //? |                      |
-      //   //? |     list height      |
-      //   //? |                      |
-      //   //? |                      |
-      //   //? |----------------------|
-      //   //? |                      |
-      //   //? |                      |
-      //   //? |  height difference   |
-      //   //? |                      |
-      //   //? |                      |
-      //   //? |                      |
-      //   //? |----------------------|
-      //   //# |    topScrollSpace    |
-      //   //# |----------------------|
-      // });
     });
   }
 
@@ -172,15 +128,6 @@ class _ListLoaderState extends State<ListLoader> {
   void initState() {
     onScroll();
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant ListLoader oldWidget) {
-    if (oldWidget.itemCount < widget.itemCount) {
-      print('Products Added');
-      hiddenListHeight = null;
-    }
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -273,9 +220,6 @@ class LoaderArrow extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
