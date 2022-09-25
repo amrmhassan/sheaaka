@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/free_colored_space.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
@@ -31,6 +34,10 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   int activeDot = 0;
+  bool _loadingProduct = true;
+  late ProductModel productModel;
+  late bool addedToCart;
+
   // int? activeSizeIndex = 0;
   // int? activeColorIndex = 0;
   void setActiveDot(int i) {
@@ -39,110 +46,155 @@ class _ProductScreenState extends State<ProductScreen> {
     });
   }
 
+  Future<void> fetchProduct(String productModelId) async {
+    setState(() {
+      _loadingProduct = true;
+    });
+    var p = await Provider.of<ProductsProvider>(context, listen: false)
+        .findProductById(productModelId);
+    setState(() {
+      productModel = p;
+      _loadingProduct = false;
+    });
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then(
+      (value) {
+        final productModelId =
+            ModalRoute.of(context)!.settings.arguments as String;
+        fetchProduct(productModelId);
+      },
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productModelId = ModalRoute.of(context)!.settings.arguments as String;
-    var productModel =
-        Provider.of<ProductsProvider>(context).findProductById(productModelId);
+    try {
+      var cartProvider = Provider.of<CartProvider>(context);
+      addedToCart = cartProvider.productAddedToCart(productModel.id);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
 
-    var cartProvider = Provider.of<CartProvider>(context);
-    bool addedToCart = cartProvider.productAddedToCart(productModelId);
     return ScreensWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      FullPostImage(
-                          imagesPath: productModel.imagesPath,
-                          setActiveDot: setActiveDot),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProductScreenAppBar(
-                            bookMark: productModel.wishListId != null,
-                            id: productModel.id,
-                          ),
-                        ],
-                      ),
-                      handleShowBrand(productModel),
-                    ],
+      child: _loadingProduct
+          ? Column(
+              children: [
+                ProductScreenAppBar(
+                  id: '',
+                  loading: _loadingProduct,
+                ),
+                Expanded(
+                  child: Loading(
+                    title: 'تحميل معلومات المنتج',
                   ),
-                  VSpace(factor: .5),
-                  ImageSliderDotsContainer(
-                    activeDot: activeDot,
-                    count: productModel.imagesPath.length,
-                  ),
-                  VSpace(factor: .5),
-                  PaddingWrapper(
+                ),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        //? this row is for the name, price
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        Stack(
+                          alignment: Alignment.topCenter,
                           children: [
-                            ProductName(
-                              name: productModel.name,
+                            FullPostImage(
+                                imagesPath: productModel.imagesPath,
+                                setActiveDot: setActiveDot),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ProductScreenAppBar(
+                                  bookMark: productModel.wishListId != null,
+                                  id: productModel.id,
+                                  loading: _loadingProduct,
+                                ),
+                              ],
                             ),
-                            Spacer(),
-                            handleShowOldPrice(productModel),
-                            HSpace(factor: .3),
-                            ProductCartPrice(
-                              fontWeight: FontWeight.bold,
-                              fontSize: h2TextSize,
-                              price: productModel.price,
-                            ),
+                            handleShowBrand(productModel),
                           ],
                         ),
-                        //? this row is for remaining in stock, rating, number of comments
-                        handleSecondaryProductInfo(productModel),
                         VSpace(factor: .5),
-                        ProductDescriptionText(
-                          desc: productModel.fullDesc ?? 'لا يوجد وصف',
+                        ImageSliderDotsContainer(
+                          activeDot: activeDot,
+                          count: productModel.imagesPath.length,
                         ),
                         VSpace(factor: .5),
-                        productModel.remainingNumber != null &&
-                                productModel.remainingNumber! < 1
-                            ? SizedBox()
-                            : ProductSizeColor(productModel: productModel),
+                        PaddingWrapper(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //? this row is for the name, price
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ProductName(
+                                    name: productModel.name,
+                                  ),
+                                  Spacer(),
+                                  handleShowOldPrice(productModel),
+                                  HSpace(factor: .3),
+                                  ProductCartPrice(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: h2TextSize,
+                                    price: productModel.price,
+                                  ),
+                                ],
+                              ),
+                              //? this row is for remaining in stock, rating, number of comments
+                              handleSecondaryProductInfo(productModel),
+                              VSpace(factor: .5),
+                              ProductDescriptionText(
+                                desc: productModel.fullDesc ?? 'لا يوجد وصف',
+                              ),
+                              VSpace(factor: .5),
+                              productModel.remainingNumber != null &&
+                                      productModel.remainingNumber! < 1
+                                  ? SizedBox()
+                                  : ProductSizeColor(
+                                      productModel: productModel),
+                            ],
+                          ),
+                        ),
+                        FreeColoredSpace(
+                          number: 50,
+                          margin: 5,
+                        ),
                       ],
                     ),
                   ),
-                  FreeColoredSpace(
-                    number: 50,
-                    margin: 5,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPad,
-              vertical: kVPad / 2,
-            ),
-            child: Row(
-              children: [
-                AddToCartButton(
-                  productModel: productModel,
-                  active: addToCartActiveButton(productModel.remainingNumber) &&
-                      !addedToCart,
-                  title: addedToCart ? 'موجود في السلة' : null,
                 ),
-                HSpace(factor: .5),
-                OpenProductCommentsButton(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPad,
+                    vertical: kVPad / 2,
+                  ),
+                  child: Row(
+                    children: [
+                      AddToCartButton(
+                        productModel: productModel,
+                        active: addToCartActiveButton(
+                                productModel.remainingNumber) &&
+                            !addedToCart,
+                        title: addedToCart ? 'موجود في السلة' : null,
+                      ),
+                      HSpace(factor: .5),
+                      OpenProductCommentsButton(),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

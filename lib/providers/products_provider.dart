@@ -5,12 +5,6 @@ import 'package:project/constants/models_constants.dart';
 import 'package:project/models/product_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
-  void refresh() {
-    // products = [...dc.fProducts];
-    notifyListeners();
-  }
-
-  // List<ProductModel> products = [...dc.fProducts];
   //# HomeScreen Products
   FirebaseFirestore ref = FirebaseFirestore.instance;
   List<ProductModel> _homeProducts = [];
@@ -110,8 +104,16 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //? get a product with id
-  ProductModel findProductById(String id) {
-    return _homeProducts.firstWhere((element) => id == element.id);
+  Future<ProductModel> findProductById(String id) async {
+    int i = homeProducts.indexWhere((element) => element.id == id);
+    if (i > 0) {
+      return homeProducts[i];
+    }
+    var res = await ref.collection(productsCollectionName).doc(id).get();
+
+    var p = ProductModel.fromJSON(res.data() as Map<String, dynamic>);
+
+    return p;
   }
 
   //? to get the wishlist products
