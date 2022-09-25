@@ -22,8 +22,4 @@
 //   return s.join();
 // }
 
-import 'package:flutter/material.dart';
-
-void main(List<String> args) {
-  print(Color(0xffaaee));
-}
+void main(List<String> args) {}

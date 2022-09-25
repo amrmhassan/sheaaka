@@ -30,7 +30,7 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
       loading = true;
     });
     var res = await ref
-        .collection(smallProductsCollectionName)
+        .collection(productsCollectionName)
         .orderBy(createdAtString, descending: true)
         .limit(10)
         .get();
@@ -54,13 +54,13 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
     QuerySnapshot<Map<String, dynamic>> res;
     if (products.isNotEmpty) {
       res = await ref
-          .collection(smallProductsCollectionName)
+          .collection(productsCollectionName)
           .orderBy(createdAtString, descending: true)
           .limit(10)
           .startAfter([products.last.createdAt]).get();
     } else {
       res = await ref
-          .collection(smallProductsCollectionName)
+          .collection(productsCollectionName)
           .orderBy(createdAtString, descending: true)
           .limit(10)
           .get();
@@ -87,7 +87,6 @@ class _ListLoadingScreenState extends State<ListLoadingScreen> {
   Widget build(BuildContext context) {
     var listLoader = ListLoader(
       reloadingAfterPixels: 130,
-      loadingNewAfterPixels: 20,
       onLoadNew: () {
         fetchData();
         var snackBar = SnackBar(

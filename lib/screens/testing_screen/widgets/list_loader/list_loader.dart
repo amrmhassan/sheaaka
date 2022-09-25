@@ -17,7 +17,7 @@ const double marginFactor = 5;
 const rotationSpeedFactor = 100;
 
 const double startReloadingAfterPixels = 130;
-const double startLoadingNewAfterPixels = 20;
+const double startLoadingNewAfterPixels = 0;
 
 class ListLoader extends StatefulWidget {
   final int itemCount;
