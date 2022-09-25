@@ -49,6 +49,7 @@ dependencies:
   firebase_core: ^1.23.0
   http: ^0.13.5
   firebase_database: ^9.1.5
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
     - assets/images/fake/
     - assets/icons/catIcons/
     - assets/fonts/
+    - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

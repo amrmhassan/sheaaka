@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/constants/types.dart';
@@ -26,7 +27,29 @@ class HomeScreen extends StatelessWidget {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var homeProducts = productsProvider.homeProducts;
     return productsProvider.loadingHomeProducts
-        ? Text('Loading Home Products')
+        ? Container(
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'تحميل أحدث المنتجات',
+                  style: h3InactiveTextStyle,
+                ),
+                SizedBox(
+                  width: 300,
+                  height: 300,
+                  child: Lottie.asset(
+                    'assets/animations/loading1.json',
+                    animate: true,
+                    reverse: true,
+                  ),
+                )
+              ],
+            ),
+          )
         : Column(
             children: [
               VSpace(),
@@ -40,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               HLine(),
               Expanded(
                 child: ListLoader(
-                  reloadingAfterPixels: 0,
+                  loadingNewAfterPixels: 0,
                   onReload: () {
                     productsProvider.reloadHomeProducts();
                   },

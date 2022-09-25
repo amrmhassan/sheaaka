@@ -34,10 +34,7 @@ class _TestingScreenState extends State<TestingScreen> {
     var ref = FirebaseFirestore.instance;
     String id = Random().nextInt(5000).toString();
     String name = 'name$id';
-    print('START--------------------');
-    print(id);
     ref.collection('users').doc(id).set({'name': name, 'id': id});
-    print('DONE--------------------');
   }
 
   Future<void> createData() async {
