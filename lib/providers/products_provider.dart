@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/firebase_constants.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 
@@ -9,17 +12,60 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   List<ProductModel> products = [...dc.fProducts];
+  //# HomeScreen Products
+  FirebaseFirestore ref = FirebaseFirestore.instance;
+  List<ProductModel> _homeProducts = [];
+  bool loadingHomeProducts = true;
+  bool loadingNextHomeProducts = false;
 
 //? to get the home products after applying its filters
   List<ProductModel> get homeProducts {
-    if (onlyOffers) {
-      return products
-          .where((element) =>
-              element.offerEnd != null &&
-              element.offerEnd!.isAfter(DateTime.now()))
-          .toList();
+    return [..._homeProducts];
+  }
+
+  //? fetch and update home products
+  //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
+  Future<void> reloadHomeProducts([bool noStateNotify = false]) async {
+    if (loadingHomeProducts) return;
+    loadingHomeProducts = true;
+    if (!noStateNotify) notifyListeners();
+
+    QuerySnapshot<Map<String, dynamic>> res;
+    res = await ref
+        .collection(productsCollectionName)
+        .orderBy(createdAtString, descending: true)
+        .limit(10)
+        .get();
+
+    List<ProductModel> helperList = [];
+    for (var element in res.docs) {
+      var p = ProductModel.fromJSON(element.data());
+      helperList.add(p);
     }
-    return [...products];
+    _homeProducts = helperList;
+    loadingHomeProducts = false;
+    notifyListeners();
+  }
+
+  //? loading the next 10 products
+  Future<void> getNextHomeProducts() async {
+    if (loadingNextHomeProducts) return;
+    loadingNextHomeProducts = true;
+    notifyListeners();
+    QuerySnapshot<Map<String, dynamic>> res;
+    res = await ref
+        .collection(productsCollectionName)
+        .orderBy(createdAtString, descending: true)
+        .limit(10)
+        .startAfter([_homeProducts.last.createdAt]).get();
+
+    for (var element in res.docs) {
+      var p = ProductModel.fromJSON(element.data());
+      _homeProducts.add(p);
+    }
+
+    loadingNextHomeProducts = false;
+    notifyListeners();
   }
 
 //@ only offers filter

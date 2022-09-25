@@ -7,8 +7,10 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
 import 'package:project/screens/holder_screen/widgets/random_creator_cheats_open.dart';
+import 'package:provider/provider.dart';
 
 class HolderScreen extends StatefulWidget {
   const HolderScreen({Key? key}) : super(key: key);
@@ -19,6 +21,23 @@ class HolderScreen extends StatefulWidget {
 }
 
 class _HolderScreenState extends State<HolderScreen> {
+  //# home Screen stuff
+  Future<void> fetchHomeProducts() async {
+    try {
+      await Provider.of<ProductsProvider>(context, listen: false)
+          .reloadHomeProducts(true);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    fetchHomeProducts();
+    super.initState();
+  }
+
+//# holder screen stuff
   int activeIndex = 0;
 
   void setActiveIndex(int index) {

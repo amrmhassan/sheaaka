@@ -24,33 +24,35 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var homeProducts = productsProvider.homeProducts;
-    return Column(
-      children: [
-        VSpace(),
-        OpenSearchBox(
-          onTap: () {
-            Navigator.pushNamed(context, SearchScreen.routeName,
-                arguments: SearchTypes.product);
-          },
-        ),
-        VSpace(),
-        HLine(),
-        Expanded(
-          child: ListLoader(
-            onReload: () {
-              print('Reloading');
-            },
-            onLoadNew: () {
-              print('Loading new');
-            },
-            padding: EdgeInsets.only(bottom: kVPad / 2),
-            itemCount: homeProducts.length,
-            itemBuilder: (context, index) => FullPost(
-              fullPostModel: homeProducts[index],
-            ),
-          ),
-        ),
-      ],
-    );
+    return productsProvider.loadingHomeProducts
+        ? Text('Loading Home Products')
+        : Column(
+            children: [
+              VSpace(),
+              OpenSearchBox(
+                onTap: () {
+                  Navigator.pushNamed(context, SearchScreen.routeName,
+                      arguments: SearchTypes.product);
+                },
+              ),
+              VSpace(),
+              HLine(),
+              Expanded(
+                child: ListLoader(
+                  onReload: () {
+                    productsProvider.reloadHomeProducts();
+                  },
+                  onLoadNew: () {
+                    productsProvider.getNextHomeProducts();
+                  },
+                  padding: EdgeInsets.only(bottom: kVPad / 2),
+                  itemCount: homeProducts.length,
+                  itemBuilder: (context, index) => FullPost(
+                    fullPostModel: homeProducts[index],
+                  ),
+                ),
+              ),
+            ],
+          );
   }
 }
