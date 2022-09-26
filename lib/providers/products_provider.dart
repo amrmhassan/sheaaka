@@ -4,8 +4,41 @@ import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/product_model.dart';
 
+int loadingAtATime = 10;
+
+//? i will load all products in the back and load just 10 products to be viewed in the home
+//? and when loading next home products i will check if the loading all product bool is false then i will load the next products from the all products list
+//? else i will load them from the firebase
+
 class ProductsProvider extends ChangeNotifier {
-  //# HomeScreen Products
+  // //# 1] All Products
+  List<ProductModel> _allProducts = [];
+  bool loadingAllProducts = false;
+
+  // //? fetch all products
+  Future<void> fetchAllProducts([bool noStateNotify = false]) async {
+    if (loadingAllProducts) return;
+    loadingAllProducts = true;
+    if (!noStateNotify) notifyListeners();
+
+    QuerySnapshot<Map<String, dynamic>> res;
+    res = await ref
+        .collection(productsCollectionName)
+        .orderBy(createdAtString, descending: true)
+        .get();
+
+    List<ProductModel> helperList = [];
+    for (var element in res.docs) {
+      var p = ProductModel.fromJSON(element.data());
+      helperList.add(p);
+    }
+    _allProducts = helperList;
+    loadingAllProducts = false;
+
+    notifyListeners();
+  }
+
+  //# 2] HomeScreen Products
   FirebaseFirestore ref = FirebaseFirestore.instance;
   List<ProductModel> _homeProducts = [];
   bool loadingHomeProducts = false;
@@ -20,6 +53,7 @@ class ProductsProvider extends ChangeNotifier {
   //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
   Future<void> reloadHomeProducts([bool noStateNotify = false]) async {
     if (loadingHomeProducts) return;
+
     loadingHomeProducts = true;
     if (!noStateNotify) notifyListeners();
 
@@ -27,7 +61,7 @@ class ProductsProvider extends ChangeNotifier {
     res = await ref
         .collection(productsCollectionName)
         .orderBy(createdAtString, descending: true)
-        .limit(10)
+        .limit(loadingAtATime)
         .get();
 
     List<ProductModel> helperList = [];
@@ -36,6 +70,7 @@ class ProductsProvider extends ChangeNotifier {
       helperList.add(p);
     }
     _homeProducts = helperList;
+
     loadingHomeProducts = false;
     notifyListeners();
   }
@@ -43,13 +78,27 @@ class ProductsProvider extends ChangeNotifier {
   //? loading the next 10 products
   Future<void> getNextHomeProducts() async {
     if (loadingNextHomeProducts) return;
+    if (_allProducts.isNotEmpty) {
+      //* this will load the home products from the already loaded products if they exist
+      ProductModel lastHomeProduct = _homeProducts.last;
+      int startIndex = _allProducts
+              .indexWhere((element) => element.id == lastHomeProduct.id) +
+          1;
+      int endIndex = startIndex + loadingAtATime;
+
+      List<ProductModel> nextProducts =
+          _allProducts.sublist(startIndex, endIndex);
+      _homeProducts.addAll(nextProducts);
+      notifyListeners();
+      return;
+    }
     loadingNextHomeProducts = true;
     notifyListeners();
     QuerySnapshot<Map<String, dynamic>> res;
     res = await ref
         .collection(productsCollectionName)
         .orderBy(createdAtString, descending: true)
-        .limit(10)
+        .limit(loadingAtATime)
         .startAfter([_homeProducts.last.createdAt]).get();
 
     for (var element in res.docs) {
@@ -59,6 +108,18 @@ class ProductsProvider extends ChangeNotifier {
 
     loadingNextHomeProducts = false;
     notifyListeners();
+  }
+
+  //# 3] suggestions products
+  List<ProductModel> _suggestionsProducts = [];
+
+  //? fetch suggestions products depending on(Color)
+  Future<void> fetchSuggestionProducts(int colorCode) async {
+    var res = await ref
+        .collection(productsCollectionName)
+        .where(availableColorsString, arrayContains: [])
+        .limit(20)
+        .get();
   }
 
 //@ only offers filter

@@ -3,7 +3,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/free_colored_space.dart';
+import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -21,6 +23,7 @@ import 'package:project/screens/product_screen/widgets/product_description_text.
 import 'package:project/screens/product_screen/widgets/product_name.dart';
 import 'package:project/screens/product_screen/widgets/product_screen_app_bar.dart';
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
+import 'package:project/screens/product_screen/widgets/product_suggestion_card.dart';
 import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +40,7 @@ class _ProductScreenState extends State<ProductScreen> {
   bool _loadingProduct = true;
   late ProductModel productModel;
   late bool addedToCart;
+  ScrollController _scrollController = ScrollController();
 
   // int? activeSizeIndex = 0;
   // int? activeColorIndex = 0;
@@ -73,6 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var productProvider = Provider.of<ProductsProvider>(context);
     try {
       var cartProvider = Provider.of<CartProvider>(context);
       addedToCart = cartProvider.productAddedToCart(productModel.id);
@@ -102,6 +107,7 @@ class _ProductScreenState extends State<ProductScreen> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
+                    controller: _scrollController,
                     physics: BouncingScrollPhysics(),
                     child: Column(
                       children: [
@@ -166,9 +172,39 @@ class _ProductScreenState extends State<ProductScreen> {
                             ],
                           ),
                         ),
-                        FreeColoredSpace(
-                          number: 50,
-                          margin: 5,
+                        HLine(),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: kHPad,
+                            vertical: kVPad / 2,
+                          ),
+                          child: Text(
+                            'الاقتراحات',
+                            style: h2TextStyle,
+                          ),
+                        ),
+                        GridView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 10,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 2 / 3,
+                            crossAxisSpacing: kHPad / 2,
+                            mainAxisSpacing: kVPad / 2,
+                          ),
+                          itemBuilder: (context, index) {
+                            ProductModel p =
+                                productProvider.homeProducts[index];
+                            return ProductSuggestionCard(
+                              imagePath: p.imagesPath[0],
+                              productId: p.id,
+                              price: p.price,
+                            );
+                          },
                         ),
                       ],
                     ),
