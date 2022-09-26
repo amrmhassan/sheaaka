@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/helpers/data_creator.dart';
+import 'package:project/utils/general_utils.dart';
 
 class UploadDataScreen extends StatefulWidget {
   static String routeName = '/upload-data-screen';
@@ -17,6 +18,7 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
   bool uploading = false;
   var ref = FirebaseFirestore.instance;
   String dataLength = '';
+
   @override
   Widget build(BuildContext context) {
     Future<void> createDataFireStore() async {
@@ -27,16 +29,22 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
 
       for (var product in uploadDc.fProducts) {
         await ref
-            .collection(smallProductsCollectionName)
+            .collection(productsCollectionName)
             .doc(product.id)
             .set(product.toJSON());
       }
-      // for (var store in uploadDc.fStores) {
-      //   await ref
-      //       .collection(storesCollectionName)
-      //       .doc(store.id)
-      //       .set(store.toJSON());
-      // }
+      for (var store in uploadDc.fStores) {
+        await ref
+            .collection(storesCollectionName)
+            .doc(store.id)
+            .set(store.toJSON());
+      }
+      for (var offer in uploadDc.fOffers) {
+        await ref
+            .collection(offersCollectionName)
+            .doc(offer.id)
+            .set(offer.toJSON());
+      }
 
       setState(() {
         uploading = false;
@@ -47,7 +55,7 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
       setState(() {
         uploading = true;
       });
-      var res = await ref.collection(smallProductsCollectionName).get();
+      var res = await ref.collection(productsCollectionName).get();
 
       setState(() {
         dataLength = res.docs.length.toString();

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/offer_model.dart';
@@ -28,6 +29,7 @@ class StoreModel {
   Map<String, dynamic> toJSON() {
     List<Map<String, dynamic>> offersJSON =
         offers.map((e) => e.toJSON()).toList();
+    GeoPoint locationPoint = GeoPoint(location.latitude, location.longitude);
     return {
       idString: id,
       nameString: name,
@@ -37,7 +39,7 @@ class StoreModel {
       ratingString: rating,
       descString: desc,
       offersString: offersJSON,
-      locationString: location,
+      locationString: locationPoint,
     };
   }
 }

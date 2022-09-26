@@ -10,12 +10,13 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 
-int storesNumber = 50;
-int productsNumber = 500;
+int storesNumber = 1;
+int productsNumber = 1;
 int wishlistsNumber = 5;
-int offersNumber = 200;
+int offersNumber = 1;
 
 class DataCreator {
   List<ProductModel> fProducts = [];
@@ -159,11 +160,7 @@ class DataCreator {
       rating: rating,
       shortDesc: shortDesc,
       availableColors: availableColors,
-      availableSize: [
-        Sizes.l,
-        Sizes.xl,
-        Sizes.xxl,
-      ],
+      availableSize: getRandomProductSize(),
       offerEnd: null,
       oldPrice: oldPrice,
       wishListId: null,

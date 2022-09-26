@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:project/models/types.dart';
+
 String lovesToString(int n) {
   if (n < 1000) {
     return n.toString();
@@ -18,4 +22,17 @@ String doubleToString(double d, [int roundTo = 2]) {
     s.removeLast();
   }
   return s.join();
+}
+
+List<Sizes> getRandomProductSize() {
+  List<Sizes> randomSizes = [];
+  List<Sizes> allSizes = Sizes.values;
+  int length = Random().nextInt(allSizes.length);
+  List.generate(length, (index) {
+    Sizes size = allSizes[Random().nextInt(length)];
+    if (!randomSizes.contains(size)) {
+      randomSizes.add(size);
+    }
+  });
+  return randomSizes;
 }
