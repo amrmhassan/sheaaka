@@ -1,4 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/models/offer_model.dart';
 
 class StoreModel {
@@ -23,4 +24,20 @@ class StoreModel {
     this.desc,
     this.rating,
   });
+
+  Map<String, dynamic> toJSON() {
+    List<Map<String, dynamic>> offersJSON =
+        offers.map((e) => e.toJSON()).toList();
+    return {
+      idString: id,
+      nameString: name,
+      logoImagePathString: logoImagePath,
+      coverImagePathString: coverImagePath,
+      followersString: followers,
+      ratingString: rating,
+      descString: desc,
+      offersString: offersJSON,
+      locationString: location,
+    };
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:project/constants/models_constants.dart';
+
 class OfferModel {
   final String id;
   final String title;
@@ -18,12 +20,12 @@ class OfferModel {
 
   Map<String, dynamic> toJSON() {
     return {
-      'id': id,
-      'title': title,
-      'imagePath': imagePath,
-      'createdAt': createdAt,
-      'endAt': endAt,
-      'active': active,
+      idString: id,
+      titleString: title,
+      imagesPathString: imagePath,
+      createdAtString: createdAt,
+      endAtString: endAt,
+      activeString: active,
     };
   }
 }

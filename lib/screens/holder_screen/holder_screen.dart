@@ -21,10 +21,8 @@ class HolderScreen extends StatefulWidget {
 
 class _HolderScreenState extends State<HolderScreen> {
   //# home Screen stuff
-  Future<void> fetchProducts() async {
+  Future<void> reloadProducts() async {
     try {
-      Provider.of<ProductsProvider>(context, listen: false)
-          .fetchAllProducts(true);
       await Provider.of<ProductsProvider>(context, listen: false)
           .reloadHomeProducts(true);
     } catch (e) {
@@ -36,7 +34,7 @@ class _HolderScreenState extends State<HolderScreen> {
 
   @override
   void initState() {
-    fetchProducts();
+    reloadProducts();
     super.initState();
   }
 

@@ -16,7 +16,7 @@ class ProductsProvider extends ChangeNotifier {
   bool loadingAllProducts = false;
 
   // //? fetch all products
-  Future<void> fetchAllProducts([bool noStateNotify = false]) async {
+  Future<void> _fetchAllProducts([bool noStateNotify = false]) async {
     if (loadingAllProducts) return;
     loadingAllProducts = true;
     if (!noStateNotify) notifyListeners();
@@ -52,6 +52,8 @@ class ProductsProvider extends ChangeNotifier {
   //? fetch and update home products
   //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
   Future<void> reloadHomeProducts([bool noStateNotify = false]) async {
+    _fetchAllProducts(noStateNotify);
+
     if (loadingHomeProducts) return;
 
     loadingHomeProducts = true;
@@ -185,9 +187,33 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //? get store products
-  List<ProductModel> getStoreProducts(String storeId) {
-    return _homeProducts
-        .where((element) => element.storeId == storeId)
-        .toList();
+  Future<List<ProductModel>> getStoreProducts(String storeId) async {
+    List<ProductModel> storeProducts = [];
+    if (_allProducts.isNotEmpty) {
+      //* this will load the home products from the already loaded products if they exist
+
+      storeProducts = _allProducts
+          .where(
+            (element) => element.storeId == storeId,
+          )
+          .toList();
+      return storeProducts;
+    }
+
+    QuerySnapshot<Map<String, dynamic>> res;
+    res = await ref
+        .collection(productsCollectionName)
+        .where(storeIdString, isEqualTo: storeId)
+        .get();
+
+    for (var element in res.docs) {
+      var p = ProductModel.fromJSON(element.data());
+      storeProducts.add(p);
+    }
+
+    return storeProducts;
   }
 }
+
+
+// samsung a10s

@@ -26,3 +26,16 @@ String availableColorsString = 'availableColorsString';
 
 //? brand model constants
 String iconString = 'iconString';
+
+//? store model constants
+String logoImagePathString = 'logoImagePathString';
+String coverImagePathString = 'coverImagePathString';
+String followersString = 'followersString';
+String descString = 'descString';
+String offersString = 'offersString';
+String locationString = 'locationString';
+
+//? offer model constants
+String titleString = 'titleString';
+String endAtString = 'endAtString';
+String activeString = 'activeString';
