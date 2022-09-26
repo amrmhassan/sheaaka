@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/constants/models_constants.dart';
 
 class OfferModel {
@@ -27,5 +28,15 @@ class OfferModel {
       endAtString: endAt,
       activeString: active,
     };
+  }
+
+  static OfferModel fromJSON(Map<String, dynamic> offerJSON) {
+    return OfferModel(
+      id: offerJSON[idString],
+      imagePath: offerJSON[imagesPathString],
+      title: offerJSON[titleString],
+      createdAt: (offerJSON[createdAtString] as Timestamp).toDate(),
+      endAt: (offerJSON[endAtString] as Timestamp).toDate(),
+    );
   }
 }

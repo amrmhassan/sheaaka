@@ -42,4 +42,32 @@ class StoreModel {
       locationString: locationPoint,
     };
   }
+
+  static StoreModel fromJSON(Map<String, dynamic> storeJSON) {
+    String idF = storeJSON[idString];
+    String coverImagePathF = storeJSON[coverImagePathString];
+    String logoImagePathF = storeJSON[logoImagePathString];
+    int followersF = storeJSON[followersString];
+    String nameF = storeJSON[nameString];
+
+    List<dynamic> offersF =
+        (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
+
+    GeoPoint locationGeoPoint = (storeJSON[locationString] as GeoPoint);
+    LatLng locationF =
+        LatLng(locationGeoPoint.latitude, locationGeoPoint.longitude);
+    String? descF = storeJSON[descString];
+    double? ratingF = storeJSON[ratingString];
+    return StoreModel(
+      id: idF,
+      coverImagePath: coverImagePathF,
+      logoImagePath: logoImagePathF,
+      followers: followersF,
+      name: nameF,
+      offers: [...offersF],
+      location: locationF,
+      desc: descF,
+      rating: ratingF,
+    );
+  }
 }

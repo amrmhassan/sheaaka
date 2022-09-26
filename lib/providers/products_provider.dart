@@ -11,6 +11,8 @@ int loadingAtATime = 10;
 //? else i will load them from the firebase
 
 class ProductsProvider extends ChangeNotifier {
+  FirebaseFirestore ref = FirebaseFirestore.instance;
+
   // //# 1] All Products
   List<ProductModel> _allProducts = [];
   bool loadingAllProducts = false;
@@ -39,7 +41,6 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //# 2] HomeScreen Products
-  FirebaseFirestore ref = FirebaseFirestore.instance;
   List<ProductModel> _homeProducts = [];
   bool loadingHomeProducts = false;
   bool loadingNextHomeProducts = false;
