@@ -26,7 +26,7 @@ class ProductModel {
   String? fullDesc;
   String? shortDesc;
   bool? favorite;
-  bool? hasOffer;
+  late bool hasOffer;
   DateTime? offerEnd;
   DateTime? offerStarted;
 
@@ -46,14 +46,15 @@ class ProductModel {
     this.rating,
     this.oldPrice,
     this.remainingNumber,
-    this.hasOffer,
     this.offerEnd,
     this.offerStarted,
     this.favorite,
     this.fullDesc,
     this.shortDesc,
     this.availableColors,
-  });
+  }) {
+    hasOffer = offerEnd != null && offerEnd!.isAfter(DateTime.now());
+  }
 
 //? to convert a product model to json
   Map<String, dynamic> toJSON() {
@@ -135,7 +136,6 @@ class ProductModel {
       brand: brand,
       favorite: favorite,
       fullDesc: fullDesc,
-      hasOffer: hasOffer,
       nOfComments: nOfComments,
       offerEnd: offerEnd,
       offerStarted: offerStarted,

@@ -42,11 +42,15 @@ class ProductsProvider extends ChangeNotifier {
 
   //# 2] HomeScreen Products
   List<ProductModel> _homeProducts = [];
+
   bool loadingHomeProducts = false;
   bool loadingNextHomeProducts = false;
 
 //? to get the home products after applying its filters
   List<ProductModel> get homeProducts {
+    if (onlyOffers) {
+      return [..._allProducts.where((element) => element.hasOffer)];
+    }
     return [..._homeProducts];
   }
 

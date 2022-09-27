@@ -21,22 +21,25 @@ class ChooseProductColor extends StatelessWidget {
         ? SizedBox()
         : ProductPropsChoose(
             title: 'اللون',
-            child: Row(
-              children: colors!.map(
-                (e) {
-                  int i = colors!.indexWhere(
-                    (element) => element == e,
-                  );
-                  return ProductColorElement(
-                    color: e,
-                    active: activeColorIndex == i,
-                    border: e == Colors.white,
-                    onTap: () {
-                      setActiveColor(i);
-                    },
-                  );
-                },
-              ).toList(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: colors!.map(
+                  (e) {
+                    int i = colors!.indexWhere(
+                      (element) => element == e,
+                    );
+                    return ProductColorElement(
+                      color: e,
+                      active: activeColorIndex == i,
+                      border: e == Colors.white,
+                      onTap: () {
+                        setActiveColor(i);
+                      },
+                    );
+                  },
+                ).toList(),
+              ),
             ),
           );
   }

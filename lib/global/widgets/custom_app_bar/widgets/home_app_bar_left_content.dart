@@ -5,7 +5,10 @@ import 'package:project/global/widgets/custom_app_bar/widgets/filters_icon.dart'
 import 'package:project/global/widgets/custom_app_bar/widgets/n_of_notifications.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/providers/cart_provider.dart';
+import 'package:project/providers/orders_provider.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeAppBarLeftContent extends StatelessWidget {
   const HomeAppBarLeftContent({
@@ -14,6 +17,10 @@ class HomeAppBarLeftContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
+    var ordersProvider = Provider.of<OrdersProvider>(context);
+    int nOfNotifications =
+        (cartProvider.cartItems.length + ordersProvider.orders.length);
     return Row(
       children: [
         FiltersIcon(),
@@ -32,7 +39,10 @@ class HomeAppBarLeftContent extends StatelessWidget {
               },
               child: ProfileImage(),
             ),
-            NOfNotifications(),
+            if (nOfNotifications > 0)
+              NOfNotifications(
+                nOfNotifications: nOfNotifications,
+              ),
           ],
         ),
       ],

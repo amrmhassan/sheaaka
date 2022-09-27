@@ -3,19 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/providers/cart_provider.dart';
-import 'package:project/providers/orders_provider.dart';
-import 'package:provider/provider.dart';
 
 class NOfNotifications extends StatelessWidget {
+  final int nOfNotifications;
   const NOfNotifications({
     Key? key,
+    required this.nOfNotifications,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var cartProvider = Provider.of<CartProvider>(context);
-    var ordersProvider = Provider.of<OrdersProvider>(context);
     return Positioned(
       right: -23,
       top: -8,
@@ -34,8 +31,7 @@ class NOfNotifications extends StatelessWidget {
             ),
           ),
           Text(
-            (cartProvider.cartItems.length + ordersProvider.orders.length)
-                .toString(),
+            nOfNotifications.toString(),
             style: h4LiteTextStyle.copyWith(color: Colors.white),
           )
         ],

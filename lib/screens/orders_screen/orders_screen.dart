@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
+import 'package:project/constants/sizes.dart';
+import 'package:project/constants/styles.dart';
 
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
@@ -29,24 +32,50 @@ class OrdersScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
           ),
-          VSpace(),
-          // CategoryCustomerTypeContainer(),
-          // VSpace(),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: orderProvider.orders.map((e) {
-                  OrderModel firstOrderItem = orderProvider.orders.first;
-                  bool open = e.id == firstOrderItem.id;
-                  return Order(
-                    order: e,
-                    open: open,
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
+          orderProvider.orders.isNotEmpty
+              ? Expanded(
+                  child: Column(
+                    children: [
+                      VSpace(),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
+                            children: orderProvider.orders.reversed.map((e) {
+                              OrderModel firstOrderItem =
+                                  orderProvider.orders.last;
+                              bool open = e.id == firstOrderItem.id;
+                              return Order(
+                                order: e,
+                                open: open,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/icons/order-now.png',
+                        width: ultraLargeIconSize * 2,
+                        color: kSecondaryColor,
+                      ),
+                      VSpace(factor: .5),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'لم تقم بشراء أي منتجات بعد',
+                          style: h4TextStyleInactive,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ],
       ),
     );

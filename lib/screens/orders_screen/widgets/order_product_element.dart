@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/dot.dart';
 import 'package:project/global/widgets/h_space.dart';
@@ -96,15 +97,23 @@ class OrderProductElement extends StatelessWidget {
                   VSpace(),
                   Row(
                     children: [
-                      ProductCartQuantityControllerButton(
-                        onTap: () {},
-                        iconPath: 'assets/icons/plus.png',
+                      RichText(
+                        text: TextSpan(
+                          style: h3InactiveTextStyle,
+                          children: [
+                            TextSpan(text: 'عدد'),
+                            TextSpan(text: ' '),
+                            TextSpan(
+                              text: cartItemModel.quantity.toString(),
+                              style: h3InactiveTextStyle.copyWith(
+                                color: kLoveColor,
+                              ),
+                            ),
+                            TextSpan(text: ' '),
+                            TextSpan(text: 'منتجات'),
+                          ],
+                        ),
                       ),
-                      HSpace(),
-                      ProductCartQuantity(quantity: 1),
-                      HSpace(),
-                      ProductCartQuantityControllerButton(
-                          onTap: () {}, iconPath: 'assets/icons/minus1.png'),
                       Spacer(),
                       DeleteProductFromCartButton(
                         cartItemId: 'kj',

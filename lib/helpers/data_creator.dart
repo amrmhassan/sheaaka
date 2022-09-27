@@ -156,7 +156,6 @@ class DataCreator {
       brand: BrandModel(name: brandName, id: Uuid().v4()),
       nOfComments: nOfComments,
       favorite: rb(),
-      hasOffer: rb(),
       fullDesc: fullDesc,
       remainingNumber: remainingNumber,
       rating: rating,
