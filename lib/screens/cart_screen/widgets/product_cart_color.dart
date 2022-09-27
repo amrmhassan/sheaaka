@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/styles.dart';
+import 'package:project/constants/sizes.dart';
 
 class ProductCartColor extends StatelessWidget {
   final Color color;
@@ -9,9 +9,14 @@ class ProductCartColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'أزرق',
-      style: h4LightTextStyle.copyWith(color: color),
+    return Container(
+      width: mediumIconSize,
+      height: mediumIconSize / 2,
+      color: color,
     );
+    // return Text(
+    //   'أزرق',
+    //   style: h4LightTextStyle.copyWith(color: color),
+    // );
   }
 }

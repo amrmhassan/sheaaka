@@ -71,19 +71,27 @@ class CartProduct extends StatelessWidget {
                   ProductCartPrice(
                     price: cartItemModel.productPrice,
                   ),
-                  HSpace(factor: 0.5),
-                  Dot(),
-                  HSpace(factor: 0.5),
                   if (cartItemModel.size != null)
-                    ProductCartSize(
-                      size: cartItemModel.size!,
+                    Row(
+                      children: [
+                        HSpace(factor: 0.5),
+                        Dot(),
+                        HSpace(factor: 0.5),
+                        ProductCartSize(
+                          size: cartItemModel.size!,
+                        ),
+                      ],
                     ),
-                  HSpace(factor: 0.5),
-                  Dot(),
-                  HSpace(factor: 0.5),
                   if (cartItemModel.color != null)
-                    ProductCartColor(
-                      color: cartItemModel.color!,
+                    Row(
+                      children: [
+                        HSpace(factor: 0.5),
+                        Dot(),
+                        HSpace(factor: 0.5),
+                        ProductCartColor(
+                          color: cartItemModel.color!,
+                        ),
+                      ],
                     ),
                 ],
               ),

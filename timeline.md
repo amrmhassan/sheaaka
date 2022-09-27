@@ -6,4 +6,4 @@
 
 # add search for each store products
 
-# fix wishlist screen
+# fix add to wishlist when there is no wishlist Modal
