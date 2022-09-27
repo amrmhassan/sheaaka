@@ -11,7 +11,7 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';
-import 'package:project/utils/general_utils.dart' as generalUtils;
+import 'package:project/utils/general_utils.dart' as general_utils;
 import 'package:uuid/uuid.dart';
 
 int storesNumber = 10;
@@ -68,9 +68,10 @@ class DataCreator {
   }
 
   //? to create random store offer model
-  OfferModel makeStoreOffer(String imagePath, String title) {
+  OfferModel makeStoreOffer(String imagePath, String title, String productId) {
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now().subtract(Duration(days: r(10)));
+
     DateTime endAt = createdAt.add(Duration(days: r(5)));
 
     return OfferModel(
@@ -79,6 +80,7 @@ class DataCreator {
       title: title,
       createdAt: createdAt,
       endAt: endAt,
+      productId: productId,
     );
   }
 
@@ -148,7 +150,6 @@ class DataCreator {
       storeName: store.name,
       storeLogo: store.logoImagePath,
       imagesPath: imagesPath,
-      storeActiveOffers: store.offers.where((element) => element.active).length,
       createdAt: createdAt,
       lovesNumber: lovesNumber,
       price: price,
@@ -160,11 +161,11 @@ class DataCreator {
       remainingNumber: remainingNumber,
       rating: rating,
       shortDesc: shortDesc,
-      availableColors: generalUtils
+      availableColors: general_utils
           .getRandomList(productColors)
           .map((e) => Color((e as Color).value))
           .toList(),
-      availableSize: generalUtils
+      availableSize: general_utils
           .getRandomList(Sizes.values)
           .map((e) => e as Sizes)
           .toList(),
@@ -192,6 +193,7 @@ class DataCreator {
     ProductModel p = fProducts[i];
     p.offerEnd = endAt;
     p.offerStarted = startDate;
+
     fProducts[i] = p;
   }
 
@@ -215,7 +217,8 @@ class DataCreator {
     //? making offers and add them to products and stores
     fOffers = List.generate(offersNumber, (index) {
       ProductModel rp = fProducts[r(fProducts.length)];
-      OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name);
+
+      OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name, rp.id);
       addOfferToProduct(rp.id, offer.endAt, offer.createdAt);
       addOfferToStore(offer, rp.storeId);
       return offer;

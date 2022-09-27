@@ -34,9 +34,10 @@ String followersString = 'followersString';
 String descString = 'descString';
 String offersString = 'offersString';
 String locationString = 'locationString';
+String distanceString = 'distanceString';
 
 //? offer model constants
 String titleString = 'titleString';
 String endAtString = 'endAtString';
 String activeString = 'activeString';
-String distanceString = 'distanceString';
+String productIdString = 'productIdString';

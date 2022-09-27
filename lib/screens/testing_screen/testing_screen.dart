@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/product_constants.dart';
-import 'package:project/helpers/data_creator.dart';
-import 'package:project/models/types.dart';
-import 'package:project/utils/general_utils.dart';
 
 const double maxLoaderRadius = 100;
 const double radiusFactor = 2;

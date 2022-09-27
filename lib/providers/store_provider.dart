@@ -7,8 +7,6 @@ import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/locations.dart';
 import 'package:project/models/store_model.dart';
 
-//! see the last item in timeline
-
 class StoreProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
 

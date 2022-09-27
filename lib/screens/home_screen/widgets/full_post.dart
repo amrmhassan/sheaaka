@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/offer_timer.dart';
@@ -12,6 +13,7 @@ import 'package:project/screens/home_screen/widgets/post_header.dart';
 import 'package:project/screens/home_screen/widgets/post_info.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
+import 'package:provider/provider.dart';
 
 class FullPost extends StatefulWidget {
   final ProductModel fullPostModel;
@@ -34,6 +36,7 @@ class _FullPostState extends State<FullPost> {
 
   @override
   Widget build(BuildContext context) {
+    var storesProvider = Provider.of<StoreProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -60,7 +63,12 @@ class _FullPostState extends State<FullPost> {
               child: PostHeader(
                 logoImagePath: widget.fullPostModel.storeLogo,
                 storeName: widget.fullPostModel.storeName,
-                offersNumber: widget.fullPostModel.storeActiveOffers,
+                offersNumber: storesProvider.stores
+                    .firstWhere(
+                        (element) => element.id == widget.fullPostModel.storeId)
+                    .offers
+                    .where((element) => element.active)
+                    .length,
               ),
             ),
             VSpace(factor: 0.5),

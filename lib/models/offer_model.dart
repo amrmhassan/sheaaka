@@ -8,6 +8,7 @@ class OfferModel {
   final DateTime createdAt;
   final DateTime endAt;
   late bool active;
+  final String productId;
 
   OfferModel({
     required this.id,
@@ -15,6 +16,7 @@ class OfferModel {
     required this.title,
     required this.createdAt,
     required this.endAt,
+    required this.productId,
   }) {
     active = endAt.isAfter(DateTime.now());
   }
@@ -37,6 +39,7 @@ class OfferModel {
       title: offerJSON[titleString],
       createdAt: (offerJSON[createdAtString] as Timestamp).toDate(),
       endAt: (offerJSON[endAtString] as Timestamp).toDate(),
+      productId: offerJSON[productIdString] ?? '',
     );
   }
 }

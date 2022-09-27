@@ -114,16 +114,16 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //# 3] suggestions products
-  List<ProductModel> _suggestionsProducts = [];
+  // List<ProductModel> _suggestionsProducts = [];
 
   //? fetch suggestions products depending on(Color)
-  Future<void> fetchSuggestionProducts(int colorCode) async {
-    var res = await ref
-        .collection(productsCollectionName)
-        .where(availableColorsString, arrayContains: [])
-        .limit(20)
-        .get();
-  }
+  // Future<void> fetchSuggestionProducts(int colorCode) async {
+  //   var res = await ref
+  //       .collection(productsCollectionName)
+  //       .where(availableColorsString, arrayContains: [])
+  //       .limit(20)
+  //       .get();
+  // }
 
 //@ only offers filter
   bool onlyOffers = false;

@@ -39,7 +39,7 @@ class _ProductScreenState extends State<ProductScreen> {
   bool _loadingProduct = true;
   late ProductModel productModel;
   late bool addedToCart;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   // int? activeSizeIndex = 0;
   // int? activeColorIndex = 0;

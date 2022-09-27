@@ -11,7 +11,6 @@ class ProductModel {
   String storeId;
   String storeName;
   String storeLogo;
-  int storeActiveOffers;
   List<String> imagesPath;
   int lovesNumber;
   double price;
@@ -38,7 +37,6 @@ class ProductModel {
     required this.storeId,
     required this.storeLogo,
     required this.storeName,
-    required this.storeActiveOffers,
     required this.imagesPath,
     required this.createdAt,
     required this.lovesNumber,
@@ -69,7 +67,6 @@ class ProductModel {
       storeIdString: storeId,
       storeLogoString: storeLogo,
       storeNameString: storeName,
-      storeActiveOffersString: storeActiveOffers,
       imagesPathString: imagesPath,
       createdAtString: createdAt,
       lovesNumberString: lovesNumber,
@@ -98,7 +95,6 @@ class ProductModel {
     String storeId = productDOC[storeIdString];
     String storeLogo = productDOC[storeLogoString];
     String storeName = productDOC[storeNameString];
-    int storeActiveOffers = productDOC[storeActiveOffersString];
     List<String> imagesPath = (productDOC[imagesPathString] as List<dynamic>)
         .map((e) => e.toString())
         .toList();
@@ -134,7 +130,6 @@ class ProductModel {
       storeId: storeId,
       storeLogo: storeLogo,
       storeName: storeName,
-      storeActiveOffers: storeActiveOffers,
       imagesPath: imagesPath,
       createdAt: createdAt,
       lovesNumber: lovesNumber,
