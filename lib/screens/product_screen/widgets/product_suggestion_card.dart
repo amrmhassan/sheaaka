@@ -24,7 +24,7 @@ class ProductSuggestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductScreen.routeName,
+        Navigator.pushReplacementNamed(context, ProductScreen.routeName,
             arguments: productId);
       },
       child: Container(

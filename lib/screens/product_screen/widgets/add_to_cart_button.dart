@@ -14,11 +14,16 @@ class AddToCartButton extends StatefulWidget {
   final bool active;
   final String? title;
   final ProductModel productModel;
+  final Color? chosenColor;
+  final Sizes? chosenSize;
+
   const AddToCartButton({
     Key? key,
     this.active = true,
     this.title,
     required this.productModel,
+    required this.chosenColor,
+    required this.chosenSize,
   }) : super(key: key);
 
   @override
@@ -35,8 +40,8 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         onTap: () {
           Provider.of<CartProvider>(context, listen: false).addCartItem(
             widget.productModel.id,
-            Colors.red,
-            Sizes.l,
+            widget.chosenColor,
+            widget.chosenSize,
             widget.productModel.name,
             widget.productModel.imagesPath[0],
             widget.productModel.price,

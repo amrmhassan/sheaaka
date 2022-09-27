@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
+import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -59,18 +61,21 @@ class CartScreen extends StatelessWidget {
                 )
               : Expanded(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'عربة التسوق فارغة',
-                            style: h4TextStyleInactive,
-                          ),
+                      Image.asset(
+                        'assets/icons/shopping-cart.png',
+                        width: ultraLargeIconSize,
+                        color: kSecondaryColor,
+                      ),
+                      VSpace(factor: .5),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'عربة التسوق فارغة',
+                          style: h4TextStyleInactive,
                         ),
                       ),
-                      Spacer(),
-                      Image.asset('assets/icons/shopping-cart.png')
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 //? product Colors
 import 'package:flutter/material.dart';
+import 'package:project/models/types.dart';
 
 const List<Color> productColors = [
   Color(0xffffffff),
@@ -14,4 +15,4 @@ const List<Color> productColors = [
   Color(0xffFD7E4C),
 ];
 
-const List<String> productSizes = ['Xlll', 'Xll', 'M', 'S'];
+const List<Sizes> productSizes = Sizes.values;

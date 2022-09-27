@@ -11,8 +11,8 @@ class CartProvider extends ChangeNotifier {
 //? to add a cart item
   void addCartItem(
     String productId,
-    Color color,
-    Sizes size,
+    Color? color,
+    Sizes? size,
     String productName,
     String productImage,
     double productPrice,
@@ -31,6 +31,8 @@ class CartProvider extends ChangeNotifier {
       productImage: productImage,
     );
     cartItems.add(cartItemModel);
+    print(cartItemModel.color);
+    print(cartItemModel.size);
     notifyListeners();
   }
 

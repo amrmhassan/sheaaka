@@ -74,15 +74,17 @@ class CartProduct extends StatelessWidget {
                   HSpace(factor: 0.5),
                   Dot(),
                   HSpace(factor: 0.5),
-                  ProductCartSize(
-                    size: cartItemModel.size,
-                  ),
+                  if (cartItemModel.size != null)
+                    ProductCartSize(
+                      size: cartItemModel.size!,
+                    ),
                   HSpace(factor: 0.5),
                   Dot(),
                   HSpace(factor: 0.5),
-                  ProductCartColor(
-                    color: cartItemModel.color,
-                  ),
+                  if (cartItemModel.color != null)
+                    ProductCartColor(
+                      color: cartItemModel.color!,
+                    ),
                 ],
               ),
               VSpace(),

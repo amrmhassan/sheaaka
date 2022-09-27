@@ -8,8 +8,8 @@ class CartItemModel {
   final String productName;
   final double productPrice;
   final DateTime createdAt;
-  final Sizes size;
-  final Color color;
+  final Sizes? size;
+  final Color? color;
   bool selected;
   int quantity;
 
@@ -18,8 +18,8 @@ class CartItemModel {
     required this.productId,
     required this.quantity,
     required this.createdAt,
-    required this.size,
-    required this.color,
+    this.size,
+    this.color,
     required this.productImage,
     required this.productName,
     required this.productPrice,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/product_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
@@ -71,7 +72,14 @@ class _ProductScreenState extends State<ProductScreen> {
     });
     var p = Provider.of<ProductsProvider>(context, listen: false)
         .findProductById(productModelId);
+
     setState(() {
+      if (p.availableColors == null || p.availableColors!.isEmpty) {
+        activeColorIndex = null;
+      }
+      if (p.availableSize == null || p.availableSize!.isEmpty) {
+        activeSizeIndex = null;
+      }
       productModel = p;
       _loadingProduct = false;
     });
@@ -217,6 +225,12 @@ class _ProductScreenState extends State<ProductScreen> {
                                 productModel.remainingNumber) &&
                             !addedToCart,
                         title: addedToCart ? 'موجود في السلة' : null,
+                        chosenColor: activeColorIndex == null
+                            ? null
+                            : productModel.availableColors?[activeColorIndex!],
+                        chosenSize: activeSizeIndex == null
+                            ? null
+                            : productModel.availableSize?[activeSizeIndex!],
                       ),
                       HSpace(factor: .5),
                       OpenProductCommentsButton(),
