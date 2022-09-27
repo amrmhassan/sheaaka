@@ -13,8 +13,9 @@ class StoreModel {
   final String? desc;
   final List<OfferModel> offers;
   final LatLng location;
+  double? distance;
 
-  const StoreModel({
+  StoreModel({
     required this.id,
     required this.coverImagePath,
     required this.logoImagePath,
@@ -22,6 +23,7 @@ class StoreModel {
     required this.name,
     required this.offers,
     required this.location,
+    this.distance,
     this.desc,
     this.rating,
   });

@@ -39,3 +39,4 @@ String locationString = 'locationString';
 String titleString = 'titleString';
 String endAtString = 'endAtString';
 String activeString = 'activeString';
+String distanceString = 'distanceString';

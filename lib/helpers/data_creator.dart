@@ -4,18 +4,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/product_constants.dart';
 import 'package:project/models/brand_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
+import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';
-import 'package:project/utils/general_utils.dart';
+import 'package:project/utils/general_utils.dart' as generalUtils;
 import 'package:uuid/uuid.dart';
 
-int storesNumber = 50;
-int productsNumber = 500;
+int storesNumber = 10;
+int productsNumber = 50;
 int wishlistsNumber = 5;
-int offersNumber = 200;
+int offersNumber = 40;
 
 class DataCreator {
   List<ProductModel> fProducts = [];
@@ -158,8 +160,14 @@ class DataCreator {
       remainingNumber: remainingNumber,
       rating: rating,
       shortDesc: shortDesc,
-      availableColors: availableColors,
-      availableSize: getRandomProductSize(),
+      availableColors: generalUtils
+          .getRandomList(productColors)
+          .map((e) => Color((e as Color).value))
+          .toList(),
+      availableSize: generalUtils
+          .getRandomList(Sizes.values)
+          .map((e) => e as Sizes)
+          .toList(),
       offerEnd: null,
       oldPrice: oldPrice,
       wishListId: null,

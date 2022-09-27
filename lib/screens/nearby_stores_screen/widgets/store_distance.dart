@@ -5,29 +5,21 @@ import 'package:project/constants/styles.dart';
 import 'package:project/utils/general_utils.dart';
 
 class StoreDistance extends StatelessWidget {
-  final LatLng currentLocation;
-  final LatLng storeLocation;
+  final double distance;
   const StoreDistance({
     Key? key,
-    required this.currentLocation,
-    required this.storeLocation,
+    required this.distance,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      getLocation(),
+      getDistance(),
       style: h4LiteTextStyle.copyWith(color: Colors.white),
     );
   }
 
-  String getLocation() {
-    double distance = Geolocator.distanceBetween(
-      storeLocation.latitude,
-      storeLocation.longitude,
-      currentLocation.latitude,
-      currentLocation.longitude,
-    );
+  String getDistance() {
     if (distance < 1000) {
       return '${doubleToString(distance, 0)}م';
     } else {

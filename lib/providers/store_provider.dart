@@ -2,7 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:project/constants/firebase_constants.dart';
+import 'package:project/constants/locations.dart';
 import 'package:project/models/store_model.dart';
 
 //! see the last item in timeline
@@ -26,14 +28,21 @@ class StoreProvider extends ChangeNotifier {
     if (!noStateNotify) notifyListeners();
 
     QuerySnapshot<Map<String, dynamic>> res;
-    //! add orderby the location
     res = await ref.collection(storesCollectionName).get();
-
     List<StoreModel> helperList = [];
     for (var element in res.docs) {
-      var p = StoreModel.fromJSON(element.data());
-      helperList.add(p);
+      var s = StoreModel.fromJSON(element.data());
+      double distance = Geolocator.distanceBetween(
+        s.location.latitude,
+        s.location.longitude,
+        myLocation.latitude,
+        myLocation.longitude,
+      );
+      s.distance = distance;
+
+      helperList.add(s);
     }
+    helperList.sort(((a, b) => a.distance!.compareTo(b.distance!)));
     _stores = helperList;
     loadingStores = false;
 

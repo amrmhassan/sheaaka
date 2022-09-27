@@ -36,3 +36,21 @@ List<Sizes> getRandomProductSize() {
   });
   return randomSizes;
 }
+
+List getRandomList(List originalList, [int? length]) {
+  List randomList = [];
+
+  int randomListLength = length ?? Random().nextInt(originalList.length + 1);
+
+  int i = 0;
+
+  while (i < randomListLength) {
+    dynamic item = originalList[Random().nextInt(originalList.length)];
+    if (!randomList.contains(item)) {
+      randomList.add(item);
+      i++;
+    }
+  }
+
+  return randomList;
+}

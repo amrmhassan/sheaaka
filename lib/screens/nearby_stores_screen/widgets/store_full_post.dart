@@ -42,6 +42,8 @@ class StoreFullPost extends StatelessWidget {
                   storeModel.coverImagePath,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                  height: double.infinity,
                 ),
                 Positioned(
                   bottom: 0,
@@ -78,8 +80,7 @@ class StoreFullPost extends StatelessWidget {
                               ),
                               HSpace(),
                               StoreDistance(
-                                storeLocation: storeModel.location,
-                                currentLocation: myLocation,
+                                distance: storeModel.distance as double,
                               ),
                             ],
                           ),
