@@ -14,6 +14,7 @@ class ModalWrapper extends StatelessWidget {
   final String applyButtonTitle;
   final bool showApplyModalButton;
   final Color? color;
+  final bool applyActive;
 
   const ModalWrapper({
     Key? key,
@@ -21,6 +22,7 @@ class ModalWrapper extends StatelessWidget {
     required this.onApply,
     required this.applyButtonTitle,
     this.showApplyModalButton = true,
+    this.applyActive = true,
     this.color,
   }) : super(key: key);
 
@@ -54,6 +56,7 @@ class ModalWrapper extends StatelessWidget {
           VSpace(factor: 2),
           if (showApplyModalButton)
             ApplyModalButton(
+                active: applyActive,
                 onTap: () {
                   onApply();
                   Navigator.pop(context);

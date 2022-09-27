@@ -43,7 +43,10 @@ class ButtonWrapper extends StatelessWidget {
       margin: margin,
       decoration: decoration ??
           BoxDecoration(
-            color: backgroundColor ?? kMainButtonColor,
+            color: active
+                ? (backgroundColor ?? kMainButtonColor)
+                : (backgroundColor?.withOpacity(.2) ??
+                    kMainButtonColor.withOpacity(.2)),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
       child: Material(

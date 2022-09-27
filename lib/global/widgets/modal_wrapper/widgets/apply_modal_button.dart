@@ -9,16 +9,19 @@ import 'package:project/global/widgets/button_wrapper.dart';
 class ApplyModalButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+  final bool active;
 
   const ApplyModalButton({
     Key? key,
     required this.onTap,
     required this.title,
+    this.active = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
+      active: active,
       width: double.infinity,
       backgroundColor: kPrimaryColor,
       padding: EdgeInsets.symmetric(vertical: kVPad / 2),
