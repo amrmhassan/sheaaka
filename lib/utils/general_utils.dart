@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
+//? to handle the loves to string
 String lovesToString(int n) {
   if (n < 1000) {
     return n.toString();
@@ -8,6 +10,7 @@ String lovesToString(int n) {
   }
 }
 
+//? to handle double to string
 String doubleToString(double d, [int roundTo = 2]) {
   List<String> s = d.toStringAsFixed(roundTo).split('');
   for (int i = 0; i < roundTo; i++) {
@@ -22,10 +25,12 @@ String doubleToString(double d, [int roundTo = 2]) {
   return s.join();
 }
 
+//? date to string date
 String dateToString(DateTime date) {
   return '${date.year}-${date.month}-${date.day}';
 }
 
+//? make random list with random length from a list
 List getRandomList(List originalList, [int? length]) {
   List randomList = [];
 
@@ -42,4 +47,15 @@ List getRandomList(List originalList, [int? length]) {
   }
 
   return randomList;
+}
+
+Future<bool> checkConnectivity() async {
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile) {
+    return true;
+  } else if (connectivityResult == ConnectivityResult.wifi) {
+    return true;
+  } else {
+    return false;
+  }
 }
