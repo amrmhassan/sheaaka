@@ -7,10 +7,8 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
-import 'package:project/helpers/data_creator.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
-import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
 import 'package:provider/provider.dart';
 

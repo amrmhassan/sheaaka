@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/product_constants.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/choose_product_type.dart';
@@ -51,9 +52,15 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
           availableSizes: Provider.of<ProductsProvider>(context, listen: false)
               .homeProducts[0]
               .availableSize,
+          activeSizeIndex: 0,
+          setActiveSize: (int x) {},
         ),
         VSpace(),
-        ChooseProductColor(),
+        ChooseProductColor(
+          activeColorIndex: 0,
+          colors: productColors,
+          setActiveColor: (int i) {},
+        ),
         VSpace(),
         ChooseProductType(),
       ],

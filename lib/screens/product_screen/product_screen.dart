@@ -43,19 +43,32 @@ class _ProductScreenState extends State<ProductScreen> {
   String? wishlistItemId;
   final ScrollController _scrollController = ScrollController();
 
-  // int? activeSizeIndex = 0;
-  // int? activeColorIndex = 0;
+  int? activeSizeIndex = 0;
+  int? activeColorIndex = 0;
+
+  void setActiveColorIndex(int i) {
+    setState(() {
+      activeColorIndex = i;
+    });
+  }
+
+  void setActiveSizeIndex(int i) {
+    setState(() {
+      activeSizeIndex = i;
+    });
+  }
+
   void setActiveDot(int i) {
     setState(() {
       activeDot = i;
     });
   }
 
-  Future<void> fetchProduct(String productModelId) async {
+  void fetchProduct(String productModelId) {
     setState(() {
       _loadingProduct = true;
     });
-    var p = await Provider.of<ProductsProvider>(context, listen: false)
+    var p = Provider.of<ProductsProvider>(context, listen: false)
         .findProductById(productModelId);
     setState(() {
       productModel = p;
@@ -174,7 +187,12 @@ class _ProductScreenState extends State<ProductScreen> {
                                       productModel.remainingNumber! < 1
                                   ? SizedBox()
                                   : ProductSizeColor(
-                                      productModel: productModel),
+                                      productModel: productModel,
+                                      setActiveColor: setActiveColorIndex,
+                                      setActiveSize: setActiveSizeIndex,
+                                      activeColorIndex: activeColorIndex,
+                                      activeSizeIndex: activeSizeIndex,
+                                    ),
                             ],
                           ),
                         ),

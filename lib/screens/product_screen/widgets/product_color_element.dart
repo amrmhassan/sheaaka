@@ -8,37 +8,42 @@ class ProductColorElement extends StatelessWidget {
   final Color color;
   final bool border;
   final bool active;
+  final VoidCallback onTap;
 
   const ProductColorElement({
     Key? key,
     required this.color,
     this.border = false,
     this.active = false,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(largePadding * 1.2),
-      width: largeIconSize,
-      height: largeIconSize,
-      margin: EdgeInsets.only(left: mediumPadding),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(smallBorderRadius),
-        color: color,
-        border: border
-            ? Border.all(
-                width: 1,
-                color: kSecondaryColor.withOpacity(.3),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(largePadding * 1.2),
+        width: largeIconSize,
+        height: largeIconSize,
+        margin: EdgeInsets.only(left: mediumPadding),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(smallBorderRadius),
+          color: color,
+          border: border
+              ? Border.all(
+                  width: 1,
+                  color: kSecondaryColor.withOpacity(.3),
+                )
+              : null,
+        ),
+        child: active
+            ? Image.asset(
+                'assets/icons/check-mark.png',
+                color: border ? Colors.black : Colors.white,
               )
-            : null,
+            : SizedBox(),
       ),
-      child: active
-          ? Image.asset(
-              'assets/icons/check-mark.png',
-              color: border ? Colors.black : Colors.white,
-            )
-          : SizedBox(),
     );
   }
 }

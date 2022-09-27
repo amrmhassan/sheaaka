@@ -7,9 +7,14 @@ import 'package:project/screens/product_screen/widgets/product_size_element.dart
 
 class ChooseProductSize extends StatelessWidget {
   final List<Sizes>? availableSizes;
+  final Function(int index) setActiveSize;
+  final int? activeSizeIndex;
+
   const ChooseProductSize({
     Key? key,
     this.availableSizes,
+    required this.activeSizeIndex,
+    required this.setActiveSize,
   }) : super(key: key);
 
   @override
@@ -19,12 +24,18 @@ class ChooseProductSize extends StatelessWidget {
         : ProductPropsChoose(
             title: 'الحجم',
             child: Row(
-              children: availableSizes!
-                  .map((e) => ProductSizeElement(
-                        size: e,
-                        active: e == Sizes.m,
-                      ))
-                  .toList(),
+              children: availableSizes!.map(
+                (e) {
+                  int i = availableSizes!.indexWhere((element) => element == e);
+                  return ProductSizeElement(
+                    size: e,
+                    active: activeSizeIndex == i,
+                    onTap: () {
+                      setActiveSize(i);
+                    },
+                  );
+                },
+              ).toList(),
             ),
           );
   }

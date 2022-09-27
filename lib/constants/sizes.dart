@@ -4,6 +4,7 @@ const double kVPad = 20;
 const double smallPadding = 3;
 const double mediumPadding = 5;
 const double largePadding = 10;
+const double ultraLargePadding = 15;
 
 //? Text Sizes
 const double h1TextSize = 20;
