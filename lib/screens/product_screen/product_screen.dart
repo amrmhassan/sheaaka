@@ -24,6 +24,7 @@ import 'package:project/screens/product_screen/widgets/product_name.dart';
 import 'package:project/screens/product_screen/widgets/product_screen_app_bar.dart';
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
 import 'package:project/screens/product_screen/widgets/product_suggestion_card.dart';
+import 'package:project/screens/product_screen/widgets/product_suggestions.dart';
 import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -83,6 +84,8 @@ class _ProductScreenState extends State<ProductScreen> {
         final productModelId =
             ModalRoute.of(context)!.settings.arguments as String;
         fetchProduct(productModelId);
+        Provider.of<ProductsProvider>(context, listen: false)
+            .fetchSuggestionProducts(productModelId);
       },
     );
 
@@ -91,7 +94,6 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var productProvider = Provider.of<ProductsProvider>(context);
     var wishlistProvider = Provider.of<WishListsProvider>(context);
 
     try {
@@ -197,39 +199,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                         ),
                         HLine(),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: kHPad,
-                            vertical: kVPad / 2,
-                          ),
-                          child: Text(
-                            'الاقتراحات',
-                            style: h2TextStyle,
-                          ),
-                        ),
-                        GridView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: 10,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 2 / 3,
-                            crossAxisSpacing: kHPad / 2,
-                            mainAxisSpacing: kVPad / 2,
-                          ),
-                          itemBuilder: (context, index) {
-                            ProductModel p =
-                                productProvider.homeProducts[index];
-                            return ProductSuggestionCard(
-                              imagePath: p.imagesPath[0],
-                              productId: p.id,
-                              price: p.price,
-                            );
-                          },
-                        ),
+                        ProductSuggestions(),
                       ],
                     ),
                   ),

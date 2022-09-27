@@ -114,16 +114,39 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //# 3] suggestions products
-  // List<ProductModel> _suggestionsProducts = [];
+  List<ProductModel> _suggestionsProducts = [];
 
-  //? fetch suggestions products depending on(Color)
-  // Future<void> fetchSuggestionProducts(int colorCode) async {
-  //   var res = await ref
-  //       .collection(productsCollectionName)
-  //       .where(availableColorsString, arrayContains: [])
-  //       .limit(20)
-  //       .get();
-  // }
+  List<ProductModel> get suggestionsProducts {
+    return [..._suggestionsProducts];
+  }
+
+  // ? fetch suggestions products depending on(Color)
+  void fetchSuggestionProducts(String productId) {
+    _suggestionsProducts.clear();
+    List<ProductModel> helperList = [..._allProducts];
+    ProductModel p = findProductById(productId);
+    List<Color>? productColors = p.availableColors;
+    if (productColors == null || productColors.isEmpty) {
+      return;
+    }
+
+    for (var product in helperList) {
+      if (product.id == productId ||
+          product.availableColors == null ||
+          product.availableColors!.isEmpty) {
+        break;
+      }
+      for (var color in productColors) {
+        if (product.availableColors!.contains(color)) {
+          if (!_suggestionsProducts.contains(product)) {
+            _suggestionsProducts.add(product);
+          }
+        }
+      }
+    }
+
+    notifyListeners();
+  }
 
 //@ only offers filter
   bool onlyOffers = false;
@@ -152,32 +175,10 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-// // to toggle a pro
-//   void toggleWishListProduct(String id, [String? whishListId]) {
-//     int index = _homeProducts.indexWhere((element) => element.id == id);
-//     ProductModel product = _homeProducts[index];
-//     _homeProducts.removeAt(index);
-//     if (product.wishListId == null) {
-//       product.wishListId = whishListId;
-//     } else {
-//       product.wishListId = null;
-//     }
-//     _homeProducts.insert(index, product);
-
-//     notifyListeners();
-//   }
-
   //? get a product with id
   ProductModel findProductById(String id) {
     return _allProducts.firstWhere((element) => element.id == id);
   }
-
-  // // to get the wishlist products
-  // List<ProductModel> getWhishListProducts(String wishListId) {
-  //   return _homeProducts
-  //       .where((element) => element.wishListId == wishListId)
-  //       .toList();
-  // }
 
   //? get store products
   Future<List<ProductModel>> getStoreProducts(String storeId) async {
