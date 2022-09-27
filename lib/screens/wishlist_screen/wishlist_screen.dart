@@ -22,36 +22,31 @@ class WishlistScreen extends StatefulWidget {
 }
 
 class _WishlistScreenState extends State<WishlistScreen> {
-  bool noWishList = false;
   List<ProductModel> wishlistProducts = [];
-  List<ProductModel> activeWishListProducts = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var wishListProvider = Provider.of<WishListsProvider>(context);
 
-    if (wishListProvider.activeWishListId == null) {
-      setState(() {
-        noWishList = true;
-      });
+    if (wishListProvider.wishLists.isNotEmpty &&
+        wishListProvider.activeWishListId == null) {
+      Provider.of<WishListsProvider>(
+        context,
+        listen: false,
+      ).setActiveWishList(wishListProvider.wishLists.first.id);
+    }
+    if (wishListProvider.wishLists.isEmpty) {
     } else {
       setState(() {
-        noWishList = true;
-        wishlistProducts = productsProvider
-            .getWhishListProducts(wishListProvider.activeWishListId!);
-        activeWishListProducts = wishlistProducts
-            .where(((element) =>
-                element.wishListId == wishListProvider.activeWishListId))
+        wishlistProducts = wishListProvider
+            .getWishlistProducts(
+                wishListProvider.activeWishListId!, productsProvider)
+            .reversed
             .toList();
       });
     }
-    return noWishList
+    return wishListProvider.wishLists.isEmpty
         ? Container(
             alignment: Alignment.center,
             width: double.infinity,
@@ -82,7 +77,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 WishListsNames(),
                 VSpace(),
                 Expanded(
-                  child: activeWishListProducts.isEmpty
+                  child: wishlistProducts.isEmpty
                       ? Container(
                           alignment: Alignment.center,
                           child: Column(
@@ -102,9 +97,9 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         )
                       : ListView.builder(
                           physics: BouncingScrollPhysics(),
-                          itemCount: activeWishListProducts.length,
+                          itemCount: wishlistProducts.length,
                           itemBuilder: (context, index) => HorizontalPost(
-                              product: activeWishListProducts.toList()[index]),
+                              product: wishlistProducts.toList()[index]),
                         ),
                 ),
               ],

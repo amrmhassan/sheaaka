@@ -7,7 +7,9 @@ import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
 import 'package:project/screens/search_screen/search_screen.dart';
@@ -26,6 +28,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var homeProducts = productsProvider.homeProducts;
+    var wishlistProvider = Provider.of<WishListsProvider>(context);
+
     return productsProvider.loadingHomeProducts
         ? Container(
             height: double.infinity,
@@ -57,9 +61,14 @@ class HomeScreen extends StatelessWidget {
                   },
                   padding: EdgeInsets.only(bottom: kVPad / 2),
                   itemCount: homeProducts.length,
-                  itemBuilder: (context, index) => FullPost(
-                    fullPostModel: homeProducts[index],
-                  ),
+                  itemBuilder: (context, index) {
+                    ProductModel p = homeProducts[index];
+                    return FullPost(
+                      fullPostModel: p,
+                      wishlistItemId:
+                          wishlistProvider.getWishlistItemByProductId(p.id)?.id,
+                    );
+                  },
                   showBottomLoader: false,
                 ),
               ),

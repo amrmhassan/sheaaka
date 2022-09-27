@@ -63,6 +63,7 @@ class _LoadingProductsScreenState extends State<LoadingProductsScreen> {
                       physics: BouncingScrollPhysics(),
                       itemBuilder: ((context, index) => FullPost(
                             fullPostModel: products[index],
+                            wishlistItemId: null,
                           )),
                     ),
                   ),

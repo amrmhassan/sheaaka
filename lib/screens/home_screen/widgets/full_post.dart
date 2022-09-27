@@ -5,6 +5,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/store_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/offer_timer.dart';
@@ -17,9 +18,12 @@ import 'package:provider/provider.dart';
 
 class FullPost extends StatefulWidget {
   final ProductModel fullPostModel;
+  final String? wishlistItemId;
+
   const FullPost({
     Key? key,
     required this.fullPostModel,
+    required this.wishlistItemId,
   }) : super(key: key);
 
   @override
@@ -94,10 +98,11 @@ class _FullPostState extends State<FullPost> {
                 activeDot: activeDot),
             //? this will take the favorite bool, bookmark bool
             PostActions(
-              bookMarked: widget.fullPostModel.wishListId != null,
+              bookMarked: widget.wishlistItemId != null,
               loved: widget.fullPostModel.favorite,
               lovesNumber: widget.fullPostModel.lovesNumber,
-              id: widget.fullPostModel.id,
+              productId: widget.fullPostModel.id,
+              wishlistItemId: widget.wishlistItemId,
             ),
             //? this will take product info , product short description
             PostInfo(

@@ -3,14 +3,15 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/utils/screens_utils/post_actions_utils.dart';
 
 class ProductScreenAppBar extends StatelessWidget {
-  final bool? bookMark;
   final String id;
   final bool loading;
+  final String? wishlistItemId;
+
   const ProductScreenAppBar({
     Key? key,
-    this.bookMark,
     required this.id,
     required this.loading,
+    required this.wishlistItemId,
   }) : super(key: key);
 
   @override
@@ -18,7 +19,7 @@ class ProductScreenAppBar extends StatelessWidget {
     return CustomAppBar(
       rightIcon: loading
           ? null
-          : handleShowBookMarkButtonAppBarIcon(context, id, bookMark),
+          : handleShowBookMarkButtonAppBarIcon(context, id, wishlistItemId),
     );
   }
 }

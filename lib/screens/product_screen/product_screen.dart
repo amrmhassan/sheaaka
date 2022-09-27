@@ -12,6 +12,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
@@ -39,6 +40,7 @@ class _ProductScreenState extends State<ProductScreen> {
   bool _loadingProduct = true;
   late ProductModel productModel;
   late bool addedToCart;
+  String? wishlistItemId;
   final ScrollController _scrollController = ScrollController();
 
   // int? activeSizeIndex = 0;
@@ -77,9 +79,13 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     var productProvider = Provider.of<ProductsProvider>(context);
+    var wishlistProvider = Provider.of<WishListsProvider>(context);
+
     try {
       var cartProvider = Provider.of<CartProvider>(context);
       addedToCart = cartProvider.productAddedToCart(productModel.id);
+      wishlistItemId =
+          wishlistProvider.getWishlistItemByProductId(productModel.id)?.id;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -93,6 +99,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 ProductScreenAppBar(
                   id: '',
                   loading: _loadingProduct,
+                  wishlistItemId: wishlistItemId,
                 ),
                 Expanded(
                   child: Loading(
@@ -120,9 +127,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ProductScreenAppBar(
-                                  bookMark: productModel.wishListId != null,
                                   id: productModel.id,
                                   loading: _loadingProduct,
+                                  wishlistItemId: wishlistItemId,
                                 ),
                               ],
                             ),

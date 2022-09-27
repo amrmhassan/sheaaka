@@ -14,7 +14,6 @@ class ProductModel {
   List<String> imagesPath;
   int lovesNumber;
   double price;
-  String? wishListId;
 
   BrandModel? brand;
   List<Sizes>? availableSize;
@@ -41,7 +40,6 @@ class ProductModel {
     required this.createdAt,
     required this.lovesNumber,
     required this.price,
-    this.wishListId,
     this.brand,
     this.availableSize,
     this.nOfComments,
@@ -71,7 +69,6 @@ class ProductModel {
       createdAtString: createdAt,
       lovesNumberString: lovesNumber,
       priceString: price,
-      wishListIdString: wishListId,
       brandString: brand?.toJSON(),
       availableSizeString: sizesConverted,
       nOfCommentsString: nOfComments,
@@ -101,7 +98,6 @@ class ProductModel {
     DateTime createdAt = (productDOC[createdAtString] as Timestamp).toDate();
     int lovesNumber = productDOC[lovesNumberString];
     double price = productDOC[priceString];
-    String? wishListId = productDOC[wishListIdString] as String?;
     BrandModel? brand = BrandModel.fromJSON(productDOC[brandString]);
 
     double? oldPrice = productDOC[oldPriceString] as double?;
@@ -134,7 +130,6 @@ class ProductModel {
       createdAt: createdAt,
       lovesNumber: lovesNumber,
       price: price,
-      wishListId: wishListId,
       availableColors: availableColors,
       availableSize: availableSize,
       brand: brand,

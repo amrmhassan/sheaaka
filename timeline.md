@@ -5,3 +5,5 @@
 # add the helper widget to the screen wrapper, with a (Widget ?helperWidget) and show it if not null
 
 # add search for each store products
+
+# fix wishlist screen

@@ -171,7 +171,6 @@ class DataCreator {
           .toList(),
       offerEnd: null,
       oldPrice: oldPrice,
-      wishListId: null,
     );
   }
 
@@ -200,7 +199,6 @@ class DataCreator {
   void addProductToWishList(String wishListId, String productId) {
     int i = fProducts.indexWhere((element) => element.id == productId);
     ProductModel p = fProducts[i];
-    p.wishListId = wishListId;
     fProducts[i] = p;
   }
 

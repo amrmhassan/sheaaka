@@ -16,14 +16,16 @@ class PostActions extends StatelessWidget {
   final bool? bookMarked;
   final bool? loved;
   final int lovesNumber;
-  final String id;
+  final String productId;
+  final String? wishlistItemId;
 
   const PostActions({
     Key? key,
     this.bookMarked,
     this.loved,
     required this.lovesNumber,
-    required this.id,
+    required this.productId,
+    required this.wishlistItemId,
   }) : super(key: key);
 
   @override
@@ -34,8 +36,8 @@ class PostActions extends StatelessWidget {
         children: [
           handleShowBookMarkButton(
             context,
-            id,
-            bookMarked,
+            productId,
+            wishlistItemId,
           ),
           Spacer(),
           CustomIconButton(iconName: 'share', onTap: () {}),
@@ -48,7 +50,7 @@ class PostActions extends StatelessWidget {
                       iconName: 'heart2',
                       onTap: () {
                         Provider.of<ProductsProvider>(context, listen: false)
-                            .toggleFavProduct(id);
+                            .toggleFavProduct(productId);
                       },
                       color: kLoveColor,
                     )
@@ -56,7 +58,7 @@ class PostActions extends StatelessWidget {
                       iconName: 'heart',
                       onTap: () {
                         Provider.of<ProductsProvider>(context, listen: false)
-                            .toggleFavProduct(id);
+                            .toggleFavProduct(productId);
                       },
                     ),
               Text(

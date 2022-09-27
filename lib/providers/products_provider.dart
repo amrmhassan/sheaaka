@@ -152,40 +152,32 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//? to toggle a pro
-  void toggleWishListProduct(String id, [String? whishListId]) {
-    int index = _homeProducts.indexWhere((element) => element.id == id);
-    ProductModel product = _homeProducts[index];
-    _homeProducts.removeAt(index);
-    if (product.wishListId == null) {
-      product.wishListId = whishListId;
-    } else {
-      product.wishListId = null;
-    }
-    _homeProducts.insert(index, product);
+// // to toggle a pro
+//   void toggleWishListProduct(String id, [String? whishListId]) {
+//     int index = _homeProducts.indexWhere((element) => element.id == id);
+//     ProductModel product = _homeProducts[index];
+//     _homeProducts.removeAt(index);
+//     if (product.wishListId == null) {
+//       product.wishListId = whishListId;
+//     } else {
+//       product.wishListId = null;
+//     }
+//     _homeProducts.insert(index, product);
 
-    notifyListeners();
-  }
+//     notifyListeners();
+//   }
 
   //? get a product with id
-  Future<ProductModel> findProductById(String id) async {
-    int i = homeProducts.indexWhere((element) => element.id == id);
-    if (i > 0) {
-      return homeProducts[i];
-    }
-    var res = await ref.collection(productsCollectionName).doc(id).get();
-
-    var p = ProductModel.fromJSON(res.data() as Map<String, dynamic>);
-
-    return p;
+  ProductModel findProductById(String id) {
+    return _allProducts.firstWhere((element) => element.id == id);
   }
 
-  //? to get the wishlist products
-  List<ProductModel> getWhishListProducts(String wishListId) {
-    return _homeProducts
-        .where((element) => element.wishListId == wishListId)
-        .toList();
-  }
+  // // to get the wishlist products
+  // List<ProductModel> getWhishListProducts(String wishListId) {
+  //   return _homeProducts
+  //       .where((element) => element.wishListId == wishListId)
+  //       .toList();
+  // }
 
   //? get store products
   Future<List<ProductModel>> getStoreProducts(String storeId) async {
