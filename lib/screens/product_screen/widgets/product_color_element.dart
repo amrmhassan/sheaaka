@@ -8,6 +8,7 @@ class ProductColorElement extends StatelessWidget {
   final Color color;
   final bool border;
   final bool active;
+
   const ProductColorElement({
     Key? key,
     required this.color,
@@ -28,7 +29,7 @@ class ProductColorElement extends StatelessWidget {
         border: border
             ? Border.all(
                 width: 1,
-                color: kSecondaryColor,
+                color: kSecondaryColor.withOpacity(.3),
               )
             : null,
       ),

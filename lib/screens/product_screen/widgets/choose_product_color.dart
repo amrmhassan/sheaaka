@@ -26,7 +26,7 @@ class ChooseProductColor extends StatelessWidget {
                     (e) => ProductColorElement(
                       color: e,
                       active: selectedColorIndex == colors!.indexOf(e),
-                      border: e == productColors[0],
+                      border: e == Colors.white,
                     ),
                   )
                   .toList(),

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 const List<Color> productColors = [
+  Color(0xffffffff),
   Color(0xff3678bd),
   Color(0xffff8fba),
-  Color(0xffffffff),
   Color(0xffb4b4b4),
   Color(0xff222222),
   Color(0xff398451),
