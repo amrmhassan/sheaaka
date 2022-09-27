@@ -12,10 +12,15 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class OrderTitle extends StatelessWidget {
   final bool open;
+  final String date;
+  final double price;
+
   final VoidCallback onTap;
   const OrderTitle({
     Key? key,
     required this.open,
+    required this.date,
+    required this.price,
     required this.onTap,
   }) : super(key: key);
 
@@ -41,7 +46,7 @@ class OrderTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '20-10-2022',
+              date,
               style: h4TextStyleInactive.copyWith(height: 1),
             ),
             HSpace(factor: .4),
@@ -54,7 +59,7 @@ class OrderTitle extends StatelessWidget {
             HSpace(factor: .4),
             ProductCartPrice(
               fontSize: 14,
-              price: 20,
+              price: price,
             ),
             HSpace(factor: .5),
             Image.asset(

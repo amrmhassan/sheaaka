@@ -12,8 +12,11 @@ import 'package:project/screens/cart_screen/widgets/coupon_area.dart';
 import 'package:provider/provider.dart';
 
 class CartSummary extends StatelessWidget {
+  final VoidCallback onProceedCheckOut;
+
   const CartSummary({
     Key? key,
+    required this.onProceedCheckOut,
   }) : super(key: key);
 
   @override
@@ -36,7 +39,9 @@ class CartSummary extends StatelessWidget {
           CartSummaryElement(
               title: 'الإجمالي', price: cartPrice + shippingPrice),
           Spacer(),
-          CheckOutButton()
+          CheckOutButton(
+            onTap: onProceedCheckOut,
+          )
         ],
       ),
     );

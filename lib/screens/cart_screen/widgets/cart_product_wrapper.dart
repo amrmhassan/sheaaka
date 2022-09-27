@@ -10,7 +10,7 @@ class CartProductWrapper extends StatelessWidget {
   final bool showAfterSeparator;
   final CartItemModel cartItemModel;
   final String cartItemId;
-  //! here add the select cart item and deselect it by long tapping
+
   const CartProductWrapper({
     Key? key,
     this.showAfterSeparator = true,

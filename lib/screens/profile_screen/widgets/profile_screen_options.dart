@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/providers/cart_provider.dart';
+import 'package:project/providers/orders_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/profile_screen/widgets/profile_page_element.dart';
@@ -13,6 +14,7 @@ class ProfileScreenOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int cartItemNumber = Provider.of<CartProvider>(context).cartItems.length;
+    int ordersNumber = Provider.of<OrdersProvider>(context).orders.length;
     return Column(
       children: [
         ProfilePageElement(
@@ -39,7 +41,7 @@ class ProfileScreenOptions extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, OrdersScreen.routeName);
           },
-          notifyTitle: '2',
+          notifyTitle: ordersNumber == 0 ? null : ordersNumber.toString(),
         ),
       ],
     );

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:project/providers/cart_provider.dart';
+import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/products_search_provider.dart';
 import 'package:project/providers/store_provider.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => StoreProvider()),
         ChangeNotifierProvider(create: (ctx) => CartProvider()),
         ChangeNotifierProvider(create: (ctx) => ProductsSearchProvider()),
+        ChangeNotifierProvider(create: (ctx) => OrdersProvider()),
       ],
       child: MaterialApp(
         localizationsDelegates: [

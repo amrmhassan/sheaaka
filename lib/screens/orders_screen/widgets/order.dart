@@ -2,15 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/order_model.dart';
 import 'package:project/screens/cart_screen/widgets/cart_items_count.dart';
 import 'package:project/screens/orders_screen/widgets/order_product_wrapper.dart';
 import 'package:project/screens/orders_screen/widgets/order_title.dart';
+import 'package:project/utils/general_utils.dart';
 
 class Order extends StatefulWidget {
   final bool open;
+  final OrderModel order;
   const Order({
     Key? key,
     this.open = false,
+    required this.order,
   }) : super(key: key);
 
   @override
@@ -38,6 +42,8 @@ class _OrderState extends State<Order> {
     return Column(
       children: [
         OrderTitle(
+          date: dateToString(widget.order.createdAt),
+          price: widget.order.fullPrice,
           open: innerOpen,
           onTap: toggleInnerOpen,
         ),
@@ -47,14 +53,14 @@ class _OrderState extends State<Order> {
                   VSpace(),
                   CartItemsCount(
                     leading: 'يوجد',
-                    count: '3',
+                    count: widget.order.cartItems.length.toString(),
                   ),
-                  OrderProductWrapper(storeName: 'نيو فاشون'),
-                  OrderProductWrapper(storeName: 'نيو '),
-                  OrderProductWrapper(
-                    storeName: 'نيو فاشون',
-                    showAfterSeparator: false,
-                  ),
+                  ...widget.order.cartItems
+                      .map(((e) => OrderProductWrapper(
+                            cartItemModel: e,
+                            storeName: 'Store Name',
+                          )))
+                      .toList(),
                 ],
               )
             : SizedBox(),

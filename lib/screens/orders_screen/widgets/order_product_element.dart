@@ -5,6 +5,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/dot.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/cart_item_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/cart_screen/widgets/cart_products_separator.dart';
 import 'package:project/screens/cart_screen/widgets/delete_product_from_cart_button.dart';
@@ -18,14 +19,14 @@ import 'package:project/screens/cart_screen/widgets/product_cart_size.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 
 class OrderProductElement extends StatelessWidget {
+  final CartItemModel cartItemModel;
+  final String storeName;
+
   const OrderProductElement({
     Key? key,
+    required this.cartItemModel,
     required this.storeName,
-    required this.showAfterSeparator,
   }) : super(key: key);
-
-  final String storeName;
-  final bool showAfterSeparator;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class OrderProductElement extends StatelessWidget {
           // textDirection: TextDirection.rtl,
           children: [
             ProductCartImage(
-              imagePath: 'assets/images/1.jpg',
+              imagePath: cartItemModel.productImage,
               onTap: () {
                 Navigator.pushNamed(context, TrackOrderScreen.routeName);
               },
@@ -51,11 +52,11 @@ class OrderProductElement extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ProductCartName(
-                        name: 'testing name',
+                        name: cartItemModel.productName,
                       ),
                       Spacer(),
                       Text(
-                        storeName,
+                        cartItemModel.productName,
                         style: h5InactiveTextStyle,
                       ),
                     ],
@@ -66,20 +67,30 @@ class OrderProductElement extends StatelessWidget {
                     // textDirection: TextDirection.rtl,
                     children: [
                       ProductCartPrice(
-                        price: 50,
+                        price: cartItemModel.productPrice,
                       ),
-                      HSpace(factor: 0.5),
-                      Dot(),
-                      HSpace(factor: 0.5),
-                      ProductCartSize(
-                        size: Sizes.m,
-                      ),
-                      HSpace(factor: 0.5),
-                      Dot(),
-                      HSpace(factor: 0.5),
-                      ProductCartColor(
-                        color: Colors.blue,
-                      ),
+                      if (cartItemModel.size != null)
+                        Row(
+                          children: [
+                            HSpace(factor: 0.5),
+                            Dot(),
+                            HSpace(factor: 0.5),
+                            ProductCartSize(
+                              size: cartItemModel.size!,
+                            ),
+                          ],
+                        ),
+                      if (cartItemModel.color != null)
+                        Row(
+                          children: [
+                            HSpace(factor: 0.5),
+                            Dot(),
+                            HSpace(factor: 0.5),
+                            ProductCartColor(
+                              color: cartItemModel.color!,
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                   VSpace(),
@@ -106,7 +117,7 @@ class OrderProductElement extends StatelessWidget {
             HSpace(),
           ],
         ),
-        if (showAfterSeparator) const CartProductsSeparator(),
+        const CartProductsSeparator(),
       ],
     );
   }

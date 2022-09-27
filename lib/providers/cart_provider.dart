@@ -6,7 +6,19 @@ import 'package:project/models/types.dart';
 import 'package:uuid/uuid.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<CartItemModel> cartItems = [];
+  List<CartItemModel> _cartItems = [];
+
+  List<CartItemModel> get cartItems {
+    return [..._cartItems];
+  }
+
+//? empty card
+  void emptyCartFromSelectedItems(List<CartItemModel> selectedCartItems) {
+    for (var cartItem in selectedCartItems) {
+      _cartItems.remove(cartItem);
+    }
+    notifyListeners();
+  }
 
 //? to add a cart item
   void addCartItem(
@@ -30,7 +42,7 @@ class CartProvider extends ChangeNotifier {
       productName: productName,
       productImage: productImage,
     );
-    cartItems.add(cartItemModel);
+    _cartItems.add(cartItemModel);
     print(cartItemModel.color);
     print(cartItemModel.size);
     notifyListeners();
@@ -38,54 +50,54 @@ class CartProvider extends ChangeNotifier {
 
 //? to increase the quantity of the cart item by 1
   void cartItemIncreaseQuantity(String cartItemId) {
-    int index = cartItems.indexWhere((element) => element.id == cartItemId);
-    CartItemModel c = cartItems[index];
+    int index = _cartItems.indexWhere((element) => element.id == cartItemId);
+    CartItemModel c = _cartItems[index];
     c.quantity++;
-    cartItems[index] = c;
+    _cartItems[index] = c;
     notifyListeners();
   }
 
 //? to decrease the quantity of the cart item by 1
   void cartItemDecreaseQuantity(String cartItemId) {
-    int index = cartItems.indexWhere((element) => element.id == cartItemId);
-    CartItemModel c = cartItems[index];
+    int index = _cartItems.indexWhere((element) => element.id == cartItemId);
+    CartItemModel c = _cartItems[index];
     if (c.quantity <= 1) {
       return;
     }
     c.quantity--;
-    cartItems[index] = c;
+    _cartItems[index] = c;
     notifyListeners();
   }
 
 //? toggle select cart item
   void toggleSelectCartItem(String cartItemId) {
-    int index = cartItems.indexWhere((element) => element.id == cartItemId);
-    CartItemModel c = cartItems[index];
+    int index = _cartItems.indexWhere((element) => element.id == cartItemId);
+    CartItemModel c = _cartItems[index];
     c.selected = !c.selected;
-    cartItems[index] = c;
+    _cartItems[index] = c;
     notifyListeners();
   }
 
   //? delete cart item
   void deleteCartItem(String cartItemId) {
-    cartItems.removeWhere((element) => element.id == cartItemId);
+    _cartItems.removeWhere((element) => element.id == cartItemId);
     notifyListeners();
   }
 
   //? get the whole cart price(selected products only)
   double getCartPrice() {
-    return cartItems.where((element) => element.selected).fold(
+    return _cartItems.where((element) => element.selected).fold(
         0,
         (previousValue, element) =>
             previousValue + element.productPrice * element.quantity);
   }
 
   List<CartItemModel> get getSelectedCartItems {
-    return cartItems.where((element) => element.selected).toList();
+    return _cartItems.where((element) => element.selected).toList();
   }
 
   bool productAddedToCart(String productId) {
-    return cartItems.indexWhere((element) => element.productId == productId) !=
+    return _cartItems.indexWhere((element) => element.productId == productId) !=
         -1;
   }
 }

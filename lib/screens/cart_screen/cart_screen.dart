@@ -8,7 +8,9 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/language/lang_controller.dart';
+import 'package:project/models/cart_item_model.dart';
 import 'package:project/providers/cart_provider.dart';
+import 'package:project/providers/orders_provider.dart';
 import 'package:project/screens/cart_screen/widgets/cart_items_count.dart';
 import 'package:project/screens/cart_screen/widgets/cart_product_wrapper.dart';
 import 'package:project/screens/cart_screen/widgets/cart_summary.dart';
@@ -17,6 +19,21 @@ import 'package:provider/provider.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
   static const String routeName = '/cart-screen';
+
+  void placeAnOrder(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context, listen: false);
+    List<CartItemModel> selectedCartItems =
+        cartProvider.cartItems.where((element) => element.selected).toList();
+
+    if (selectedCartItems.where((element) => element.selected).isNotEmpty) {
+      Provider.of<OrdersProvider>(context, listen: false)
+          .placeAnOrder(selectedCartItems);
+
+      cartProvider.emptyCartFromSelectedItems(selectedCartItems);
+      SnackBar s = SnackBar(content: Text('تمت إضافة الطلبية'));
+      ScaffoldMessenger.of(context).showSnackBar(s);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +72,9 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                       if (cartProvider.getSelectedCartItems.isNotEmpty)
-                        CartSummary(),
+                        CartSummary(
+                          onProceedCheckOut: () => placeAnOrder(context),
+                        ),
                     ],
                   ),
                 )
