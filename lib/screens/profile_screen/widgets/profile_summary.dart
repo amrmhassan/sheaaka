@@ -5,7 +5,12 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/providers/cart_provider.dart';
+import 'package:project/providers/orders_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
+import 'package:project/screens/cart_screen/widgets/cart_product.dart';
 import 'package:project/screens/profile_screen/widgets/profile_summary_element.dart';
+import 'package:provider/provider.dart';
 
 class ProfileSummary extends StatelessWidget {
   const ProfileSummary({
@@ -14,6 +19,9 @@ class ProfileSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
+    var ordersProvider = Provider.of<OrdersProvider>(context);
+    var wishlistProvider = Provider.of<WishListsProvider>(context);
     return Row(
       children: [
         ProfileImage(
@@ -26,15 +34,15 @@ class ProfileSummary extends StatelessWidget {
         ),
         HSpace(),
         ProfileSummaryElement(
-          amount: '5',
+          amount: cartProvider.cartItems.length,
           title: 'عربة التسوق',
         ),
         ProfileSummaryElement(
-          amount: '4',
+          amount: ordersProvider.orders.length,
           title: "طلبيات",
         ),
         ProfileSummaryElement(
-          amount: '20',
+          amount: wishlistProvider.wishlistItems.length,
           title: "قائمة التمني",
         ),
       ],

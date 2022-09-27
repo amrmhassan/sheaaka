@@ -27,12 +27,12 @@ class OpenStoreDashboardButton extends StatelessWidget {
             'فتح المتجر',
             style: h3TextStyle.copyWith(color: Colors.white),
           ),
-          Positioned(
-            left: kHPad,
-            child: NotifyingBox(
-              title: '16',
-            ),
-          )
+          // Positioned(
+          //   left: kHPad,
+          //   child: NotifyingBox(
+          //     title: '16',
+          //   ),
+          // )
         ],
       ),
     );

@@ -3,7 +3,7 @@ import 'package:project/constants/styles.dart';
 
 class ProfileSummaryElement extends StatelessWidget {
   final String title;
-  final String amount;
+  final int amount;
   const ProfileSummaryElement({
     Key? key,
     required this.amount,
@@ -16,7 +16,7 @@ class ProfileSummaryElement extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            amount,
+            amount.toString(),
             style: h2TextStyle,
           ),
           Text(

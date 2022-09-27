@@ -57,7 +57,7 @@ class CartScreen extends StatelessWidget {
                         child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
-                            children: cartProvider.cartItems.map(
+                            children: cartProvider.cartItems.reversed.map(
                               (element) {
                                 // bool first =
                                 //     cartProvider.cartItems.first == element;
