@@ -33,6 +33,9 @@ class _HolderScreenState extends State<HolderScreen> {
 
   //# home Screen stuff
   Future<void> reloadProducts() async {
+    setState(() {
+      loading = true;
+    });
     //? the loading in this screen only for the network checking
     await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
     await Provider.of<ProductsProvider>(context, listen: false)
@@ -40,10 +43,6 @@ class _HolderScreenState extends State<HolderScreen> {
     int products = Provider.of<ProductsProvider>(context, listen: false)
         .homeProducts
         .length;
-
-    setState(() {
-      loading = true;
-    });
 
     bool online = await checkConnectivity();
     bool allowTheApp = online || products > 0;
