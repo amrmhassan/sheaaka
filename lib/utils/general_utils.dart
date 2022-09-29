@@ -59,3 +59,9 @@ Future<bool> checkConnectivity() async {
     return false;
   }
 }
+
+//? checking if number
+bool isNumeric(String? s) {
+  if (s == null) return false;
+  return double.tryParse(s) != null;
+}

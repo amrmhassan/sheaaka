@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
-import 'package:project/screens/login_screen/widgets/custom_text_form_field.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/form_promo_with_logo.dart';
@@ -57,7 +57,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
               setUserRole: widget.setUserRole,
             ),
             VSpace(factor: 2),
-            CustomTextFormField(
+            CustomTextField(
               errorText: userNameError,
               controller: widget.userNameController,
               iconName: 'user',
@@ -111,6 +111,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
             ),
           ],
         ),
+        VSpace(),
       ],
     );
   }

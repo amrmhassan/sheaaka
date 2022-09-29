@@ -90,7 +90,7 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               password: !showPassword,
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
-              trailingIconName: 'view',
+              trailingIconName: showPassword ? 'hide' : 'view',
               textInputType: TextInputType.visiblePassword,
               handleShowPassword: handleShowPassword,
               errorText: passwordError,
@@ -103,7 +103,7 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               password: !showPasswordConfirmation,
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
-              trailingIconName: 'view',
+              trailingIconName: showPasswordConfirmation ? 'hide' : 'view',
               textInputType: TextInputType.visiblePassword,
               handleShowPassword: handleShowPasswordConfirmation,
               errorText: passConfirmError,
@@ -111,6 +111,7 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
             VSpace(factor: .5),
             CustomTextField(
               controller: widget.phone,
+              textInputType: TextInputType.phone,
               iconName: 'smartphone',
               title: 'رقم الهاتف',
               color: kSecondaryColor,
@@ -134,28 +135,28 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
         ),
         VSpace(),
         SubmitFormButton(
-            onTap: () {
-              String? emailV = emailValidation(widget.email.text);
-              String? passV = passwordValidation(widget.password.text);
-              String? passConfirmV = passConfirmValidation(
-                  widget.passwordConfirm.text, widget.password.text);
-              String? phoneV = phoneValidation(widget.phone.text);
-              setState(() {
-                emailError = emailV;
-                passwordError = passV;
-                passConfirmError = passConfirmV;
-                phoneError = phoneV;
-              });
-              if (emailError == null &&
-                  passwordError == null &&
-                  passConfirmError == null &&
-                  phoneError == null) {
-                widget.incrementActiveIndex();
-              }
-            },
-            title: 'التالي'),
+          onTap: () {
+            String? emailV = emailValidation(widget.email.text);
+            String? passV = passwordValidation(widget.password.text);
+            String? passConfirmV = passConfirmValidation(
+                widget.passwordConfirm.text, widget.password.text);
+            String? phoneV = phoneValidation(widget.phone.text);
+            setState(() {
+              emailError = emailV;
+              passwordError = passV;
+              passConfirmError = passConfirmV;
+              phoneError = phoneV;
+            });
+            if (emailError == null &&
+                passwordError == null &&
+                passConfirmError == null &&
+                phoneError == null) {
+              widget.incrementActiveIndex();
+            }
+          },
+          title: 'التالي',
+        ),
         BackStepFormButton(onTap: widget.decrementActiveIndex),
-        Spacer(),
       ],
     );
   }

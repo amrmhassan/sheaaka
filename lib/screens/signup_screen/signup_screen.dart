@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
-import 'package:project/helpers/responsive.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
@@ -25,11 +24,6 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   //? handling the current step in signing a user up
   int activeStepIndex = 0;
-  void setActiveIndex(int i) {
-    setState(() {
-      activeStepIndex = i;
-    });
-  }
 
   void incrementActiveIndex() {
     setState(() {
@@ -76,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  Widget getSignupStep(int i, Function(int i) setActiveIndex) {
+  Widget getSignupStep(int i) {
     if (i == 0) {
       return SignUpUsername(
         incrementActiveIndex: incrementActiveIndex,
@@ -122,15 +116,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (n) {
-          n.disallowIndicator();
-          return true;
-        },
-        child: SingleChildScrollView(
-          child: PaddingWrapper(
-            height: Responsive.getCleanHeight(context),
-            child: getSignupStep(activeStepIndex, setActiveIndex),
+      child: PaddingWrapper(
+        child: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (n) {
+            n.disallowIndicator();
+            return true;
+          },
+          child: SingleChildScrollView(
+            child: getSignupStep(activeStepIndex),
           ),
         ),
       ),

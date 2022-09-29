@@ -1,4 +1,6 @@
 //? validating user name
+import 'package:project/utils/general_utils.dart';
+
 String? userNameValidation(String? v) {
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
@@ -65,13 +67,18 @@ String? phoneValidation(String? v) {
   }
   if (v.isEmpty) {
     return 'لا يمكن أن يكون فارغا';
-  } else if (v.length < 11) {
-    return 'لا يقل عن 11 رقم';
-  } else if ((!v.startsWith('01')) ||
-      (!v.startsWith('012')) ||
-      (!v.startsWith('010')) ||
-      (!v.startsWith('015'))) {
+  } else if (v.length != 11) {
+    return 'لابد أن يكون 11 رقم';
+  }
+
+  if (!isNumeric(v)) {
+    return 'لابد من إدخال قيم رقمية فقط';
+  }
+
+  String start = v.substring(0, 3);
+  if (start == '011' || start == '012' || start == '010' || start == '015') {
+    return null;
+  } else {
     return 'صيغة الرقم غير صحيحة';
   }
-  return null;
 }
