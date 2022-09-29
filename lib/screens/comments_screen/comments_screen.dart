@@ -6,7 +6,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/profile_image.dart';
+import 'package:project/global/widgets/profile_image/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';

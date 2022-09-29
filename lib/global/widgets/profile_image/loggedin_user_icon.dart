@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
-class ProfileImage extends StatelessWidget {
-  final double? radius;
-  final Border? border;
-  final EdgeInsets? padding;
-
-  const ProfileImage({
+class LoggedInUserIcon extends StatelessWidget {
+  const LoggedInUserIcon({
     Key? key,
-    this.border,
-    this.padding,
-    this.radius,
+    required this.radius,
+    required this.padding,
+    required this.border,
+    required this.imagePath,
+    this.color,
   }) : super(key: key);
+
+  final double? radius;
+  final EdgeInsets? padding;
+  final Border? border;
+  final String? imagePath;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +33,11 @@ class ProfileImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(500),
         ),
         child: Image.asset(
-          'assets/images/profile.jpg',
+          imagePath ?? 'assets/icons/user.png',
           fit: BoxFit.cover,
           width: double.infinity,
           alignment: Alignment.topCenter,
+          color: color,
         ),
       ),
     );

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/profile_image.dart';
+import 'package:project/global/widgets/profile_image/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
