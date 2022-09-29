@@ -7,10 +7,12 @@ import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
 import 'package:project/screens/signup_screen/widgets/signup_email_password.dart';
-import 'package:project/screens/signup_screen/widgets/signup_email_verfication.dart';
+import 'package:project/screens/signup_screen/widgets/signup_email_verification.dart';
 import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
 import 'package:project/screens/signup_screen/widgets/signup_user_photo_upload.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
+
+//! the validation runs on each sign up step by running the validation before going to the next step
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -24,9 +26,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //? handling the current step in signing a user up
   int activeStepIndex = 0;
   void setActiveIndex(int i) {
-    //! here the for validation will take place with showSnackBar
     setState(() {
       activeStepIndex = i;
+    });
+  }
+
+  void incrementActiveIndex() {
+    setState(() {
+      activeStepIndex++;
+    });
+  }
+
+  void decrementActiveIndex() {
+    setState(() {
+      activeStepIndex--;
     });
   }
 
@@ -66,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget getSignupStep(int i, Function(int i) setActiveIndex) {
     if (i == 0) {
       return SignUpUsername(
-        setActiveSignUpStep: () => setActiveIndex(1),
+        incrementActiveIndex: incrementActiveIndex,
         userRole: userRole,
         setUserRole: setUserRole,
         userNameController: userNameController,
@@ -77,15 +90,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: passwordController,
         passwordConfirm: passwordConfirmController,
         phone: phoneNumberController,
-        setActiveSignUpStep: () => setActiveIndex(2),
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
       );
     } else if (i == 2) {
       return SignUpEmailVerification(
-        setActiveSignUpStep: () => setActiveIndex(3),
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
       );
     } else if (i == 3) {
       return SignUpUserPhotoUpload(
-        setActiveSignUpStep: () => setActiveIndex(4),
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
       );
     } else if (i == 4) {
       return SignUpLastStep(
@@ -93,7 +109,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         birthDate: birthDateController,
         userGender: userGender,
         setUserGender: setUserGender,
-        setActiveSignUpStep: () => setActiveIndex(5),
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
         userAgree: userAgree,
         toggleUserAgree: toggleUserAgree,
       );

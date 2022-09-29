@@ -6,7 +6,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/form_promo_with_logo.dart';
@@ -45,12 +45,12 @@ class LoginScreen extends StatelessWidget {
                       title: 'تسجيل الدخول',
                     ),
                     VSpace(factor: .5),
-                    CustomFormInput(
+                    CustomTextField(
                       title: 'الايميل',
                       iconName: 'mail',
                     ),
                     VSpace(factor: .5),
-                    CustomFormInput(
+                    CustomTextField(
                       title: 'الرقم السري',
                       iconName: 'key',
                       trailingIconName: 'view',

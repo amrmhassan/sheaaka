@@ -6,7 +6,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 
@@ -28,13 +28,13 @@ class SignUpStoreInfo extends StatelessWidget {
             title: 'معلمومات التاجر',
           ),
           VSpace(factor: 2),
-          CustomFormInput(
+          CustomTextField(
             iconName: 'shop',
             title: 'اسم المحل',
             padding: EdgeInsets.zero,
           ),
           VSpace(),
-          CustomFormInput(
+          CustomTextField(
             padding: EdgeInsets.zero,
             iconName: 'shop',
             title: 'عنوان المحل',
@@ -78,7 +78,7 @@ class StoreContactsElement extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: CustomFormInput(
+          child: CustomTextField(
             padding: EdgeInsets.zero,
             iconName: iconName,
             title: title,

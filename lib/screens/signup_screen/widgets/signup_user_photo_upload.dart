@@ -6,16 +6,19 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
+import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 
 //? if the user is a trader he can't add a personal photo
 //? before adding the user photo the button will be تخطي
 //? after adding the photo it will be التالي
 class SignUpUserPhotoUpload extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+  final VoidCallback incrementActiveIndex;
+  final VoidCallback decrementActiveIndex;
 
   const SignUpUserPhotoUpload({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.incrementActiveIndex,
+    required this.decrementActiveIndex,
   }) : super(key: key);
 
   @override
@@ -86,7 +89,8 @@ class SignUpUserPhotoUpload extends StatelessWidget {
           style: h5InactiveTextStyle,
         ),
         VSpace(),
-        SubmitFormButton(onTap: setActiveSignUpStep, title: 'التالي'),
+        SubmitFormButton(onTap: incrementActiveIndex, title: 'التالي'),
+        BackStepFormButton(onTap: decrementActiveIndex),
       ],
     );
   }

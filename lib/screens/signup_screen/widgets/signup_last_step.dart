@@ -9,30 +9,33 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
+import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 
 class SignUpLastStep extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+  final VoidCallback incrementActiveIndex;
   final TextEditingController address;
   final TextEditingController birthDate;
   final UserGender userGender;
   final Function(UserGender g) setUserGender;
   final bool userAgree;
   final VoidCallback toggleUserAgree;
+  final VoidCallback decrementActiveIndex;
 
   const SignUpLastStep({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.incrementActiveIndex,
     required this.address,
     required this.birthDate,
     required this.setUserGender,
     required this.userGender,
     required this.userAgree,
     required this.toggleUserAgree,
+    required this.decrementActiveIndex,
   }) : super(key: key);
 
   @override
@@ -61,7 +64,7 @@ class SignUpLastStep extends StatelessWidget {
           ),
         ),
         VSpace(factor: .2),
-        CustomFormInput(
+        CustomTextField(
           controller: address,
           iconName: 'home2',
           title: 'عنوان المنزل',
@@ -88,7 +91,7 @@ class SignUpLastStep extends StatelessWidget {
           ),
         ),
         VSpace(factor: .2),
-        CustomFormInput(
+        CustomTextField(
           controller: birthDate,
           iconName: 'birthday-cake',
           title: 'تاريخ الميلاد',
@@ -136,7 +139,8 @@ class SignUpLastStep extends StatelessWidget {
           ),
         ),
         VSpace(),
-        SubmitFormButton(onTap: setActiveSignUpStep, title: 'تسجيل')
+        SubmitFormButton(onTap: incrementActiveIndex, title: 'تسجيل'),
+        BackStepFormButton(onTap: decrementActiveIndex),
       ],
     );
   }

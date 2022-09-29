@@ -10,7 +10,9 @@ import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 
 class SignUpCongrats extends StatelessWidget {
-  const SignUpCongrats({Key? key}) : super(key: key);
+  const SignUpCongrats({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

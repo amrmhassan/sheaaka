@@ -7,7 +7,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
-class CustomFormInput extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final String title;
   final String iconName;
   final Function(String v)? onChange;
@@ -23,8 +23,9 @@ class CustomFormInput extends StatelessWidget {
   final bool password;
   final VoidCallback? handleShowPassword;
   final TextInputAction? textInputAction;
+  final String? errorText;
 
-  const CustomFormInput({
+  const CustomTextField({
     Key? key,
     required this.iconName,
     required this.title,
@@ -41,6 +42,7 @@ class CustomFormInput extends StatelessWidget {
     this.password = false,
     this.handleShowPassword,
     this.textInputAction,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -48,20 +50,24 @@ class CustomFormInput extends StatelessWidget {
     return PaddingWrapper(
       padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(smallBorderRadius),
+          border: Border.all(
+            width: 1,
+            color:
+                errorText == null ? (borderColor ?? kBlackColor) : kDangerColor,
+          ),
+        ),
         padding: EdgeInsets.symmetric(
           horizontal: kHPad / 2,
           // vertical: kVPad / 2,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(smallBorderRadius),
-          border: Border.all(width: 1, color: borderColor ?? kBlackColor),
         ),
         child: Row(
           children: [
             Image.asset(
               'assets/icons/$iconName.png',
               width: mediumIconSize,
-              color: color ?? kBlackColor,
+              color: errorText == null ? (color ?? kBlackColor) : kDangerColor,
             ),
             HSpace(factor: .5),
             Expanded(
@@ -75,8 +81,12 @@ class CustomFormInput extends StatelessWidget {
                 keyboardType: textInputType,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: title,
-                  hintStyle: h3LiteTextStyle,
+                  hintText: errorText ?? title,
+                  hintStyle: errorText == null
+                      ? h3LiteTextStyle
+                      : h3LiteTextStyle.copyWith(
+                          color: kDangerColor,
+                        ),
                 ),
               ),
             ),

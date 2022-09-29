@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 
 class AddWishlistModal extends StatelessWidget {
   final Function(String n) setWishListName;
@@ -23,7 +23,7 @@ class AddWishlistModal extends StatelessWidget {
           style: h4TextStyle,
         ),
         VSpace(),
-        CustomFormInput(
+        CustomTextField(
           autoFocus: true,
           onChange: setWishListName,
           padding: EdgeInsets.zero,

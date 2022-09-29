@@ -5,16 +5,19 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
+import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 
 class SignUpEmailVerification extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+  final VoidCallback incrementActiveIndex;
+  final VoidCallback decrementActiveIndex;
 
   const SignUpEmailVerification({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.incrementActiveIndex,
+    required this.decrementActiveIndex,
   }) : super(key: key);
 
   @override
@@ -35,7 +38,7 @@ class SignUpEmailVerification extends StatelessWidget {
           ),
         ),
         VSpace(factor: .2),
-        CustomFormInput(
+        CustomTextField(
           iconName: 'email - open',
           title: 'رمز التفعيل',
           color: kSecondaryColor,
@@ -43,9 +46,15 @@ class SignUpEmailVerification extends StatelessWidget {
         ),
         VSpace(),
         SubmitFormButton(
-          onTap: setActiveSignUpStep,
+          onTap: incrementActiveIndex,
           title: 'تأكيد',
-        )
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BackStepFormButton(onTap: decrementActiveIndex),
+          ],
+        ),
       ],
     );
   }

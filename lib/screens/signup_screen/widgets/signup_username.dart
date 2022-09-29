@@ -5,7 +5,7 @@ import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_form_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/form_promo_with_logo.dart';
@@ -13,20 +13,28 @@ import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/social_account_header.dart';
 import 'package:project/screens/login_screen/widgets/social_button.dart';
 import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
+import 'package:project/validation/signup_validation.dart';
 
-class SignUpUsername extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+class SignUpUsername extends StatefulWidget {
+  final VoidCallback incrementActiveIndex;
   final UserRole userRole;
   final Function(UserRole userRole) setUserRole;
   final TextEditingController userNameController;
 
   const SignUpUsername({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.incrementActiveIndex,
     required this.userRole,
     required this.userNameController,
     required this.setUserRole,
   }) : super(key: key);
+
+  @override
+  State<SignUpUsername> createState() => _SignUpUsernameState();
+}
+
+class _SignUpUsernameState extends State<SignUpUsername> {
+  String? userNameError;
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +53,32 @@ class SignUpUsername extends StatelessWidget {
             VSpace(),
             Text('نوع الحساب'),
             EmailTypeSwitch(
-              userRole: userRole,
-              setUserRole: setUserRole,
+              userRole: widget.userRole,
+              setUserRole: widget.setUserRole,
             ),
             VSpace(factor: 2),
-            CustomFormInput(
-              controller: userNameController,
+            CustomTextFormField(
+              errorText: userNameError,
+              controller: widget.userNameController,
               iconName: 'user',
               title: 'اسم المستخدم',
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
             ),
-            VSpace(factor: 2),
+            VSpace(),
             SubmitFormButton(
               title: 'التالي',
-              onTap: setActiveSignUpStep,
+              onTap: () {
+                String? validator =
+                    userNameValidation(widget.userNameController.text);
+                if (validator == null) {
+                  widget.incrementActiveIndex();
+                } else {
+                  setState(() {
+                    userNameError = validator;
+                  });
+                }
+              },
             ),
             VSpace(),
             SocialAccountsHeader(

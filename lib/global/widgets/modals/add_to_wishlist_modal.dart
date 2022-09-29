@@ -5,7 +5,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/whishlists_provider.dart';
-import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
+import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/wishlist_screen/widgets/add_wishlist_button.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class AddToWishlistModal extends StatelessWidget {
                 VSpace(),
                 WishListsNames(allowIndent: false),
                 VSpace(),
-                CustomFormInput(
+                CustomTextField(
                   iconName: 'notes',
                   title: ' إضافة ملاحظة (اختياري)',
                   padding: EdgeInsets.zero,

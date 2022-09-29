@@ -32,8 +32,8 @@ class NotLoggedInUserIcon extends StatelessWidget {
           ),
           child: Image.asset(
             'assets/icons/user-avatar.png',
-            width: largeIconSize,
-            height: largeIconSize,
+            width: mediumIconSize,
+            height: mediumIconSize,
             fit: BoxFit.cover,
             color: kSecondaryColor,
           ),
