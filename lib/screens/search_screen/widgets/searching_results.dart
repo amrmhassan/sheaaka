@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/rating.dart';
 import 'package:project/models/store_model.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/products_search_provider.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/wishlist_screen/widgets/horizontal_post.dart';

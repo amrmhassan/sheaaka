@@ -3,11 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/constants/types.dart';
+
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';

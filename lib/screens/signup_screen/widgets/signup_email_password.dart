@@ -9,7 +9,6 @@ import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
-import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 import 'package:project/validation/signup_validation.dart';
 
 class SignUpEmailPassword extends StatefulWidget {

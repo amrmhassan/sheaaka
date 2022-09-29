@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/locations.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/constants/types.dart';
+
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/open_stores_map_button.dart';

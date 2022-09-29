@@ -1,4 +1,0 @@
-enum SearchTypes {
-  product,
-  store,
-}

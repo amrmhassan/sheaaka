@@ -7,7 +7,6 @@ import 'package:project/global/widgets/profile_image/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
-import 'package:project/screens/profile_screen/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeAppBarLeftContent extends StatelessWidget {

@@ -17,3 +17,8 @@ enum UserGender {
   male,
   female,
 }
+
+enum SearchTypes {
+  product,
+  store,
+}

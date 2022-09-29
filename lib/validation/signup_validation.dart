@@ -1,34 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
-bool validateTextInput({
-  required List<String> formErrors,
-  required Function(List<String> v) setFormErrors,
-  required TextEditingController controller,
-  required Function(String? error) onError,
-  String? lengthError,
-  String? emptyError,
-  int? minLength,
-  bool canBeEmpty = false,
-}) {
-  if (!canBeEmpty && controller.text.isEmpty) {
-    String eLength = 'لا يمكن أن يكون فارغا';
-    onError(eLength);
-    List<String> formErrorsHelper = [];
-    formErrorsHelper.add(eLength);
-    setFormErrors(formErrorsHelper);
-    return false;
-  } else if (controller.text.length < (minLength ?? 3)) {
-    String eEmpty = 'لا يقل عن $minLengthأحرف';
-    List<String> formErrorsHelper = [];
-    formErrorsHelper.add(eEmpty);
-    setFormErrors(formErrorsHelper);
-    onError(eEmpty);
-    return false;
-  }
-  onError(null);
-  return true;
-}
-
+//? validating user name
 String? userNameValidation(String? v) {
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
@@ -41,7 +11,12 @@ String? userNameValidation(String? v) {
   return null;
 }
 
+//? validating email
 String? emailValidation(String? v) {
+  bool emailValid = RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(v.toString());
+
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
   }
@@ -49,10 +24,13 @@ String? emailValidation(String? v) {
     return 'لا يمكن أن يكون فارغا';
   } else if (v.length < 3) {
     return 'لا يقل عن 3 أحرف';
+  } else if (!emailValid) {
+    return 'صيغة الايميل غير صالحة';
   }
   return null;
 }
 
+//? password
 String? passwordValidation(String? v) {
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
@@ -65,6 +43,7 @@ String? passwordValidation(String? v) {
   return null;
 }
 
+//? password confirmation
 String? passConfirmValidation(String? v, String equalsTo) {
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
@@ -79,6 +58,7 @@ String? passConfirmValidation(String? v, String equalsTo) {
   return null;
 }
 
+//? phone number
 String? phoneValidation(String? v) {
   if (v == null) {
     return 'لا يمكن أن يكون فارغا';
@@ -86,7 +66,12 @@ String? phoneValidation(String? v) {
   if (v.isEmpty) {
     return 'لا يمكن أن يكون فارغا';
   } else if (v.length < 11) {
-    return 'لا يقل عن 11 أحرف';
+    return 'لا يقل عن 11 رقم';
+  } else if ((!v.startsWith('01')) ||
+      (!v.startsWith('012')) ||
+      (!v.startsWith('010')) ||
+      (!v.startsWith('015'))) {
+    return 'صيغة الرقم غير صحيحة';
   }
   return null;
 }

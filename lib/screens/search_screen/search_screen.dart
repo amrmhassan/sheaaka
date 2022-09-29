@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/types.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/products_search_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/search_screen/widgets/search_box.dart';
