@@ -6,19 +6,33 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
+import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 
 class SignUpLastStep extends StatelessWidget {
   final VoidCallback setActiveSignUpStep;
+  final TextEditingController address;
+  final TextEditingController birthDate;
+  final UserGender userGender;
+  final Function(UserGender g) setUserGender;
+  final bool userAgree;
+  final VoidCallback toggleUserAgree;
 
   const SignUpLastStep({
     Key? key,
     required this.setActiveSignUpStep,
+    required this.address,
+    required this.birthDate,
+    required this.setUserGender,
+    required this.userGender,
+    required this.userAgree,
+    required this.toggleUserAgree,
   }) : super(key: key);
 
   @override
@@ -48,6 +62,7 @@ class SignUpLastStep extends StatelessWidget {
         ),
         VSpace(factor: .2),
         CustomFormInput(
+          controller: address,
           iconName: 'home2',
           title: 'عنوان المنزل',
           color: kSecondaryColor,
@@ -74,6 +89,7 @@ class SignUpLastStep extends StatelessWidget {
         ),
         VSpace(factor: .2),
         CustomFormInput(
+          controller: birthDate,
           iconName: 'birthday-cake',
           title: 'تاريخ الميلاد',
           color: kSecondaryColor,
@@ -86,12 +102,15 @@ class SignUpLastStep extends StatelessWidget {
           child: Row(
             children: [
               UserGenderElement(
+                active: userGender == UserGender.male,
                 title: 'ذكر',
+                onTap: () => setUserGender(UserGender.male),
               ),
               HSpace(),
               UserGenderElement(
                 title: 'أنثي',
-                active: true,
+                active: userGender == UserGender.female,
+                onTap: () => setUserGender(UserGender.female),
               ),
             ],
           ),
@@ -101,12 +120,13 @@ class SignUpLastStep extends StatelessWidget {
           child: Row(
             children: [
               ProductCartCheckBox(
-                checked: true,
+                checked: userAgree,
+                onTap: toggleUserAgree,
               ),
               HSpace(factor: .3),
               Expanded(
                 child: TitleSubtitle(
-                  onTap: () {},
+                  onTap: toggleUserAgree,
                   title: 'أوافق علي',
                   subTitle: 'الشروط والأحكام',
                   padding: EdgeInsets.zero,
@@ -117,52 +137,6 @@ class SignUpLastStep extends StatelessWidget {
         ),
         VSpace(),
         SubmitFormButton(onTap: setActiveSignUpStep, title: 'تسجيل')
-      ],
-    );
-  }
-}
-
-class UserGenderElement extends StatelessWidget {
-  final String title;
-  final bool active;
-
-  const UserGenderElement({
-    Key? key,
-    this.active = false,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: smallIconSize,
-          height: smallIconSize,
-          padding: EdgeInsets.all(smallPadding / 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(500),
-            border: Border.all(
-              width: 2,
-              color: active ? kPrimaryColor : kSecondaryColor,
-            ),
-          ),
-          child: active
-              ? Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(500),
-                  ),
-                )
-              : SizedBox(),
-        ),
-        HSpace(factor: .4),
-        Text(
-          title,
-          style: h4TextStyle,
-        ),
       ],
     );
   }

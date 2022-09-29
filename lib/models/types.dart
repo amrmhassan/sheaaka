@@ -6,3 +6,14 @@ enum Sizes {
   xxl,
   xxxl,
 }
+
+enum UserRole {
+  trader,
+  normal,
+  delivery,
+}
+
+enum UserGender {
+  male,
+  female,
+}

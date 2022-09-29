@@ -9,13 +9,41 @@ import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 
-class SignUpEmailPassword extends StatelessWidget {
+class SignUpEmailPassword extends StatefulWidget {
   final VoidCallback setActiveSignUpStep;
+  final TextEditingController email;
+  final TextEditingController password;
+  final TextEditingController passwordConfirm;
+  final TextEditingController phone;
 
   const SignUpEmailPassword({
     Key? key,
     required this.setActiveSignUpStep,
+    required this.email,
+    required this.password,
+    required this.passwordConfirm,
+    required this.phone,
   }) : super(key: key);
+
+  @override
+  State<SignUpEmailPassword> createState() => _SignUpEmailPasswordState();
+}
+
+class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
+  bool showPassword = false;
+  bool showPasswordConfirmation = false;
+
+  void handlePassword() {
+    setState(() {
+      showPassword = !showPassword;
+    });
+  }
+
+  void handlePasswordConfirmation() {
+    setState(() {
+      showPasswordConfirmation = !showPasswordConfirmation;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,29 +65,40 @@ class SignUpEmailPassword extends StatelessWidget {
               ),
             ),
             CustomFormInput(
+              controller: widget.email,
               iconName: 'email',
               title: 'الايميل',
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
+              textInputType: TextInputType.emailAddress,
             ),
             VSpace(factor: .5),
             CustomFormInput(
+              controller: widget.password,
               iconName: 'key',
               title: 'الرقم السري',
+              password: !showPassword,
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
               trailingIconName: 'view',
+              textInputType: TextInputType.visiblePassword,
+              handleShowPassword: handlePassword,
             ),
             VSpace(factor: .5),
             CustomFormInput(
+              controller: widget.passwordConfirm,
               iconName: 'key',
               title: 'تأكيد الرقم السري',
+              password: !showPasswordConfirmation,
               color: kSecondaryColor,
               borderColor: kSecondaryColor,
               trailingIconName: 'view',
+              textInputType: TextInputType.visiblePassword,
+              handleShowPassword: handlePasswordConfirmation,
             ),
             VSpace(factor: .5),
             CustomFormInput(
+              controller: widget.phone,
               iconName: 'smartphone',
               title: 'رقم الهاتف',
               color: kSecondaryColor,
@@ -81,7 +120,7 @@ class SignUpEmailPassword extends StatelessWidget {
           ],
         ),
         VSpace(),
-        SubmitFormButton(onTap: setActiveSignUpStep, title: 'التالي'),
+        SubmitFormButton(onTap: widget.setActiveSignUpStep, title: 'التالي'),
         Spacer(),
       ],
     );

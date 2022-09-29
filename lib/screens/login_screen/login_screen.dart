@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/helpers/responsive.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
@@ -21,73 +22,82 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: PaddingWrapper(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            VSpace(),
-            FormHeaderWithLogo(
-              iconName: 'login',
-              title: 'شياكة',
-            ),
-            VSpace(factor: 2),
-            Column(
+      child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (n) {
+          n.disallowIndicator();
+          return true;
+        },
+        child: SingleChildScrollView(
+          child: PaddingWrapper(
+            height: Responsive.getCleanHeight(context),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FormPromoWithLogo(
-                  title: 'تسجيل الدخول',
-                ),
-                VSpace(factor: .5),
-                CustomFormInput(
-                  title: 'الايميل',
-                  iconName: 'mail',
-                ),
-                VSpace(factor: .5),
-                CustomFormInput(
-                  title: 'الرقم السري',
-                  iconName: 'key',
-                  trailingIconName: 'view',
-                ),
                 VSpace(),
-                SubmitFormButton(
-                  title: 'تسجيل الدخول',
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, HolderScreen.routeName);
-                  },
+                FormHeaderWithLogo(
+                  iconName: 'login',
+                  title: 'شياكة',
                 ),
-                VSpace(),
-                TitleSubtitle(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, SignUpScreen.routeName);
-                  },
-                ),
-              ],
-            ),
-            VSpace(factor: 2),
-            Column(
-              children: [
-                SocialAccountsHeader(),
-                VSpace(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                VSpace(factor: 2),
+                Column(
                   children: [
-                    SocialButton(
-                      title: 'Google',
-                      iconName: 'google',
-                      onTap: () {},
+                    FormPromoWithLogo(
+                      title: 'تسجيل الدخول',
                     ),
-                    SocialButton(
-                      title: 'Facebook',
-                      iconName: 'facebook',
-                      onTap: () {},
+                    VSpace(factor: .5),
+                    CustomFormInput(
+                      title: 'الايميل',
+                      iconName: 'mail',
+                    ),
+                    VSpace(factor: .5),
+                    CustomFormInput(
+                      title: 'الرقم السري',
+                      iconName: 'key',
+                      trailingIconName: 'view',
+                    ),
+                    VSpace(),
+                    SubmitFormButton(
+                      title: 'تسجيل الدخول',
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, HolderScreen.routeName);
+                      },
+                    ),
+                    VSpace(),
+                    TitleSubtitle(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, SignUpScreen.routeName);
+                      },
                     ),
                   ],
                 ),
+                VSpace(factor: 2),
+                Column(
+                  children: [
+                    SocialAccountsHeader(),
+                    VSpace(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SocialButton(
+                          title: 'Google',
+                          iconName: 'google',
+                          onTap: () {},
+                        ),
+                        SocialButton(
+                          title: 'Facebook',
+                          iconName: 'facebook',
+                          onTap: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                VSpace(factor: 3)
               ],
             ),
-            VSpace(factor: 3)
-          ],
+          ),
         ),
       ),
     );

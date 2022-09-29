@@ -4,35 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/models/types.dart';
 
 const double width = 200;
 const double borderWidth = 1;
 const double height = 50;
 
-class EmailTypeSwitch extends StatefulWidget {
+class EmailTypeSwitch extends StatelessWidget {
+  final UserRole userRole;
+
+  final Function(UserRole userRole) setUserRole;
   const EmailTypeSwitch({
     Key? key,
+    required this.userRole,
+    required this.setUserRole,
   }) : super(key: key);
 
   @override
-  State<EmailTypeSwitch> createState() => _EmailTypeSwitchState();
-}
-
-class _EmailTypeSwitchState extends State<EmailTypeSwitch> {
-  bool on = true;
-  void toggleButton() {
-    setState(() {
-      on = !on;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    bool on = userRole == UserRole.normal;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: toggleButton,
+          onTap: () => setUserRole(on ? UserRole.trader : UserRole.normal),
           child: Stack(
             children: [
               Positioned(

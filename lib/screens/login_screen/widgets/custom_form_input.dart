@@ -18,6 +18,11 @@ class CustomFormInput extends StatelessWidget {
   final EdgeInsets? padding;
   final Color? trailingIconColor;
   final bool autoFocus;
+  final TextEditingController? controller;
+  final TextInputType? textInputType;
+  final bool password;
+  final VoidCallback? handleShowPassword;
+  final TextInputAction? textInputAction;
 
   const CustomFormInput({
     Key? key,
@@ -31,6 +36,11 @@ class CustomFormInput extends StatelessWidget {
     this.trailingIconWidget,
     this.trailingIconColor,
     this.autoFocus = false,
+    this.controller,
+    this.textInputType,
+    this.password = false,
+    this.handleShowPassword,
+    this.textInputAction,
   }) : super(key: key);
 
   @override
@@ -56,8 +66,13 @@ class CustomFormInput extends StatelessWidget {
             HSpace(factor: .5),
             Expanded(
               child: TextField(
+                textInputAction: textInputAction ?? TextInputAction.next,
+                obscureText: password,
+                autocorrect: !password,
+                controller: controller,
                 onChanged: onChange,
                 autofocus: autoFocus,
+                keyboardType: textInputType,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: title,
@@ -66,10 +81,13 @@ class CustomFormInput extends StatelessWidget {
               ),
             ),
             if (trailingIconName != null)
-              Image.asset(
-                'assets/icons/$trailingIconName.png',
-                width: mediumIconSize,
-                color: trailingIconColor ?? kSecondaryColor,
+              GestureDetector(
+                onTap: handleShowPassword,
+                child: Image.asset(
+                  'assets/icons/$trailingIconName.png',
+                  width: mediumIconSize,
+                  color: trailingIconColor ?? kSecondaryColor,
+                ),
               ),
             if (trailingIconWidget != null) trailingIconWidget!
           ],

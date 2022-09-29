@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_form_input.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
@@ -15,9 +16,16 @@ import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
 class SignUpUsername extends StatelessWidget {
   final VoidCallback setActiveSignUpStep;
+  final UserRole userRole;
+  final Function(UserRole userRole) setUserRole;
+  final TextEditingController userNameController;
+
   const SignUpUsername({
     Key? key,
     required this.setActiveSignUpStep,
+    required this.userRole,
+    required this.userNameController,
+    required this.setUserRole,
   }) : super(key: key);
 
   @override
@@ -36,9 +44,13 @@ class SignUpUsername extends StatelessWidget {
             ),
             VSpace(),
             Text('نوع الحساب'),
-            EmailTypeSwitch(),
+            EmailTypeSwitch(
+              userRole: userRole,
+              setUserRole: setUserRole,
+            ),
             VSpace(factor: 2),
             CustomFormInput(
+              controller: userNameController,
               iconName: 'user',
               title: 'اسم المستخدم',
               color: kSecondaryColor,
