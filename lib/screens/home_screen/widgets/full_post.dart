@@ -115,14 +115,6 @@ class _FullPostState extends State<FullPost> {
   }
 
   bool showOfferTimer() {
-    if (widget.fullPostModel.hasOffer == null) {
-      return false;
-    } else if (widget.fullPostModel.offerEnd == null) {
-      return false;
-    } else if (DateTime.now().isAfter(widget.fullPostModel.offerEnd!)) {
-      return false;
-    } else {
-      return true;
-    }
+    return widget.fullPostModel.hasOffer;
   }
 }

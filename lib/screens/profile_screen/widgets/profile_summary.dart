@@ -8,7 +8,6 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
-import 'package:project/screens/cart_screen/widgets/cart_product.dart';
 import 'package:project/screens/profile_screen/widgets/profile_summary_element.dart';
 import 'package:provider/provider.dart';
 

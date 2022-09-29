@@ -2,9 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/product_constants.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
@@ -24,7 +22,6 @@ import 'package:project/screens/product_screen/widgets/product_description_text.
 import 'package:project/screens/product_screen/widgets/product_name.dart';
 import 'package:project/screens/product_screen/widgets/product_screen_app_bar.dart';
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
-import 'package:project/screens/product_screen/widgets/product_suggestion_card.dart';
 import 'package:project/screens/product_screen/widgets/product_suggestions.dart';
 import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';

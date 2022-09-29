@@ -6,7 +6,7 @@ import 'package:project/models/types.dart';
 import 'package:uuid/uuid.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<CartItemModel> _cartItems = [];
+  final List<CartItemModel> _cartItems = [];
 
   List<CartItemModel> get cartItems {
     return [..._cartItems];
@@ -43,8 +43,6 @@ class CartProvider extends ChangeNotifier {
       productImage: productImage,
     );
     _cartItems.add(cartItemModel);
-    print(cartItemModel.color);
-    print(cartItemModel.size);
     notifyListeners();
   }
 

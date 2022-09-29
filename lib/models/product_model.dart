@@ -103,7 +103,6 @@ class ProductModel {
 
     double? oldPrice = productDOC[oldPriceString] as double?;
     bool? favorite = productDOC[favoriteString] as bool?;
-    bool? hasOffer = productDOC[hasOfferString] as bool?;
     String? fullDesc = productDOC[fullDescString] as String?;
     String? shortDesc = productDOC[shortDescString] as String?;
     int? nOfComments = productDOC[nOfCommentsString] as int?;

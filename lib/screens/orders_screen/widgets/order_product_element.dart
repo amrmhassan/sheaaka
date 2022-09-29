@@ -7,15 +7,12 @@ import 'package:project/global/widgets/dot.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/cart_item_model.dart';
-import 'package:project/models/types.dart';
 import 'package:project/screens/cart_screen/widgets/cart_products_separator.dart';
 import 'package:project/screens/cart_screen/widgets/delete_product_from_cart_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_color.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_image.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_name.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
-import 'package:project/screens/cart_screen/widgets/product_cart_quantity.dart';
-import 'package:project/screens/cart_screen/widgets/product_cart_quantity_controller_button.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_size.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 

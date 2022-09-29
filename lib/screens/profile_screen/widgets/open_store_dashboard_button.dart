@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/screens/profile_screen/widgets/notifying_box.dart';
 
 class OpenStoreDashboardButton extends StatelessWidget {
   const OpenStoreDashboardButton({

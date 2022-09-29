@@ -6,7 +6,7 @@ import 'package:project/models/order_model.dart';
 import 'package:uuid/uuid.dart';
 
 class OrdersProvider extends ChangeNotifier {
-  List<OrderModel> _orders = [];
+  final List<OrderModel> _orders = [];
 
   List<OrderModel> get orders {
     return [..._orders];

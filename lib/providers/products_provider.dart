@@ -118,7 +118,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //# 3] suggestions products
-  List<ProductModel> _suggestionsProducts = [];
+  final List<ProductModel> _suggestionsProducts = [];
 
   List<ProductModel> get suggestionsProducts {
     return [..._suggestionsProducts];
