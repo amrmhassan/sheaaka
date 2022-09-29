@@ -25,6 +25,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final String? errorText;
   final String? Function(String? v)? validator;
+  final bool enabled;
 
   const CustomTextField({
     Key? key,
@@ -45,6 +46,7 @@ class CustomTextField extends StatelessWidget {
     this.textInputAction,
     this.errorText,
     this.validator,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,7 @@ class CustomTextField extends StatelessWidget {
                 HSpace(factor: .5),
                 Expanded(
                   child: TextFormField(
+                    enabled: enabled,
                     validator: validator,
                     textInputAction: textInputAction ?? TextInputAction.next,
                     obscureText: password,

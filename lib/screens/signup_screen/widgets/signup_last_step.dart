@@ -15,6 +15,7 @@ import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
+import 'package:project/utils/general_utils.dart';
 
 class SignUpLastStep extends StatelessWidget {
   final VoidCallback incrementActiveIndex;
@@ -25,6 +26,7 @@ class SignUpLastStep extends StatelessWidget {
   final bool userAgree;
   final VoidCallback toggleUserAgree;
   final VoidCallback decrementActiveIndex;
+  final Future<void> Function() signUserIn;
 
   const SignUpLastStep({
     Key? key,
@@ -36,6 +38,7 @@ class SignUpLastStep extends StatelessWidget {
     required this.userAgree,
     required this.toggleUserAgree,
     required this.decrementActiveIndex,
+    required this.signUserIn,
   }) : super(key: key);
 
   @override
@@ -91,14 +94,28 @@ class SignUpLastStep extends StatelessWidget {
           ),
         ),
         VSpace(factor: .2),
-        CustomTextField(
-          controller: birthDate,
-          iconName: 'birthday-cake',
-          title: 'تاريخ الميلاد',
-          color: kSecondaryColor,
-          borderColor: kSecondaryColor,
-          trailingIconName: 'calendar',
-          trailingIconColor: kPrimaryColor,
+        GestureDetector(
+          onTap: () async {
+            DateTime? pickedBirthDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now().subtract(Duration(days: 10 * 365)),
+              firstDate: DateTime.now().subtract(Duration(days: 80 * 365)),
+              lastDate: DateTime.now().subtract(Duration(days: 365)),
+            );
+            if (pickedBirthDate != null) {
+              birthDate.text = dateToString(pickedBirthDate);
+            }
+          },
+          child: CustomTextField(
+            enabled: false,
+            controller: birthDate,
+            iconName: 'birthday-cake',
+            title: 'تاريخ الميلاد',
+            color: kSecondaryColor,
+            borderColor: kSecondaryColor,
+            trailingIconName: 'calendar',
+            trailingIconColor: kPrimaryColor,
+          ),
         ),
         VSpace(),
         PaddingWrapper(
@@ -139,7 +156,33 @@ class SignUpLastStep extends StatelessWidget {
           ),
         ),
         VSpace(),
-        SubmitFormButton(onTap: incrementActiveIndex, title: 'تسجيل'),
+        GestureDetector(
+          onTap: userAgree
+              ? () {}
+              : () {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                    'لابد من الموافقة علي اتفاقية المستخدم أولا',
+                    style: h4LiteTextStyle,
+                  )));
+                },
+          child: SubmitFormButton(
+            onTap: () async {
+              try {
+                await signUserIn();
+                incrementActiveIndex();
+              } on Exception catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(e.toString()),
+                  ),
+                );
+              }
+            },
+            title: 'تسجيل',
+            active: userAgree,
+          ),
+        ),
         BackStepFormButton(onTap: decrementActiveIndex),
       ],
     );

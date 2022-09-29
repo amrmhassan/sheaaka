@@ -11,12 +11,14 @@ class SubmitFormButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final EdgeInsets? padding;
+  final bool active;
 
   const SubmitFormButton({
     Key? key,
     required this.onTap,
     this.padding,
     required this.title,
+    this.active = true,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class SubmitFormButton extends StatelessWidget {
     return PaddingWrapper(
       padding: padding ?? EdgeInsets.symmetric(horizontal: kHPad),
       child: ButtonWrapper(
+        active: active,
         padding: EdgeInsets.symmetric(vertical: kVPad / 2),
         backgroundColor: kBlackColor,
         onTap: onTap,

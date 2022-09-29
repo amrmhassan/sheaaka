@@ -52,6 +52,7 @@ dependencies:
   lottie: ^1.4.3
   connectivity_plus: ^2.3.7
   firebase_auth: ^3.10.0
+  syncfusion_flutter_datepicker: ^20.3.47
 
 dev_dependencies:
   flutter_test:

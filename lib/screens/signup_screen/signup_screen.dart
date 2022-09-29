@@ -6,9 +6,7 @@ import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
 import 'package:project/screens/signup_screen/widgets/signup_email_password.dart';
-import 'package:project/screens/signup_screen/widgets/signup_email_verification.dart';
 import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
-import 'package:project/screens/signup_screen/widgets/signup_user_photo_upload.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
 
 //! the validation runs on each sign up step by running the validation before going to the next step
@@ -22,9 +20,23 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  //? submitting user info to firebase auth
+  Future<void> signUserIn() async {
+    //! here i will implement the user sign in code
+    print(userNameController.text);
+    print(emailController.text);
+    print(passwordController.text);
+    print(passwordConfirmController.text);
+    print(phoneNumberController.text);
+    print(addressController.text);
+    print(birthDateController.text);
+    print(userGender.name);
+    print(userAgree);
+    throw Exception('This will be a signing in user function ');
+  }
+
   //? handling the current step in signing a user up
   int activeStepIndex = 0;
-
   void incrementActiveIndex() {
     setState(() {
       activeStepIndex++;
@@ -56,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   //? for user gender
   UserGender userGender = UserGender.male;
-  void setUserGender(UserGender g) {
+  void setUserGender(UserGender g) async {
     setState(() {
       userGender = g;
     });
@@ -87,17 +99,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
         incrementActiveIndex: incrementActiveIndex,
         decrementActiveIndex: decrementActiveIndex,
       );
-    } else if (i == 2) {
-      return SignUpEmailVerification(
-        incrementActiveIndex: incrementActiveIndex,
-        decrementActiveIndex: decrementActiveIndex,
-      );
-    } else if (i == 3) {
-      return SignUpUserPhotoUpload(
-        incrementActiveIndex: incrementActiveIndex,
-        decrementActiveIndex: decrementActiveIndex,
-      );
-    } else if (i == 4) {
+    }
+    //! i won't enable this right now cause it will need some more work
+    // else if (i == 2) {
+    //   return SignUpEmailVerification(
+    //     incrementActiveIndex: incrementActiveIndex,
+    //     decrementActiveIndex: decrementActiveIndex,
+    //   );
+    // }
+    // else if (i == 3) {
+    //   return SignUpUserPhotoUpload(
+    //     incrementActiveIndex: incrementActiveIndex,
+    //     decrementActiveIndex: decrementActiveIndex,
+    //   );
+    // }
+    else if (i == 2) {
       return SignUpLastStep(
         address: addressController,
         birthDate: birthDateController,
@@ -107,6 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         decrementActiveIndex: decrementActiveIndex,
         userAgree: userAgree,
         toggleUserAgree: toggleUserAgree,
+        signUserIn: signUserIn,
       );
     } else {
       return SignUpCongrats();
