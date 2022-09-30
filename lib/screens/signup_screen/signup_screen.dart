@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -8,6 +10,7 @@ import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
 import 'package:project/screens/signup_screen/widgets/signup_email_password.dart';
 import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
+import 'package:project/utils/general_utils.dart';
 
 //! the validation runs on each sign up step by running the validation before going to the next step
 
@@ -23,6 +26,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //? submitting user info to firebase auth
   Future<void> signUserIn() async {
     //! here i will implement the user sign in code
+    try {
+      UserCredential credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text);
+      if (credential.user != null) {
+        //? add the data to the firebase users table
+        await FirebaseFirestore.instance.doc(credential.user!.uid).set({});
+      } else {
+        throw Exception('Unknown Error');
+      }
+    } catch (e) {
+      showSnackBar(context, 'Error occurred: $e', SnackBarType.error);
+    }
     print(userNameController.text);
     print(emailController.text);
     print(passwordController.text);

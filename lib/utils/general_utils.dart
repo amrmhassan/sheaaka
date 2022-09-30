@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
+import 'package:project/models/types.dart';
 
 //? to handle the loves to string
 String lovesToString(int n) {
@@ -64,4 +67,32 @@ Future<bool> checkConnectivity() async {
 bool isNumeric(String? s) {
   if (s == null) return false;
   return double.tryParse(s) != null;
+}
+
+void showSnackBar(
+    BuildContext context, String message, SnackBarType snackBarType,
+    [bool aboveBottomNavBar = false]) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      behavior: aboveBottomNavBar ? SnackBarBehavior.floating : null,
+      content: Text(
+        message,
+      ),
+      backgroundColor: snackBarType == SnackBarType.success
+          ? kGreenColor
+          : snackBarType == SnackBarType.error
+              ? kDangerColor
+              : null,
+      action: SnackBarAction(
+        label: 'Ok',
+        textColor: snackBarType == SnackBarType.error ||
+                snackBarType == SnackBarType.success ||
+                snackBarType == SnackBarType.info
+            ? Colors.white
+            : null,
+        onPressed: () {},
+      ),
+    ),
+  );
 }

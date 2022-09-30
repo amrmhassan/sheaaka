@@ -1,13 +1,11 @@
 import 'package:flutter/animation.dart';
-import 'package:project/models/types.dart';
 
-Sizes? stringToSizes(String v) {
-  for (var size in Sizes.values) {
-    if (v == size.name) {
-      return size;
+dynamic stringToEnum<T>(String n, List<T> e) {
+  for (var name in e) {
+    if (n == name.toString().split('.').last) {
+      return name;
     }
   }
-  return null;
 }
 
 Color intToColors(int v) {

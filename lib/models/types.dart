@@ -22,3 +22,9 @@ enum SearchTypes {
   product,
   store,
 }
+
+enum SnackBarType {
+  info,
+  error,
+  success,
+}

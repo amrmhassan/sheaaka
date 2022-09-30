@@ -113,7 +113,7 @@ class ProductModel {
         (productDOC[offerStartedString] as Timestamp?)?.toDate();
     List<Sizes>? availableSize =
         (productDOC[availableSizeString] as List<dynamic>?)
-            ?.map((e) => stringToSizes(e) as Sizes)
+            ?.map((e) => stringToEnum(e, Sizes.values) as Sizes)
             .toList();
     List<Color>? availableColors =
         (productDOC[availableColorsString] as List<dynamic>?)

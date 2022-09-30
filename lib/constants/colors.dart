@@ -16,6 +16,7 @@ const Color kRedTextColor = Colors.red;
 
 //? icons colors
 const Color kDangerColor = Colors.red;
+const Color kGreenColor = Colors.green;
 
 //? buttons colors
 const Color kMainButtonColor = Colors.black;

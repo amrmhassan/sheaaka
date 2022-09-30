@@ -41,3 +41,12 @@ String titleString = 'titleString';
 String endAtString = 'endAtString';
 String activeString = 'activeString';
 String productIdString = 'productIdString';
+
+//? user model constants
+String emailString = 'emailString';
+String addressString = 'addressString';
+String phoneString = 'phoneString';
+String birthDateString = 'birthDateString';
+String userGenderString = 'userGenderString';
+String userRoleString = 'userRoleString';
+String singUpString = 'singUpString';
