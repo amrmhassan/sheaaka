@@ -38,6 +38,8 @@ class _HolderScreenState extends State<HolderScreen> {
     await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
     await Provider.of<ProductsProvider>(context, listen: false)
         .reloadHomeProducts(true);
+    await Provider.of<ProductsProvider>(context, listen: false)
+        .fetchAndUpdateFavoriteProducts();
     int products = Provider.of<ProductsProvider>(context, listen: false)
         .homeProducts
         .length;

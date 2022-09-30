@@ -25,7 +25,7 @@ class ProductModel {
   DateTime createdAt;
   String? fullDesc;
   String? shortDesc;
-  bool? favorite;
+  // bool? favorite;
   late bool hasOffer;
   DateTime? offerEnd;
   DateTime? offerStarted;
@@ -48,7 +48,7 @@ class ProductModel {
     this.remainingNumber,
     this.offerEnd,
     this.offerStarted,
-    this.favorite,
+    // this.favorite,
     this.fullDesc,
     this.shortDesc,
     this.availableColors,
@@ -79,7 +79,7 @@ class ProductModel {
       hasOfferString: hasOffer,
       offerEndString: offerEnd,
       offerStartedString: offerStarted,
-      favoriteString: favorite,
+      // favoriteString: favorite,
       fullDescString: fullDesc,
       shortDescString: shortDesc,
       availableColorsString: colorsConverted,
@@ -102,7 +102,7 @@ class ProductModel {
     BrandModel? brand = BrandModel.fromJSON(productDOC[brandString]);
 
     double? oldPrice = productDOC[oldPriceString] as double?;
-    bool? favorite = productDOC[favoriteString] as bool?;
+    // bool? favorite = productDOC[favoriteString] as bool?;
     String? fullDesc = productDOC[fullDescString] as String?;
     String? shortDesc = productDOC[shortDescString] as String?;
     int? nOfComments = productDOC[nOfCommentsString] as int?;
@@ -133,7 +133,7 @@ class ProductModel {
       availableColors: availableColors,
       availableSize: availableSize,
       brand: brand,
-      favorite: favorite,
+      // favorite: favorite,
       fullDesc: fullDesc,
       nOfComments: nOfComments,
       offerEnd: offerEnd,

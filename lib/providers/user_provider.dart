@@ -51,9 +51,11 @@ class UserProvider extends ChangeNotifier {
     required String email,
     required String password,
     required BuildContext context,
+    required Future<void> Function() fetchAndUpdateFavoriteProducts,
   }) async {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+    await fetchAndUpdateFavoriteProducts();
   }
 
   Future<UserModel> getUserData(String userUID) async {

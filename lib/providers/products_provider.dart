@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
@@ -163,20 +164,91 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//? to toggle a product love
-  void toggleFavProduct(String id) {
-    int index = _homeProducts.indexWhere((element) => element.id == id);
-    ProductModel product = _homeProducts[index];
-    _homeProducts.removeAt(index);
-    if (product.favorite == null || product.favorite == false) {
-      product.favorite = true;
-      product.lovesNumber += 1;
-    } else {
-      product.favorite = false;
-      product.lovesNumber -= 1;
+//# user favorite products
+  List<String> _favoriteProductsIds = [];
+
+  List<String> get favoriteProductsIds {
+    return [..._favoriteProductsIds];
+  }
+
+  Future<bool> checkIfProductIsLiked(String productId) async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      throw Exception('no user logged in');
     }
-    _homeProducts.insert(index, product);
+    var data = await FirebaseFirestore.instance
+        .collection(usersCollectionName)
+        .doc(currentUser.uid)
+        .collection(usersLikesCollectionName)
+        .doc(productId)
+        .get();
+    var res = data.data();
+    if (res != null && res.values.first == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> fetchAndUpdateFavoriteProducts() async {
+    _favoriteProductsIds.clear();
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      throw Exception('no user logged in');
+    }
+    var data = await FirebaseFirestore.instance
+        .collection(usersCollectionName)
+        .doc(currentUser.uid)
+        .collection(usersLikesCollectionName)
+        .get();
+
+    for (var doc in data.docs) {
+      var productId = doc.data().keys.first;
+      var productLoved = doc.data().values.first;
+      if (productLoved) {
+        _favoriteProductsIds.add(productId);
+      }
+    }
     notifyListeners();
+  }
+
+//? to toggle a product love
+  Future<void> toggleFavProduct(String productId) async {
+    //! here i will need to update the value of number of loves in the product itself
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      throw Exception('no user logged in');
+    }
+
+    //* updating in the local provider
+    bool lovedLocally = _favoriteProductsIds.contains(productId);
+    if (lovedLocally) {
+      _favoriteProductsIds.remove(productId);
+    } else {
+      _favoriteProductsIds.add(productId);
+    }
+    notifyListeners();
+
+//* updating in the firebase
+    try {
+      bool loved = await checkIfProductIsLiked(productId);
+
+      await FirebaseFirestore.instance
+          .collection(usersCollectionName)
+          .doc(currentUser.uid)
+          .collection(usersLikesCollectionName)
+          .doc(productId)
+          .set({productId: !loved});
+    } catch (e) {
+      //* here i will reverse what just done in the first step
+      if (lovedLocally) {
+        _favoriteProductsIds.add(productId);
+      } else {
+        _favoriteProductsIds.remove(productId);
+      }
+      notifyListeners();
+      throw Exception('Error occurred during loving product');
+    }
   }
 
   //? get a product with id
@@ -212,6 +284,5 @@ class ProductsProvider extends ChangeNotifier {
     return storeProducts;
   }
 }
-
 
 // samsung a10s

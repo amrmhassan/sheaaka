@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/wishlist_screen/widgets/add_wishlist_button.dart';
 import 'package:project/screens/wishlist_screen/widgets/horizontal_post.dart';
+import 'package:project/screens/wishlist_screen/widgets/no_wishlists.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 import 'package:provider/provider.dart';
 
@@ -47,27 +49,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
       });
     }
     return wishListProvider.wishLists.isEmpty
-        ? Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'قم بإضافة قائمة تمني',
-                  style: h3InactiveTextStyle,
-                ),
-                VSpace(factor: .5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AddWishListButton(),
-                  ],
-                ),
-              ],
-            ),
-          )
+        ? NoWishlists()
         : Container(
             alignment: Alignment.topRight,
             child: Column(

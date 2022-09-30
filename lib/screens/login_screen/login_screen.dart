@@ -2,12 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
-import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/helpers/responsive.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -46,10 +46,13 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loggingIn = true;
       });
+      var fetchLikes = Provider.of<ProductsProvider>(context, listen: false)
+          .fetchAndUpdateFavoriteProducts;
       await Provider.of<UserProvider>(context, listen: false).login(
         email: _emailController.text,
         password: _passwordController.text,
         context: context,
+        fetchAndUpdateFavoriteProducts: fetchLikes,
       );
       showSnackBar(context, 'تم تسجيل الدخول', SnackBarType.success);
       Navigator.pushReplacementNamed(context, HolderScreen.routeName);
@@ -120,6 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             title: 'الايميل',
                             iconName: 'mail',
                             errorText: emailError,
+                            textInputType: TextInputType.emailAddress,
+                            color: kSecondaryColor,
+                            borderColor: kSecondaryColor,
                           ),
                           VSpace(factor: .5),
                           CustomTextField(
@@ -130,6 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             errorText: passwordError,
                             handleShowPassword: toggleShowPassword,
                             password: !showPassword,
+                            color: kSecondaryColor,
+                            borderColor: kSecondaryColor,
                           ),
                           VSpace(),
                           SubmitFormButton(
