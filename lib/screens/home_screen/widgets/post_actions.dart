@@ -2,21 +2,15 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
-import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/custom_icon_button.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/testing_screen/widgets/database_testing.dart';
-import 'package:project/utils/bools.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/screens_utils/post_actions_utils.dart';
-import 'package:provider/provider.dart';
 
 class PostActions extends StatelessWidget {
   final bool? bookMarked;
-  final bool? loved;
   final int lovesNumber;
   final String productId;
   final String? wishlistItemId;
@@ -24,7 +18,6 @@ class PostActions extends StatelessWidget {
   const PostActions({
     Key? key,
     this.bookMarked,
-    this.loved,
     required this.lovesNumber,
     required this.productId,
     required this.wishlistItemId,

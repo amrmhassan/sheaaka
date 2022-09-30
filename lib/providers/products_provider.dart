@@ -165,7 +165,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
 //# user favorite products
-  List<String> _favoriteProductsIds = [];
+  final List<String> _favoriteProductsIds = [];
 
   List<String> get favoriteProductsIds {
     return [..._favoriteProductsIds];
@@ -212,6 +212,22 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+//? update product loves number in firebase
+  Future<void> updateProductLovesNumber(String productId, bool loved) async {
+    var productData = (await FirebaseFirestore.instance
+            .collection(productsCollectionName)
+            .doc(productId)
+            .get())
+        .data();
+    int lovesNumber = productData![lovesNumberString];
+    int newLovesNumber = loved ? lovesNumber - 1 : lovesNumber + 1;
+
+    await FirebaseFirestore.instance
+        .collection(productsCollectionName)
+        .doc(productId)
+        .update({lovesNumberString: newLovesNumber});
+  }
+
 //? to toggle a product love
   Future<void> toggleFavProduct(String productId) async {
     //! here i will need to update the value of number of loves in the product itself
@@ -219,13 +235,17 @@ class ProductsProvider extends ChangeNotifier {
     if (currentUser == null) {
       throw Exception('no user logged in');
     }
+    ProductModel product =
+        _homeProducts.firstWhere((element) => element.id == productId);
 
     //* updating in the local provider
     bool lovedLocally = _favoriteProductsIds.contains(productId);
     if (lovedLocally) {
       _favoriteProductsIds.remove(productId);
+      product.lovesNumber = product.lovesNumber - 1;
     } else {
       _favoriteProductsIds.add(productId);
+      product.lovesNumber = product.lovesNumber + 1;
     }
     notifyListeners();
 
@@ -233,18 +253,26 @@ class ProductsProvider extends ChangeNotifier {
     try {
       bool loved = await checkIfProductIsLiked(productId);
 
-      await FirebaseFirestore.instance
-          .collection(usersCollectionName)
-          .doc(currentUser.uid)
-          .collection(usersLikesCollectionName)
-          .doc(productId)
-          .set({productId: !loved});
+      await Future.wait([
+//* add the product to the loved numbers
+        FirebaseFirestore.instance
+            .collection(usersCollectionName)
+            .doc(currentUser.uid)
+            .collection(usersLikesCollectionName)
+            .doc(productId)
+            .set({productId: !loved}),
+
+        //* update product loved number
+        updateProductLovesNumber(productId, loved),
+      ]);
     } catch (e) {
       //* here i will reverse what just done in the first step
       if (lovedLocally) {
         _favoriteProductsIds.add(productId);
+        product.lovesNumber = product.lovesNumber + 1;
       } else {
         _favoriteProductsIds.remove(productId);
+        product.lovesNumber = product.lovesNumber - 1;
       }
       notifyListeners();
       throw Exception('Error occurred during loving product');

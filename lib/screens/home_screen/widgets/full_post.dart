@@ -98,7 +98,6 @@ class _FullPostState extends State<FullPost> {
             //? this will take the favorite bool, bookmark bool
             PostActions(
               bookMarked: widget.wishlistItemId != null,
-              loved: widget.fullPostModel.favorite,
               lovesNumber: widget.fullPostModel.lovesNumber,
               productId: widget.fullPostModel.id,
               wishlistItemId: widget.wishlistItemId,
