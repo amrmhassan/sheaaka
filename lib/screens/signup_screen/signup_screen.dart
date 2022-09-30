@@ -1,18 +1,20 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
 import 'package:project/screens/signup_screen/widgets/signup_email_password.dart';
 import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
+import 'package:project/utils/auth_exception_utils.dart';
 import 'package:project/utils/general_utils.dart';
-
-//! the validation runs on each sign up step by running the validation before going to the next step
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -23,32 +25,32 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  //? signing up
+  bool signingUp = false;
+
   //? submitting user info to firebase auth
-  Future<void> signUserIn() async {
-    //! here i will implement the user sign in code
+  Future<void> submitUserDate() async {
+    setState(() {
+      signingUp = true;
+    });
     try {
-      UserCredential credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
-      if (credential.user != null) {
-        //? add the data to the firebase users table
-        await FirebaseFirestore.instance.doc(credential.user!.uid).set({});
-      } else {
-        throw Exception('Unknown Error');
-      }
-    } catch (e) {
-      showSnackBar(context, 'Error occurred: $e', SnackBarType.error);
+      await Provider.of<UserProvider>(context, listen: false).signUserUp(
+        email: emailController.text,
+        password: passwordController.text,
+        phone: phoneNumberController.text,
+        address: addressController.text,
+        birthDate: birthDate,
+        location: location,
+        userGender: userGender,
+        userRole: userRole,
+        context: context,
+      );
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
     }
-    print(userNameController.text);
-    print(emailController.text);
-    print(passwordController.text);
-    print(passwordConfirmController.text);
-    print(phoneNumberController.text);
-    print(addressController.text);
-    print(birthDateController.text);
-    print(userGender.name);
-    print(userAgree);
-    throw Exception('This will be a signing in user function ');
+    setState(() {
+      signingUp = false;
+    });
   }
 
   //? handling the current step in signing a user up
@@ -80,7 +82,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordConfirmController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController birthDateController = TextEditingController();
 
   //? for user gender
   UserGender userGender = UserGender.male;
@@ -90,11 +91,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  //? acceptance of user agreement
+  //? other user info
   bool userAgree = false;
   void toggleUserAgree() {
     setState(() {
       userAgree = !userAgree;
+    });
+  }
+
+  DateTime birthDate = DateTime.now();
+  void setBirthDate(DateTime d) {
+    setState(() {
+      birthDate = d;
+    });
+  }
+
+  LatLng? location;
+  void setLocation(LatLng l) {
+    setState(() {
+      location;
     });
   }
 
@@ -132,14 +147,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     else if (i == 2) {
       return SignUpLastStep(
         address: addressController,
-        birthDate: birthDateController,
+        birthDate: birthDate,
         userGender: userGender,
         setUserGender: setUserGender,
         incrementActiveIndex: incrementActiveIndex,
         decrementActiveIndex: decrementActiveIndex,
         userAgree: userAgree,
         toggleUserAgree: toggleUserAgree,
-        signUserIn: signUserIn,
+        signUserUp: submitUserDate,
+        setBirthDate: setBirthDate,
+        setLocation: setLocation,
+        location: location,
       );
     } else {
       return SignUpCongrats();
@@ -155,9 +173,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             n.disallowIndicator();
             return true;
           },
-          child: SingleChildScrollView(
-            child: getSignupStep(activeStepIndex),
-          ),
+          child: signingUp
+              ? FullLoadingScreen(title: 'جاري التسجيل')
+              : SingleChildScrollView(
+                  child: getSignupStep(activeStepIndex),
+                ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
@@ -20,13 +21,16 @@ import 'package:project/utils/general_utils.dart';
 class SignUpLastStep extends StatelessWidget {
   final VoidCallback incrementActiveIndex;
   final TextEditingController address;
-  final TextEditingController birthDate;
+  final DateTime birthDate;
+  final Function(DateTime d) setBirthDate;
+  final LatLng? location;
+  final Function(LatLng l) setLocation;
   final UserGender userGender;
   final Function(UserGender g) setUserGender;
   final bool userAgree;
   final VoidCallback toggleUserAgree;
   final VoidCallback decrementActiveIndex;
-  final Future<void> Function() signUserIn;
+  final Future<void> Function() signUserUp;
 
   const SignUpLastStep({
     Key? key,
@@ -38,11 +42,15 @@ class SignUpLastStep extends StatelessWidget {
     required this.userAgree,
     required this.toggleUserAgree,
     required this.decrementActiveIndex,
-    required this.signUserIn,
+    required this.signUserUp,
+    required this.location,
+    required this.setBirthDate,
+    required this.setLocation,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController birthDateController = TextEditingController();
     return Column(
       children: [
         VSpace(factor: 3),
@@ -68,6 +76,7 @@ class SignUpLastStep extends StatelessWidget {
         ),
         VSpace(factor: .2),
         CustomTextField(
+          autoFocus: true,
           controller: address,
           iconName: 'home2',
           title: 'عنوان المنزل',
@@ -103,12 +112,13 @@ class SignUpLastStep extends StatelessWidget {
               lastDate: DateTime.now().subtract(Duration(days: 365)),
             );
             if (pickedBirthDate != null) {
-              birthDate.text = dateToString(pickedBirthDate);
+              setBirthDate(pickedBirthDate);
+              birthDateController.text = dateToString(pickedBirthDate);
             }
           },
           child: CustomTextField(
             enabled: false,
-            controller: birthDate,
+            controller: birthDateController,
             iconName: 'birthday-cake',
             title: 'تاريخ الميلاد',
             color: kSecondaryColor,
@@ -169,7 +179,7 @@ class SignUpLastStep extends StatelessWidget {
           child: SubmitFormButton(
             onTap: () async {
               try {
-                await signUserIn();
+                await signUserUp();
                 incrementActiveIndex();
               } on Exception catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(

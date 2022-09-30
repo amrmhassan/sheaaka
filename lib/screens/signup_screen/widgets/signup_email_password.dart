@@ -74,6 +74,7 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               ),
             ),
             CustomTextField(
+              autoFocus: true,
               controller: widget.email,
               iconName: 'email',
               title: 'الايميل',

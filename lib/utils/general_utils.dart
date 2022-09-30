@@ -52,6 +52,7 @@ List getRandomList(List originalList, [int? length]) {
   return randomList;
 }
 
+//? for checking for the internet
 Future<bool> checkConnectivity() async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.mobile) {
@@ -69,6 +70,7 @@ bool isNumeric(String? s) {
   return double.tryParse(s) != null;
 }
 
+//? for showing a quick snack bar
 void showSnackBar(
     BuildContext context, String message, SnackBarType snackBarType,
     [bool aboveBottomNavBar = false]) {
@@ -85,7 +87,7 @@ void showSnackBar(
               ? kDangerColor
               : null,
       action: SnackBarAction(
-        label: 'Ok',
+        label: 'تم',
         textColor: snackBarType == SnackBarType.error ||
                 snackBarType == SnackBarType.success ||
                 snackBarType == SnackBarType.info

@@ -1,9 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/global/widgets/full_loading_screen.dart';
+import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
+import 'package:project/models/types.dart';
+import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
@@ -14,10 +19,72 @@ import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/social_account_header.dart';
 import 'package:project/screens/login_screen/widgets/social_button.dart';
 import 'package:project/screens/signup_screen/signup_screen.dart';
+import 'package:project/utils/auth_exception_utils.dart';
+import 'package:project/utils/general_utils.dart';
+import 'package:project/validation/signup_validation.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
   static const String routeName = '/login-screen';
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  //? logging in
+  bool loggingIn = false;
+
+  //? password credentials controllers
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+//? for logging the user in
+  Future<void> submitUserData() async {
+    try {
+      setState(() {
+        loggingIn = true;
+      });
+      await Provider.of<UserProvider>(context, listen: false).login(
+        email: _emailController.text,
+        password: _passwordController.text,
+        context: context,
+      );
+      showSnackBar(context, 'تم تسجيل الدخول', SnackBarType.success);
+      Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
+    }
+    setState(() {
+      loggingIn = false;
+    });
+  }
+
+//? validating the user input
+  Future<void> validateLoginData() async {
+    String? emailValidator = emailValidation(_emailController.text);
+    String? passwordValidator = passwordValidation(_passwordController.text);
+    setState(() {
+      emailError = emailValidator;
+      passwordError = passwordValidator;
+    });
+    if (emailError == null && passwordError == null) {
+      submitUserData();
+    }
+  }
+
+//? user validation errors
+  String? emailError;
+  String? passwordError;
+
+  //? password showing
+  bool showPassword = false;
+  void toggleShowPassword() async {
+    setState(() {
+      showPassword = !showPassword;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,74 +96,80 @@ class LoginScreen extends StatelessWidget {
         },
         child: SingleChildScrollView(
           child: PaddingWrapper(
-            height: Responsive.getCleanHeight(context),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                VSpace(),
-                FormHeaderWithLogo(
-                  iconName: 'login',
-                  title: 'شياكة',
-                ),
-                VSpace(factor: 2),
-                Column(
-                  children: [
-                    FormPromoWithLogo(
-                      title: 'تسجيل الدخول',
-                    ),
-                    VSpace(factor: .5),
-                    CustomTextField(
-                      title: 'الايميل',
-                      iconName: 'mail',
-                    ),
-                    VSpace(factor: .5),
-                    CustomTextField(
-                      title: 'الرقم السري',
-                      iconName: 'key',
-                      trailingIconName: 'view',
-                    ),
-                    VSpace(),
-                    SubmitFormButton(
-                      title: 'تسجيل الدخول',
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                            context, HolderScreen.routeName);
-                      },
-                    ),
-                    VSpace(),
-                    TitleSubtitle(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(
-                            context, SignUpScreen.routeName);
-                      },
-                    ),
-                  ],
-                ),
-                VSpace(factor: 2),
-                Column(
-                  children: [
-                    SocialAccountsHeader(),
-                    VSpace(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SocialButton(
-                          title: 'Google',
-                          iconName: 'google',
-                          onTap: () {},
-                        ),
-                        SocialButton(
-                          title: 'Facebook',
-                          iconName: 'facebook',
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                VSpace(factor: 3)
-              ],
-            ),
+            child: loggingIn
+                ? FullLoadingScreen(
+                    title: 'جاري تسجيل الدخول',
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      VSpace(),
+                      FormHeaderWithLogo(
+                        iconName: 'login',
+                        title: 'شياكة',
+                      ),
+                      VSpace(factor: 2),
+                      Column(
+                        children: [
+                          FormPromoWithLogo(
+                            title: 'تسجيل الدخول',
+                          ),
+                          VSpace(factor: .5),
+                          CustomTextField(
+                            controller: _emailController,
+                            title: 'الايميل',
+                            iconName: 'mail',
+                            errorText: emailError,
+                          ),
+                          VSpace(factor: .5),
+                          CustomTextField(
+                            controller: _passwordController,
+                            title: 'الرقم السري',
+                            iconName: 'key',
+                            trailingIconName: showPassword ? 'hide' : 'view',
+                            errorText: passwordError,
+                            handleShowPassword: toggleShowPassword,
+                            password: !showPassword,
+                          ),
+                          VSpace(),
+                          SubmitFormButton(
+                            title: 'تسجيل الدخول',
+                            onTap: validateLoginData,
+                          ),
+                          VSpace(),
+                          TitleSubtitle(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                  context, SignUpScreen.routeName);
+                            },
+                          ),
+                        ],
+                      ),
+                      VSpace(factor: 2),
+                      Column(
+                        children: [
+                          SocialAccountsHeader(),
+                          VSpace(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SocialButton(
+                                title: 'Google',
+                                iconName: 'google',
+                                onTap: () {},
+                              ),
+                              SocialButton(
+                                title: 'Facebook',
+                                iconName: 'facebook',
+                                onTap: () {},
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      VSpace(factor: 3)
+                    ],
+                  ),
           ),
         ),
       ),

@@ -58,6 +58,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
             ),
             VSpace(factor: 2),
             CustomTextField(
+              autoFocus: true,
               errorText: userNameError,
               controller: widget.userNameController,
               iconName: 'user',

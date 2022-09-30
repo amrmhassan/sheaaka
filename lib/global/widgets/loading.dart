@@ -13,6 +13,7 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (title != null)
           Text(
@@ -20,8 +21,8 @@ class Loading extends StatelessWidget {
             style: h3InactiveTextStyle,
           ),
         SizedBox(
-          width: 300,
-          height: 300,
+          width: 200,
+          height: 200,
           child: Lottie.asset(
             'assets/animations/loading1.json',
             animate: true,
