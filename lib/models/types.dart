@@ -28,3 +28,9 @@ enum SnackBarType {
   error,
   success,
 }
+
+enum SignMethod {
+  email,
+  google,
+  facebook,
+}

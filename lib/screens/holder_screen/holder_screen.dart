@@ -99,12 +99,7 @@ class _HolderScreenState extends State<HolderScreen> {
       return CustomAppBar(
         title: 'قوائم التمني',
         home: true,
-        leftContent: Row(
-          children: [
-            ShareWishlistIcon(),
-            HomeAppBarLeftContent(),
-          ],
-        ),
+        leftContent: [ShareWishlistIcon()],
       );
     } else if (activeIndex == 4) {
       return CustomAppBar(

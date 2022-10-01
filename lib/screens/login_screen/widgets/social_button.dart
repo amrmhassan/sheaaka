@@ -23,7 +23,7 @@ class SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       backgroundColor: Colors.transparent,
       child: PaddingWrapper(
         padding: EdgeInsets.symmetric(

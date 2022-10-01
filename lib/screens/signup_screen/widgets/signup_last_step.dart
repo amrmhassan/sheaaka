@@ -21,7 +21,7 @@ import 'package:project/utils/general_utils.dart';
 class SignUpLastStep extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final TextEditingController address;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final Function(DateTime d) setBirthDate;
   final LatLng? location;
   final Function(LatLng l) setLocation;
@@ -113,7 +113,8 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
           onTap: () async {
             DateTime? pickedBirthDate = await showDatePicker(
               context: context,
-              initialDate: widget.birthDate,
+              initialDate: widget.birthDate ??
+                  DateTime.now().subtract(Duration(days: 10 * 365)),
               firstDate: DateTime.now().subtract(Duration(days: 80 * 365)),
               lastDate: DateTime.now().subtract(Duration(days: 365)),
             );

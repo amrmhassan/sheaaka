@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
@@ -18,6 +19,7 @@ class SignUpEmailPassword extends StatefulWidget {
   final TextEditingController password;
   final TextEditingController passwordConfirm;
   final TextEditingController phone;
+  final SignMethod signMethod;
 
   const SignUpEmailPassword({
     Key? key,
@@ -27,6 +29,7 @@ class SignUpEmailPassword extends StatefulWidget {
     required this.password,
     required this.passwordConfirm,
     required this.phone,
+    required this.signMethod,
   }) : super(key: key);
 
   @override
@@ -49,10 +52,20 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
     });
   }
 
+  @override
+  void initState() {
+    if (widget.signMethod != SignMethod.email) {
+      enableEmail = false;
+    }
+    super.initState();
+  }
+
   String? emailError;
   String? passwordError;
   String? passConfirmError;
   String? phoneError;
+
+  bool enableEmail = true;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +87,10 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               ),
             ),
             CustomTextField(
+              enabled: enableEmail,
+              textStyle: h4LiteTextStyle.copyWith(
+                  color:
+                      !enableEmail ? kInActiveTextColor.withOpacity(.5) : null),
               autoFocus: true,
               controller: widget.email,
               iconName: 'email',
@@ -83,32 +100,38 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               textInputType: TextInputType.emailAddress,
               errorText: emailError,
             ),
-            VSpace(factor: .5),
-            CustomTextField(
-              controller: widget.password,
-              iconName: 'key',
-              title: 'الرقم السري',
-              password: !showPassword,
-              color: kSecondaryColor,
-              borderColor: kSecondaryColor,
-              trailingIconName: showPassword ? 'hide' : 'view',
-              textInputType: TextInputType.visiblePassword,
-              handleShowPassword: handleShowPassword,
-              errorText: passwordError,
-            ),
-            VSpace(factor: .5),
-            CustomTextField(
-              controller: widget.passwordConfirm,
-              iconName: 'key',
-              title: 'تأكيد الرقم السري',
-              password: !showPasswordConfirmation,
-              color: kSecondaryColor,
-              borderColor: kSecondaryColor,
-              trailingIconName: showPasswordConfirmation ? 'hide' : 'view',
-              textInputType: TextInputType.visiblePassword,
-              handleShowPassword: handleShowPasswordConfirmation,
-              errorText: passConfirmError,
-            ),
+            if (widget.signMethod == SignMethod.email)
+              Column(
+                children: [
+                  VSpace(factor: .5),
+                  CustomTextField(
+                    controller: widget.password,
+                    iconName: 'key',
+                    title: 'الرقم السري',
+                    password: !showPassword,
+                    color: kSecondaryColor,
+                    borderColor: kSecondaryColor,
+                    trailingIconName: showPassword ? 'hide' : 'view',
+                    textInputType: TextInputType.visiblePassword,
+                    handleShowPassword: handleShowPassword,
+                    errorText: passwordError,
+                  ),
+                  VSpace(factor: .5),
+                  CustomTextField(
+                    controller: widget.passwordConfirm,
+                    iconName: 'key',
+                    title: 'تأكيد الرقم السري',
+                    password: !showPasswordConfirmation,
+                    color: kSecondaryColor,
+                    borderColor: kSecondaryColor,
+                    trailingIconName:
+                        showPasswordConfirmation ? 'hide' : 'view',
+                    textInputType: TextInputType.visiblePassword,
+                    handleShowPassword: handleShowPasswordConfirmation,
+                    errorText: passConfirmError,
+                  ),
+                ],
+              ),
             VSpace(factor: .5),
             CustomTextField(
               controller: widget.phone,
@@ -148,10 +171,16 @@ class _SignUpEmailPasswordState extends State<SignUpEmailPassword> {
               passConfirmError = passConfirmV;
               phoneError = phoneV;
             });
-            if (emailError == null &&
-                passwordError == null &&
-                passConfirmError == null &&
-                phoneError == null) {
+            bool checkEmail = emailError == null;
+            bool checkPassword = !enableEmail || (passwordError == null);
+            bool checkConfirmPassword =
+                !enableEmail || (passConfirmError == null);
+            bool checkPhone = phoneError == null;
+
+            if (checkEmail &&
+                checkPassword &&
+                checkConfirmPassword &&
+                checkPhone) {
               widget.incrementActiveIndex();
             }
           },

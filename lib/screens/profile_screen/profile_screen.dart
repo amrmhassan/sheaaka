@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
@@ -10,6 +11,7 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_p_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
@@ -21,6 +23,7 @@ import 'package:project/screens/profile_screen/widgets/profile_screen_options.da
 import 'package:project/screens/profile_screen/widgets/profile_summary.dart';
 import 'package:project/screens/profile_screen/widgets/user_name.dart';
 import 'package:project/screens/profile_screen/widgets/user_suggestions.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -40,9 +43,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _loadingData = true;
     });
-    currentUser = FirebaseAuth.instance.currentUser as User;
-    userModel = await Provider.of<UserProvider>(context, listen: false)
-        .getUserData(currentUser.uid);
+    try {
+      currentUser = FirebaseAuth.instance.currentUser as User;
+      userModel = await Provider.of<UserProvider>(context, listen: false)
+          .getUserData(currentUser.uid);
+    } catch (e) {
+      showSnackBar(context, 'فشل تحميل صورة المستخدم', SnackBarType.error);
+    }
+
     setState(() {
       _loadingData = false;
     });

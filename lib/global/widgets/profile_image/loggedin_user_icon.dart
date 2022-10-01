@@ -3,8 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/profile_image/not_loggedin_user_icon.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 class LoggedInUserIcon extends StatefulWidget {
@@ -35,10 +37,14 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
     setState(() {
       loading = true;
     });
-    String userUID = FirebaseAuth.instance.currentUser!.uid;
-    String? userPhotoPath =
-        await Provider.of<UserProvider>(context, listen: false)
-            .getUserPhoto(userUID);
+    String? userPhotoPath;
+    try {
+      String userUID = FirebaseAuth.instance.currentUser!.uid;
+      userPhotoPath = await Provider.of<UserProvider>(context, listen: false)
+          .getUserPhoto(userUID);
+    } catch (e) {
+      showSnackBar(context, e.toString(), SnackBarType.error);
+    }
 
     setState(() {
       userPhoto = userPhotoPath;
@@ -83,6 +89,13 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
                     ),
                     child: Image.network(
                       userPhoto!,
+                      errorBuilder: (context, error, stackTrace) {
+                        print(error.toString());
+                        return NotLoggedInUserIcon(
+                          allowClick: widget.allowClick,
+                          imagePath: 'assets/icons/user.png',
+                        );
+                      },
                       fit: BoxFit.cover,
                       width: double.infinity,
                       alignment: Alignment.topCenter,

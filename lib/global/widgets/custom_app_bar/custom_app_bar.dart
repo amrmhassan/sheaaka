@@ -8,7 +8,7 @@ class CustomAppBar extends StatelessWidget {
   final String? title;
   final bool home;
   final Widget? rightIcon;
-  final Widget? leftContent;
+  final List<Widget>? leftContent;
   final bool boundRightIconWidth;
 
   const CustomAppBar({

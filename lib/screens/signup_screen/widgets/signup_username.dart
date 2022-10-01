@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
@@ -13,13 +16,20 @@ import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/social_account_header.dart';
 import 'package:project/screens/login_screen/widgets/social_button.dart';
 import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:project/validation/signup_validation.dart';
+import 'package:provider/provider.dart';
 
 class SignUpUsername extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final UserRole userRole;
   final Function(UserRole userRole) setUserRole;
   final TextEditingController userNameController;
+  final Function(SignMethod method) setSignMethod;
+  final TextEditingController emailController;
+  final String? profilePhoto;
+  final Function(String? p) setProfilePhoto;
+  final Function(GoogleSignInAccount p) setGoogleAccount;
 
   const SignUpUsername({
     Key? key,
@@ -27,6 +37,11 @@ class SignUpUsername extends StatefulWidget {
     required this.userRole,
     required this.userNameController,
     required this.setUserRole,
+    required this.setSignMethod,
+    required this.emailController,
+    required this.profilePhoto,
+    required this.setProfilePhoto,
+    required this.setGoogleAccount,
   }) : super(key: key);
 
   @override
@@ -91,12 +106,12 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                 SocialButton(
                   title: 'Google',
                   iconName: 'google',
-                  onTap: () {},
+                  onTap: startSignUpWithGoogle,
                 ),
                 SocialButton(
                   title: 'Facebook',
                   iconName: 'facebook',
-                  onTap: () {},
+                  onTap: startSignUpWithFacebook,
                 ),
               ],
             ),
@@ -114,5 +129,33 @@ class _SignUpUsernameState extends State<SignUpUsername> {
         VSpace(),
       ],
     );
+  }
+
+  void startSignUpWithFacebook() {
+    widget.setSignMethod(SignMethod.facebook);
+    //* here just sign up with facebook
+  }
+
+  void startSignUpWithGoogle() async {
+    widget.setSignMethod(SignMethod.google);
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await Provider.of<UserProvider>(context, listen: false)
+              .googleSignIn();
+
+      if (googleSignInAccount == null) {
+        return showSnackBar(context, 'لم يتم التسجيل', SnackBarType.error);
+      }
+
+      widget.setGoogleAccount(googleSignInAccount);
+      String email = googleSignInAccount.email;
+      String? name = googleSignInAccount.displayName;
+      String? photoUrl = googleSignInAccount.photoUrl;
+      widget.emailController.text = email;
+      widget.userNameController.text = name ?? '';
+      widget.setProfilePhoto(photoUrl);
+    } catch (e) {
+      showSnackBar(context, e.toString(), SnackBarType.error);
+    }
   }
 }

@@ -6,6 +6,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
   final String? errorText;
   final String? Function(String? v)? validator;
   final bool enabled;
+  final TextStyle? textStyle;
 
   const CustomTextField({
     Key? key,
@@ -47,6 +49,7 @@ class CustomTextField extends StatelessWidget {
     this.errorText,
     this.validator,
     this.enabled = true,
+    this.textStyle,
   }) : super(key: key);
 
   @override
@@ -90,6 +93,7 @@ class CustomTextField extends StatelessWidget {
                     onChanged: onChange,
                     autofocus: autoFocus,
                     keyboardType: textInputType,
+                    style: textStyle ?? h3LiteTextStyle,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: title,

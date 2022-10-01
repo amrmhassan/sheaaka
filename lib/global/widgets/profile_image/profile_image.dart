@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/profile_image/loggedin_user_icon.dart';
 import 'package:project/global/widgets/profile_image/not_loggedin_user_icon.dart';
 
@@ -31,7 +32,10 @@ class ProfileImage extends StatelessWidget {
             allowClick: allowClick,
             radius: radius,
             padding: padding,
-            border: border,
+            border: Border.all(
+              width: 1,
+              color: kSecondaryColor,
+            ),
           );
         } else {
           return NotLoggedInUserIcon(

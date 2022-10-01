@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';

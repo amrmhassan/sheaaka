@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -26,6 +27,21 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  SignMethod signMethod = SignMethod.email;
+  void setSignMethod(SignMethod method) {
+    setState(() {
+      signMethod = method;
+    });
+  }
+
+  //? google account
+  GoogleSignInAccount? googleSignInAccount;
+  void setGoogleAccount(GoogleSignInAccount g) {
+    setState(() {
+      googleSignInAccount = g;
+    });
+  }
+
   //? signing up
   bool signingUp = false;
 
@@ -47,6 +63,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context: context,
         userProfilePhoto: profileImage,
         userName: userNameController.text,
+        signMethod: signMethod,
+        googleSignInAccount: googleSignInAccount,
       );
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
@@ -103,7 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
 //? for birth date
-  DateTime birthDate = DateTime.now().subtract(Duration(days: 10 * 365));
+  DateTime? birthDate;
   void setBirthDate(DateTime d) {
     setState(() {
       birthDate = d;
@@ -130,10 +148,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget getSignupStep(int i) {
     if (i == 0) {
       return SignUpUsername(
+        setSignMethod: setSignMethod,
         incrementActiveIndex: incrementActiveIndex,
         userRole: userRole,
         setUserRole: setUserRole,
         userNameController: userNameController,
+        emailController: emailController,
+        profilePhoto: profileImage,
+        setProfilePhoto: setProfilePhoto,
+        setGoogleAccount: setGoogleAccount,
       );
     } else if (i == 1) {
       return SignUpEmailPassword(
@@ -143,6 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         phone: phoneNumberController,
         incrementActiveIndex: incrementActiveIndex,
         decrementActiveIndex: decrementActiveIndex,
+        signMethod: signMethod,
       );
     }
     //! i won't enable this right now cause it will need some more work

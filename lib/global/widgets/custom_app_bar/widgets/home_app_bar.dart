@@ -15,7 +15,7 @@ class HomeAppBar extends StatelessWidget {
 
   final Widget? rightIcon;
   final String? title;
-  final Widget? leftContent;
+  final List<Widget>? leftContent;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,9 @@ class HomeAppBar extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
           Spacer(),
-          leftContent ?? HomeAppBarLeftContent(),
+          HomeAppBarLeftContent(
+            leftContent: leftContent,
+          ),
         ],
       ),
     );

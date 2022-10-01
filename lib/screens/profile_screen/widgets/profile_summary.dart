@@ -26,10 +26,6 @@ class ProfileSummary extends StatelessWidget {
         ProfileImage(
           allowClick: false,
           radius: 80,
-          border: Border.all(
-            width: 1,
-            color: kSecondaryColor,
-          ),
           padding: EdgeInsets.all(smallPadding / 3),
         ),
         HSpace(),
