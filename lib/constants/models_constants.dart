@@ -50,3 +50,4 @@ String birthDateString = 'birthDateString';
 String userGenderString = 'userGenderString';
 String userRoleString = 'userRoleString';
 String singUpString = 'singUpString';
+String userProfilePhotoString = 'userProfilePhotoString';

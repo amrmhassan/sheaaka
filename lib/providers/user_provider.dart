@@ -11,6 +11,7 @@ import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {
+  //? sign user up
   Future<void> signUserUp({
     required String email,
     required String password,
@@ -21,11 +22,11 @@ class UserProvider extends ChangeNotifier {
     required UserGender userGender,
     required UserRole userRole,
     required BuildContext context,
+    required String? userProfilePhoto,
   }) async {
     UserCredential credential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     if (credential.user != null) {
-      //? add the data to the firebase users table
       UserModel newUser = UserModel(
         id: Uuid().v4(),
         email: email,
@@ -36,6 +37,7 @@ class UserProvider extends ChangeNotifier {
         userGender: userGender,
         userRole: userRole,
         signupAt: DateTime.now(),
+        userProfilePhoto: userProfilePhoto,
       );
       await FirebaseFirestore.instance
           .collection(usersCollectionName)
@@ -47,6 +49,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+//? login user
   Future<void> login({
     required String email,
     required String password,
@@ -58,6 +61,7 @@ class UserProvider extends ChangeNotifier {
     await fetchAndUpdateFavoriteProducts();
   }
 
+//? get user data by his uid
   Future<UserModel> getUserData(String userUID) async {
     var userData = await FirebaseFirestore.instance
         .collection(usersCollectionName)
@@ -67,5 +71,11 @@ class UserProvider extends ChangeNotifier {
         UserModel.fromJSON(userData.data() as Map<String, dynamic>);
 
     return userModel;
+  }
+
+  //? get user photo path by his uid
+  Future<String?> getUserPhoto(String userUID) async {
+    UserModel userModel = await getUserData(userUID);
+    return userModel.userProfilePhoto;
   }
 }

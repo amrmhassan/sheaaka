@@ -14,6 +14,7 @@ class UserModel {
   final DateTime? birthDate;
   final UserRole userRole;
   final DateTime signupAt;
+  final String? userProfilePhoto;
 
   const UserModel({
     required this.id,
@@ -25,6 +26,7 @@ class UserModel {
     required this.userGender,
     required this.userRole,
     required this.signupAt,
+    required this.userProfilePhoto,
   });
 
   Map<String, dynamic> toJSON() {
@@ -38,6 +40,7 @@ class UserModel {
       userRoleString: userRole.name,
       birthDateString: birthDate,
       singUpString: signupAt,
+      userProfilePhotoString: userProfilePhoto,
     };
   }
 
@@ -52,6 +55,7 @@ class UserModel {
         stringToEnum(userJSON[userGenderString], UserGender.values);
     UserRole userRole = stringToEnum(userJSON[userRoleString], UserRole.values);
     DateTime signupAt = (userJSON[singUpString] as Timestamp).toDate();
+    String? userProfilePhoto = userJSON[userProfilePhotoString];
 
     return UserModel(
       id: id,
@@ -63,6 +67,7 @@ class UserModel {
       userGender: userGender,
       userRole: userRole,
       signupAt: signupAt,
+      userProfilePhoto: userProfilePhoto,
     );
   }
 }

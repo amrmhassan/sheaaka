@@ -22,13 +22,13 @@ class ProfileImage extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
+        //! never remove this builder cause it make an error in the children widgets
+        //! cause i am not checking if the user is logged in or not in them
         if (snapshot.hasData) {
-          User user = snapshot.data as User;
           return LoggedInUserIcon(
             radius: radius,
             padding: padding,
             border: border,
-            imagePath: user.photoURL,
           );
         } else {
           return NotLoggedInUserIcon();
