@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       currentUser = FirebaseAuth.instance.currentUser as User;
       userModel = await Provider.of<UserProvider>(context, listen: false)
-          .getUserData(currentUser.uid);
+          .getUserDataByUID(currentUser.uid);
     } catch (e) {
       showSnackBar(context, 'فشل تحميل صورة المستخدم', SnackBarType.error);
     }

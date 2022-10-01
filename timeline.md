@@ -1,4 +1,5 @@
-# add the like button with likes to the not logged in users but prevent them from clicking it and show a message to log in first
+-- fix the log in with google by trying to sign in first, or check if the email is already signed in => to skip asking for his info if he is already sign in
+--or to ask him for info if he tries to sign in but he has no info yet
 
 # then locating the user
 

@@ -6,7 +6,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/models/user_model.dart';
 import 'package:project/providers/user_provider.dart';
+import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
@@ -152,6 +154,17 @@ class _SignUpUsernameState extends State<SignUpUsername> {
       String? name = googleSignInAccount.displayName;
       String? photoUrl = googleSignInAccount.photoUrl;
       widget.emailController.text = email;
+      UserModel? userModel =
+          await Provider.of<UserProvider>(context, listen: false)
+              .getUserDataByEmail(email);
+      if (userModel != null) {
+        //* here the user is already signed up and i will sign him in to
+        await Provider.of<UserProvider>(context, listen: false)
+            .firebaseSignInGoogle(googleSignInAccount);
+        showSnackBar(context, 'أنت بالفعل مسجل', SnackBarType.info);
+        Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+      }
+
       widget.userNameController.text = name ?? '';
       widget.setProfilePhoto(photoUrl);
     } catch (e) {

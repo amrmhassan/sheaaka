@@ -7,6 +7,7 @@ import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/models/user_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
@@ -164,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               SocialButton(
                                 title: 'Google',
                                 iconName: 'google',
-                                onTap: () {},
+                                onTap: () async {},
                               ),
                               SocialButton(
                                 title: 'Facebook',

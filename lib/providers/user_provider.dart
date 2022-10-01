@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/firebase_constants.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/utils/general_utils.dart';
@@ -71,7 +72,7 @@ class UserProvider extends ChangeNotifier {
   }
 
 //? get user data by his uid
-  Future<UserModel> getUserData(String userUID) async {
+  Future<UserModel> getUserDataByUID(String userUID) async {
     var userData = await FirebaseFirestore.instance
         .collection(usersCollectionName)
         .doc(userUID)
@@ -82,9 +83,23 @@ class UserProvider extends ChangeNotifier {
     return userModel;
   }
 
+  Future<UserModel?> getUserDataByEmail(String email) async {
+    var data = (await FirebaseFirestore.instance
+        .collection(usersCollectionName)
+        .where(emailString, isEqualTo: email)
+        .get());
+    bool empty = data.docs.isEmpty;
+    if (empty) {
+      return null;
+    }
+    var userData = data.docs.first.data();
+    UserModel userModel = UserModel.fromJSON(userData);
+    return userModel;
+  }
+
   //? get user photo path by his uid
   Future<String?> getUserPhoto(String userUID) async {
-    UserModel userModel = await getUserData(userUID);
+    UserModel userModel = await getUserDataByUID(userUID);
     return userModel.userProfilePhoto;
   }
 
