@@ -140,6 +140,8 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
   void startSignUpWithGoogle() async {
     widget.setSignMethod(SignMethod.google);
+    await GoogleSignIn().signOut();
+
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await Provider.of<UserProvider>(context, listen: false)

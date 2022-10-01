@@ -77,7 +77,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     rightIcon: AppBarIcon(
                       onTap: () async {
                         Navigator.pushNamed(context, HolderScreen.routeName);
-                        await FirebaseAuth.instance.signOut();
+                        await Provider.of<UserProvider>(context, listen: false)
+                            .logOutGoogle();
+                        // GoogleIdentity.
                       },
                       iconName: 'logout',
                       backgroundColor: Colors.transparent,

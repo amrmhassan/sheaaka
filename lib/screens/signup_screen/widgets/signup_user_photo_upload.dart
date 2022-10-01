@@ -172,10 +172,11 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
             ),
           ],
         ),
-        Text(
-          'قم بإضافة صورة حتي يبدو حسابك بشكل أفضل',
-          style: h5InactiveTextStyle,
-        ),
+        if (widget.profileImage == null)
+          Text(
+            'قم بإضافة صورة حتي يبدو حسابك بشكل أفضل',
+            style: h5InactiveTextStyle,
+          ),
         VSpace(),
         SubmitFormButton(
             onTap: widget.incrementActiveIndex,

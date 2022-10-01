@@ -13,6 +13,8 @@ import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {
+  final GoogleSignIn _google = GoogleSignIn();
+
   //? sign user up
   Future<void> signUserUp({
     required String email,
@@ -60,7 +62,7 @@ class UserProvider extends ChangeNotifier {
   }
 
 //? login user
-  Future<void> login({
+  Future<void> loginEmailPassword({
     required String email,
     required String password,
     required BuildContext context,
@@ -83,6 +85,7 @@ class UserProvider extends ChangeNotifier {
     return userModel;
   }
 
+//? get user data by email
   Future<UserModel?> getUserDataByEmail(String email) async {
     var data = (await FirebaseFirestore.instance
         .collection(usersCollectionName)
@@ -103,15 +106,15 @@ class UserProvider extends ChangeNotifier {
     return userModel.userProfilePhoto;
   }
 
+//? sign in google account to get it's information
   Future<GoogleSignInAccount?> googleSignIn() async {
     //* here just sign up with google
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount = await _google.signIn();
 
     return googleSignInAccount;
   }
 
+//? sign in google account to firebase to add it to firebase auth
   Future<User?> firebaseSignInGoogle(
     GoogleSignInAccount googleSignInAccount,
   ) async {
@@ -128,6 +131,7 @@ class UserProvider extends ChangeNotifier {
     return result.user;
   }
 
+//? sign up with email and password
   Future<User?> firebaseSignUpEmailPassword(
     String email,
     String password,
@@ -135,5 +139,12 @@ class UserProvider extends ChangeNotifier {
     UserCredential credential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     return credential.user;
+  }
+
+  //? logout google
+  Future<void> logOutGoogle() async {
+    await _google.disconnect();
+    await FirebaseAuth.instance.signOut();
+    await _google.signOut();
   }
 }

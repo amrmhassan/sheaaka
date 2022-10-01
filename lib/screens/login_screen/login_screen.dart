@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -49,7 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       var fetchLikes = Provider.of<ProductsProvider>(context, listen: false)
           .fetchAndUpdateFavoriteProducts;
-      await Provider.of<UserProvider>(context, listen: false).login(
+      await Provider.of<UserProvider>(context, listen: false)
+          .loginEmailPassword(
         email: _emailController.text,
         password: _passwordController.text,
         context: context,
@@ -165,7 +167,46 @@ class _LoginScreenState extends State<LoginScreen> {
                               SocialButton(
                                 title: 'Google',
                                 iconName: 'google',
-                                onTap: () async {},
+                                onTap: () async {
+                                  try {
+                                    final GoogleSignInAccount?
+                                        googleSignInAccount =
+                                        await Provider.of<UserProvider>(context,
+                                                listen: false)
+                                            .googleSignIn();
+
+                                    if (googleSignInAccount == null) {
+                                      return showSnackBar(context,
+                                          'لم يتم التسجيل', SnackBarType.error);
+                                    }
+
+                                    String email = googleSignInAccount.email;
+                                    UserModel? userModel =
+                                        await Provider.of<UserProvider>(context,
+                                                listen: false)
+                                            .getUserDataByEmail(email);
+                                    if (userModel == null) {
+                                      //* here the user isn't sign up and he must sign up first
+                                      Provider.of<UserProvider>(context,
+                                              listen: false)
+                                          .logOutGoogle();
+                                      return showSnackBar(
+                                          context,
+                                          'قم بالتسجيل أولا',
+                                          SnackBarType.error);
+                                    } else {
+                                      await Provider.of<UserProvider>(context,
+                                              listen: false)
+                                          .firebaseSignInGoogle(
+                                              googleSignInAccount);
+                                      Navigator.pushReplacementNamed(
+                                          context, HolderScreen.routeName);
+                                    }
+                                  } catch (e) {
+                                    showSnackBar(context, e.toString(),
+                                        SnackBarType.error);
+                                  }
+                                },
                               ),
                               SocialButton(
                                 title: 'Facebook',
