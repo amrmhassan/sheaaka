@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
-import 'package:project/providers/products_search_provider.dart';
+import 'package:project/providers/search_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/search_screen/widgets/search_box.dart';
@@ -24,36 +25,45 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   String searchQuery = '';
-  void startSearch(String value, SearchTypes searchType) {
+
+  void startSearch(String value, SearchTypes searchType, [String? storeId]) {
+    print(storeId);
+    var storeProvider = Provider.of<StoreProvider>(context, listen: false);
+    var productProvider = Provider.of<ProductsProvider>(context, listen: false);
     if (value.isNotEmpty) {
       if (searchType == SearchTypes.product) {
-        var productProvider =
-            Provider.of<ProductsProvider>(context, listen: false);
-
         Provider.of<SearchProvider>(
           context,
           listen: false,
         ).applySearchProducts(value, productProvider);
       } else if (searchType == SearchTypes.store) {
-        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
         Provider.of<SearchProvider>(
           context,
           listen: false,
         ).applySearchStores(value, storeProvider);
+      } else if (searchType == SearchTypes.storeProducts) {
+        //? apply the search for a single store
+        Provider.of<SearchProvider>(
+          context,
+          listen: false,
+        ).applySearchStoreProducts(value, productProvider, storeId!);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    SearchTypes searchType =
-        ModalRoute.of(context)!.settings.arguments! as SearchTypes;
+    var searchData =
+        ModalRoute.of(context)!.settings.arguments! as Map<String, dynamic>;
     return ScreensWrapper(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SearchBox(
-            startSearch: () => startSearch(searchQuery, searchType),
+            startSearch: () => startSearch(
+                searchQuery,
+                searchData['searchType'] as SearchTypes,
+                searchData['storeId'] as String?),
             updateSearchQuery: (value) {
               setState(() {
                 searchQuery = value;
@@ -67,7 +77,10 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 Expanded(
                   child: StartSearchButton(
-                    onTap: () => startSearch(searchQuery, searchType),
+                    onTap: () => startSearch(
+                        searchQuery,
+                        searchData['searchType'] as SearchTypes,
+                        searchData['storeId'] as String?),
                     searchQuery: searchQuery,
                   ),
                 ),
@@ -77,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           VSpace(),
           SearchingResults(
-            searchType: searchType,
+            searchType: searchData['searchType'] as SearchTypes,
           ),
         ],
       ),

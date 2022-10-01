@@ -61,7 +61,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
           OpenSearchBox(
             onTap: () {
               Navigator.pushNamed(context, SearchScreen.routeName,
-                  arguments: SearchTypes.store);
+                  arguments: {'searchType': SearchTypes.store});
             },
           ),
           VSpace(),

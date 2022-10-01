@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
               OpenSearchBox(
                 onTap: () {
                   Navigator.pushNamed(context, SearchScreen.routeName,
-                      arguments: SearchTypes.product);
+                      arguments: {'searchType': SearchTypes.product});
                 },
               ),
               VSpace(),

@@ -21,6 +21,7 @@ enum UserGender {
 enum SearchTypes {
   product,
   store,
+  storeProducts,
 }
 
 enum SnackBarType {

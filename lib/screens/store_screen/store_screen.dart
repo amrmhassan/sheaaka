@@ -1,7 +1,9 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -15,6 +17,7 @@ import 'package:project/screens/store_screen/widgets/follow_store.dart';
 import 'package:project/screens/store_screen/widgets/mail_store.dart';
 import 'package:project/screens/store_screen/widgets/store_all_products_grid.dart';
 import 'package:project/screens/store_screen/widgets/store_category_element.dart';
+import 'package:project/screens/store_screen/widgets/store_info.dart';
 import 'package:project/screens/store_screen/widgets/store_name.dart';
 import 'package:project/screens/store_screen/widgets/store_offers.dart';
 import 'package:project/screens/store_screen/widgets/store_page_header.dart';
@@ -48,6 +51,7 @@ class StoreScreen extends StatelessWidget {
             StorePageHeader(
               coverImagePath: storeModel.coverImagePath,
               logoImagePath: storeModel.logoImagePath,
+              storeId: storeId,
             ),
             PaddingWrapper(
               width: double.infinity,
@@ -73,8 +77,10 @@ class StoreScreen extends StatelessWidget {
                         name: storeModel.name,
                       ),
                       Spacer(),
+                      StoreInfo(),
+                      HSpace(factor: .3),
                       FollowStore(),
-                      HSpace(factor: .5),
+                      HSpace(factor: .3),
                       MailStore(),
                     ],
                   ),

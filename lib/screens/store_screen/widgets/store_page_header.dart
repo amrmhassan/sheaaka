@@ -3,18 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
-import 'package:project/global/widgets/modals/store_info_modal.dart';
+import 'package:project/models/types.dart';
+import 'package:project/screens/search_screen/search_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_logo_photo_storage_page.dart';
 
 class StorePageHeader extends StatelessWidget {
   final String logoImagePath;
   final String coverImagePath;
+  final String storeId;
 
   const StorePageHeader({
     Key? key,
     required this.coverImagePath,
     required this.logoImagePath,
+    required this.storeId,
   }) : super(key: key);
 
   @override
@@ -38,19 +40,15 @@ class StorePageHeader extends StatelessWidget {
           children: [
             CustomAppBar(
               rightIcon: AppBarIcon(
-                iconName: 'info1',
+                iconName: 'search',
                 onTap: () {
-                  showBottomSheet(
-                    elevation: 30,
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (ctx) => ModalWrapper(
-                      // color: kLightColor,
-                      onApply: () {},
-                      applyButtonTitle: 'applyButtonTitle',
-                      showApplyModalButton: false,
-                      child: StoreInfoModal(),
-                    ),
+                  Navigator.pushNamed(
+                    context,
+                    SearchScreen.routeName,
+                    arguments: {
+                      'searchType': SearchTypes.storeProducts,
+                      'storeId': storeId,
+                    },
                   );
                 },
               ),

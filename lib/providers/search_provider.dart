@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:project/helpers/data_creator.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/providers/products_provider.dart';
@@ -48,6 +47,34 @@ class SearchProvider extends ChangeNotifier {
             element.name.contains(searchQuery) ||
             (element.desc ?? '').contains(searchQuery))
       ];
+      noSearchResults = null;
+    } catch (e) {
+      noSearchResults = 'No Search Results Found';
+      _searchStores = [];
+    }
+    notifyListeners();
+  }
+
+  //# store products search
+  List<ProductModel> _storeProductsSearch = [];
+  List<ProductModel> get storeProductsSearch {
+    return [..._storeProductsSearch];
+  }
+
+  void applySearchStoreProducts(
+      String searchQuery, ProductsProvider productsProvider, String storeId) {
+    var allProducts = productsProvider.allProducts;
+    try {
+      _storeProductsSearch = [
+        ...allProducts.where(
+          (element) =>
+              (element.storeId == storeId) &&
+              (element.name.contains(searchQuery) ||
+                  (element.fullDesc ?? '').contains(searchQuery) ||
+                  (element.shortDesc ?? '').contains(searchQuery)),
+        )
+      ];
+      print('object');
       noSearchResults = null;
     } catch (e) {
       noSearchResults = 'No Search Results Found';
