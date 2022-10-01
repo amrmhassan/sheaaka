@@ -1,14 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
@@ -16,16 +9,10 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/image_picking_option_element.dart';
-import 'package:path/path.dart' as p;
-import 'package:project/utils/general_utils.dart';
-import 'package:uuid/uuid.dart';
-
-const maxCompressQuality = 10;
-const maxAfterPickSize = 1000; // this is 1MB
+import 'package:project/utils/photo_utils.dart';
 
 //? if the user is a trader he can't add a personal photo
 //? before adding the user photo the button will be تخطي
@@ -50,75 +37,30 @@ class SignUpUserPhotoUpload extends StatefulWidget {
 
 class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
   bool _uploading = false;
-//? to pick an image
-  Future<void> pickImage(ImageSource source, BuildContext context) async {
-    Navigator.pop(context);
 
-    try {
-      ImagePicker picker = ImagePicker();
-      XFile? image = await picker.pickImage(source: source, imageQuality: 7);
-      if (image == null) return;
-      var file = await ImageCropper.platform.cropImage(
-        sourcePath: image.path,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-      );
-      double imageSize = (await image.length()) /
-          1000; // this will return the image size in kb
-      if (imageSize > maxAfterPickSize) {
-        String msg =
-            'لا يمكن أن يتعدي حجم الصورة ${maxAfterPickSize / 1000} ميجا';
-        return showSnackBar(context, msg, SnackBarType.error);
-      }
-      int quality = 1000 ~/ imageSize;
-      quality = quality > maxCompressQuality ? maxCompressQuality : quality;
-      if (file == null) return;
-      File? compressedFile = await compressImage(file.path, quality);
-      if (compressedFile == null) return;
-      String? profilePhotoUrl = await _uploadFile(compressedFile.path);
-      widget.setProfilePhoto(profilePhotoUrl);
-    } catch (e) {
-      showSnackBar(
-          context, kDebugMode ? e.toString() : 'حدث خطأ', SnackBarType.error);
-    }
-  }
-
-//? to compress an image
-  Future<File?> compressImage(String path, int quality) async {
-    //* when ever the q
-    final newPath = p.join((await getTemporaryDirectory()).path,
-        '${Uuid().v4()}${p.extension(path)}');
-
-    final result = await FlutterImageCompress.compressAndGetFile(path, newPath,
-        quality: quality);
-    return result;
-  }
-
-//? for uploading a file to firebase storage
-  Future<String?> _uploadFile(String path) async {
-    String? fileUrl;
+//? to start the loading
+  void startLoading() {
     setState(() {
       _uploading = true;
     });
-    try {
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child(profileImagesDir)
-          .child('${Uuid().v4()}-${DateTime.now()}.${p.basename(path)}');
+  }
 
-      final result = await ref.putFile(File(path));
-      fileUrl = await result.ref.getDownloadURL();
-    } catch (e) {
-      showSnackBar(
-          context,
-          kDebugMode ? 'upload error ${e.toString()}' : 'حدث خطأ في رفع الصورة',
-          SnackBarType.error);
-    }
-
+//? to end the loading
+  void endLoading() {
     setState(() {
       _uploading = false;
     });
-    return fileUrl;
   }
+
+//? for handling picking image
+  void handlePickImage(ImageSource imageSource) => pickImage(
+        context: context,
+        callBack: widget.setProfilePhoto,
+        source: imageSource,
+        setStartLoading: startLoading,
+        setEndLoading: endLoading,
+        cloudFolderName: profileImagesDir,
+      );
 
 //? to view the bottom modal to choose the image source
   void showPickImageOptions(BuildContext context) {
@@ -135,12 +77,12 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
               children: [
                 ImagePickingOptionElement(
                   iconName: 'camera1',
-                  onTap: () => pickImage(ImageSource.camera, context),
+                  onTap: () => handlePickImage(ImageSource.camera),
                 ),
                 HSpace(factor: .5),
                 ImagePickingOptionElement(
                   iconName: 'gallery',
-                  onTap: () => pickImage(ImageSource.gallery, context),
+                  onTap: () => handlePickImage(ImageSource.gallery),
                 ),
               ],
             ),
