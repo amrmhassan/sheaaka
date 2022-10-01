@@ -1,5 +1,5 @@
--- fix the log in with google by trying to sign in first, or check if the email is already signed in => to skip asking for his info if he is already sign in
---or to ask him for info if he tries to sign in but he has no info yet
+-- add the error handling to show readable messages to the user
+-- add try catch to every future running in the app
 
 # then locating the user
 

@@ -9,22 +9,25 @@ import 'package:project/models/store_model.dart';
 
 class StoreProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
-
-  List<StoreModel> _stores = [];
   bool loadingStores = false;
+
+//# all stores
+  List<StoreModel> _stores = [];
+
   List<StoreModel> get stores {
     return [..._stores];
   }
 
+//? get store by id
   StoreModel getStoreById(String id) {
     return _stores.firstWhere((element) => element.id == id);
   }
 
+//? fetch all stores from firebase
   Future<void> fetchStores([bool noStateNotify = false]) async {
     if (loadingStores) return;
     loadingStores = true;
     if (!noStateNotify) notifyListeners();
-
     QuerySnapshot<Map<String, dynamic>> res;
     res = await ref.collection(storesCollectionName).get();
     List<StoreModel> helperList = [];

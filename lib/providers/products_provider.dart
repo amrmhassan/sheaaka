@@ -16,6 +16,11 @@ class ProductsProvider extends ChangeNotifier {
 
   // //# 1] All Products
   List<ProductModel> _allProducts = [];
+
+  List<ProductModel> get allProducts {
+    return [..._allProducts];
+  }
+
   bool loadingAllProducts = false;
 
   // //? fetch all products

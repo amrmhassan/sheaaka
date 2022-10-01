@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/products_search_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/search_screen/widgets/search_box.dart';
 import 'package:project/screens/search_screen/widgets/search_filters_button.dart';
@@ -25,15 +27,19 @@ class _SearchScreenState extends State<SearchScreen> {
   void startSearch(String value, SearchTypes searchType) {
     if (value.isNotEmpty) {
       if (searchType == SearchTypes.product) {
-        Provider.of<ProductsSearchProvider>(
+        var productProvider =
+            Provider.of<ProductsProvider>(context, listen: false);
+
+        Provider.of<SearchProvider>(
           context,
           listen: false,
-        ).applySearchProducts(value);
+        ).applySearchProducts(value, productProvider);
       } else if (searchType == SearchTypes.store) {
-        Provider.of<ProductsSearchProvider>(
+        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
+        Provider.of<SearchProvider>(
           context,
           listen: false,
-        ).applySearchStores(value);
+        ).applySearchStores(value, storeProvider);
       }
     }
   }
