@@ -82,7 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ProfileSummary(),
-                        UserName(),
+                        UserName(
+                          name: userModel.userName,
+                        ),
                         VSpace(),
                         HLine(width: 1, color: kSecondaryColor.withOpacity(.2)),
                         VSpace(),

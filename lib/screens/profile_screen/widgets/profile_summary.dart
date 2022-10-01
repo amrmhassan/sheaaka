@@ -24,6 +24,7 @@ class ProfileSummary extends StatelessWidget {
     return Row(
       children: [
         ProfileImage(
+          allowClick: false,
           radius: 80,
           border: Border.all(
             width: 1,

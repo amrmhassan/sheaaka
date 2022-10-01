@@ -9,12 +9,14 @@ class ProfileImage extends StatelessWidget {
   final double? radius;
   final Border? border;
   final EdgeInsets? padding;
+  final bool allowClick;
 
   const ProfileImage({
     Key? key,
     this.border,
     this.padding,
     this.radius,
+    this.allowClick = true,
   }) : super(key: key);
 
   @override
@@ -26,12 +28,15 @@ class ProfileImage extends StatelessWidget {
         //! cause i am not checking if the user is logged in or not in them
         if (snapshot.hasData) {
           return LoggedInUserIcon(
+            allowClick: allowClick,
             radius: radius,
             padding: padding,
             border: border,
           );
         } else {
-          return NotLoggedInUserIcon();
+          return NotLoggedInUserIcon(
+            allowClick: allowClick,
+          );
         }
       },
     );

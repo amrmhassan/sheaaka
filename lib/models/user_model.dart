@@ -6,6 +6,7 @@ import 'package:project/utils/string_to_type_utils.dart';
 
 class UserModel {
   final String id;
+  final String userName;
   final String email;
   final String? address;
   final LatLng? location;
@@ -18,6 +19,7 @@ class UserModel {
 
   const UserModel({
     required this.id,
+    required this.userName,
     required this.email,
     required this.address,
     required this.birthDate,
@@ -41,11 +43,13 @@ class UserModel {
       birthDateString: birthDate,
       singUpString: signupAt,
       userProfilePhotoString: userProfilePhoto,
+      userNameString: userName,
     };
   }
 
   static UserModel fromJSON(Map<String, dynamic> userJSON) {
     String id = userJSON[idString];
+    String userName = userJSON[userNameString];
     String email = userJSON[emailString];
     String? address = userJSON[addressString];
     DateTime? birthDate = (userJSON[birthDateString] as Timestamp?)?.toDate();
@@ -68,6 +72,7 @@ class UserModel {
       userRole: userRole,
       signupAt: signupAt,
       userProfilePhoto: userProfilePhoto,
+      userName: userName,
     );
   }
 }

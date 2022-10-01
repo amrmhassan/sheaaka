@@ -3,8 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project/constants/firebase_constants.dart';
-import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -48,6 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userRole: userRole,
         context: context,
         userProfilePhoto: profileImage,
+        userName: userNameController.text,
       );
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
@@ -104,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
 //? for birth date
-  DateTime birthDate = DateTime.now();
+  DateTime birthDate = DateTime.now().subtract(Duration(days: 10 * 365));
   void setBirthDate(DateTime d) {
     setState(() {
       birthDate = d;

@@ -18,7 +18,7 @@ import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 import 'package:project/utils/general_utils.dart';
 
-class SignUpLastStep extends StatelessWidget {
+class SignUpLastStep extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final TextEditingController address;
   final DateTime birthDate;
@@ -32,7 +32,7 @@ class SignUpLastStep extends StatelessWidget {
   final VoidCallback decrementActiveIndex;
   final Future<void> Function() signUserUp;
 
-  const SignUpLastStep({
+  SignUpLastStep({
     Key? key,
     required this.incrementActiveIndex,
     required this.address,
@@ -49,8 +49,14 @@ class SignUpLastStep extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<SignUpLastStep> createState() => _SignUpLastStepState();
+}
+
+class _SignUpLastStepState extends State<SignUpLastStep> {
+  final TextEditingController birthDateController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController birthDateController = TextEditingController();
     return Column(
       children: [
         VSpace(factor: 3),
@@ -77,7 +83,7 @@ class SignUpLastStep extends StatelessWidget {
         VSpace(factor: .2),
         CustomTextField(
           autoFocus: true,
-          controller: address,
+          controller: widget.address,
           iconName: 'home2',
           title: 'عنوان المنزل',
           color: kSecondaryColor,
@@ -107,12 +113,12 @@ class SignUpLastStep extends StatelessWidget {
           onTap: () async {
             DateTime? pickedBirthDate = await showDatePicker(
               context: context,
-              initialDate: DateTime.now().subtract(Duration(days: 10 * 365)),
+              initialDate: widget.birthDate,
               firstDate: DateTime.now().subtract(Duration(days: 80 * 365)),
               lastDate: DateTime.now().subtract(Duration(days: 365)),
             );
             if (pickedBirthDate != null) {
-              setBirthDate(pickedBirthDate);
+              widget.setBirthDate(pickedBirthDate);
               birthDateController.text = dateToString(pickedBirthDate);
             }
           },
@@ -132,15 +138,15 @@ class SignUpLastStep extends StatelessWidget {
           child: Row(
             children: [
               UserGenderElement(
-                active: userGender == UserGender.male,
+                active: widget.userGender == UserGender.male,
                 title: 'ذكر',
-                onTap: () => setUserGender(UserGender.male),
+                onTap: () => widget.setUserGender(UserGender.male),
               ),
               HSpace(),
               UserGenderElement(
                 title: 'أنثي',
-                active: userGender == UserGender.female,
-                onTap: () => setUserGender(UserGender.female),
+                active: widget.userGender == UserGender.female,
+                onTap: () => widget.setUserGender(UserGender.female),
               ),
             ],
           ),
@@ -150,13 +156,13 @@ class SignUpLastStep extends StatelessWidget {
           child: Row(
             children: [
               ProductCartCheckBox(
-                checked: userAgree,
-                onTap: toggleUserAgree,
+                checked: widget.userAgree,
+                onTap: widget.toggleUserAgree,
               ),
               HSpace(factor: .3),
               Expanded(
                 child: TitleSubtitle(
-                  onTap: toggleUserAgree,
+                  onTap: widget.toggleUserAgree,
                   title: 'أوافق علي',
                   subTitle: 'الشروط والأحكام',
                   padding: EdgeInsets.zero,
@@ -167,7 +173,7 @@ class SignUpLastStep extends StatelessWidget {
         ),
         VSpace(),
         GestureDetector(
-          onTap: userAgree
+          onTap: widget.userAgree
               ? () {}
               : () {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -179,8 +185,8 @@ class SignUpLastStep extends StatelessWidget {
           child: SubmitFormButton(
             onTap: () async {
               try {
-                await signUserUp();
-                incrementActiveIndex();
+                await widget.signUserUp();
+                widget.incrementActiveIndex();
               } on Exception catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -190,10 +196,10 @@ class SignUpLastStep extends StatelessWidget {
               }
             },
             title: 'تسجيل',
-            active: userAgree,
+            active: widget.userAgree,
           ),
         ),
-        BackStepFormButton(onTap: decrementActiveIndex),
+        BackStepFormButton(onTap: widget.decrementActiveIndex),
       ],
     );
   }

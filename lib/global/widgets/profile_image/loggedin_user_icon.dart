@@ -4,10 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/profile_image/not_loggedin_user_icon.dart';
 import 'package:project/providers/user_provider.dart';
-import 'package:project/screens/login_screen/login_screen.dart';
-import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
-import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 class LoggedInUserIcon extends StatefulWidget {
@@ -16,6 +13,7 @@ class LoggedInUserIcon extends StatefulWidget {
     required this.radius,
     required this.padding,
     required this.border,
+    this.allowClick = true,
     this.color,
   }) : super(key: key);
 
@@ -23,6 +21,7 @@ class LoggedInUserIcon extends StatefulWidget {
   final EdgeInsets? padding;
   final Border? border;
   final Color? color;
+  final bool allowClick;
 
   @override
   State<LoggedInUserIcon> createState() => _LoggedInUserIconState();
@@ -60,11 +59,14 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
         : userPhoto == null
             ? NotLoggedInUserIcon(
                 imagePath: 'assets/icons/user.png',
+                allowClick: widget.allowClick,
               )
             : GestureDetector(
-                onTap: () async {
-                  Navigator.pushNamed(context, ProfileScreen.routeName);
-                },
+                onTap: widget.allowClick
+                    ? () async {
+                        Navigator.pushNamed(context, ProfileScreen.routeName);
+                      }
+                    : () {},
                 child: Container(
                   clipBehavior: Clip.hardEdge,
                   width: widget.radius ?? 50,

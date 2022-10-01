@@ -14,6 +14,7 @@ class UserProvider extends ChangeNotifier {
   //? sign user up
   Future<void> signUserUp({
     required String email,
+    required String userName,
     required String password,
     required String phone,
     required String address,
@@ -38,6 +39,7 @@ class UserProvider extends ChangeNotifier {
         userRole: userRole,
         signupAt: DateTime.now(),
         userProfilePhoto: userProfilePhoto,
+        userName: userName,
       );
       await FirebaseFirestore.instance
           .collection(usersCollectionName)

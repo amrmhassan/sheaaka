@@ -12,26 +12,30 @@ import 'package:project/utils/general_utils.dart';
 
 class NotLoggedInUserIcon extends StatelessWidget {
   final String? imagePath;
+  final bool allowClick;
   const NotLoggedInUserIcon({
     Key? key,
     this.imagePath,
+    this.allowClick = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        User? user = FirebaseAuth.instance.currentUser;
-        if (user == null) {
-          if (await checkConnectivity()) {
-            Navigator.pushNamed(context, LoginScreen.routeName);
-          } else {
-            Navigator.pushNamed(context, NoInternetScreen.routeName);
-          }
-        } else {
-          Navigator.pushNamed(context, ProfileScreen.routeName);
-        }
-      },
+      onTap: allowClick
+          ? () async {
+              User? user = FirebaseAuth.instance.currentUser;
+              if (user == null) {
+                if (await checkConnectivity()) {
+                  Navigator.pushNamed(context, LoginScreen.routeName);
+                } else {
+                  Navigator.pushNamed(context, NoInternetScreen.routeName);
+                }
+              } else {
+                Navigator.pushNamed(context, ProfileScreen.routeName);
+              }
+            }
+          : () {},
       child: Container(
         padding: EdgeInsets.all(mediumPadding),
         decoration: BoxDecoration(

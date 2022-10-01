@@ -177,7 +177,9 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
           style: h5InactiveTextStyle,
         ),
         VSpace(),
-        SubmitFormButton(onTap: widget.incrementActiveIndex, title: 'التالي'),
+        SubmitFormButton(
+            onTap: widget.incrementActiveIndex,
+            title: widget.profileImage == null ? 'تخطي' : 'التالي'),
         BackStepFormButton(onTap: widget.decrementActiveIndex),
       ],
     );

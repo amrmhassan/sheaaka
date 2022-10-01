@@ -51,3 +51,4 @@ String userGenderString = 'userGenderString';
 String userRoleString = 'userRoleString';
 String singUpString = 'singUpString';
 String userProfilePhotoString = 'userProfilePhotoString';
+String userNameString = 'userNameString';
