@@ -26,6 +26,7 @@ class ProductSizeColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (productModel.availableSize != null &&
             productModel.availableSize!.isNotEmpty)

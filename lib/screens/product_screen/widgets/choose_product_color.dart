@@ -24,6 +24,7 @@ class ChooseProductColor extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: colors!.map(
                   (e) {
                     int i = colors!.indexWhere(
