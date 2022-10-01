@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/firebase_constants.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -11,6 +12,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
 import 'package:project/screens/signup_screen/widgets/signup_email_password.dart';
 import 'package:project/screens/signup_screen/widgets/signup_last_step.dart';
+import 'package:project/screens/signup_screen/widgets/signup_user_photo_upload.dart';
 import 'package:project/screens/signup_screen/widgets/signup_username.dart';
 import 'package:project/utils/auth_exception_utils.dart';
 import 'package:project/utils/general_utils.dart';
@@ -54,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   //? handling the current step in signing a user up
-  int activeStepIndex = 0;
+  int activeStepIndex = 2;
   void incrementActiveIndex() {
     setState(() {
       activeStepIndex++;
@@ -99,6 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+//? for birth date
   DateTime birthDate = DateTime.now();
   void setBirthDate(DateTime d) {
     setState(() {
@@ -106,6 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+//? for location
   LatLng? location;
   void setLocation(LatLng l) {
     setState(() {
@@ -113,6 +117,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+//? user photo
+  String? profileImage;
+  void setProfilePhoto(String? p) {
+    setState(() {
+      profileImage = p;
+    });
+  }
+
+//? handle viewing the current signup step
   Widget getSignupStep(int i) {
     if (i == 0) {
       return SignUpUsername(
@@ -138,13 +151,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //     decrementActiveIndex: decrementActiveIndex,
     //   );
     // }
-    // else if (i == 3) {
-    //   return SignUpUserPhotoUpload(
-    //     incrementActiveIndex: incrementActiveIndex,
-    //     decrementActiveIndex: decrementActiveIndex,
-    //   );
-    // }
     else if (i == 2) {
+      return SignUpUserPhotoUpload(
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
+        setProfilePhoto: setProfilePhoto,
+        profileImage: profileImage,
+      );
+    } else if (i == 3) {
       return SignUpLastStep(
         address: addressController,
         birthDate: birthDate,

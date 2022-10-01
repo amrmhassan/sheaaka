@@ -37,22 +37,23 @@ class PostActions extends StatelessWidget {
           ),
           Spacer(),
           CustomIconButton(iconName: 'share', onTap: () {}),
-          if (user != null)
-            Row(
-              children: [
-                HSpace(),
-                Column(
-                  children: [
-                    handleShowLoveButton(context, productId),
-                    Text(
-                      lovesToString(lovesNumber),
-                      textAlign: TextAlign.justify,
-                      style: h4TextStyleInactive.copyWith(height: 1),
-                    )
-                  ],
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              HSpace(),
+              Column(
+                children: [
+                  user != null
+                      ? handleShowLoveButton(context, productId)
+                      : handleShowNotLoggedInLoveButton(context),
+                  Text(
+                    lovesToString(lovesNumber),
+                    textAlign: TextAlign.justify,
+                    style: h4TextStyleInactive.copyWith(height: 1),
+                  )
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-# implement logging users up and in
+# add the like button with likes to the not logged in users but prevent them from clicking it and show a message to log in first
 
 # then locating the user
 

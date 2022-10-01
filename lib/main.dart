@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';
@@ -15,6 +16,7 @@ import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
+import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:project/screens/offer_screen/offer_screen.dart';
 import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
@@ -95,6 +97,7 @@ class MyApp extends StatelessWidget {
           TrendScreen.routeName: (context) => TrendScreen(),
           UploadDataScreen.routeName: (context) => UploadDataScreen(),
           OfferScreen.routeName: (context) => OfferScreen(),
+          NoInternetScreen.routeName: (context) => NoInternetScreen(),
         },
       ),
     );

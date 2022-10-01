@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
@@ -9,8 +10,10 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/loading.dart';
+import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
@@ -34,23 +37,30 @@ class _HolderScreenState extends State<HolderScreen> {
     setState(() {
       loading = true;
     });
-    //? the loading in this screen only for the network checking
-    await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
-    await Provider.of<ProductsProvider>(context, listen: false)
-        .reloadHomeProducts(true);
-    await Provider.of<ProductsProvider>(context, listen: false)
-        .fetchAndUpdateFavoriteProducts();
-    int products = Provider.of<ProductsProvider>(context, listen: false)
-        .homeProducts
-        .length;
+    try {
+      //? the loading in this screen only for the network checking
+      await Provider.of<StoreProvider>(context, listen: false)
+          .fetchStores(true);
+      await Provider.of<ProductsProvider>(context, listen: false)
+          .reloadHomeProducts(true);
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        await Provider.of<ProductsProvider>(context, listen: false)
+            .fetchAndUpdateFavoriteProducts();
+      }
+      int products = Provider.of<ProductsProvider>(context, listen: false)
+          .homeProducts
+          .length;
 
-    bool online = await checkConnectivity();
-    bool allowTheApp = online || products > 0;
-
-    setState(() {
-      noInternetNoData = !allowTheApp;
-      loading = false;
-    });
+      bool online = await checkConnectivity();
+      bool allowTheApp = online || products > 0;
+      setState(() {
+        noInternetNoData = !allowTheApp;
+        loading = false;
+      });
+    } catch (e) {
+      showSnackBar(context, e.toString(), SnackBarType.error);
+    }
   }
 
   @override
@@ -122,23 +132,7 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
             )
           : noInternetNoData
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(width: double.infinity),
-                    Image.asset(
-                      'assets/icons/no-signal.png',
-                      width: largeIconSize * 2,
-                      color: kSecondaryColor,
-                    ),
-                    VSpace(factor: .5),
-                    Text(
-                      'لابد من وجود اتصال بالانترنت في أول مرة',
-                      style: h3InactiveTextStyle,
-                    ),
-                  ],
-                )
+              ? NoInternetFullScreen()
               : Stack(
                   children: [
                     Column(

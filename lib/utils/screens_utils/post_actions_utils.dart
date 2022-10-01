@@ -124,3 +124,16 @@ Widget handleShowLoveButton(
           onTap: () => toggleLove(context, productId),
         );
 }
+
+//? handleShowNotLoggedInLoveButton
+Widget handleShowNotLoggedInLoveButton(
+  BuildContext context,
+) {
+  return CustomIconButton(
+    iconName: 'heart',
+    color: kSecondaryColor,
+    onTap: () {
+      showSnackBar(context, 'قم بتسجيل الدخول أولا', SnackBarType.info);
+    },
+  );
+}

@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
+import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
+import 'package:project/utils/general_utils.dart';
 
 class NotLoggedInUserIcon extends StatelessWidget {
   final String? imagePath;
@@ -17,10 +20,14 @@ class NotLoggedInUserIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         User? user = FirebaseAuth.instance.currentUser;
         if (user == null) {
-          Navigator.pushNamed(context, LoginScreen.routeName);
+          if (await checkConnectivity()) {
+            Navigator.pushNamed(context, LoginScreen.routeName);
+          } else {
+            Navigator.pushNamed(context, NoInternetScreen.routeName);
+          }
         } else {
           Navigator.pushNamed(context, ProfileScreen.routeName);
         }
