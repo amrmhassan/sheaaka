@@ -14,40 +14,47 @@ class SearchingResults extends StatelessWidget {
     Key? key,
     required this.searchType,
   }) : super(key: key);
+  bool haveResults(SearchProvider searchProvider) {
+    return searchProvider.searchProducts.isNotEmpty &&
+            searchType == SearchTypes.product ||
+        searchProvider.searchStores.isNotEmpty &&
+            searchType == SearchTypes.store ||
+        searchProvider.searchProducts.isNotEmpty &&
+            searchType == SearchTypes.storeProducts;
+  }
+
+  Widget getSearchResultWidget(SearchProvider searchProvider) {
+    return searchType == SearchTypes.product
+        ? Column(
+            children: searchProvider.searchProducts
+                .map((e) => HorizontalPost(product: e))
+                .toList(),
+          )
+        : searchType == SearchTypes.storeProducts
+            ? Column(
+                children: searchProvider.storeProductsSearch
+                    .map((e) => HorizontalPost(product: e))
+                    .toList(),
+              )
+            : Column(
+                children: searchProvider.searchStores
+                    .map(
+                      (e) => SearchResultStore(
+                        storeModel: e,
+                      ),
+                    )
+                    .toList(),
+              );
+  }
 
   @override
   Widget build(BuildContext context) {
     var searchProvider = Provider.of<SearchProvider>(context);
     return Expanded(
-      child: searchProvider.searchProducts.isNotEmpty &&
-                  searchType == SearchTypes.product ||
-              searchProvider.searchStores.isNotEmpty &&
-                  searchType == SearchTypes.store ||
-              searchProvider.searchProducts.isNotEmpty &&
-                  searchType == SearchTypes.storeProducts
+      child: haveResults(searchProvider)
           ? SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              child: searchType == SearchTypes.product
-                  ? Column(
-                      children: searchProvider.searchProducts
-                          .map((e) => HorizontalPost(product: e))
-                          .toList(),
-                    )
-                  : searchType == SearchTypes.storeProducts
-                      ? Column(
-                          children: searchProvider.storeProductsSearch
-                              .map((e) => HorizontalPost(product: e))
-                              .toList(),
-                        )
-                      : Column(
-                          children: searchProvider.searchStores
-                              .map(
-                                (e) => SearchResultStore(
-                                  storeModel: e,
-                                ),
-                              )
-                              .toList(),
-                        ),
+              child: getSearchResultWidget(searchProvider),
             )
           : Container(
               height: double.infinity,

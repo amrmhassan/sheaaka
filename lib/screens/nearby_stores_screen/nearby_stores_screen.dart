@@ -1,18 +1,20 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project/constants/locations.dart';
-import 'package:project/constants/styles.dart';
+import 'package:location/location.dart';
+import 'package:project/global/widgets/loading.dart';
 
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/location_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/open_search_box.dart';
+import 'package:project/screens/nearby_stores_screen/widgets/nearby_stores_no_location.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/open_stores_map_button.dart';
 import 'package:project/screens/nearby_stores_screen/widgets/store_full_post.dart';
 import 'package:project/screens/search_screen/search_screen.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 class NearbyStoresScreen extends StatefulWidget {
@@ -23,13 +25,15 @@ class NearbyStoresScreen extends StatefulWidget {
 }
 
 class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
-  LatLng? location = myLocation;
+  LocationData? locationData;
+  bool _loadingLocation = false;
+
   ScrollController scrollController = ScrollController();
   bool mapsButtonActive = true;
   double currentScrollPosition = 0;
 
-  @override
-  void initState() {
+//? handling the map icon with scrolling
+  void addScrollListener() {
     scrollController.addListener(() {
       double s = scrollController.position.extentAfter;
       double i = scrollController.position.extentBefore;
@@ -47,6 +51,41 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
       }
       currentScrollPosition = s;
     });
+  }
+
+//? for loading the user location
+  Future<void> loadLocation() async {
+    setState(() {
+      _loadingLocation = true;
+    });
+    try {
+      var locationProvider =
+          Provider.of<LocationProvider>(context, listen: false);
+      await locationProvider.fetchAndUpdateUserLocation(context);
+      LocationData? l = locationProvider.locationData;
+      if (l != null) {
+        Provider.of<StoreProvider>(context, listen: false)
+            .addStoreDistanceAndSortThem(locationFromLocationData(l));
+        setState(() {
+          locationData = l;
+        });
+      } else {
+        showSnackBar(context, 'لم يتم تحديد موقعك', SnackBarType.error);
+      }
+    } catch (e) {
+      showSnackBar(context, e.toString(), SnackBarType.error);
+    }
+
+    setState(() {
+      _loadingLocation = false;
+    });
+  }
+
+  @override
+  void initState() {
+    addScrollListener();
+    loadLocation();
+
     super.initState();
   }
 
@@ -64,34 +103,45 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                   arguments: {'searchType': SearchTypes.store});
             },
           ),
-          VSpace(),
-          location == null
-              ? Container(
-                  child: Text(
-                    'لابد من تحديد موقعك لاسنخدام هذه الخاصية',
-                    style: h4TextStyleInactive,
+          _loadingLocation
+              ? Expanded(
+                  child: Loading(
+                    title: 'جاري تحديد الموقع',
                   ),
                 )
-              : Expanded(
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        controller: scrollController,
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                          children: List.generate(
-                            storesProvider.stores.length,
-                            (index) => StoreFullPost(
-                              storeModel: storesProvider.stores[index],
-                              myLocation: location!,
+              : locationData == null
+                  ? NearbyStoresNoLocation(
+                      onTap: loadLocation,
+                    )
+                  : Expanded(
+                      child: Column(
+                        children: [
+                          VSpace(),
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                SingleChildScrollView(
+                                  controller: scrollController,
+                                  physics: BouncingScrollPhysics(),
+                                  child: Column(
+                                    children: List.generate(
+                                      storesProvider.stores.length,
+                                      (index) => StoreFullPost(
+                                        storeModel:
+                                            storesProvider.stores[index],
+                                        myLocation: locationFromLocationData(
+                                            locationData!),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                OpenStoresMapButton(active: mapsButtonActive),
+                              ],
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      OpenStoresMapButton(active: mapsButtonActive),
-                    ],
-                  ),
-                ),
+                    ),
         ],
       ),
     );

@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/models/types.dart';
 
@@ -97,4 +99,9 @@ void showSnackBar(
       ),
     ),
   );
+}
+
+//? get location from location data
+LatLng locationFromLocationData(LocationData locationData) {
+  return LatLng(locationData.latitude!, locationData.longitude!);
 }

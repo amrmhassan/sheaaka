@@ -80,7 +80,7 @@ class StoreFullPost extends StatelessWidget {
                               ),
                               HSpace(),
                               StoreDistance(
-                                distance: storeModel.distance as double,
+                                distance: storeModel.distance ?? 0,
                               ),
                             ],
                           ),

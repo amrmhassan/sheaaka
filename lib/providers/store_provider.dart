@@ -3,9 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/firebase_constants.dart';
-import 'package:project/constants/locations.dart';
 import 'package:project/models/store_model.dart';
+import 'package:project/providers/location_provider.dart';
+import 'dart:math' as math;
 
 class StoreProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
@@ -33,20 +35,32 @@ class StoreProvider extends ChangeNotifier {
     List<StoreModel> helperList = [];
     for (var element in res.docs) {
       var s = StoreModel.fromJSON(element.data());
-      double distance = Geolocator.distanceBetween(
-        s.location.latitude,
-        s.location.longitude,
-        myLocation.latitude,
-        myLocation.longitude,
-      );
-      s.distance = distance;
 
       helperList.add(s);
     }
-    helperList.sort(((a, b) => a.distance!.compareTo(b.distance!)));
     _stores = helperList;
     loadingStores = false;
 
+    notifyListeners();
+  }
+
+  //? add distance to stores
+  void addStoreDistanceAndSortThem(LatLng latLng) {
+    List<StoreModel> storesHelper = [];
+    for (var s in stores) {
+      double distance = Geolocator.distanceBetween(
+        s.location.latitude,
+        s.location.longitude,
+        latLng.latitude,
+        latLng.longitude,
+      );
+      s.distance = distance;
+      storesHelper.add(s);
+    }
+    storesHelper.sort(((a, b) => a.distance!.compareTo(b.distance!)));
+
+    _stores.clear();
+    _stores = storesHelper;
     notifyListeners();
   }
 }

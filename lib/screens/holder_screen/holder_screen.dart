@@ -2,17 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
-import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
-import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';

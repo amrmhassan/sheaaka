@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/product_model.dart';
 
 int loadingAtATime = 10;
@@ -179,7 +181,7 @@ class ProductsProvider extends ChangeNotifier {
   Future<bool> checkIfProductIsLiked(String productId) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw Exception('no user logged in');
+      throw CustomError(ErrorsTypes.noUserLoggedIn);
     }
     var data = await FirebaseFirestore.instance
         .collection(usersCollectionName)
@@ -199,7 +201,7 @@ class ProductsProvider extends ChangeNotifier {
     _favoriteProductsIds.clear();
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw Exception('no user logged in');
+      throw CustomError(ErrorsTypes.noUserLoggedIn);
     }
     var data = await FirebaseFirestore.instance
         .collection(usersCollectionName)
@@ -238,7 +240,7 @@ class ProductsProvider extends ChangeNotifier {
     //! here i will need to update the value of number of loves in the product itself
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw Exception('no user logged in');
+      throw CustomError(ErrorsTypes.noUserLoggedIn);
     }
     ProductModel product =
         _homeProducts.firstWhere((element) => element.id == productId);
@@ -280,7 +282,7 @@ class ProductsProvider extends ChangeNotifier {
         product.lovesNumber = product.lovesNumber - 1;
       }
       notifyListeners();
-      throw Exception('Error occurred during loving product');
+      throw CustomError(ErrorsTypes.loveError);
     }
   }
 
