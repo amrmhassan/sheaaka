@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/loading.dart';
 
 import 'package:project/global/widgets/v_space.dart';
@@ -98,13 +99,15 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
       alignment: Alignment.topRight,
       child: Column(
         children: [
+          SizedBox(width: double.infinity),
           VSpace(factor: 2),
-          OpenSearchBox(
-            onTap: () {
-              Navigator.pushNamed(context, SearchScreen.routeName,
-                  arguments: {'searchType': SearchTypes.store});
-            },
-          ),
+          if (storesProvider.stores.isNotEmpty)
+            OpenSearchBox(
+              onTap: () {
+                Navigator.pushNamed(context, SearchScreen.routeName,
+                    arguments: {'searchType': SearchTypes.store});
+              },
+            ),
           _loadingLocation
               ? Expanded(
                   child: Loading(
@@ -115,35 +118,39 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                   ? NearbyStoresNoLocation(
                       onTap: loadLocation,
                     )
-                  : Expanded(
-                      child: Column(
-                        children: [
-                          VSpace(),
-                          Expanded(
-                            child: Stack(
-                              children: [
-                                SingleChildScrollView(
-                                  controller: scrollController,
-                                  physics: BouncingScrollPhysics(),
-                                  child: Column(
-                                    children: List.generate(
-                                      storesProvider.stores.length,
-                                      (index) => StoreFullPost(
-                                        storeModel:
-                                            storesProvider.stores[index],
-                                        myLocation: locationFromLocationData(
-                                            locationData!),
+                  : storesProvider.stores.isEmpty
+                      ? Expanded(child: EmptyWidget(title: 'لا توجد محلات بعد'))
+                      : Expanded(
+                          child: Column(
+                            children: [
+                              VSpace(),
+                              Expanded(
+                                child: Stack(
+                                  children: [
+                                    SingleChildScrollView(
+                                      controller: scrollController,
+                                      physics: BouncingScrollPhysics(),
+                                      child: Column(
+                                        children: List.generate(
+                                          storesProvider.stores.length,
+                                          (index) => StoreFullPost(
+                                            storeModel:
+                                                storesProvider.stores[index],
+                                            myLocation:
+                                                locationFromLocationData(
+                                                    locationData!),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    OpenStoresMapButton(
+                                        active: mapsButtonActive),
+                                  ],
                                 ),
-                                OpenStoresMapButton(active: mapsButtonActive),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
         ],
       ),
     );
