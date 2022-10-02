@@ -56,6 +56,15 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
 
 //? for loading the user location
   Future<void> loadLocation() async {
+    var lData =
+        Provider.of<LocationProvider>(context, listen: false).locationData;
+    if (lData != null) {
+      setState(() {
+        locationData = lData;
+      });
+      return;
+    }
+
     setState(() {
       _loadingLocation = true;
     });

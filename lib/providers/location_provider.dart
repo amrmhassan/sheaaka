@@ -12,7 +12,7 @@ import 'package:project/utils/general_utils.dart';
 
 class LocationProvider extends ChangeNotifier {
   LocationData? locationData;
-  Location location = Location();
+  final Location location = Location();
   StreamSubscription? locationSubscription;
 
 //? getting location and listen to location updates
@@ -42,6 +42,8 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
     //* stopping the previous listener before creating a new one
     if (locationSubscription != null) {
+      print('---------------000000000');
+
       if (kDebugMode) {
         print('*********');
         print("Location subscription isn't null");
@@ -52,6 +54,7 @@ class LocationProvider extends ChangeNotifier {
     locationSubscription = location.onLocationChanged.listen((event) {
       locationData = event;
       if (callback != null) {
+        print('---------------000000000');
         if (kDebugMode) {
           print('---------------------------');
           print('Updating stores distances');

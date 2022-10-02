@@ -17,7 +17,7 @@ import 'package:uuid/uuid.dart';
 int storesNumber = 10;
 int productsNumber = 50;
 int wishlistsNumber = 5;
-int offersNumber = 40;
+int offersNumber = 50;
 
 class DataCreator {
   List<ProductModel> fProducts = [];
