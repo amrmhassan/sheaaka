@@ -16,6 +16,7 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:project/utils/holder_screen_utils.dart';
 import 'package:provider/provider.dart';
 
 class HolderScreen extends StatefulWidget {
@@ -31,21 +32,12 @@ class _HolderScreenState extends State<HolderScreen> {
   bool loading = false;
 
   //# home Screen stuff
-  Future<void> reloadProducts() async {
+  Future<void> reloadProductsHolderScreen() async {
     setState(() {
       loading = true;
     });
     try {
-      //? the loading in this screen only for the network checking
-      await Provider.of<StoreProvider>(context, listen: false)
-          .fetchStores(true);
-      await Provider.of<ProductsProvider>(context, listen: false)
-          .reloadHomeProducts(true);
-      User? currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        await Provider.of<ProductsProvider>(context, listen: false)
-            .fetchAndUpdateFavoriteProducts();
-      }
+      await loadData(context);
       int products = Provider.of<ProductsProvider>(context, listen: false)
           .homeProducts
           .length;
@@ -56,14 +48,14 @@ class _HolderScreenState extends State<HolderScreen> {
         noInternetNoData = !allowTheApp;
         loading = false;
       });
-    } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+    } catch (e, stack) {
+      showSnackBar(context, stack.toString(), SnackBarType.error);
     }
   }
 
   @override
   void initState() {
-    reloadProducts();
+    reloadProductsHolderScreen();
     super.initState();
   }
 
