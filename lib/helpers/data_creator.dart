@@ -68,7 +68,8 @@ class DataCreator {
   }
 
   //? to create random store offer model
-  OfferModel makeStoreOffer(String imagePath, String title, String productId) {
+  OfferModel makeStoreOffer(
+      String imagePath, String title, String productId, String storeId) {
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now().subtract(Duration(days: r(10)));
 
@@ -81,6 +82,7 @@ class DataCreator {
       createdAt: createdAt,
       endAt: endAt,
       productId: productId,
+      storeId: storeId,
     );
   }
 
@@ -216,7 +218,8 @@ class DataCreator {
     fOffers = List.generate(offersNumber, (index) {
       ProductModel rp = fProducts[r(fProducts.length)];
 
-      OfferModel offer = makeStoreOffer(rp.imagesPath[0], rp.name, rp.id);
+      OfferModel offer =
+          makeStoreOffer(rp.imagesPath[0], rp.name, rp.id, rp.storeId);
       addOfferToProduct(rp.id, offer.endAt, offer.createdAt);
       addOfferToStore(offer, rp.storeId);
       return offer;
