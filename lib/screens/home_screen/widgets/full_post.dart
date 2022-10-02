@@ -40,6 +40,9 @@ class _FullPostState extends State<FullPost> {
   @override
   Widget build(BuildContext context) {
     var storesProvider = Provider.of<StoreProvider>(context);
+    var storeOffers = storesProvider.stores
+        .firstWhere((store) => store.id == widget.fullPostModel.storeId)
+        .offers;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -66,12 +69,14 @@ class _FullPostState extends State<FullPost> {
               child: PostHeader(
                 logoImagePath: widget.fullPostModel.storeLogo,
                 storeName: widget.fullPostModel.storeName,
-                offersNumber: storesProvider.stores
-                    .firstWhere(
-                        (element) => element.id == widget.fullPostModel.storeId)
-                    .offers
-                    .where((element) => element.active)
-                    .length,
+                offersNumber: storeOffers == null
+                    ? 0
+                    : storesProvider.stores
+                        .firstWhere((element) =>
+                            element.id == widget.fullPostModel.storeId)
+                        .offers!
+                        .where((element) => element.active)
+                        .length,
               ),
             ),
             VSpace(factor: 0.5),

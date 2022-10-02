@@ -23,6 +23,7 @@ String favoriteString = 'favoriteString';
 String fullDescString = 'fullDescString';
 String shortDescString = 'shortDescString';
 String availableColorsString = 'availableColorsString';
+String keyWordsString = 'keyWordsString';
 
 //? brand model constants
 String iconString = 'iconString';

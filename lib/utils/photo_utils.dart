@@ -10,7 +10,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/photo_constants.dart';
 import 'package:project/models/types.dart';
 import 'package:project/utils/general_utils.dart';

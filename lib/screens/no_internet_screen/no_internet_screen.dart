@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 

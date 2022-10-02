@@ -6,7 +6,6 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;

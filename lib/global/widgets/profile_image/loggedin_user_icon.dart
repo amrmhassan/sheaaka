@@ -90,7 +90,6 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
                     child: Image.network(
                       userPhoto!,
                       errorBuilder: (context, error, stackTrace) {
-                        print(error.toString());
                         return NotLoggedInUserIcon(
                           allowClick: widget.allowClick,
                           imagePath: 'assets/icons/user.png',

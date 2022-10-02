@@ -32,7 +32,7 @@ class SignUpLastStep extends StatefulWidget {
   final VoidCallback decrementActiveIndex;
   final Future<void> Function() signUserUp;
 
-  SignUpLastStep({
+  const SignUpLastStep({
     Key? key,
     required this.incrementActiveIndex,
     required this.address,

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/key_word_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/utils/string_to_type_utils.dart';
 
@@ -14,7 +15,7 @@ class ProductModel {
   List<String> imagesPath;
   int lovesNumber;
   double price;
-
+  List<KeyWordModel>? keywords;
   BrandModel? brand;
   List<Sizes>? availableSize;
   List<Color>? availableColors;
@@ -40,6 +41,7 @@ class ProductModel {
     required this.createdAt,
     required this.lovesNumber,
     required this.price,
+    this.keywords,
     this.brand,
     this.availableSize,
     this.nOfComments,
@@ -60,6 +62,8 @@ class ProductModel {
   Map<String, dynamic> toJSON() {
     List<String>? sizesConverted = availableSize?.map((e) => e.name).toList();
     List<int>? colorsConverted = availableColors?.map((e) => e.value).toList();
+    List<Map<String, dynamic>>? keywordsConverted =
+        keywords?.map((e) => e.toJSON()).toList();
     return {
       idString: id,
       nameString: name,
@@ -83,41 +87,49 @@ class ProductModel {
       fullDescString: fullDesc,
       shortDescString: shortDesc,
       availableColorsString: colorsConverted,
+      keyWordsString: keywordsConverted,
     };
   }
 
 //? to create a product model out of a json map
-  static ProductModel fromJSON(Map<String, dynamic> productDOC) {
-    String id = productDOC[idString];
-    String name = productDOC[nameString];
-    String storeId = productDOC[storeIdString];
-    String storeLogo = productDOC[storeLogoString];
-    String storeName = productDOC[storeNameString];
-    List<String> imagesPath = (productDOC[imagesPathString] as List<dynamic>)
+  static ProductModel fromJSON(Map<String, dynamic> productJSON) {
+    String id = productJSON[idString];
+    String name = productJSON[nameString];
+    String storeId = productJSON[storeIdString];
+    String storeLogo = productJSON[storeLogoString];
+    String storeName = productJSON[storeNameString];
+    List<String> imagesPath = (productJSON[imagesPathString] as List<dynamic>)
         .map((e) => e.toString())
         .toList();
-    DateTime createdAt = (productDOC[createdAtString] as Timestamp).toDate();
-    int lovesNumber = productDOC[lovesNumberString];
-    double price = productDOC[priceString];
-    BrandModel? brand = BrandModel.fromJSON(productDOC[brandString]);
+    DateTime createdAt = (productJSON[createdAtString] as Timestamp).toDate();
+    int lovesNumber = productJSON[lovesNumberString];
+    double price = productJSON[priceString];
+    BrandModel? brand = BrandModel.fromJSON(productJSON[brandString]);
 
-    double? oldPrice = productDOC[oldPriceString] as double?;
-    // bool? favorite = productDOC[favoriteString] as bool?;
-    String? fullDesc = productDOC[fullDescString] as String?;
-    String? shortDesc = productDOC[shortDescString] as String?;
-    int? nOfComments = productDOC[nOfCommentsString] as int?;
-    double? rating = productDOC[ratingString] as double?;
-    int? remainingNumber = productDOC[remainingNumberString] as int?;
-    DateTime? offerEnd = (productDOC[offerEndString] as Timestamp?)?.toDate();
+    double? oldPrice = productJSON[oldPriceString] as double?;
+    // bool? favorite = productJSON[favoriteString] as bool?;
+    String? fullDesc = productJSON[fullDescString] as String?;
+    String? shortDesc = productJSON[shortDescString] as String?;
+    int? nOfComments = productJSON[nOfCommentsString] as int?;
+    double? rating = productJSON[ratingString] as double?;
+    int? remainingNumber = productJSON[remainingNumberString] as int?;
+    DateTime? offerEnd = (productJSON[offerEndString] as Timestamp?)?.toDate();
     DateTime? offerStarted =
-        (productDOC[offerStartedString] as Timestamp?)?.toDate();
+        (productJSON[offerStartedString] as Timestamp?)?.toDate();
     List<Sizes>? availableSize =
-        (productDOC[availableSizeString] as List<dynamic>?)
+        (productJSON[availableSizeString] as List<dynamic>?)
             ?.map((e) => stringToEnum(e, Sizes.values) as Sizes)
             .toList();
     List<Color>? availableColors =
-        (productDOC[availableColorsString] as List<dynamic>?)
+        (productJSON[availableColorsString] as List<dynamic>?)
             ?.map((e) => intToColors(e))
+            .toList();
+    var keywordsHelper = productJSON[keyWordsString];
+
+    List<dynamic>? keywords = keywordsHelper == null
+        ? keywordsHelper
+        : (productJSON[keyWordsString])
+            .map((k) => KeyWordModel.fromJSON(k!))
             .toList();
 
     return ProductModel(
@@ -142,6 +154,7 @@ class ProductModel {
       rating: rating,
       remainingNumber: remainingNumber,
       shortDesc: shortDesc,
+      keywords: keywords == null ? null : [...keywords],
     );
   }
 }

@@ -7,8 +7,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/store_model.dart';
-import 'package:project/providers/location_provider.dart';
-import 'dart:math' as math;
 
 import 'package:project/utils/general_utils.dart';
 

@@ -74,7 +74,6 @@ class SearchProvider extends ChangeNotifier {
                   (element.shortDesc ?? '').contains(searchQuery)),
         )
       ];
-      print('object');
       noSearchResults = null;
     } catch (e) {
       noSearchResults = 'No Search Results Found';

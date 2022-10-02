@@ -115,8 +115,10 @@ class DataCreator {
   void addOfferToStore(OfferModel offer, String storeId) {
     int i = fStores.indexWhere((element) => element.id == storeId);
     var s = fStores[i];
-    s.offers.add(offer);
-    fStores[i] = s;
+    if (s.offers != null) {
+      s.offers!.add(offer);
+      fStores[i] = s;
+    }
   }
 
   //? to create random product model

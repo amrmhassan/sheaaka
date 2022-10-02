@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
@@ -27,7 +26,6 @@ class _SearchScreenState extends State<SearchScreen> {
   String searchQuery = '';
 
   void startSearch(String value, SearchTypes searchType, [String? storeId]) {
-    print(storeId);
     var storeProvider = Provider.of<StoreProvider>(context, listen: false);
     var productProvider = Provider.of<ProductsProvider>(context, listen: false);
     if (value.isNotEmpty) {

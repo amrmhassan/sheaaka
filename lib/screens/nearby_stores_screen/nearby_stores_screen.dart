@@ -68,7 +68,6 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
           context, updateStoresDistances);
       LocationData? l = locationProvider.locationData;
       if (l != null) {
-        ;
         setState(() {
           locationData = l;
         });

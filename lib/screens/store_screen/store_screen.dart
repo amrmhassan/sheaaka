@@ -1,9 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -38,8 +36,9 @@ class StoreScreen extends StatelessWidget {
 
     StoreModel storeModel =
         Provider.of<StoreProvider>(context).getStoreById(storeId);
-    List<OfferModel> activeOffers =
-        storeModel.offers.where((element) => element.active).toList();
+    List<OfferModel> activeOffers = storeModel.offers == null
+        ? []
+        : storeModel.offers!.where((element) => element.active).toList();
 
     return ScreensWrapper(
       child: SingleChildScrollView(

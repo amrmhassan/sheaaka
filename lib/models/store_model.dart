@@ -11,7 +11,7 @@ class StoreModel {
   final int followers;
   final double? rating;
   final String? desc;
-  final List<OfferModel> offers;
+  final List<OfferModel>? offers;
   final LatLng location;
   double? distance;
 
@@ -29,8 +29,8 @@ class StoreModel {
   });
 
   Map<String, dynamic> toJSON() {
-    List<Map<String, dynamic>> offersJSON =
-        offers.map((e) => e.toJSON()).toList();
+    List<Map<String, dynamic>>? offersJSON =
+        offers?.map((e) => e.toJSON()).toList();
     GeoPoint locationPoint = GeoPoint(location.latitude, location.longitude);
     return {
       idString: id,
@@ -52,8 +52,11 @@ class StoreModel {
     int followersF = storeJSON[followersString];
     String nameF = storeJSON[nameString];
 
-    List<dynamic> offersF =
-        (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
+    var offersHelper = storeJSON[offersString];
+
+    List<dynamic>? offersF = offersHelper == null
+        ? null
+        : (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
 
     GeoPoint locationGeoPoint = (storeJSON[locationString] as GeoPoint);
     LatLng locationF =
@@ -66,7 +69,7 @@ class StoreModel {
       logoImagePath: logoImagePathF,
       followers: followersF,
       name: nameF,
-      offers: [...offersF],
+      offers: offersF == null ? null : [...offersF],
       location: locationF,
       desc: descF,
       rating: ratingF,
