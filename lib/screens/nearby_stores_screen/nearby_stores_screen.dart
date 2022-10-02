@@ -59,13 +59,16 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
       _loadingLocation = true;
     });
     try {
+      var updateStoresDistances =
+          Provider.of<StoreProvider>(context, listen: false)
+              .addStoreDistanceAndSortThem;
       var locationProvider =
           Provider.of<LocationProvider>(context, listen: false);
-      await locationProvider.fetchAndUpdateUserLocation(context);
+      await locationProvider.fetchAndUpdateUserLocation(
+          context, updateStoresDistances);
       LocationData? l = locationProvider.locationData;
       if (l != null) {
-        Provider.of<StoreProvider>(context, listen: false)
-            .addStoreDistanceAndSortThem(locationFromLocationData(l));
+        ;
         setState(() {
           locationData = l;
         });

@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/providers/location_provider.dart';
 import 'dart:math' as math;
+
+import 'package:project/utils/general_utils.dart';
 
 class StoreProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
@@ -45,7 +48,8 @@ class StoreProvider extends ChangeNotifier {
   }
 
   //? add distance to stores
-  void addStoreDistanceAndSortThem(LatLng latLng) {
+  void addStoreDistanceAndSortThem(LocationData locationData) {
+    LatLng latLng = locationFromLocationData(locationData);
     List<StoreModel> storesHelper = [];
     for (var s in stores) {
       double distance = Geolocator.distanceBetween(

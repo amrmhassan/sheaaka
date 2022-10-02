@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/models/custom_error.dart';
@@ -10,9 +13,11 @@ import 'package:project/utils/general_utils.dart';
 class LocationProvider extends ChangeNotifier {
   LocationData? locationData;
   Location location = Location();
+  StreamSubscription? locationSubscription;
 
 //? getting location and listen to location updates
-  Future<void> fetchAndUpdateUserLocation(BuildContext context) async {
+  Future<void> fetchAndUpdateUserLocation(BuildContext context,
+      [Function(LocationData even)? callback]) async {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     //* enabling location service
@@ -35,8 +40,28 @@ class LocationProvider extends ChangeNotifier {
 
     locationData = await location.getLocation();
     notifyListeners();
-    location.onLocationChanged.listen((event) {
+    //* stopping the previous listener before creating a new one
+    if (locationSubscription != null) {
+      if (kDebugMode) {
+        print('*********');
+        print("Location subscription isn't null");
+        print('*********');
+      }
+      await locationSubscription!.cancel();
+    }
+    locationSubscription = location.onLocationChanged.listen((event) {
       locationData = event;
+      if (callback != null) {
+        if (kDebugMode) {
+          print('---------------------------');
+          print('Updating stores distances');
+          print(event.latitude);
+          print(event.longitude);
+          print('---------------------------');
+        }
+
+        callback(event);
+      }
     });
   }
 }
