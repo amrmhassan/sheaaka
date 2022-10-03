@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/firebase_constants.dart';
-import 'package:project/models/custom_error.dart';
 import 'package:project/models/store_model.dart';
 
 import 'package:project/utils/general_utils.dart';
@@ -48,29 +47,6 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //? add distance to stores
-  void addStoreDistanceAndSortThem(LocationData locationData) {
-    LatLng latLng = locationFromLocationData(locationData);
-    List<StoreModel> knownLocationStores =
-        stores.where((element) => element.location != null).toList();
-    List<StoreModel> storesHelper = [];
-    for (var s in knownLocationStores) {
-      double distance = Geolocator.distanceBetween(
-        s.location!.latitude,
-        s.location!.longitude,
-        latLng.latitude,
-        latLng.longitude,
-      );
-      s.distance = distance;
-      storesHelper.add(s);
-    }
-    storesHelper.sort(((a, b) => a.distance!.compareTo(b.distance!)));
-
-    _stores.clear();
-    _stores = storesHelper;
-    notifyListeners();
-  }
-
   //? for signing up a store
   Future<void> signUpStore({
     required String coverImagePath,
@@ -99,5 +75,34 @@ class StoreProvider extends ChangeNotifier {
         .collection(storesCollectionName)
         .doc(id)
         .set(s.toJSON());
+  }
+
+  //# nearby stores
+  List<StoreModel> _nearByStores = [];
+  List<StoreModel> get nearByStores {
+    return [..._nearByStores];
+  }
+
+  //? add distance to stores
+  void addStoreDistanceAndSortThem(LocationData locationData) {
+    LatLng latLng = locationFromLocationData(locationData);
+    List<StoreModel> knownLocationStores =
+        _stores.where((element) => element.location != null).toList();
+    List<StoreModel> storesHelper = [];
+    for (var s in knownLocationStores) {
+      double distance = Geolocator.distanceBetween(
+        s.location!.latitude,
+        s.location!.longitude,
+        latLng.latitude,
+        latLng.longitude,
+      );
+      s.distance = distance;
+      storesHelper.add(s);
+    }
+    storesHelper.sort(((a, b) => a.distance!.compareTo(b.distance!)));
+
+    _nearByStores.clear();
+    _nearByStores = storesHelper;
+    notifyListeners();
   }
 }

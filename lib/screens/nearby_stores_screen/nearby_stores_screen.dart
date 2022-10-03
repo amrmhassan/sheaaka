@@ -110,7 +110,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
         children: [
           SizedBox(width: double.infinity),
           VSpace(factor: 2),
-          if (storesProvider.stores.isNotEmpty)
+          if (storesProvider.nearByStores.isNotEmpty)
             OpenSearchBox(
               onTap: () {
                 Navigator.pushNamed(context, SearchScreen.routeName,
@@ -127,7 +127,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                   ? NearbyStoresNoLocation(
                       onTap: loadLocation,
                     )
-                  : storesProvider.stores.isEmpty
+                  : storesProvider.nearByStores.isEmpty
                       ? Expanded(child: EmptyWidget(title: 'لا توجد محلات بعد'))
                       : Expanded(
                           child: Column(
@@ -141,10 +141,10 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                                       physics: BouncingScrollPhysics(),
                                       child: Column(
                                         children: List.generate(
-                                          storesProvider.stores.length,
+                                          storesProvider.nearByStores.length,
                                           (index) => StoreFullPost(
-                                            storeModel:
-                                                storesProvider.stores[index],
+                                            storeModel: storesProvider
+                                                .nearByStores[index],
                                             myLocation:
                                                 locationFromLocationData(
                                                     locationData!),
