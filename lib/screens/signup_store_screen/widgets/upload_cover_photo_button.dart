@@ -8,11 +8,11 @@ import 'package:project/global/widgets/h_space.dart';
 class UploadCoverPhotoButton extends StatelessWidget {
   const UploadCoverPhotoButton({
     Key? key,
-    required this.logoLoading,
+    required this.coverLoading,
     required this.showCoverImageModalHelper,
   }) : super(key: key);
 
-  final bool logoLoading;
+  final bool coverLoading;
   final VoidCallback showCoverImageModalHelper;
 
   @override
@@ -32,7 +32,7 @@ class UploadCoverPhotoButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if (!logoLoading)
+              if (!coverLoading)
                 Image.asset(
                   'assets/icons/camera.png',
                   width: smallIconSize,

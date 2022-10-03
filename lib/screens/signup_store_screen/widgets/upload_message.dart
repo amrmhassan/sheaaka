@@ -11,12 +11,22 @@ class UploadMessage extends StatelessWidget {
     required this.storeLogoPhoto,
   }) : super(key: key);
 
+  String getMessage() {
+    if (storeCoverPhoto == null && storeLogoPhoto == null) {
+      return 'صورة اللوجو والغلاف تساعد الزبائن في التعرف علي متجرك';
+    } else if (storeCoverPhoto == null) {
+      return 'صورة الغلاف تجعل لك هوية مميزة عند الزبائن';
+    } else if (storeLogoPhoto == null) {
+      return 'تساعد صورة اللوجو في تذكير الزبائن بك';
+    } else {
+      return 'الان سيبدو متجرك بشكل أفضل بكثير';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Text(
-      storeLogoPhoto == null && storeCoverPhoto == null
-          ? 'صورة اللوجو والغلاف تساعد الزبائن في التعرف علي متجرك'
-          : "الان سيبدو متجرك بشكل أفضل بكثير",
+      getMessage(),
       style: h4TextStyle.copyWith(color: kInActiveTextColor),
     );
   }

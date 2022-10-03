@@ -124,7 +124,7 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
             ),
             if (!coverLoading && widget.storeCoverPhoto == null)
               UploadCoverPhotoButton(
-                logoLoading: logoLoading,
+                coverLoading: coverLoading,
                 showCoverImageModalHelper: showCoverImageModalHelper,
               )
           ],
