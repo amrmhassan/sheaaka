@@ -16,7 +16,7 @@ class StoreModel {
 
   final String? desc;
   final List<OfferModel>? offers;
-  final LatLng location;
+  final LatLng? location;
   double? distance;
   String creatorUserUID;
 
@@ -27,7 +27,7 @@ class StoreModel {
     required this.followers,
     required this.name,
     required this.offers,
-    required this.location,
+    this.location,
     this.keywords,
     this.distance,
     this.desc,
@@ -38,7 +38,9 @@ class StoreModel {
   Map<String, dynamic> toJSON() {
     List<Map<String, dynamic>>? offersJSON =
         offers?.map((e) => e.toJSON()).toList();
-    GeoPoint locationPoint = GeoPoint(location.latitude, location.longitude);
+    GeoPoint? locationPoint = (location == null)
+        ? null
+        : GeoPoint(location!.latitude, location!.longitude);
     List<Map<String, dynamic>>? keywordsConverted =
         keywords?.map((e) => e.toJSON()).toList();
     return {
@@ -69,9 +71,10 @@ class StoreModel {
         ? null
         : (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
 
-    GeoPoint locationGeoPoint = (storeJSON[locationString] as GeoPoint);
-    LatLng locationF =
-        LatLng(locationGeoPoint.latitude, locationGeoPoint.longitude);
+    GeoPoint? locationGeoPoint = (storeJSON[locationString] as GeoPoint?);
+    LatLng? locationF = locationGeoPoint == null
+        ? null
+        : LatLng(locationGeoPoint.latitude, locationGeoPoint.longitude);
     String? descF = storeJSON[descString];
     double? ratingF = storeJSON[ratingString];
     var keywordsHelper = storeJSON[keyWordsString];

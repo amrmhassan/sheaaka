@@ -51,11 +51,13 @@ class StoreProvider extends ChangeNotifier {
   //? add distance to stores
   void addStoreDistanceAndSortThem(LocationData locationData) {
     LatLng latLng = locationFromLocationData(locationData);
+    List<StoreModel> knownLocationStores =
+        stores.where((element) => element.location != null).toList();
     List<StoreModel> storesHelper = [];
-    for (var s in stores) {
+    for (var s in knownLocationStores) {
       double distance = Geolocator.distanceBetween(
-        s.location.latitude,
-        s.location.longitude,
+        s.location!.latitude,
+        s.location!.longitude,
         latLng.latitude,
         latLng.longitude,
       );
