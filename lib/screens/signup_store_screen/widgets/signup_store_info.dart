@@ -15,10 +15,10 @@ class SignUpStoreInfo extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final List<String> storePhoneNumbers;
   final List<String> storeEmails;
-  final Function(String storeNumber) addAStoreNumber;
-  final Function(String storeNumber) removeAStoreNumber;
-  final Function(String email) addStoreEmail;
-  final Function(String email) removeStoreEmail;
+  final bool Function(String storeNumber) addAStoreNumber;
+  final bool Function(String storeNumber) removeAStoreNumber;
+  final bool Function(String email) addStoreEmail;
+  final bool Function(String email) removeStoreEmail;
   final TextEditingController storeNameController;
   final TextEditingController storeAddressController;
 

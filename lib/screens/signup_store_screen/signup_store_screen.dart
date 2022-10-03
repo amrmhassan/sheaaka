@@ -22,30 +22,46 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
 
   //? store phone numbers
   List<String> storePhoneNumbers = ['01147497502', '01147583002'];
-  void addAStoreNumber(String storeNumber) {
+  bool addAStoreNumber(String storeNumber) {
+    if (storePhoneNumbers.contains(storeNumber)) {
+      return false;
+    }
     setState(() {
       storePhoneNumbers.add(storeNumber);
     });
+    return true;
   }
 
-  void removeAStoreNumber(String phone) {
+  bool removeAStoreNumber(String phone) {
+    if (!storePhoneNumbers.contains(phone)) {
+      return false;
+    }
     setState(() {
       storePhoneNumbers.remove(phone);
     });
+    return true;
   }
 
   //? store emails
   List<String> storeEmails = [];
-  void addStoreEmail(String email) {
+  bool addStoreEmail(String email) {
+    if (storeEmails.contains(email)) {
+      return false;
+    }
     setState(() {
       storeEmails.add(email);
     });
+    return true;
   }
 
-  void removeStoreEmail(String email) {
+  bool removeStoreEmail(String email) {
+    if (!storeEmails.contains(email)) {
+      return false;
+    }
     setState(() {
       storeEmails.remove(email);
     });
+    return true;
   }
 
   bool signingUp = false;

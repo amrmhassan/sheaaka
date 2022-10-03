@@ -11,14 +11,15 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
+import 'package:project/screens/signup_store_screen/widgets/phone_number_data.dart';
 import 'package:project/utils/general_utils.dart';
 
 class StoreContactsElement extends StatefulWidget {
   final String title;
   final String iconName;
   final List<String> data;
-  final Function(String data) addData;
-  final Function(String data) removeData;
+  final bool Function(String data) addData;
+  final bool Function(String data) removeData;
   final Function(String? v) dataValidator;
 
   const StoreContactsElement({
@@ -40,9 +41,9 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
   bool emailsViewed = false;
   TextEditingController dataController = TextEditingController();
   String? dataError;
-  void showDataAddedModal() {
-    //? this will show a bottom sheet modal with the store phone numbers
 
+  //? show all data modal
+  void showDataAddedModal() {
     if (!phoneNumbersViewed) {
       showModalBottomSheet(
         context: context,
@@ -101,14 +102,19 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
             trailingIconWidget: ButtonWrapper(
               padding: EdgeInsets.all(mediumPadding),
               onTap: () {
-                //? here apply validation then add if valid
                 String? dataValidation =
                     widget.dataValidator(dataController.text);
                 setState(() {
                   dataError = dataValidation;
                 });
                 if (dataError == null) {
-                  widget.addData(dataController.text);
+                  var res = widget.addData(dataController.text);
+                  if (res) {
+                    showSnackBar(context, 'تمت الإضافة', SnackBarType.info);
+                    dataController.clear();
+                  } else {
+                    showSnackBar(context, 'موجود بالفعل', SnackBarType.error);
+                  }
                 }
               },
               backgroundColor: Colors.transparent,
@@ -145,8 +151,12 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
           return ModalWrapper(
             applyButtonColor: kDangerColor,
             onApply: () {
-              widget.removeData(data);
-              showSnackBar(context, 'تم الحذف ', SnackBarType.info);
+              bool res = widget.removeData(data);
+              if (res) {
+                showSnackBar(context, 'تم الحذف ', SnackBarType.info);
+              } else {
+                showSnackBar(context, 'لم يتم الحذف', SnackBarType.error);
+              }
               Navigator.pop(context);
             },
             applyButtonTitle: 'حذف',
@@ -156,41 +166,5 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
             ),
           );
         });
-  }
-}
-
-class PhoneNumberData extends StatelessWidget {
-  final String phoneNumber;
-  final VoidCallback deletePhone;
-  const PhoneNumberData({
-    Key? key,
-    required this.deletePhone,
-    required this.phoneNumber,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ButtonWrapper(
-      onTap: deletePhone,
-      backgroundColor: Colors.transparent,
-      padding: EdgeInsets.symmetric(
-        horizontal: kHPad / 2,
-        vertical: kVPad / 2,
-      ),
-      child: Row(
-        children: [
-          Text(
-            phoneNumber,
-            style: h3InactiveTextStyle,
-          ),
-          Spacer(),
-          Image.asset(
-            'assets/icons/delete.png',
-            width: smallIconSize,
-            color: kDangerColor,
-          ),
-        ],
-      ),
-    );
   }
 }
