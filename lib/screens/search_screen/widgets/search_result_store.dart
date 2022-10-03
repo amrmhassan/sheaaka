@@ -35,11 +35,17 @@ class SearchResultStore extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),
             ),
-            child: Image.asset(
-              storeModel.logoImagePath,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+            child: storeModel.logoImagePath == null
+                ? Image.asset(
+                    'assets/icons/user.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    storeModel.logoImagePath!,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
           ),
           HSpace(),
           Text(storeModel.name),

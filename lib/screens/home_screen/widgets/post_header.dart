@@ -8,7 +8,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/home_screen/widgets/trader_photo.dart';
 
 class PostHeader extends StatelessWidget {
-  final String logoImagePath;
+  final String? logoImagePath;
   final String storeName;
   final int offersNumber;
 
@@ -25,8 +25,9 @@ class PostHeader extends StatelessWidget {
       child: Row(
         children: [
           TraderPhoto(
-            logoImagePath: logoImagePath,
+            logoImagePath: logoImagePath ?? 'assets/icons/user.png',
             offersNumber: offersNumber,
+            imageFromInternet: logoImagePath != null,
           ),
           HSpace(
             factor: 0.5,

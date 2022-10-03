@@ -12,7 +12,7 @@ class ProductModel {
   String name;
   String storeId;
   String storeName;
-  String storeLogo;
+  String? storeLogo;
   List<String> imagesPath;
   int lovesNumber;
   double price;
@@ -38,7 +38,7 @@ class ProductModel {
     required this.id,
     required this.name,
     required this.storeId,
-    required this.storeLogo,
+    this.storeLogo,
     required this.storeName,
     required this.imagesPath,
     required this.createdAt,

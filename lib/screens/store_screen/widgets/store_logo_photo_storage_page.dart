@@ -4,7 +4,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 
 class StoreLogoPhotoStorePage extends StatelessWidget {
-  final String imagePath;
+  final String? imagePath;
   const StoreLogoPhotoStorePage({
     Key? key,
     required this.imagePath,
@@ -34,12 +34,19 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(500),
           ),
-          child: Image.asset(
-            imagePath,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
-          ),
+          child: imagePath == null
+              ? Image.asset(
+                  'assets/icons/user.png',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                )
+              : Image.asset(
+                  imagePath!,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
         ),
       ),
     );

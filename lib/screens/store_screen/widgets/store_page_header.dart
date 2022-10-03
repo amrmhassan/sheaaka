@@ -8,7 +8,7 @@ import 'package:project/screens/search_screen/search_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_logo_photo_storage_page.dart';
 
 class StorePageHeader extends StatelessWidget {
-  final String logoImagePath;
+  final String? logoImagePath;
   final String coverImagePath;
   final String storeId;
 

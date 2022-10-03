@@ -16,6 +16,15 @@ class SignUpStoreScreen extends StatefulWidget {
 }
 
 class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
+  //? submit store data
+  Future<void> submitStoreData() async {
+    Future.delayed(Duration(seconds: 10)).then(
+      (value) {
+        //! here i will submit the store data to be registered
+      },
+    );
+  }
+
   //? store logo
   String? storeLogoPhoto;
   void setStoreLogoPhoto(String? s) {
@@ -110,6 +119,7 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         setStoreLogoPhoto: setStoreLogoPhoto,
         storeCoverPhoto: storeCoverPhoto,
         storeLogoPhoto: storeLogoPhoto,
+        submitStoreData: submitStoreData,
       );
     } else if (i == 2) {
       //! no back step here cause the store will have been signed up

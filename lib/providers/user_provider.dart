@@ -29,7 +29,6 @@ class UserProvider extends ChangeNotifier {
     required LatLng? location,
     required UserGender userGender,
     required UserRole userRole,
-    required BuildContext context,
     required String? userProfilePhoto,
     required SignMethod signMethod,
     required GoogleSignInAccount? googleSignInAccount,
@@ -58,7 +57,6 @@ class UserProvider extends ChangeNotifier {
           .collection(usersCollectionName)
           .doc(user.uid)
           .set(newUser.toJSON());
-      showSnackBar(context, 'تم التسجيل بنجاح', SnackBarType.success);
     } else {
       throw CustomError(ErrorsTypes.unknownError);
     }

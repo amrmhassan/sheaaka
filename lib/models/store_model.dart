@@ -7,7 +7,7 @@ import 'package:project/models/offer_model.dart';
 class StoreModel {
   final String id;
   final String name;
-  final String logoImagePath;
+  final String? logoImagePath;
   final String coverImagePath;
   final int followers;
   final double? rating;
@@ -23,7 +23,7 @@ class StoreModel {
   StoreModel({
     required this.id,
     required this.coverImagePath,
-    required this.logoImagePath,
+    this.logoImagePath,
     required this.followers,
     required this.name,
     required this.offers,

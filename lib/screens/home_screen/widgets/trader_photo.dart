@@ -9,10 +9,13 @@ import 'package:project/utils/borders.dart';
 class TraderPhoto extends StatelessWidget {
   final String logoImagePath;
   final int offersNumber;
+  final bool imageFromInternet;
+
   const TraderPhoto({
     Key? key,
     required this.logoImagePath,
     required this.offersNumber,
+    required this.imageFromInternet,
   }) : super(key: key);
 
   @override
@@ -43,11 +46,17 @@ class TraderPhoto extends StatelessWidget {
           borderRadius: BorderRadius.circular(500),
           border: Border.all(width: 1 / 2, color: kBlackColor),
         ),
-        child: Image.asset(
-          logoImagePath,
-          fit: BoxFit.cover,
-          alignment: Alignment.topCenter,
-        ),
+        child: imageFromInternet
+            ? Image.network(
+                logoImagePath,
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              )
+            : Image.asset(
+                logoImagePath,
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
       ),
     );
   }
