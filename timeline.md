@@ -1,3 +1,5 @@
+# enable clicking product image from product screen to view it full screen
+
 # start implementing creating stores with sign up stores screen
 
 -- steps

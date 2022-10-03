@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -201,6 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       return SignUpCongrats(
         userRole: userRole,
+        userPhoto: profileImage,
       );
     }
   }

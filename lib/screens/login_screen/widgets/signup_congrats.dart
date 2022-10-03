@@ -13,9 +13,12 @@ import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 
 class SignUpCongrats extends StatelessWidget {
   final UserRole userRole;
+  final String? userPhoto;
+
   const SignUpCongrats({
     Key? key,
     required this.userRole,
+    required this.userPhoto,
   }) : super(key: key);
 
   @override
@@ -39,7 +42,8 @@ class SignUpCongrats extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       onTap: () {
                         Navigator.pushReplacementNamed(
-                            context, SignUpStoreScreen.routeName);
+                            context, SignUpStoreScreen.routeName,
+                            arguments: userPhoto);
                       },
                       title: 'هل أنت تاجر؟ ',
                       subTitle: 'إنشاء متجر',
@@ -68,7 +72,8 @@ class SignUpCongrats extends StatelessWidget {
             : SubmitFormButton(
                 onTap: () {
                   Navigator.pushReplacementNamed(
-                      context, SignUpStoreScreen.routeName);
+                      context, SignUpStoreScreen.routeName,
+                      arguments: userPhoto);
                 },
                 title: 'إنشاء متجرك',
               ),

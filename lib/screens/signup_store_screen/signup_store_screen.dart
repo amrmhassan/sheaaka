@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_finish_store.dart';
@@ -23,6 +24,14 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         //! here i will submit the store data to be registered
       },
     );
+  }
+
+//? store location
+  LatLng? storeLocation;
+  void setStoreLocation(LatLng latLng) {
+    setState(() {
+      storeLocation = latLng;
+    });
   }
 
   //? store logo
@@ -139,6 +148,15 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
     setState(() {
       activeStepIndex--;
     });
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      String? userLogo = ModalRoute.of(context)!.settings.arguments as String?;
+      setStoreLogoPhoto(userLogo);
+    });
+    super.initState();
   }
 
   @override
