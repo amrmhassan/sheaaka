@@ -21,7 +21,7 @@ class StorePageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var image = Image.asset(
+    var image = Image.network(
       coverImagePath,
       width: double.infinity,
       fit: BoxFit.cover,

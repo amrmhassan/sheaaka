@@ -93,16 +93,20 @@ class StoreScreen extends StatelessWidget {
                 offers: activeOffers,
               ),
             VSpace(factor: .8),
-            Taps(
-              taps: [
-                SizedBox(width: storeTitleHSpace),
-                StoreCategoryElement(active: true, title: 'الكل'),
-                StoreCategoryElement(title: 'الأشهر'),
-                StoreCategoryElement(title: 'الأفضل'),
-                SizedBox(width: storeTitleHSpace),
+            Column(
+              children: [
+                Taps(
+                  taps: [
+                    SizedBox(width: storeTitleHSpace),
+                    StoreCategoryElement(active: true, title: 'الكل'),
+                    StoreCategoryElement(title: 'الأشهر'),
+                    StoreCategoryElement(title: 'الأفضل'),
+                    SizedBox(width: storeTitleHSpace),
+                  ],
+                ),
+                StoreAllProductsGrid(storeId: storeId),
               ],
             ),
-            StoreAllProductsGrid(storeId: storeId),
           ],
         ),
       ),

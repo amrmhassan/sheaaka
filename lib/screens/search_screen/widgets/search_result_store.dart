@@ -50,7 +50,7 @@ class SearchResultStore extends StatelessWidget {
           HSpace(),
           Text(storeModel.name),
           Spacer(),
-          Rating(rating: storeModel.rating),
+          if (storeModel.rating != null) Rating(rating: storeModel.rating),
         ],
       ),
     );

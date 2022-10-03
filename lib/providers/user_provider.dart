@@ -12,11 +12,28 @@ import 'package:project/constants/models_constants.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
-import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {
+  //? creating user store warning
+  bool userStoreWarning = false;
+
+  void setUserStoreWarning(bool v) {
+    userStoreWarning = v;
+    notifyListeners();
+  }
+
   final GoogleSignIn _google = GoogleSignIn();
+  //! i might need to use these props, and set their values once the app is initiated
+  User? user;
+  UserModel? userModel;
+
+// //? setting user data
+//   void setCurrentUserData(User? u, UserModel? uM) {
+//     user = u;
+//     userModel = uM;
+//     notifyListeners();
+//   }
 
   //? sign user up
   Future<void> signUserUp({
@@ -57,6 +74,7 @@ class UserProvider extends ChangeNotifier {
           .collection(usersCollectionName)
           .doc(user.uid)
           .set(newUser.toJSON());
+      // setCurrentUserData(user, newUser);
     } else {
       throw CustomError(ErrorsTypes.unknownError);
     }
@@ -71,6 +89,11 @@ class UserProvider extends ChangeNotifier {
   }) async {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+    // User? u = userCredential.user;
+    // if (u != null) {
+    //   UserModel userModel = await getUserDataByUID(u.uid);
+    //   setCurrentUserData(u, userModel);
+    // }
     await fetchAndUpdateFavoriteProducts();
   }
 
@@ -129,6 +152,7 @@ class UserProvider extends ChangeNotifier {
       accessToken: googleSignInAuthentication.accessToken,
     );
     UserCredential result = await auth.signInWithCredential(authCredential);
+
     return result.user;
   }
 
@@ -139,6 +163,10 @@ class UserProvider extends ChangeNotifier {
   ) async {
     UserCredential credential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
+    // if (credential.user != null) {
+    //   UserModel userModel = await getUserDataByUID(credential.user!.uid);
+    //   setCurrentUserData(credential.user!, userModel);
+    // }
     return credential.user;
   }
 
@@ -152,6 +180,7 @@ class UserProvider extends ChangeNotifier {
         print(e);
       }
     }
+    // setCurrentUserData(null, null);
     await FirebaseAuth.instance.signOut();
   }
 }

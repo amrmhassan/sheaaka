@@ -28,6 +28,11 @@ class StoreProvider extends ChangeNotifier {
     return _stores.firstWhere((element) => element.id == id);
   }
 
+  //? get store by owner UID
+  StoreModel getStoreByOwnerUID(String uid) {
+    return _stores.firstWhere((element) => element.creatorUserUID == uid);
+  }
+
 //? fetch all stores from firebase
   Future<void> fetchStores([bool noStateNotify = false]) async {
     if (loadingStores) return;
@@ -67,8 +72,9 @@ class StoreProvider extends ChangeNotifier {
       followers: 0,
       name: name,
       offers: [],
-      location: location,
+      location: location ?? LatLng(30, 30),
       creatorUserUID: currentUser.uid,
+      rating: 1,
     );
 
     await FirebaseFirestore.instance

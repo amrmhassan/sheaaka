@@ -38,7 +38,7 @@ class StoreFullPost extends StatelessWidget {
             height: 250,
             child: Stack(
               children: [
-                Image.asset(
+                Image.network(
                   storeModel.coverImagePath,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -69,10 +69,11 @@ class StoreFullPost extends StatelessWidget {
                                 title: storeModel.desc,
                               ),
                               HSpace(),
-                              Rating(
-                                color: Colors.white,
-                                rating: storeModel.rating,
-                              ),
+                              if (storeModel.rating != null)
+                                Rating(
+                                  color: Colors.white,
+                                  rating: storeModel.rating,
+                                ),
                               Spacer(),
                               NOfFollowers(
                                 num: storeModel.followers,

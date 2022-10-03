@@ -128,7 +128,8 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                       onTap: loadLocation,
                     )
                   : storesProvider.nearByStores.isEmpty
-                      ? Expanded(child: EmptyWidget(title: 'لا توجد محلات بعد'))
+                      ? Expanded(
+                          child: EmptyWidget(title: 'لا توجد محلات قريبة'))
                       : Expanded(
                           child: Column(
                             children: [

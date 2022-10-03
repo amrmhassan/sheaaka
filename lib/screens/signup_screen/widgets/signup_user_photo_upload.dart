@@ -6,12 +6,9 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/h_space.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
-import 'package:project/screens/signup_screen/widgets/image_picking_option_element.dart';
 import 'package:project/utils/photo_utils.dart';
 
 //? if the user is a trader he can't add a personal photo

@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
@@ -144,66 +141,12 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
         VSpace(factor: 5),
         SubmitFormButton(
           onTap: () async {
-            if (widget.storeLogoPhoto == null &&
-                widget.storeCoverPhoto == null) {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (ctx) => ModalWrapper(
-                  onApply: () {},
-                  applyButtonTitle: 'applyButtonTitle',
-                  showApplyModalButton: false,
-                  child: Column(
-                    children: [
-                      Text('هل تريد التسجيل بدون صورة غلاف أو صورة لوجو ؟'),
-                      VSpace(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ButtonWrapper(
-                            width: 150,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: kHPad, vertical: kVPad / 2),
-                            onTap: () async {
-                              //? here i will submit the store data to be registered
-                              await widget.submitStoreData();
-                              widget.incrementActiveIndex();
-                              showSnackBar(context, 'Store is registered',
-                                  SnackBarType.success);
-                              Navigator.pop(ctx);
-                            },
-                            child: Text(
-                              'نعم',
-                              style: h4LightTextStyle,
-                            ),
-                          ),
-                          ButtonWrapper(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: kHPad, vertical: kVPad / 2),
-                            width: 150,
-                            onTap: () async {
-                              try {
-                                await widget.submitStoreData();
-                                Navigator.pop(ctx);
-                              } catch (e) {
-                                showSnackBar(
-                                    context, e.toString(), SnackBarType.error);
-                              }
-                            },
-                            child: Text(
-                              'إضافة صورة',
-                              style: h4LightTextStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              await widget.submitStoreData();
+            if (widget.storeCoverPhoto == null) {
+              return showSnackBar(
+                  context, 'قم بإضافة صورة غلاف أولا', SnackBarType.error);
             }
+            await widget.submitStoreData();
+            //![That was here]
           },
           title: 'تسجيل المتجر',
         ),
@@ -212,3 +155,65 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
     );
   }
 }
+
+
+//! that was instead of the 
+//   if (widget.storeLogoPhoto == null &&
+//       widget.storeCoverPhoto == null) {
+//     showModalBottomSheet(
+//       context: context,
+//       backgroundColor: Colors.transparent,
+//       builder: (ctx) => ModalWrapper(
+//         onApply: () {},
+//         applyButtonTitle: 'applyButtonTitle',
+//         showApplyModalButton: false,
+//         child: Column(
+//           children: [
+//             Text('هل تريد التسجيل بدون صورة غلاف أو صورة لوجو ؟'),
+//             VSpace(),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 ButtonWrapper(
+//                   width: 150,
+//                   padding: EdgeInsets.symmetric(
+//                       horizontal: kHPad, vertical: kVPad / 2),
+//                   onTap: () async {
+//                     //? here i will submit the store data to be registered
+//                     await widget.submitStoreData();
+//                     widget.incrementActiveIndex();
+//                     showSnackBar(context, 'تم إنشاء متجرك بنجاح',
+//                         SnackBarType.success);
+//                     Navigator.pop(ctx);
+//                   },
+//                   child: Text(
+//                     'نعم',
+//                     style: h4LightTextStyle,
+//                   ),
+//                 ),
+//                 ButtonWrapper(
+//                   padding: EdgeInsets.symmetric(
+//                       horizontal: kHPad, vertical: kVPad / 2),
+//                   width: 150,
+//                   onTap: () {
+//                     try {
+//                       Navigator.pop(ctx);
+//                     } catch (e) {
+//                       showSnackBar(
+//                           context, e.toString(), SnackBarType.error);
+//                     }
+//                   },
+//                   child: Text(
+//                     'إضافة صورة',
+//                     style: h4LightTextStyle,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   } else {
+//     await widget.submitStoreData();
+//   }

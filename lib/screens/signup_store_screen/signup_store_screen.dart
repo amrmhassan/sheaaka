@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -25,19 +24,21 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
   //? submit store data
   Future<void> submitStoreData() async {
     setSigningUp(true);
+
     try {
-      // await Future.delayed(Duration(seconds: 2));
-      // await  Provider.of<StoreProvider>(context, listen: false).signUpStore(
-      //     coverImagePath: storeCoverPhoto!,
-      //     location: storeLocation,
-      //     logoImagePath: storeLogoPhoto,
-      //     name: storeNameController.text,
-      //   );
+      await Provider.of<StoreProvider>(context, listen: false).signUpStore(
+        coverImagePath: storeCoverPhoto!,
+        location: storeLocation,
+        logoImagePath: storeLogoPhoto,
+        name: storeNameController.text,
+      );
+
       showSnackBar(
         context,
         'تم إنشاء متجرك بنجاح',
         SnackBarType.success,
       );
+
       incrementActiveIndex();
     } catch (e) {
       showSnackBar(context, e.toString(), SnackBarType.error);

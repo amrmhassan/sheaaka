@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/global/widgets/empty_widget.dart';
+import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
@@ -47,23 +49,29 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
 
     return loading
         ? Text('Loading')
-        : GridView.count(
-            // padding: EdgeInsets.symmetric(vertical: kVPad),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-
-            crossAxisCount: 3,
-            childAspectRatio: 1,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-            children: List.generate(
-              storeProducts.length,
-              (index) => StoreProductCardSquare(
-                imagePath: storeProducts[index].imagesPath[0],
-                productId: storeProducts[index].id,
-              ),
-            ),
-          );
+        : storeProducts.isEmpty
+            ? Column(
+                children: [
+                  VSpace(factor: 2),
+                  EmptyWidget(title: 'لا يوجد منتجات في هذا المحل'),
+                ],
+              )
+            : GridView.count(
+                // padding: EdgeInsets.symmetric(vertical: kVPad),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                children: List.generate(
+                  storeProducts.length,
+                  (index) => StoreProductCardSquare(
+                    imagePath: storeProducts[index].imagesPath[0],
+                    productId: storeProducts[index].id,
+                  ),
+                ),
+              );
   }
 }
 
