@@ -75,7 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'حسابي',
                     rightIcon: AppBarIcon(
                       onTap: () async {
-                        Navigator.pushNamed(context, HolderScreen.routeName);
+                        Navigator.pushReplacementNamed(
+                            context, HolderScreen.routeName);
                         await Provider.of<UserProvider>(context, listen: false)
                             .logOutGoogle();
                         // GoogleIdentity.

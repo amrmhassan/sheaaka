@@ -24,6 +24,7 @@ String fullDescString = 'fullDescString';
 String shortDescString = 'shortDescString';
 String availableColorsString = 'availableColorsString';
 String keyWordsString = 'keyWordsString';
+String categoryString = 'categoryString';
 
 //? brand model constants
 String iconString = 'iconString';
@@ -36,6 +37,7 @@ String descString = 'descString';
 String offersString = 'offersString';
 String locationString = 'locationString';
 String distanceString = 'distanceString';
+String creatorUserUIDString = 'creatorUserUIDString';
 
 //? offer model constants
 String titleString = 'titleString';

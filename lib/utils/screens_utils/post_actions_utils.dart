@@ -86,8 +86,6 @@ Widget handleShowBookMarkButtonAppBarIcon(
                           .addWishlistItem(productId, activeWishListId,
                               'Fix this note to be the note from the text field');
                     }
-
-                    Navigator.pop(context);
                   },
                 ),
               );

@@ -42,7 +42,7 @@ class LocationProvider extends ChangeNotifier {
     notifyListeners();
     //* stopping the previous listener before creating a new one
     if (locationSubscription != null) {
-      print('---------------000000000');
+      // print('---------------000000000');
 
       if (kDebugMode) {
         print('*********');
@@ -54,7 +54,7 @@ class LocationProvider extends ChangeNotifier {
     locationSubscription = location.onLocationChanged.listen((event) {
       locationData = event;
       if (callback != null) {
-        print('---------------000000000');
+        // print('---------------000000000');
         if (kDebugMode) {
           print('---------------------------');
           print('Updating stores distances');

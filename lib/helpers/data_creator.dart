@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/product_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/key_word_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
@@ -67,6 +68,17 @@ class DataCreator {
     return n.join();
   }
 
+  //? to make a random list of keywords
+  List<KeyWordModel> makeKeyWordsList(int length) {
+    List<KeyWordModel> keywords = List.generate(length, (index) {
+      String title = makeName(6);
+      String id = Uuid().v4();
+
+      return KeyWordModel(id: id, title: title);
+    });
+    return keywords;
+  }
+
   //? to create random store offer model
   OfferModel makeStoreOffer(
       String imagePath, String title, String productId, String storeId) {
@@ -100,6 +112,7 @@ class DataCreator {
     LatLng location = LatLng(latitude, longitude);
     String desc = makeName(10);
     double rating = Random().nextInt(4) + Random().nextDouble();
+    List<KeyWordModel> keywords = makeKeyWordsList(r(20));
 
     return StoreModel(
       id: id,
@@ -111,6 +124,8 @@ class DataCreator {
       location: location,
       desc: desc,
       rating: rating,
+      keywords: keywords,
+      creatorUserUID: 'Jwqqj0UdfyRexLAQi4Tbieeiaej2',
     );
   }
 
@@ -146,6 +161,7 @@ class DataCreator {
           Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
     );
     double oldPrice = Random().nextDouble() + Random().nextInt(200);
+    List<KeyWordModel> keywords = makeKeyWordsList(r(20));
 
     return ProductModel(
       id: id,
@@ -173,6 +189,7 @@ class DataCreator {
           .toList(),
       offerEnd: null,
       oldPrice: oldPrice,
+      keywords: keywords,
     );
   }
 

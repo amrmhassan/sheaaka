@@ -199,7 +199,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         location: location,
       );
     } else {
-      return SignUpCongrats();
+      return SignUpCongrats(
+        userRole: userRole,
+      );
     }
   }
 

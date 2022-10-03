@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
-import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/empty_widget.dart';
-
+import 'package:project/constants/styles.dart';
+import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -33,18 +31,16 @@ class HomeScreen extends StatelessWidget {
     var homeProducts = productsProvider.homeProducts;
     var wishlistProvider = Provider.of<WishListsProvider>(context);
 
-    return
-        // productsProvider.loadingHomeProducts
-        //     ? Container(
-        //         height: double.infinity,
-        //         width: double.infinity,
-        //         alignment: Alignment.center,
-        //         child: Loading(
-        //           title: 'جاري تحميل أحدث المنتجات',
-        //         ),
-        //       )
-        //     :
-        productsProvider.homeProducts.isEmpty
+    return productsProvider.loadingHomeProducts
+        ? Container(
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Loading(
+              title: 'جاري تحميل أحدث المنتجات',
+            ),
+          )
+        : productsProvider.homeProducts.isEmpty
             ? EmptyWidget(
                 title: 'لا توجد منتجات بعد',
               )

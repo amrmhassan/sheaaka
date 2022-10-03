@@ -1,4 +1,6 @@
-# add keywords to every product, store as Lists and enable searching with these keywords
+# start implementing creating stores with sign up stores screen
+
+# add the date liked to each product in the list of the products provider, \_favoriteProducts
 
 -- add the error handling to show readable messages to the user
 -- add try catch to every future running in the app

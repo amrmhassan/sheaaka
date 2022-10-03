@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/global.dart';
@@ -12,7 +11,6 @@ import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
-import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/utils/general_utils.dart';
@@ -135,7 +133,6 @@ class _HolderScreenState extends State<HolderScreen> {
                     if (allowRandomCreatorCheats && kDebugMode)
                       GestureDetector(
                         onDoubleTap: () {
-                          print('object');
                           Navigator.pushNamed(
                               context, UploadDataScreen.routeName);
                         },
