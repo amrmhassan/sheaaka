@@ -25,9 +25,8 @@ class PostHeader extends StatelessWidget {
       child: Row(
         children: [
           TraderPhoto(
-            logoImagePath: logoImagePath ?? 'assets/icons/user.png',
+            logoImagePath: logoImagePath,
             offersNumber: offersNumber,
-            imageFromInternet: logoImagePath != null,
           ),
           HSpace(
             factor: 0.5,

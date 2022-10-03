@@ -101,7 +101,7 @@ class ProductModel {
     String id = productJSON[idString];
     String name = productJSON[nameString];
     String storeId = productJSON[storeIdString];
-    String storeLogo = productJSON[storeLogoString];
+    String? storeLogo = productJSON[storeLogoString];
     String storeName = productJSON[storeNameString];
     List<String> imagesPath = (productJSON[imagesPathString] as List<dynamic>)
         .map((e) => e.toString())

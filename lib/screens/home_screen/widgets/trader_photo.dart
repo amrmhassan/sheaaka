@@ -3,19 +3,18 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/sizes.dart';
 import 'package:project/constants/trader_photo.dart';
 import 'package:project/utils/borders.dart';
 
 class TraderPhoto extends StatelessWidget {
-  final String logoImagePath;
+  final String? logoImagePath;
   final int offersNumber;
-  final bool imageFromInternet;
 
   const TraderPhoto({
     Key? key,
     required this.logoImagePath,
     required this.offersNumber,
-    required this.imageFromInternet,
   }) : super(key: key);
 
   @override
@@ -38,24 +37,26 @@ class TraderPhoto extends StatelessWidget {
         gapLength
       ],
       child: Container(
+        padding: logoImagePath == null ? EdgeInsets.all(mediumPadding) : null,
         clipBehavior: Clip.hardEdge,
         width: smallCircleRadius,
         height: smallCircleRadius,
         decoration: BoxDecoration(
-          color: kSecondaryColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(500),
-          border: Border.all(width: 1 / 2, color: kBlackColor),
+          // border: Border.all(width: 1 / 2, color: kBlackColor),
         ),
-        child: imageFromInternet
+        child: logoImagePath != null
             ? Image.network(
-                logoImagePath,
+                logoImagePath!,
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               )
             : Image.asset(
-                logoImagePath,
+                'assets/icons/user.png',
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
+                color: kSecondaryColor,
               ),
       ),
     );

@@ -16,11 +16,11 @@ class TraderPhotoOnStorePost extends StatelessWidget {
         ? SizedBox()
         : Positioned(
             top: kVPad,
-            left: kHPad,
+            right: kHPad,
             child: Container(
               clipBehavior: Clip.hardEdge,
-              width: 50,
-              height: 50,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(width: 2, color: Colors.white),
@@ -30,7 +30,7 @@ class TraderPhotoOnStorePost extends StatelessWidget {
                   borderRadius: BorderRadius.circular(500),
                 ),
                 clipBehavior: Clip.hardEdge,
-                child: Image.asset(
+                child: Image.network(
                   logoPath!,
                   width: double.infinity,
                   fit: BoxFit.cover,

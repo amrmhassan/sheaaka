@@ -59,7 +59,7 @@ class StoreModel {
   static StoreModel fromJSON(Map<String, dynamic> storeJSON) {
     String idF = storeJSON[idString];
     String coverImagePathF = storeJSON[coverImagePathString];
-    String logoImagePathF = storeJSON[logoImagePathString];
+    String? logoImagePathF = storeJSON[logoImagePathString];
     int followersF = storeJSON[followersString];
     String nameF = storeJSON[nameString];
 

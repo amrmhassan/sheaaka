@@ -104,7 +104,6 @@ class DataCreator {
     int imgNum = r(10) + 1;
     int logoNum = r(10) + 1;
     String coverImagePath = 'assets/images/fake/store$imgNum.jpg';
-    String logoImagePath = 'assets/images/fake/trader$logoNum.jpg';
     int followers = r(50000);
     String name = makeName(10);
     double latitude = Random().nextDouble() + 30;
@@ -117,7 +116,6 @@ class DataCreator {
     return StoreModel(
       id: id,
       coverImagePath: coverImagePath,
-      logoImagePath: logoImagePath,
       followers: followers,
       name: name,
       offers: [],
@@ -168,7 +166,6 @@ class DataCreator {
       name: name,
       storeId: store.id,
       storeName: store.name,
-      storeLogo: store.logoImagePath,
       imagesPath: imagesPath,
       createdAt: createdAt,
       lovesNumber: lovesNumber,

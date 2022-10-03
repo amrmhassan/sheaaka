@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
@@ -16,11 +18,12 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
       bottom: -storeLogoRadius / 2,
       right: kHPad / 2,
       child: Container(
+        padding: imagePath == null ? EdgeInsets.all(largePadding) : null,
         height: storeLogoRadius,
         width: storeLogoRadius,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(500),
           border: Border.all(
             width: .5,
@@ -40,6 +43,7 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
                   width: double.infinity,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
+                  color: kSecondaryColor,
                 )
               : Image.asset(
                   imagePath!,
