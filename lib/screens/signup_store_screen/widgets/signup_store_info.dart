@@ -2,20 +2,46 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
-import 'package:project/constants/sizes.dart';
-import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
+import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
+import 'package:project/screens/signup_store_screen/widgets/store_contact_element.dart';
+import 'package:project/validation/signup_validation.dart';
 
-class SignUpStoreInfo extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+class SignUpStoreInfo extends StatefulWidget {
+  final VoidCallback incrementActiveIndex;
+  final List<String> storePhoneNumbers;
+  final List<String> storeEmails;
+  final Function(String storeNumber) addAStoreNumber;
+  final Function(String storeNumber) removeAStoreNumber;
+  final Function(String email) addStoreEmail;
+  final Function(String email) removeStoreEmail;
+  final TextEditingController storeNameController;
+  final TextEditingController storeAddressController;
+
   const SignUpStoreInfo({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.incrementActiveIndex,
+    required this.addAStoreNumber,
+    required this.addStoreEmail,
+    required this.removeAStoreNumber,
+    required this.removeStoreEmail,
+    required this.storeEmails,
+    required this.storePhoneNumbers,
+    required this.storeAddressController,
+    required this.storeNameController,
   }) : super(key: key);
+
+  @override
+  State<SignUpStoreInfo> createState() => _SignUpStoreInfoState();
+}
+
+class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
+  String? storeNameError;
+  String? storeAddressError;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +51,20 @@ class SignUpStoreInfo extends StatelessWidget {
           VSpace(factor: 3),
           FormHeaderWithLogo(
             iconName: 'clothing-shop',
-            title: 'معلمومات التاجر',
+            title: 'معلومات المتجر',
           ),
           VSpace(factor: 2),
           CustomTextField(
+            errorText: storeNameError,
+            controller: widget.storeNameController,
             iconName: 'shop',
             title: 'اسم المحل',
             padding: EdgeInsets.zero,
           ),
           VSpace(),
           CustomTextField(
+            errorText: storeAddressError,
+            controller: widget.storeAddressController,
             padding: EdgeInsets.zero,
             iconName: 'shop',
             title: 'عنوان المحل',
@@ -45,62 +75,41 @@ class SignUpStoreInfo extends StatelessWidget {
           StoreContactsElement(
             iconName: 'telephone',
             title: 'ارقام المحل',
+            data: widget.storePhoneNumbers,
+            addData: widget.addAStoreNumber,
+            removeData: widget.removeAStoreNumber,
+            dataValidator: phoneValidation,
           ),
           VSpace(),
           StoreContactsElement(
             iconName: 'email',
             title: 'ايميلات المحل',
+            addData: widget.addStoreEmail,
+            data: widget.storeEmails,
+            removeData: widget.removeStoreEmail,
+            dataValidator: emailValidation,
           ),
           VSpace(),
           SubmitFormButton(
-            onTap: setActiveSignUpStep,
+            onTap: () {
+              String sN = widget.storeNameController.text;
+              String? nameValidator = storeNameValidation(sN);
+              String sA = widget.storeAddressController.text;
+              String? addressValidation = storeAddressValidation(sA);
+              setState(() {
+                storeNameError = nameValidator;
+                storeAddressError = addressValidation;
+              });
+              if (storeNameError == null && storeAddressError == null) {
+                widget.incrementActiveIndex();
+              }
+            },
             title: 'التالي',
             padding: EdgeInsets.zero,
-          )
+          ),
+          VSpace(),
         ],
       ),
-    );
-  }
-}
-
-class StoreContactsElement extends StatelessWidget {
-  final String title;
-  final String iconName;
-
-  const StoreContactsElement({
-    Key? key,
-    required this.iconName,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomTextField(
-            padding: EdgeInsets.zero,
-            iconName: iconName,
-            title: title,
-            trailingIconName: 'down-arrow',
-            trailingIconColor: kBlackColor,
-          ),
-        ),
-        HSpace(factor: 1),
-        Container(
-          padding: EdgeInsets.all(largePadding),
-          width: mediumIconSize * 1.5,
-          height: mediumIconSize * 1.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(500),
-            border: Border.all(width: 1, color: kBlackColor),
-          ),
-          child: Image.asset(
-            'assets/icons/plus.png',
-            color: kBlackColor,
-          ),
-        )
-      ],
     );
   }
 }

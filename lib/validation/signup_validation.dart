@@ -82,3 +82,31 @@ String? phoneValidation(String? v) {
     return 'صيغة الرقم غير صحيحة';
   }
 }
+
+//? store address validation
+String? storeAddressValidation(String? v) {
+  if (v == null) {
+    return 'لا يمكن أن يكون فارغا';
+  }
+  if (v.isEmpty) {
+    return 'لا يمكن أن يكون فارغا';
+  } else if (v.length < 10) {
+    return 'لا يقل عن 10 أحرف';
+  }
+  return null;
+}
+
+//? store name validation
+String? storeNameValidation(String? v) {
+  if (v == null) {
+    return 'لا يمكن أن يكون فارغا';
+  }
+  if (v.isEmpty) {
+    return 'لا يمكن أن يكون فارغا';
+  } else if (v.length < 5) {
+    return 'لا يقل عن 5 أحرف';
+  } else if (v.length > 20) {
+    return 'لا يزيد عن 20 أحرف';
+  }
+  return null;
+}

@@ -16,6 +16,7 @@ class ButtonWrapper extends StatelessWidget {
   final Alignment? alignment;
   final Clip? clipBehavior;
   final bool active;
+  final Color? inactiveColor;
 
   const ButtonWrapper({
     Key? key,
@@ -33,6 +34,7 @@ class ButtonWrapper extends StatelessWidget {
     this.alignment,
     this.clipBehavior,
     this.active = true,
+    this.inactiveColor,
   }) : super(key: key);
 
   @override
@@ -45,8 +47,9 @@ class ButtonWrapper extends StatelessWidget {
           BoxDecoration(
             color: active
                 ? (backgroundColor ?? kMainButtonColor)
-                : (backgroundColor?.withOpacity(.2) ??
-                    kMainButtonColor.withOpacity(.2)),
+                : (inactiveColor) ??
+                    (backgroundColor?.withOpacity(.2) ??
+                        kMainButtonColor.withOpacity(.2)),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
       child: Material(

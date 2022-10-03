@@ -7,13 +7,16 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
+import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 
 class SingUpStoreLogoUpload extends StatelessWidget {
-  final VoidCallback setActiveSignUpStep;
+  final VoidCallback incrementActiveIndex;
+  final VoidCallback decrementActiveIndex;
 
   const SingUpStoreLogoUpload({
     Key? key,
-    required this.setActiveSignUpStep,
+    required this.decrementActiveIndex,
+    required this.incrementActiveIndex,
   }) : super(key: key);
 
   @override
@@ -106,7 +109,8 @@ class SingUpStoreLogoUpload extends StatelessWidget {
           style: h4TextStyle.copyWith(color: kInActiveTextColor),
         ),
         VSpace(factor: 5),
-        SubmitFormButton(onTap: setActiveSignUpStep, title: 'التالي')
+        SubmitFormButton(onTap: incrementActiveIndex, title: 'التالي'),
+        BackStepFormButton(onTap: decrementActiveIndex),
       ],
     );
   }

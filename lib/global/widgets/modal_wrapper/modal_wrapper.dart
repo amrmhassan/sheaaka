@@ -7,6 +7,7 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/apply_modal_button.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
 class ModalWrapper extends StatelessWidget {
   final Widget child;
@@ -15,6 +16,9 @@ class ModalWrapper extends StatelessWidget {
   final bool showApplyModalButton;
   final Color? color;
   final bool applyActive;
+  final double? afterLinePaddingFactor;
+  final bool showTopLine;
+  final Color? applyButtonColor;
 
   const ModalWrapper({
     Key? key,
@@ -24,6 +28,9 @@ class ModalWrapper extends StatelessWidget {
     this.showApplyModalButton = true,
     this.applyActive = true,
     this.color,
+    this.afterLinePaddingFactor,
+    this.showTopLine = true,
+    this.applyButtonColor,
   }) : super(key: key);
 
   @override
@@ -44,18 +51,24 @@ class ModalWrapper extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          VSpace(),
-          HLine(
-            width: 4,
-            color: kSecondaryColor.withOpacity(.4),
-            borderRadius: 50,
-            widthFactor: .3,
-          ),
-          VSpace(factor: 2),
+          if (showTopLine)
+            Column(
+              children: [
+                VSpace(),
+                HLine(
+                  width: 4,
+                  color: kSecondaryColor.withOpacity(.4),
+                  borderRadius: 50,
+                  widthFactor: .3,
+                ),
+              ],
+            ),
+          VSpace(factor: afterLinePaddingFactor ?? 2),
           child,
           VSpace(factor: 2),
           if (showApplyModalButton)
             ApplyModalButton(
+                color: applyButtonColor,
                 active: applyActive,
                 onTap: () {
                   onApply();

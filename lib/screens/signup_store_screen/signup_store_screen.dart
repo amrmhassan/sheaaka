@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_finish_store.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_store_info.dart';
@@ -15,32 +16,92 @@ class SignUpStoreScreen extends StatefulWidget {
 }
 
 class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
-  Widget getSignupStep(int i, Function(int i) setActiveIndex) {
+  //? store text editing controllers
+  TextEditingController storeNameController = TextEditingController();
+  TextEditingController storeAddressController = TextEditingController();
+
+  //? store phone numbers
+  List<String> storePhoneNumbers = ['01147497502', '01147583002'];
+  void addAStoreNumber(String storeNumber) {
+    setState(() {
+      storePhoneNumbers.add(storeNumber);
+    });
+  }
+
+  void removeAStoreNumber(String phone) {
+    setState(() {
+      storePhoneNumbers.remove(phone);
+    });
+  }
+
+  //? store emails
+  List<String> storeEmails = [];
+  void addStoreEmail(String email) {
+    setState(() {
+      storeEmails.add(email);
+    });
+  }
+
+  void removeStoreEmail(String email) {
+    setState(() {
+      storeEmails.remove(email);
+    });
+  }
+
+  bool signingUp = false;
+  Widget getSignupStep(int i) {
     if (i == 0) {
       return SignUpStoreInfo(
-        setActiveSignUpStep: () => setActiveIndex(1),
+        incrementActiveIndex: incrementActiveIndex,
+        addAStoreNumber: addAStoreNumber,
+        addStoreEmail: addStoreEmail,
+        removeAStoreNumber: removeAStoreNumber,
+        removeStoreEmail: removeStoreEmail,
+        storeEmails: storeEmails,
+        storePhoneNumbers: storePhoneNumbers,
+        storeAddressController: storeAddressController,
+        storeNameController: storeNameController,
       );
     } else if (i == 1) {
       return SingUpStoreLogoUpload(
-        setActiveSignUpStep: () => setActiveIndex(2),
+        incrementActiveIndex: incrementActiveIndex,
+        decrementActiveIndex: decrementActiveIndex,
       );
     } else if (i == 2) {
-      return SignUpFinishStore();
+      return SignUpFinishStore(
+        decrementActiveIndex: decrementActiveIndex,
+      );
     }
     return SizedBox();
   }
 
   int activeStepIndex = 0;
-  void setActiveIndex(int i) {
+  void incrementActiveIndex() {
     setState(() {
-      activeStepIndex = i;
+      activeStepIndex++;
+    });
+  }
+
+  void decrementActiveIndex() {
+    setState(() {
+      activeStepIndex--;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: getSignupStep(activeStepIndex, setActiveIndex),
+      child: NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (n) {
+          n.disallowIndicator();
+          return true;
+        },
+        child: signingUp
+            ? FullLoadingScreen(title: 'جاري التسجيل')
+            : SingleChildScrollView(
+                child: getSignupStep(activeStepIndex),
+              ),
+      ),
     );
   }
 }

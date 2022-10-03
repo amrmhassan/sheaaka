@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         initialRoute:
-            testing ? TestingScreen.routeName : HolderScreen.routeName,
+            testing ? TestingScreen.routeName : SignUpStoreScreen.routeName,
         // initialRoute: UploadDataScreen.routeName,
         routes: {
           TestingScreen.routeName: (context) => TestingScreen(),

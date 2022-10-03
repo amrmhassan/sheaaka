@@ -10,12 +10,14 @@ class ApplyModalButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final bool active;
+  final Color? color;
 
   const ApplyModalButton({
     Key? key,
     required this.onTap,
     required this.title,
     this.active = true,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class ApplyModalButton extends StatelessWidget {
     return ButtonWrapper(
       active: active,
       width: double.infinity,
-      backgroundColor: kPrimaryColor,
+      backgroundColor: color ?? kPrimaryColor,
       padding: EdgeInsets.symmetric(vertical: kVPad / 2),
       onTap: onTap,
       child: Text(
