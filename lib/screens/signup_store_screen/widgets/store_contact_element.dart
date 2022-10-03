@@ -23,6 +23,7 @@ class StoreContactsElement extends StatefulWidget {
   final bool Function(String data) removeData;
   final Function(String? v) dataValidator;
   final TextInputType? textInputType;
+  final String? errorText;
 
   const StoreContactsElement({
     Key? key,
@@ -33,6 +34,7 @@ class StoreContactsElement extends StatefulWidget {
     required this.removeData,
     required this.dataValidator,
     this.textInputType,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
         Expanded(
           child: CustomTextField(
             textInputType: widget.textInputType,
-            errorText: dataError,
+            errorText: dataError ?? widget.errorText,
             controller: dataController,
             padding: EdgeInsets.zero,
             iconName: widget.iconName,

@@ -37,7 +37,7 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
   TextEditingController storeAddressController = TextEditingController();
 
   //? store phone numbers
-  List<String> storePhoneNumbers = ['01147497502', '01147583002'];
+  List<String> storePhoneNumbers = [];
   bool addAStoreNumber(String storeNumber) {
     if (storePhoneNumbers.contains(storeNumber)) {
       return false;

@@ -41,6 +41,7 @@ class SignUpStoreInfo extends StatefulWidget {
 class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
   String? storeNameError;
   String? storeAddressError;
+  String? phoneNumberError;
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +73,20 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
           ),
           VSpace(),
           StoreContactsElement(
+            errorText: phoneNumberError,
             textInputType: TextInputType.phone,
             iconName: 'telephone',
             title: 'إضافة أرقام المحل',
             data: widget.storePhoneNumbers,
-            addData: widget.addAStoreNumber,
+            addData: (String phone) {
+              bool res = widget.addAStoreNumber(phone);
+              if (res && phoneNumberError != null) {
+                setState(() {
+                  phoneNumberError = null;
+                });
+              }
+              return res;
+            },
             removeData: widget.removeAStoreNumber,
             dataValidator: phoneValidation,
           ),
@@ -97,11 +107,17 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
               String? nameValidator = storeNameValidation(sN);
               String sA = widget.storeAddressController.text;
               String? addressValidation = storeAddressValidation(sA);
+
               setState(() {
                 storeNameError = nameValidator;
                 storeAddressError = addressValidation;
+                phoneNumberError = widget.storePhoneNumbers.isEmpty
+                    ? 'لابد من إضافة رقم هاتف علي الأقل'
+                    : null;
               });
-              if (storeNameError == null && storeAddressError == null) {
+              if (storeNameError == null &&
+                  storeAddressError == null &&
+                  phoneNumberError == null) {
                 widget.incrementActiveIndex();
               }
             },
