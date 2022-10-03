@@ -7,7 +7,6 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/apply_modal_button.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 
 class ModalWrapper extends StatelessWidget {
   final Widget child;

@@ -8,6 +8,7 @@ import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/helpers/responsive.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
@@ -21,6 +22,7 @@ class StoreContactsElement extends StatefulWidget {
   final bool Function(String data) addData;
   final bool Function(String data) removeData;
   final Function(String? v) dataValidator;
+  final TextInputType? textInputType;
 
   const StoreContactsElement({
     Key? key,
@@ -30,6 +32,7 @@ class StoreContactsElement extends StatefulWidget {
     required this.data,
     required this.removeData,
     required this.dataValidator,
+    this.textInputType,
   }) : super(key: key);
 
   @override
@@ -37,56 +40,9 @@ class StoreContactsElement extends StatefulWidget {
 }
 
 class _StoreContactsElementState extends State<StoreContactsElement> {
-  bool phoneNumbersViewed = false;
   bool emailsViewed = false;
   TextEditingController dataController = TextEditingController();
   String? dataError;
-
-  //? show all data modal
-  void showDataAddedModal() {
-    if (!phoneNumbersViewed) {
-      showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (ctx) {
-          return ModalWrapper(
-            showApplyModalButton: false,
-            afterLinePaddingFactor: .5,
-            applyButtonTitle: 'تم',
-            onApply: () {},
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(width: double.infinity),
-                Text(
-                  widget.title,
-                  style: h2TextStyle,
-                ),
-                VSpace(),
-                PaddingWrapper(
-                  child: Column(
-                    children: [
-                      ...widget.data.map(
-                        (e) => PhoneNumberData(
-                          phoneNumber: e,
-                          deletePhone: () {
-                            showDeleteDataModal(context, e);
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    }
-    setState(() {
-      phoneNumbersViewed = !phoneNumbersViewed;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +50,7 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
       children: [
         Expanded(
           child: CustomTextField(
+            textInputType: widget.textInputType,
             errorText: dataError,
             controller: dataController,
             padding: EdgeInsets.zero,
@@ -110,9 +67,16 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
                 if (dataError == null) {
                   var res = widget.addData(dataController.text);
                   if (res) {
-                    showSnackBar(context, 'تمت الإضافة', SnackBarType.info);
+                    FocusManager.instance.primaryFocus?.unfocus();
+
+                    showSnackBar(
+                      context,
+                      'تمت الإضافة',
+                      SnackBarType.info,
+                    );
                     dataController.clear();
                   } else {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     showSnackBar(context, 'موجود بالفعل', SnackBarType.error);
                   }
                 }
@@ -127,22 +91,78 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
           ),
         ),
         HSpace(factor: .1),
-        ButtonWrapper(
-          inactiveColor: Colors.transparent,
-          padding: EdgeInsets.all(largePadding),
-          active: widget.data.isNotEmpty,
-          backgroundColor: Colors.transparent,
-          onTap: showDataAddedModal,
-          child: Image.asset(
-            'assets/icons/up-arrow.png',
-            color: widget.data.isEmpty ? kSecondaryColor : kBlackColor,
-            width: mediumIconSize,
+        GestureDetector(
+          onTap: widget.data.isEmpty
+              ? () {
+                  showSnackBar(context, 'لم تتم إضافة أي معلومات بعد',
+                      SnackBarType.info);
+                }
+              : () {},
+          child: ButtonWrapper(
+            inactiveColor: Colors.transparent,
+            padding: EdgeInsets.all(largePadding),
+            active: widget.data.isNotEmpty,
+            backgroundColor: Colors.transparent,
+            onTap: showDataAddedModal,
+            child: Image.asset(
+              'assets/icons/up-arrow.png',
+              color: widget.data.isEmpty ? kSecondaryColor : kBlackColor,
+              width: mediumIconSize,
+            ),
           ),
         )
       ],
     );
   }
 
+  //? show all data modal
+  void showDataAddedModal() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return ModalWrapper(
+          showApplyModalButton: false,
+          afterLinePaddingFactor: .5,
+          applyButtonTitle: 'تم',
+          onApply: () {},
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: double.infinity),
+              Text(
+                widget.title,
+                style: h2TextStyle,
+              ),
+              VSpace(),
+              SizedBox(
+                height: Responsive.getHeight(context) / 2.8,
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: PaddingWrapper(
+                    child: Column(
+                      children: [
+                        ...widget.data.map(
+                          (e) => PhoneNumberData(
+                            phoneNumber: e,
+                            deletePhone: () {
+                              showDeleteDataModal(context, e);
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+//? show delete data model
   Future<dynamic> showDeleteDataModal(BuildContext context, String data) {
     return showModalBottomSheet(
         context: context,

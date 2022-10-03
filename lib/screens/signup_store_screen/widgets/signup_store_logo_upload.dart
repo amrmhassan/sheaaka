@@ -1,23 +1,100 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
+import 'package:project/screens/signup_store_screen/widgets/cover_image.dart';
+import 'package:project/screens/signup_store_screen/widgets/logo_image.dart';
+import 'package:project/screens/signup_store_screen/widgets/upload_cover_photo_button.dart';
+import 'package:project/screens/signup_store_screen/widgets/upload_message.dart';
+import 'package:project/utils/photo_utils.dart';
 
-class SingUpStoreLogoUpload extends StatelessWidget {
+//! add options to remove the photo on the choose photo modal
+//! add option to add a photo from a link from modal modal
+
+class SingUpStoreLogoUpload extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final VoidCallback decrementActiveIndex;
+  final String? storeLogoPhoto;
+  final String? storeCoverPhoto;
+  final Function(String? s) setStoreLogoPhoto;
+  final Function(String? s) setStoreCoverPhoto;
 
   const SingUpStoreLogoUpload({
     Key? key,
     required this.decrementActiveIndex,
     required this.incrementActiveIndex,
+    required this.setStoreCoverPhoto,
+    required this.setStoreLogoPhoto,
+    required this.storeCoverPhoto,
+    required this.storeLogoPhoto,
   }) : super(key: key);
+
+  @override
+  State<SingUpStoreLogoUpload> createState() => _SingUpStoreLogoUploadState();
+}
+
+class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
+  //? logo loading
+  bool logoLoading = false;
+  void startLogoLoading() {
+    setState(() {
+      logoLoading = true;
+    });
+  }
+
+  void endLogoLoading() {
+    setState(() {
+      logoLoading = false;
+    });
+  }
+
+//? cover loading
+  bool coverLoading = false;
+  void startCoverLoading() {
+    setState(() {
+      coverLoading = true;
+    });
+  }
+
+  void endCoverLoading() {
+    setState(() {
+      coverLoading = false;
+    });
+  }
+
+//? for handling picking logo image
+  void handlePickLogoImage(ImageSource imageSource) => pickImage(
+        context: context,
+        callBack: widget.setStoreLogoPhoto,
+        source: imageSource,
+        setStartLoading: startLogoLoading,
+        setEndLoading: endLogoLoading,
+        cloudFolderName: storeLogoImagesDir,
+      );
+//? for handling picking cover image
+  void handlePickCoverImage(ImageSource imageSource) => pickImage(
+        context: context,
+        callBack: widget.setStoreCoverPhoto,
+        source: imageSource,
+        setStartLoading: startCoverLoading,
+        setEndLoading: endCoverLoading,
+        cloudFolderName: storeLogoImagesDir,
+      );
+
+//? choosing logo image, modal
+  void showLogoImageModalHelper() {
+    showPickImageOptions(context, handlePickLogoImage, 'اختيار صورة اللوجو');
+  }
+
+//? choosing cover image, modal
+  void showCoverImageModalHelper() {
+    showPickImageOptions(context, handlePickCoverImage, 'اختيار صورة الغلاف');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,90 +104,44 @@ class SingUpStoreLogoUpload extends StatelessWidget {
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: [
-            Container(
-              height: 250,
-              width: double.infinity,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(color: kBlackColor),
-              child: Text(
-                'قم باختيار صورة غلاف',
-                style: h3TextStyle.copyWith(color: kLightColor),
-              ),
+            GestureDetector(
+              onTap: showCoverImageModalHelper,
+              child: CoverImage(
+                  coverLoading: coverLoading,
+                  storeCoverPhoto: widget.storeCoverPhoto),
             ),
+            if (coverLoading) CircularProgressIndicator(),
             Positioned(
               bottom: -50,
               right: largePadding,
-              child: Stack(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(largePadding * 2),
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(500),
-                      border: Border.all(width: 1, color: kSecondaryColor),
-                      color: Colors.white,
-                    ),
-                    child: Opacity(
-                      opacity: .2,
-                      child: Image.asset(
-                        'assets/icons/user.png',
-                        color: kBlackColor,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    padding: EdgeInsets.all(largePadding * 3),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(.5),
-                      borderRadius: BorderRadius.circular(500),
-                    ),
-                    child: Image.asset(
-                      'assets/icons/camera.png',
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+              child: GestureDetector(
+                onTap: showLogoImageModalHelper,
+                child: LogoImage(
+                  logoLoading: logoLoading,
+                  storeLogoPhoto: widget.storeLogoPhoto,
+                ),
               ),
             ),
-            Positioned(
-              left: largePadding * 2,
-              bottom: largePadding,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: kHPad / 2, vertical: kVPad / 3),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(smallBorderRadius),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      'assets/icons/camera.png',
-                      width: smallIconSize,
-                    ),
-                    HSpace(factor: .3),
-                    Text(
-                      'إضافة صورة',
-                      style: h4LiteTextStyle,
-                    )
-                  ],
-                ),
-              ),
-            )
+            if (!coverLoading && widget.storeCoverPhoto == null)
+              UploadCoverPhotoButton(
+                logoLoading: logoLoading,
+                showCoverImageModalHelper: showCoverImageModalHelper,
+              )
           ],
         ),
         VSpace(factor: 5),
-        Text(
-          'صورة اللوجو والغلاف تساعد الزبائن في التعرف علي متجرك',
-          style: h4TextStyle.copyWith(color: kInActiveTextColor),
+        UploadMessage(
+          storeCoverPhoto: widget.storeCoverPhoto,
+          storeLogoPhoto: widget.storeLogoPhoto,
         ),
         VSpace(factor: 5),
-        SubmitFormButton(onTap: incrementActiveIndex, title: 'التالي'),
-        BackStepFormButton(onTap: decrementActiveIndex),
+        SubmitFormButton(
+            onTap: widget.incrementActiveIndex,
+            title: (widget.storeCoverPhoto == null) &&
+                    (widget.storeLogoPhoto == null)
+                ? 'تخطي'
+                : 'التالي'),
+        BackStepFormButton(onTap: widget.decrementActiveIndex),
       ],
     );
   }

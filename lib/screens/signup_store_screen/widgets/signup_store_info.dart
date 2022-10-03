@@ -7,7 +7,6 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
-import 'package:project/screens/signup_screen/widgets/email_type_switch.dart';
 import 'package:project/screens/signup_store_screen/widgets/store_contact_element.dart';
 import 'package:project/validation/signup_validation.dart';
 
@@ -73,8 +72,9 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
           ),
           VSpace(),
           StoreContactsElement(
+            textInputType: TextInputType.phone,
             iconName: 'telephone',
-            title: 'ارقام المحل',
+            title: 'إضافة أرقام المحل',
             data: widget.storePhoneNumbers,
             addData: widget.addAStoreNumber,
             removeData: widget.removeAStoreNumber,
@@ -82,8 +82,9 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
           ),
           VSpace(),
           StoreContactsElement(
+            textInputType: TextInputType.emailAddress,
             iconName: 'email',
-            title: 'ايميلات المحل',
+            title: 'إضافة إيميلات المحل',
             addData: widget.addStoreEmail,
             data: widget.storeEmails,
             removeData: widget.removeStoreEmail,

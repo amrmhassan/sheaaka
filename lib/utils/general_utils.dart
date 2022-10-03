@@ -74,8 +74,12 @@ bool isNumeric(String? s) {
 
 //? for showing a quick snack bar
 void showSnackBar(
-    BuildContext context, String message, SnackBarType snackBarType,
-    [bool aboveBottomNavBar = false]) {
+  BuildContext context,
+  String message,
+  SnackBarType snackBarType, [
+  bool aboveBottomNavBar = false,
+  EdgeInsets? margin,
+]) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -88,6 +92,7 @@ void showSnackBar(
           : snackBarType == SnackBarType.error
               ? kDangerColor
               : null,
+      margin: margin,
       action: SnackBarAction(
         label: 'تم',
         textColor: snackBarType == SnackBarType.error ||

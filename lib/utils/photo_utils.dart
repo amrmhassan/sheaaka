@@ -11,7 +11,12 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:project/constants/photo_constants.dart';
+import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/h_space.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
+import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/screens/signup_screen/widgets/image_picking_option_element.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 import 'package:path/path.dart' as p;
@@ -99,4 +104,53 @@ Future<String?> _uploadFile({
   setEndLoading();
 
   return fileUrl;
+}
+
+//? to view the bottom modal to choose the image source
+void showPickImageOptions(
+  BuildContext context,
+  Function(ImageSource imageSource) handlePickImage, [
+  String? title,
+]) {
+  showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return ModalWrapper(
+          onApply: () {},
+          applyButtonTitle: 'applyButtonTitle',
+          showApplyModalButton: false,
+          afterLinePaddingFactor: title != null ? .5 : null,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(width: double.infinity),
+              if (title != null)
+                Column(
+                  children: [
+                    Text(
+                      title,
+                      style: h3LiteTextStyle,
+                    ),
+                    VSpace()
+                  ],
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ImagePickingOptionElement(
+                    iconName: 'camera1',
+                    onTap: () => handlePickImage(ImageSource.camera),
+                  ),
+                  HSpace(factor: .5),
+                  ImagePickingOptionElement(
+                    iconName: 'gallery',
+                    onTap: () => handlePickImage(ImageSource.gallery),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      });
 }

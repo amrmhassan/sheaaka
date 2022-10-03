@@ -62,34 +62,6 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
         cloudFolderName: profileImagesDir,
       );
 
-//? to view the bottom modal to choose the image source
-  void showPickImageOptions(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) {
-          return ModalWrapper(
-            onApply: () {},
-            applyButtonTitle: 'applyButtonTitle',
-            showApplyModalButton: false,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ImagePickingOptionElement(
-                  iconName: 'camera1',
-                  onTap: () => handlePickImage(ImageSource.camera),
-                ),
-                HSpace(factor: .5),
-                ImagePickingOptionElement(
-                  iconName: 'gallery',
-                  onTap: () => handlePickImage(ImageSource.gallery),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -108,7 +80,9 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: _uploading ? () {} : () => showPickImageOptions(context),
+              onTap: _uploading
+                  ? () {}
+                  : () => showPickImageOptions(context, handlePickImage),
               child: Stack(
                 alignment: Alignment.center,
                 children: [

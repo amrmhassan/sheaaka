@@ -5,18 +5,15 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
+import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/utils/general_utils.dart';
 
 class SignUpFinishStore extends StatelessWidget {
-  final VoidCallback decrementActiveIndex;
-
   const SignUpFinishStore({
     Key? key,
-    required this.decrementActiveIndex,
   }) : super(key: key);
 
   @override
@@ -48,7 +45,7 @@ class SignUpFinishStore extends StatelessWidget {
               );
             },
             title: 'فتح المتجر',
-          )
+          ),
         ],
       ),
     );

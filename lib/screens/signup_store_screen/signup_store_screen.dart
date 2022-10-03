@@ -16,6 +16,22 @@ class SignUpStoreScreen extends StatefulWidget {
 }
 
 class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
+  //? store logo
+  String? storeLogoPhoto;
+  void setStoreLogoPhoto(String? s) {
+    setState(() {
+      storeLogoPhoto = s;
+    });
+  }
+
+  //? store cover photo
+  String? storeCoverPhoto;
+  void setStoreCoverPhoto(String? s) {
+    setState(() {
+      storeCoverPhoto = s;
+    });
+  }
+
   //? store text editing controllers
   TextEditingController storeNameController = TextEditingController();
   TextEditingController storeAddressController = TextEditingController();
@@ -64,7 +80,14 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
     return true;
   }
 
+//? for signing up indicator
   bool signingUp = false;
+  void setSigningUp(bool s) {
+    setState(() {
+      signingUp = s;
+    });
+  }
+
   Widget getSignupStep(int i) {
     if (i == 0) {
       return SignUpStoreInfo(
@@ -79,14 +102,18 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         storeNameController: storeNameController,
       );
     } else if (i == 1) {
+      //! at this step the store will be signed up then move to the next step
       return SingUpStoreLogoUpload(
         incrementActiveIndex: incrementActiveIndex,
         decrementActiveIndex: decrementActiveIndex,
+        setStoreCoverPhoto: setStoreCoverPhoto,
+        setStoreLogoPhoto: setStoreLogoPhoto,
+        storeCoverPhoto: storeCoverPhoto,
+        storeLogoPhoto: storeLogoPhoto,
       );
     } else if (i == 2) {
-      return SignUpFinishStore(
-        decrementActiveIndex: decrementActiveIndex,
-      );
+      //! no back step here cause the store will have been signed up
+      return SignUpFinishStore();
     }
     return SizedBox();
   }

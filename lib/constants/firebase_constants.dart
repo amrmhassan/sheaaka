@@ -9,3 +9,5 @@ String usersLikesCollectionName = 'usersLikesCollectionName';
 
 //? firebase storage constants
 String profileImagesDir = 'profileImagesDir';
+String storeLogoImagesDir = 'storeLogoImagesDir';
+String storeCoverImagesDir = 'storeCoverImagesDir';
