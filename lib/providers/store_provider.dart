@@ -52,7 +52,7 @@ class StoreProvider extends ChangeNotifier {
     required String coverImagePath,
     required String? logoImagePath,
     required String name,
-    required LatLng location,
+    required LatLng? location,
   }) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {

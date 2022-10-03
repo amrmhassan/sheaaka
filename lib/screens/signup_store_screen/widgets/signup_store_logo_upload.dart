@@ -181,8 +181,14 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: kHPad, vertical: kVPad / 2),
                             width: 150,
-                            onTap: () {
-                              Navigator.pop(ctx);
+                            onTap: () async {
+                              try {
+                                await widget.submitStoreData();
+                                Navigator.pop(ctx);
+                              } catch (e) {
+                                showSnackBar(
+                                    context, e.toString(), SnackBarType.error);
+                              }
                             },
                             child: Text(
                               'إضافة صورة',
@@ -195,6 +201,8 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
                   ),
                 ),
               );
+            } else {
+              await widget.submitStoreData();
             }
           },
           title: 'تسجيل المتجر',

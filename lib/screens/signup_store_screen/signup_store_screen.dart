@@ -1,12 +1,17 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
+import 'package:project/models/types.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_finish_store.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_store_info.dart';
 import 'package:project/screens/signup_store_screen/widgets/signup_store_logo_upload.dart';
+import 'package:project/utils/general_utils.dart';
+import 'package:provider/provider.dart';
 
 class SignUpStoreScreen extends StatefulWidget {
   static const String routeName = '/signup-store-screen';
@@ -19,11 +24,26 @@ class SignUpStoreScreen extends StatefulWidget {
 class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
   //? submit store data
   Future<void> submitStoreData() async {
-    Future.delayed(Duration(seconds: 10)).then(
-      (value) {
-        //! here i will submit the store data to be registered
-      },
-    );
+    setSigningUp(true);
+    try {
+      // await Future.delayed(Duration(seconds: 2));
+      // await  Provider.of<StoreProvider>(context, listen: false).signUpStore(
+      //     coverImagePath: storeCoverPhoto!,
+      //     location: storeLocation,
+      //     logoImagePath: storeLogoPhoto,
+      //     name: storeNameController.text,
+      //   );
+      showSnackBar(
+        context,
+        'تم إنشاء متجرك بنجاح',
+        SnackBarType.success,
+      );
+      incrementActiveIndex();
+    } catch (e) {
+      showSnackBar(context, e.toString(), SnackBarType.error);
+    }
+
+    setSigningUp(false);
   }
 
 //? store location
@@ -132,7 +152,9 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
       );
     } else if (i == 2) {
       //! no back step here cause the store will have been signed up
-      return SignUpFinishStore();
+      return SignUpFinishStore(
+        decrementActiveIndex: decrementActiveIndex,
+      );
     }
     return SizedBox();
   }
