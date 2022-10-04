@@ -27,6 +27,27 @@ class StoreFullPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var coverImage = Image.network(
+      storeModel.coverImagePath,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      alignment: Alignment.topCenter,
+      height: double.infinity,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.grey.withOpacity(.5),
+          child: Opacity(
+            opacity: .5,
+            child: Image.asset(
+              'assets/icons/image.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      },
+    );
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, StoreScreen.routeName,
@@ -38,13 +59,7 @@ class StoreFullPost extends StatelessWidget {
             height: 250,
             child: Stack(
               children: [
-                Image.network(
-                  storeModel.coverImagePath,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                  height: double.infinity,
-                ),
+                coverImage,
                 Positioned(
                   bottom: 0,
                   child: Container(
@@ -64,21 +79,27 @@ class StoreFullPost extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              StoreProductsType(
-                                color: Colors.white,
-                                title: storeModel.desc,
-                              ),
-                              HSpace(),
+                              if (storeModel.desc != null)
+                                Row(
+                                  children: [
+                                    StoreProductsType(
+                                      color: Colors.white,
+                                      title: storeModel.desc,
+                                    ),
+                                    HSpace(),
+                                  ],
+                                ),
                               if (storeModel.rating != null)
                                 Rating(
                                   color: Colors.white,
                                   rating: storeModel.rating,
                                 ),
                               Spacer(),
-                              NOfFollowers(
-                                num: storeModel.followers,
-                                color: Colors.white,
-                              ),
+                              if (storeModel.followers > 0)
+                                NOfFollowers(
+                                  num: storeModel.followers,
+                                  color: Colors.white,
+                                ),
                               HSpace(),
                               StoreDistance(
                                 distance: storeModel.distance ?? 0,

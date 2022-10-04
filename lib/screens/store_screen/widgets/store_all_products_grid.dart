@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/models/store_tab_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:provider/provider.dart';
 
 class StoreAllProductsGrid extends StatefulWidget {
+  final StoreTabModel storeActiveTab;
   final String storeId;
+
   const StoreAllProductsGrid({
     Key? key,
+    required this.storeActiveTab,
     required this.storeId,
   }) : super(key: key);
 
@@ -27,9 +31,14 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
     setState(() {
       loading = true;
     });
-    List<ProductModel> p =
-        await Provider.of<ProductsProvider>(context, listen: false)
-            .getStoreProducts(widget.storeId);
+    List<ProductModel> p;
+    if (widget.storeActiveTab.allProducts) {
+      p = Provider.of<ProductsProvider>(context, listen: false)
+          .getStoreProducts(widget.storeId);
+    } else {
+      p = Provider.of<ProductsProvider>(context, listen: false)
+          .getStoreTabProducts(widget.storeActiveTab, widget.storeId);
+    }
 
     setState(() {
       storeProducts = p;

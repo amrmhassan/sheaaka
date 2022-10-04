@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/models/types.dart';
@@ -25,6 +26,20 @@ class StorePageHeader extends StatelessWidget {
       coverImagePath,
       width: double.infinity,
       fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.grey.withOpacity(.5),
+          child: Opacity(
+            opacity: .5,
+            child: Image.asset(
+              'assets/icons/image.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      },
     );
 
     return Stack(

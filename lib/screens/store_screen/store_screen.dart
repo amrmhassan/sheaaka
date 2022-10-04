@@ -7,6 +7,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/store_model.dart';
+import 'package:project/models/store_tab_model.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/global/widgets/n_of_followers.dart';
@@ -26,9 +27,24 @@ import 'package:provider/provider.dart';
 const double storeLogoRadius = 100;
 const double storeTitleHSpace = kHPad / 2;
 
-class StoreScreen extends StatelessWidget {
+class StoreScreen extends StatefulWidget {
   const StoreScreen({Key? key}) : super(key: key);
   static const String routeName = '/store-screen';
+
+  @override
+  State<StoreScreen> createState() => _StoreScreenState();
+}
+
+class _StoreScreenState extends State<StoreScreen> {
+  //? store tabs
+  int activeTabIndex = 0;
+  void setActiveTabIndex(int s, StoreTabModel storeTabModel) {
+    //* changing active tab by passing the tab products to be viewed and check if it has all products
+
+    setState(() {
+      activeTabIndex = s;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,13 +114,23 @@ class StoreScreen extends StatelessWidget {
                 Taps(
                   taps: [
                     SizedBox(width: storeTitleHSpace),
-                    StoreCategoryElement(active: true, title: 'الكل'),
-                    StoreCategoryElement(title: 'الأشهر'),
-                    StoreCategoryElement(title: 'الأفضل'),
+                    ...storeModel.storeTabs.map(
+                      (e) {
+                        int index = storeModel.storeTabs.indexOf(e);
+                        return StoreCategoryElement(
+                          title: e.title,
+                          active: index == activeTabIndex,
+                          onTap: () => setActiveTabIndex(index, e),
+                        );
+                      },
+                    ),
                     SizedBox(width: storeTitleHSpace),
                   ],
                 ),
-                StoreAllProductsGrid(storeId: storeId),
+                StoreAllProductsGrid(
+                  storeActiveTab: storeModel.storeTabs[activeTabIndex],
+                  storeId: storeId,
+                ),
               ],
             ),
           ],

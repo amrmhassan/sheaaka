@@ -47,6 +47,9 @@ class _HolderScreenState extends State<HolderScreen> {
         loading = false;
       });
     } catch (e, stack) {
+      if (kDebugMode) {
+        rethrow;
+      }
       showSnackBar(context, stack.toString(), SnackBarType.error);
     }
   }

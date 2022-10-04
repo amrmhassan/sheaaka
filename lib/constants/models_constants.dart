@@ -38,6 +38,7 @@ String offersString = 'offersString';
 String locationString = 'locationString';
 String distanceString = 'distanceString';
 String creatorUserUIDString = 'creatorUserUIDString';
+String storeTabsString = 'storeTabsString';
 
 //? offer model constants
 String titleString = 'titleString';
@@ -55,3 +56,7 @@ String userRoleString = 'userRoleString';
 String singUpString = 'singUpString';
 String userProfilePhotoString = 'userProfilePhotoString';
 String userNameString = 'userNameString';
+
+//? store tab model constants
+String productsIdsString = 'productsIdsString';
+String allProductsString = 'allProductsString';

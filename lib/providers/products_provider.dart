@@ -6,6 +6,7 @@ import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/models/store_tab_model.dart';
 
 int loadingAtATime = 10;
 
@@ -288,34 +289,28 @@ class ProductsProvider extends ChangeNotifier {
 
   //? get a product with id
   ProductModel findProductById(String id) {
-    return _allProducts.firstWhere((element) => element.id == id);
+    ProductModel p = _allProducts.firstWhere((element) => element.id == id);
+    return p;
+  }
+
+//? getting store tab products
+  List<ProductModel> getStoreTabProducts(
+      StoreTabModel storeTabModel, String storeId) {
+    return storeTabModel.productsIds.map((e) {
+      ProductModel productModel = findProductById(e);
+      return productModel;
+    }).toList();
   }
 
   //? get store products
-  Future<List<ProductModel>> getStoreProducts(String storeId) async {
+  List<ProductModel> getStoreProducts(String storeId) {
     List<ProductModel> storeProducts = [];
-    if (_allProducts.isNotEmpty) {
-      //* this will load the home products from the already loaded products if they exist
 
-      storeProducts = _allProducts
-          .where(
-            (element) => element.storeId == storeId,
-          )
-          .toList();
-      return storeProducts;
-    }
-
-    QuerySnapshot<Map<String, dynamic>> res;
-    res = await ref
-        .collection(productsCollectionName)
-        .where(storeIdString, isEqualTo: storeId)
-        .get();
-
-    for (var element in res.docs) {
-      var p = ProductModel.fromJSON(element.data());
-      storeProducts.add(p);
-    }
-
+    storeProducts = _allProducts
+        .where(
+          (element) => element.storeId == storeId,
+        )
+        .toList();
     return storeProducts;
   }
 }

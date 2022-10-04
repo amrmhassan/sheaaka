@@ -45,9 +45,9 @@ class LocationProvider extends ChangeNotifier {
       // print('---------------000000000');
 
       if (kDebugMode) {
-        print('*********');
-        print("Location subscription isn't null");
-        print('*********');
+        // print('*********');
+        // print("Location subscription isn't null");
+        // print('*********');
       }
       await locationSubscription!.cancel();
     }
@@ -56,11 +56,11 @@ class LocationProvider extends ChangeNotifier {
       if (callback != null) {
         // print('---------------000000000');
         if (kDebugMode) {
-          print('---------------------------');
-          print('Updating stores distances');
-          print(event.latitude);
-          print(event.longitude);
-          print('---------------------------');
+          // print('---------------------------');
+          // print('Updating stores distances');
+          // print(event.latitude);
+          // print(event.longitude);
+          // print('---------------------------');
         }
 
         callback(event);

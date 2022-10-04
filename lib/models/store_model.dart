@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/constants/stores_constants.dart';
 import 'package:project/models/key_word_model.dart';
 import 'package:project/models/offer_model.dart';
+import 'package:project/models/store_tab_model.dart';
 
 class StoreModel {
   final String id;
@@ -11,6 +13,7 @@ class StoreModel {
   final String coverImagePath;
   final int followers;
   final double? rating;
+  final List<StoreTabModel> storeTabs;
 
   List<KeyWordModel>? keywords;
 
@@ -23,26 +26,33 @@ class StoreModel {
   StoreModel({
     required this.id,
     required this.coverImagePath,
-    this.logoImagePath,
     required this.followers,
     required this.name,
     required this.offers,
+    required this.creatorUserUID,
+    this.logoImagePath,
     this.location,
     this.keywords,
     this.distance,
     this.desc,
     this.rating,
-    required this.creatorUserUID,
+    this.storeTabs = defaultStoreTabs,
   });
 
   Map<String, dynamic> toJSON() {
     List<Map<String, dynamic>>? offersJSON =
         offers?.map((e) => e.toJSON()).toList();
+
     GeoPoint? locationPoint = (location == null)
         ? null
         : GeoPoint(location!.latitude, location!.longitude);
+
     List<Map<String, dynamic>>? keywordsConverted =
         keywords?.map((e) => e.toJSON()).toList();
+
+    List<Map<String, dynamic>> storeTabsJSON =
+        storeTabs.map((e) => e.toJSON()).toList();
+
     return {
       idString: id,
       nameString: name,
@@ -55,6 +65,7 @@ class StoreModel {
       locationString: locationPoint,
       keyWordsString: keywordsConverted,
       creatorUserUIDString: creatorUserUID,
+      storeTabsString: storeTabsJSON,
     };
   }
 
@@ -87,6 +98,20 @@ class StoreModel {
     String creatorUserUID =
         storeJSON[creatorUserUIDString] ?? 'Jwqqj0UdfyRexLAQi4Tbieeiaej2';
 
+    var storeTabsHelper = storeJSON[storeTabsString] as List<dynamic>?;
+    if (storeTabsHelper != null) {
+      print('object');
+    }
+    List<StoreTabModel> storeTabs = (storeTabsHelper == null)
+        ? defaultStoreTabs
+        : (storeTabsHelper).map((e) => StoreTabModel.fromJSON(e)).toList();
+
+    //! remove this cause the trader might want to delete the all products tab
+    //! so this is temporary
+    List<StoreTabModel> fullStoreTabs = [];
+    fullStoreTabs.addAll(defaultStoreTabs);
+    if (storeTabsHelper != null) fullStoreTabs.addAll(storeTabs);
+
     return StoreModel(
       id: idF,
       coverImagePath: coverImagePathF,
@@ -99,6 +124,7 @@ class StoreModel {
       rating: ratingF,
       keywords: keywords == null ? null : [...keywords],
       creatorUserUID: creatorUserUID,
+      storeTabs: fullStoreTabs,
     );
   }
 }
