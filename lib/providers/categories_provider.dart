@@ -16,6 +16,11 @@ class CategoriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //? active gender model
+  CustomerGenderModel get activeGenderModel {
+    return genders.firstWhere((element) => element.id == activeGenderId);
+  }
+
   //? get gender by id
   CustomerGenderModel getGenderById(String id) {
     return genders.firstWhere((element) => element.id == id);
@@ -29,6 +34,15 @@ class CategoriesProvider extends ChangeNotifier {
   void setActiveCategoryId(String id) {
     activeCategoryId = id;
     notifyListeners();
+  }
+
+//? active category model
+  CategoryModel? get activeCategoryModel {
+    try {
+      return categories.firstWhere((element) => element.id == activeCategoryId);
+    } catch (e) {
+      return null;
+    }
   }
 
   //? get category by id

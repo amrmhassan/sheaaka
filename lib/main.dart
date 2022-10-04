@@ -14,6 +14,7 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
+import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
@@ -101,6 +102,7 @@ class MyApp extends StatelessWidget {
           UploadDataScreen.routeName: (context) => UploadDataScreen(),
           OfferScreen.routeName: (context) => OfferScreen(),
           NoInternetScreen.routeName: (context) => NoInternetScreen(),
+          CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
         },
       ),
     );

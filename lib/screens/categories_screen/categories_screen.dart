@@ -54,10 +54,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           subTitle: 'إضافة',
           onTap: () {},
         ),
-        CategoryItemsGrid(
-          activeCustomerGender:
-              catProviderFalse.getGenderById(catProvider.activeGenderId),
-        ),
+        CategoryItemsGrid(),
         VSpace(factor: .5),
         // PaddingWrapper(
         //   child: ButtonWrapper(
