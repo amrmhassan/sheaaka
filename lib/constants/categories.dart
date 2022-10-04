@@ -3,7 +3,7 @@
 import 'package:project/models/category_model.dart';
 import 'package:uuid/uuid.dart';
 
-List<CategoryModel> categories = [
+List<CategoryModel> categoriesConstants = [
   CategoryModel(
     id: Uuid().v4(),
     icon: 'assets/icons/catIcons/shirt.png',
@@ -43,5 +43,10 @@ List<CategoryModel> categories = [
     id: Uuid().v4(),
     icon: 'assets/icons/catIcons/baseball-cap.png',
     title: 'قبعة',
+  ),
+  CategoryModel(
+    id: Uuid().v4(),
+    icon: 'assets/icons/catIcons/oversize.png',
+    title: 'اوفر سايز',
   ),
 ];

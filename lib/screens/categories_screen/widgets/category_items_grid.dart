@@ -3,11 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/models/customer_gender_model.dart';
 import 'package:project/screens/categories_screen/widgets/category_item.dart';
 
 class CategoryItemsGrid extends StatelessWidget {
+  final CustomerGenderModel activeCustomerGender;
+
   const CategoryItemsGrid({
     Key? key,
+    required this.activeCustomerGender,
   }) : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ class CategoryItemsGrid extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 2.9,
         ),
-        children: categories
+        children: categoriesConstants
             .map((e) => CategoryItem(iconPath: e.icon, title: e.title))
             .toList(),
       ),

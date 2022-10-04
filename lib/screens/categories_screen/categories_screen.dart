@@ -1,11 +1,15 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/categories.dart';
+import 'package:project/constants/genders_constants.dart';
 import 'package:project/global/widgets/group_header.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/providers/categories_provider.dart';
 import 'package:project/screens/categories_screen/widgets/category_customer_type_container.dart';
 import 'package:project/screens/categories_screen/widgets/category_items_grid.dart';
+import 'package:provider/provider.dart';
 
 //? this screen will only have filters techniques like gender, clothes category
 //? it won't have any product cards right now
@@ -24,6 +28,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var catProvider = Provider.of<CategoriesProvider>(context);
+    var catProviderFalse =
+        Provider.of<CategoriesProvider>(context, listen: false);
+
     return Column(
       children: [
         // VSpace(),
@@ -36,14 +44,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         //   subTitle: 'الكل',
         //   onTap: () {},
         // ),
-        CategoryCustomerTypeContainer(),
+        CategoryCustomerTypeContainer(
+          setActiveGender: catProviderFalse.setActiveGenderId,
+          activeGenderId: catProvider.activeGenderId,
+        ),
         VSpace(),
         GroupHeader(
           title: 'الفئات',
           subTitle: 'إضافة',
           onTap: () {},
         ),
-        CategoryItemsGrid(),
+        CategoryItemsGrid(
+          activeCustomerGender:
+              catProviderFalse.getGenderById(catProvider.activeGenderId),
+        ),
         VSpace(factor: .5),
         // PaddingWrapper(
         //   child: ButtonWrapper(
