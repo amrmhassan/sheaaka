@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/product_constants.dart';
+import 'package:project/global/widgets/v_space.dart';
 
 const double maxLoaderRadius = 100;
 const double radiusFactor = 2;
@@ -24,14 +25,29 @@ class _TestingScreenState extends State<TestingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: productColors
-            .map((e) => Container(
-                  width: double.infinity,
-                  height: 50,
-                  color: e,
-                ))
-            .toList(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            VSpace(),
+            Image.network(
+              'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-674010.jpg&fm=jpg',
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress != null) {
+                  if (loadingProgress.cumulativeBytesLoaded <
+                      loadingProgress.expectedTotalBytes!) {
+                    return Text('data');
+                  } else {
+                    return child;
+                  }
+                }
+
+                return child;
+              },
+              width: double.infinity,
+              fit: BoxFit.contain,
+            )
+          ],
+        ),
       ),
     );
   }

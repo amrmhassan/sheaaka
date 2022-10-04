@@ -87,7 +87,7 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
         source: imageSource,
         setStartLoading: startCoverLoading,
         setEndLoading: endCoverLoading,
-        cloudFolderName: storeLogoImagesDir,
+        cloudFolderName: storeCoverImagesDir,
       );
 
 //? choosing logo image, modal

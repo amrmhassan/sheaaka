@@ -96,21 +96,11 @@ class StoreModel {
             .map((k) => KeyWordModel.fromJSON(k!))
             .toList();
     String creatorUserUID =
-        storeJSON[creatorUserUIDString] ?? 'Jwqqj0UdfyRexLAQi4Tbieeiaej2';
+        storeJSON[creatorUserUIDString] ?? 'qDjfg4sfaKOG2gY6Op6AdQiz5Ts1';
 
-    var storeTabsHelper = storeJSON[storeTabsString] as List<dynamic>?;
-    if (storeTabsHelper != null) {
-      print('object');
-    }
-    List<StoreTabModel> storeTabs = (storeTabsHelper == null)
-        ? defaultStoreTabs
-        : (storeTabsHelper).map((e) => StoreTabModel.fromJSON(e)).toList();
-
-    //! remove this cause the trader might want to delete the all products tab
-    //! so this is temporary
-    List<StoreTabModel> fullStoreTabs = [];
-    fullStoreTabs.addAll(defaultStoreTabs);
-    if (storeTabsHelper != null) fullStoreTabs.addAll(storeTabs);
+    var storeTabsHelper = storeJSON[storeTabsString] as List<dynamic>;
+    List<StoreTabModel> storeTabs =
+        (storeTabsHelper).map((e) => StoreTabModel.fromJSON(e)).toList();
 
     return StoreModel(
       id: idF,
@@ -124,7 +114,7 @@ class StoreModel {
       rating: ratingF,
       keywords: keywords == null ? null : [...keywords],
       creatorUserUID: creatorUserUID,
-      storeTabs: fullStoreTabs,
+      storeTabs: storeTabs,
     );
   }
 }

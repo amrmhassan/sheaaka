@@ -15,7 +15,7 @@ class StoreTabModel {
   Map<String, dynamic> toJSON() {
     return {
       titleString: title,
-      productIdString: productsIdsString,
+      productIdString: productsIds,
       allProductsString: allProducts,
     };
   }

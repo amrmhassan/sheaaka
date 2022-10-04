@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:project/global/widgets/empty_widget.dart';
@@ -85,7 +86,14 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
         showSnackBar(context, 'لم يتم تحديد موقعك', SnackBarType.error);
       }
     } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+      try {
+        showSnackBar(context, e.toString(), SnackBarType.error);
+      } catch (e) {
+        if (kDebugMode) {
+          print(e.toString());
+          rethrow;
+        }
+      }
     }
 
     setState(() {

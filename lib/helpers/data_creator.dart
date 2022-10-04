@@ -15,10 +15,10 @@ import 'package:project/models/whishlist_model.dart';
 import 'package:project/utils/general_utils.dart' as general_utils;
 import 'package:uuid/uuid.dart';
 
-int storesNumber = 10;
-int productsNumber = 50;
+int storesNumber = 2;
+int productsNumber = 20;
 int wishlistsNumber = 5;
-int offersNumber = 50;
+int offersNumber = 20;
 
 class DataCreator {
   List<ProductModel> fProducts = [];

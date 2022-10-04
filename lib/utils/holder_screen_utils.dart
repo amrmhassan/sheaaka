@@ -2,7 +2,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/products_provider.dart';
@@ -27,9 +26,8 @@ Future<void> loadData(BuildContext context) async {
         await Provider.of<UserProvider>(context, listen: false)
             .getUserDataByUID(currentUser.uid);
     if (userModel.userRole == UserRole.trader) {
-      StoreModel? userStore;
       try {
-        userStore = Provider.of<StoreProvider>(context, listen: false)
+        Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him

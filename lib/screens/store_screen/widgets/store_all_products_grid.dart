@@ -52,6 +52,15 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
     super.initState();
   }
 
+//? to change the viewed products when the active tab changes
+  @override
+  void didUpdateWidget(covariant StoreAllProductsGrid oldWidget) {
+    if (oldWidget.storeActiveTab != widget.storeActiveTab) {
+      fetchStoreProducts();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     //! make the taps to float in the of the screen when reaching the top while scrolling
