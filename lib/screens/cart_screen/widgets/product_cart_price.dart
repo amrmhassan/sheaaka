@@ -44,7 +44,7 @@ class ProductCartPrice extends StatelessWidget {
               height: 1,
             ),
           ),
-          TextSpan(text: ' '),
+          // TextSpan(text: ' '),
           TextSpan(
             text: 'جنيه',
             style: textStyle.copyWith(

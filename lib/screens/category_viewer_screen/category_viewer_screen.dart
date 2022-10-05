@@ -5,19 +5,23 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/product_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/dialog_wrapper.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_line.dart';
-import 'package:project/helpers/responsive.dart';
+import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/providers/categories_provider.dart';
+import 'package:project/providers/products_provider.dart';
+import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/category_viewer_screen/widgets/all_colors_palette.dart';
 import 'package:project/screens/category_viewer_screen/widgets/all_filters_button.dart';
 import 'package:project/screens/category_viewer_screen/widgets/category_chooser.dart';
+import 'package:project/screens/category_viewer_screen/widgets/category_product_cart.dart';
 import 'package:project/screens/category_viewer_screen/widgets/size_chooser.dart';
+import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/product_screen/widgets/product_color_element.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +37,7 @@ class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
   @override
   Widget build(BuildContext context) {
     var catProvider = Provider.of<CategoriesProvider>(context);
+    var productsProvider = Provider.of<ProductsProvider>(context);
 
     return ScreensWrapper(
       child: Column(
@@ -53,6 +58,25 @@ class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
             ],
           ),
           HLine(),
+          Expanded(
+            child: GridView.builder(
+              padding:
+                  EdgeInsets.symmetric(horizontal: kHPad / 2, vertical: kVPad),
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              itemCount: productsProvider.allProducts.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2 / 3,
+                crossAxisSpacing: kHPad / 2,
+                mainAxisSpacing: kHPad / 2,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                ProductModel p = productsProvider.allProducts[index];
+                return CategoryProductCart(p: p);
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
@@ -104,4 +106,10 @@ BoxShadow defaultBoxShadow = BoxShadow(
   spreadRadius: 5,
   blurRadius: 15,
   color: Colors.grey.withOpacity(0.1),
+);
+BoxShadow liteBoxShadow = BoxShadow(
+  offset: Offset(0, 0),
+  color: Colors.grey.withOpacity(.2),
+  blurStyle: BlurStyle.outer,
+  blurRadius: 6,
 );

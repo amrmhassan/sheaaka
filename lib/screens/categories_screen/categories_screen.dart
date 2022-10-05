@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/categories.dart';
-import 'package:project/constants/genders_constants.dart';
 import 'package:project/global/widgets/group_header.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/v_space.dart';

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/models/customer_gender_model.dart';
 import 'package:project/providers/categories_provider.dart';
 import 'package:project/screens/categories_screen/widgets/category_item.dart';
 import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';

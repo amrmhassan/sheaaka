@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/product_constants.dart';
 import 'package:project/global/widgets/v_space.dart';
 
 const double maxLoaderRadius = 100;
