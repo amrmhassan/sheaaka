@@ -17,6 +17,7 @@ import 'package:project/providers/categories_provider.dart';
 import 'package:project/screens/category_viewer_screen/widgets/all_colors_palette.dart';
 import 'package:project/screens/category_viewer_screen/widgets/all_filters_button.dart';
 import 'package:project/screens/category_viewer_screen/widgets/category_chooser.dart';
+import 'package:project/screens/category_viewer_screen/widgets/size_chooser.dart';
 import 'package:project/screens/product_screen/widgets/product_color_element.dart';
 import 'package:provider/provider.dart';
 
@@ -44,41 +45,47 @@ class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
                 color: kSecondaryColor.withOpacity(.1),
               ),
               HSpace(factor: .5),
+              colorChooser(catProvider, context),
+              HSpace(factor: .5),
               CategoryChooser(catProvider: catProvider),
               HSpace(factor: .5),
-              categoryColors(catProvider.activeColor, () {
-                showDialog(
-                  context: context,
-                  useSafeArea: true,
-                  builder: (ctx) {
-                    return DialogWrapper(
-                      margin: EdgeInsets.symmetric(horizontal: kHPad * 2),
-                      child: GridView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: productColors.length,
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 50,
-                          childAspectRatio: 1,
-                          crossAxisSpacing: kHPad / 2,
-                          mainAxisSpacing: kVPad / 2,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return categoryColors(
-                              catProvider.availableColors[index]);
-                        },
-                      ),
-                    );
-                  },
-                );
-              }),
+              SizeChooser(catProvider: catProvider),
             ],
           ),
           HLine(),
         ],
       ),
     );
+  }
+
+//? this will control choosing colors
+  Widget colorChooser(CategoriesProvider catProvider, BuildContext context) {
+    return categoryColors(catProvider.activeColor, () {
+      showDialog(
+        context: context,
+        useSafeArea: true,
+        builder: (ctx) {
+          return DialogWrapper(
+            margin: EdgeInsets.symmetric(horizontal: kHPad * 2),
+            child: GridView.builder(
+              padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: productColors.length,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 50,
+                childAspectRatio: 1,
+                crossAxisSpacing: kHPad / 2,
+                mainAxisSpacing: kHPad / 2,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                return categoryColors(catProvider.availableColors[index]);
+              },
+            ),
+          );
+        },
+      );
+    });
   }
 
 //? this will handle showing the colors boxes in the colors dialog

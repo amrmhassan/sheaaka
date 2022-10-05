@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/types.dart';
 
+const List<Sizes> productSizes = Sizes.values;
+
 const List<Color> productColors = [
   Color(0xffffffff),
   Color(0xff3678bd),
@@ -27,14 +29,13 @@ const List<Color> productColors = [
 //   ColorWithName(color: Color(0xffFD7E4C), name: 'name'),
 // ];
 
-const List<Sizes> productSizes = Sizes.values;
 
-class ColorWithName {
-  final Color color;
-  final String name;
+// class ColorWithName {
+//   final Color color;
+//   final String name;
 
-  const ColorWithName({
-    required this.color,
-    required this.name,
-  });
-}
+//   const ColorWithName({
+//     required this.color,
+//     required this.name,
+//   });
+// }

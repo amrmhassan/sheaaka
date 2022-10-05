@@ -1,4 +1,5 @@
 enum Sizes {
+  allSizes,
   s,
   m,
   l,
