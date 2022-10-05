@@ -22,7 +22,7 @@ class SocialAccountsHeader extends StatelessWidget {
       children: [
         Expanded(
           child: HLine(
-            width: 2,
+            thickness: 2,
             color: kSecondaryColor.withOpacity(.2),
           ),
         ),
@@ -34,7 +34,7 @@ class SocialAccountsHeader extends StatelessWidget {
         HSpace(factor: .5),
         Expanded(
           child: HLine(
-            width: 2,
+            thickness: 2,
             color: kSecondaryColor.withOpacity(.2),
           ),
         ),

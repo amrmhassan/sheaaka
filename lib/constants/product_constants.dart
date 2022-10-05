@@ -15,17 +15,17 @@ const List<Color> productColors = [
   Color(0xffFD7E4C),
 ];
 
-List<ColorWithName> productColorsWithName = const [
-  ColorWithName(color: Color(0xffffffff), name: 'name'),
-  ColorWithName(color: Color(0xff3678bd), name: 'name'),
-  ColorWithName(color: Color(0xffff8fba), name: 'name'),
-  ColorWithName(color: Color(0xffb4b4b4), name: 'name'),
-  ColorWithName(color: Color(0xff222222), name: 'name'),
-  ColorWithName(color: Color(0xff398451), name: 'name'),
-  ColorWithName(color: Color(0xffA75430), name: 'name'),
-  ColorWithName(color: Color(0xffDBAB59), name: 'name'),
-  ColorWithName(color: Color(0xffFD7E4C), name: 'name'),
-];
+// List<ColorWithName> productColorsWithName = const [
+//   ColorWithName(color: Color(0xffffffff), name: 'name'),
+//   ColorWithName(color: Color(0xff3678bd), name: 'name'),
+//   ColorWithName(color: Color(0xffff8fba), name: 'name'),
+//   ColorWithName(color: Color(0xffb4b4b4), name: 'name'),
+//   ColorWithName(color: Color(0xff222222), name: 'name'),
+//   ColorWithName(color: Color(0xff398451), name: 'name'),
+//   ColorWithName(color: Color(0xffA75430), name: 'name'),
+//   ColorWithName(color: Color(0xffDBAB59), name: 'name'),
+//   ColorWithName(color: Color(0xffFD7E4C), name: 'name'),
+// ];
 
 const List<Sizes> productSizes = Sizes.values;
 

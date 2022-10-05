@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 
 class HLine extends StatelessWidget {
-  final double? width;
+  final double? thickness;
   final Color? color;
   final double? borderRadius;
   final double? widthFactor;
+  final double? width;
 
   const HLine({
     Key? key,
     this.color,
-    this.width,
+    this.thickness,
     this.borderRadius,
     this.widthFactor,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -20,8 +22,8 @@ class HLine extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: widthFactor ?? 1,
       child: Container(
-        width: double.infinity,
-        height: width ?? 2,
+        width: width ?? double.infinity,
+        height: thickness ?? 2,
         decoration: BoxDecoration(
           color: color ?? kLightColor,
           borderRadius: BorderRadius.circular(borderRadius ?? 0),

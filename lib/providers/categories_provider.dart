@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:project/constants/categories.dart';
 import 'package:project/constants/genders_constants.dart';
-import 'package:project/models/cart_item_model.dart';
+import 'package:project/constants/product_constants.dart';
 import 'package:project/models/category_model.dart';
 import 'package:project/models/customer_gender_model.dart';
-import 'package:project/models/types.dart';
 
 class CategoriesProvider extends ChangeNotifier {
   //# user genders
@@ -48,5 +47,15 @@ class CategoriesProvider extends ChangeNotifier {
   //? get category by id
   CategoryModel getCategoryById(String id) {
     return categories.firstWhere((element) => element.id == id);
+  }
+
+  //# colors
+  List<dynamic> availableColors = ['all', ...productColors];
+  dynamic activeColor = 'all';
+
+  //? set active color
+  void setActiveColor(dynamic a) {
+    activeColor = a;
+    notifyListeners();
   }
 }

@@ -53,7 +53,7 @@ class OrderTitle extends StatelessWidget {
             Expanded(
               child: HLine(
                 color: kSecondaryColor.withOpacity(.2),
-                width: 1,
+                thickness: 1,
               ),
             ),
             HSpace(factor: .4),

@@ -96,7 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           name: userModel.userName,
                         ),
                         VSpace(),
-                        HLine(width: 1, color: kSecondaryColor.withOpacity(.2)),
+                        HLine(
+                            thickness: 1,
+                            color: kSecondaryColor.withOpacity(.2)),
                         VSpace(),
                         ProfileScreenOptions(),
                         VSpace(),

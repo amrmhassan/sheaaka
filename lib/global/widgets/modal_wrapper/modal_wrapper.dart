@@ -55,7 +55,7 @@ class ModalWrapper extends StatelessWidget {
               children: [
                 VSpace(),
                 HLine(
-                  width: 4,
+                  thickness: 4,
                   color: kSecondaryColor.withOpacity(.4),
                   borderRadius: 50,
                   widthFactor: .3,
