@@ -5,7 +5,6 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/models/product_model.dart';
-import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
 import 'package:project/screens/category_viewer_screen/widgets/product_category_data.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 

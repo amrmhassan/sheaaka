@@ -5,8 +5,11 @@ import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/custom_error.dart';
+import 'package:project/models/customer_gender_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
+import 'package:project/models/types.dart';
+import 'package:project/providers/categories_provider.dart';
 
 int loadingAtATime = 10;
 
@@ -179,6 +182,7 @@ class ProductsProvider extends ChangeNotifier {
     return [..._favoriteProductsIds];
   }
 
+//? checking if the product is favorite
   Future<bool> checkIfProductIsLiked(String productId) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
@@ -198,6 +202,7 @@ class ProductsProvider extends ChangeNotifier {
     }
   }
 
+//? getting liked products
   Future<void> fetchAndUpdateFavoriteProducts() async {
     _favoriteProductsIds.clear();
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -312,6 +317,41 @@ class ProductsProvider extends ChangeNotifier {
         )
         .toList();
     return storeProducts;
+  }
+
+  List<ProductModel> catProducts = [];
+  //# categories products
+  void setCategoriesProducts(
+      {required CategoriesProvider catProvider, required bool notify}) {
+    CustomerGenderModel gender = catProvider.activeGenderModel;
+    String? categoryId = catProvider.activeCategoryId;
+    dynamic color = catProvider.activeColor;
+    Sizes? size = catProvider.activeSizeEnum;
+    Iterable<ProductModel> helperList = [];
+    //* gender id
+    helperList =
+        _allProducts.where((element) => element.genderCategoryId == gender.id);
+
+    //* category id
+    if (categoryId != null && categoryId != 'all') {
+      helperList =
+          helperList.where((element) => element.categoryId == categoryId);
+    }
+    //* color
+    if (color != null && color != 'all') {
+      helperList = helperList.where((element) =>
+          element.availableColors != null &&
+          element.availableColors!.contains(color));
+    }
+    //* sizes
+    if (size != null && size != Sizes.allSizes) {
+      helperList = helperList.where((element) =>
+          element.availableSize != null &&
+          element.availableSize!.contains(size));
+    }
+
+    catProducts = helperList.toList();
+    if (notify) notifyListeners();
   }
 }
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/providers/categories_provider.dart';
+import 'package:project/utils/categories_utiles.dart';
 
 class SizeChooser extends StatelessWidget {
   const SizeChooser({
@@ -40,6 +41,7 @@ class SizeChooser extends StatelessWidget {
       onChanged: (v) {
         if (v is int) {
           catProvider.setActiveSize(v);
+          updateCategories(context);
         }
       },
     );

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/providers/categories_provider.dart';
 import 'package:project/screens/categories_screen/widgets/category_item.dart';

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/brand_model.dart';
-import 'package:project/models/category_model.dart';
 import 'package:project/models/key_word_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/utils/string_to_type_utils.dart';
@@ -32,7 +31,9 @@ class ProductModel {
   DateTime? offerEnd;
   DateTime? offerStarted;
   //! i don't know if a product can be in multiple categories or not, so make sure then edit it to list if needed
-  CategoryModel? category;
+  // CategoryModel? category;
+  String? categoryId;
+  String? genderCategoryId;
 
   ProductModel({
     required this.id,
@@ -57,7 +58,8 @@ class ProductModel {
     this.fullDesc,
     this.shortDesc,
     this.availableColors,
-    this.category,
+    this.categoryId,
+    this.genderCategoryId,
   }) {
     hasOffer = offerEnd != null && offerEnd!.isAfter(DateTime.now());
   }
@@ -92,7 +94,9 @@ class ProductModel {
       shortDescString: shortDesc,
       availableColorsString: colorsConverted,
       keyWordsString: keywordsConverted,
-      categoryString: category?.toJSON(),
+      // categoryString: category?.toJSON(),
+      categoryIdString: categoryId,
+      genderCategoryIdString: genderCategoryId,
     };
   }
 
@@ -136,10 +140,12 @@ class ProductModel {
         : (productJSON[keyWordsString])
             .map((k) => KeyWordModel.fromJSON(k!))
             .toList();
-    var catHelper = productJSON[categoryString];
+    // var catHelper = productJSON[categoryString];
 
-    CategoryModel? category =
-        catHelper == null ? catHelper : CategoryModel.fromJSON(catHelper);
+    // CategoryModel? category =
+    //     catHelper == null ? catHelper : CategoryModel.fromJSON(catHelper);
+    String? categoryId = productJSON[categoryIdString];
+    String? genderCategoryId = productJSON[genderCategoryIdString];
 
     return ProductModel(
       id: id,
@@ -164,7 +170,9 @@ class ProductModel {
       remainingNumber: remainingNumber,
       shortDesc: shortDesc,
       keywords: keywords == null ? null : [...keywords],
-      category: category,
+      // category: category,
+      categoryId: categoryId,
+      genderCategoryId: genderCategoryId,
     );
   }
 }

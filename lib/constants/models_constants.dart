@@ -25,6 +25,8 @@ String shortDescString = 'shortDescString';
 String availableColorsString = 'availableColorsString';
 String keyWordsString = 'keyWordsString';
 String categoryString = 'categoryString';
+String categoryIdString = 'categoryIdString';
+String genderCategoryIdString = 'genderCategoryIdString';
 
 //? brand model constants
 String iconString = 'iconString';

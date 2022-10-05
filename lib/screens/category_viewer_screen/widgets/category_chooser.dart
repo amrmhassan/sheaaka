@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/providers/categories_provider.dart';
+import 'package:project/utils/categories_utiles.dart';
 
 class CategoryChooser extends StatelessWidget {
   const CategoryChooser({
@@ -43,6 +43,7 @@ class CategoryChooser extends StatelessWidget {
       onChanged: (v) {
         if (v is String) {
           catProvider.setActiveCategoryId(v);
+          updateCategories(context);
         }
       },
     );

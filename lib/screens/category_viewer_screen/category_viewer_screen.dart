@@ -6,6 +6,7 @@ import 'package:project/constants/product_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/dialog_wrapper.dart';
+import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -19,6 +20,7 @@ import 'package:project/screens/category_viewer_screen/widgets/category_chooser.
 import 'package:project/screens/category_viewer_screen/widgets/category_product_cart.dart';
 import 'package:project/screens/category_viewer_screen/widgets/size_chooser.dart';
 import 'package:project/screens/product_screen/widgets/product_color_element.dart';
+import 'package:project/utils/categories_utiles.dart';
 import 'package:provider/provider.dart';
 
 class CategoryViewerScreen extends StatefulWidget {
@@ -30,6 +32,13 @@ class CategoryViewerScreen extends StatefulWidget {
 }
 
 class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
+  @override
+  void initState() {
+    updateCategories(context, false);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var catProvider = Provider.of<CategoriesProvider>(context);
@@ -55,23 +64,25 @@ class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
           ),
           HLine(),
           Expanded(
-            child: GridView.builder(
-              padding:
-                  EdgeInsets.symmetric(horizontal: kHPad / 2, vertical: kVPad),
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: productsProvider.allProducts.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2 / 3,
-                crossAxisSpacing: kHPad / 2,
-                mainAxisSpacing: kHPad / 2,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                ProductModel p = productsProvider.allProducts[index];
-                return CategoryProductCart(p: p);
-              },
-            ),
+            child: productsProvider.catProducts.isEmpty
+                ? EmptyWidget(title: 'لا توجد منتجات , حاول تغيير الفلتر')
+                : GridView.builder(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: kHPad / 2, vertical: kVPad),
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    itemCount: productsProvider.catProducts.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2 / 3,
+                      crossAxisSpacing: kHPad / 2,
+                      mainAxisSpacing: kHPad / 2,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      ProductModel p = productsProvider.allProducts[index];
+                      return CategoryProductCart(p: p);
+                    },
+                  ),
           ),
         ],
       ),
@@ -115,6 +126,7 @@ class _CategoryViewerScreenState extends State<CategoryViewerScreen> {
     var catProvider = Provider.of<CategoriesProvider>(context);
     onTap() {
       catProviderFalse.setActiveColor(item);
+      updateCategories(context);
       Navigator.pop(context);
     }
 

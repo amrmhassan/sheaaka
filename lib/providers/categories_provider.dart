@@ -76,6 +76,10 @@ class CategoriesProvider extends ChangeNotifier {
   int? activeSizeIndex = productSizes.first.index;
   List<String> dd = [];
 
+  Sizes? get activeSizeEnum {
+    return activeSizeIndex == null ? null : Sizes.values[activeSizeIndex!];
+  }
+
 //? set active size
   void setActiveSize(int s) {
     activeSizeIndex = s;
