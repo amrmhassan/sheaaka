@@ -7,6 +7,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/providers/categories_provider.dart';
 import 'package:project/screens/categories_screen/widgets/category_customer_type_container.dart';
 import 'package:project/screens/categories_screen/widgets/category_items_grid.dart';
+import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
 import 'package:provider/provider.dart';
 
 //? this screen will only have filters techniques like gender, clothes category
@@ -49,8 +50,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         VSpace(),
         GroupHeader(
           title: 'الفئات',
-          subTitle: 'إضافة',
-          onTap: () {},
+          subTitle: 'الكل',
+          onTap: () {
+            catProviderFalse.setActiveCategoryId('all');
+            Navigator.pushNamed(context, CategoryViewerScreen.routeName);
+          },
         ),
         CategoryItemsGrid(),
         VSpace(factor: .5),

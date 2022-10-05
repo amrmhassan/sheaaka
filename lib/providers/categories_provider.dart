@@ -12,6 +12,8 @@ class CategoriesProvider extends ChangeNotifier {
   String activeGenderId = gendersConstants.first.id;
   //? set active gender id
   void setActiveGenderId(String g) {
+    //* set categories to match the active gender
+
     activeGenderId = g;
     notifyListeners();
   }
@@ -27,7 +29,16 @@ class CategoriesProvider extends ChangeNotifier {
   }
 
   //# categories
-  List<CategoryModel> categories = [...categoriesConstants];
+  List<CategoryModel> get categories {
+    return [
+      ...categoriesConstants
+          .where((element) => element.categoryGenderId == activeGenderId)
+    ];
+  }
+
+  CategoryModel allOfGenderCategory =
+      categoriesConstants.firstWhere((element) => element.id == 'all');
+
   String? activeCategoryId;
 
   //? set active category id

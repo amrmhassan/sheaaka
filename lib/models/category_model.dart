@@ -4,11 +4,15 @@ class CategoryModel {
   final String id;
   final String title;
   final String icon;
+  final String categoryGenderId;
+  final bool allOfGender;
 
   const CategoryModel({
     required this.id,
     required this.icon,
     required this.title,
+    required this.categoryGenderId,
+    this.allOfGender = false,
   });
 
   Map<String, dynamic> toJSON() {
@@ -16,6 +20,7 @@ class CategoryModel {
       idString: id,
       titleString: title,
       iconString: icon,
+      categoryGenderIdString: categoryGenderId,
     };
   }
 
@@ -23,10 +28,12 @@ class CategoryModel {
     String id = catJSON[idString];
     String title = catJSON[titleString];
     String icon = catJSON[iconString];
+    String categoryGenderId = catJSON[categoryGenderIdString];
     return CategoryModel(
       id: id,
       icon: icon,
       title: title,
+      categoryGenderId: categoryGenderId,
     );
   }
 }

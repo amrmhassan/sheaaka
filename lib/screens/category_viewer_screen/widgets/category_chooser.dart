@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/categories.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/providers/categories_provider.dart';
 
@@ -25,14 +26,20 @@ class CategoryChooser extends StatelessWidget {
       alignment: AlignmentDirectional.centerEnd,
       borderRadius: BorderRadius.circular(mediumBorderRadius),
       value: catProvider.activeCategoryId,
-      items: catProvider.categories.map(
-        (e) {
-          return DropdownMenuItem(
-            value: e.id,
-            child: Text(e.title),
-          );
-        },
-      ).toList(),
+      items: [
+        DropdownMenuItem(
+          value: catProvider.allOfGenderCategory.id,
+          child: Text(catProvider.allOfGenderCategory.title),
+        ),
+        ...catProvider.categories.map(
+          (e) {
+            return DropdownMenuItem(
+              value: e.id,
+              child: Text(e.title),
+            );
+          },
+        )
+      ],
       onChanged: (v) {
         if (v is String) {
           catProvider.setActiveCategoryId(v);

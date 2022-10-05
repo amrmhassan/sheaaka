@@ -17,6 +17,7 @@ class CategoryItemsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     var catProviderFalse =
         Provider.of<CategoriesProvider>(context, listen: false);
+    var catProvider = Provider.of<CategoriesProvider>(context);
     return Expanded(
       child: GridView(
         physics: BouncingScrollPhysics(),
@@ -27,7 +28,7 @@ class CategoryItemsGrid extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 2.9,
         ),
-        children: categoriesConstants
+        children: catProvider.categories
             .map(
               (e) => CategoryItem(
                 iconPath: e.icon,

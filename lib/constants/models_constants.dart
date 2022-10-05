@@ -60,3 +60,6 @@ String userNameString = 'userNameString';
 //? store tab model constants
 String productsIdsString = 'productsIdsString';
 String allProductsString = 'allProductsString';
+
+//? category model constants
+String categoryGenderIdString = 'categoryGenderIdString';
