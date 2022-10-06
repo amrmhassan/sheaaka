@@ -1,5 +1,6 @@
 import 'package:project/constants/db_constants.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/models/cart_item_model.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 
@@ -13,9 +14,8 @@ class DBHelper {
       finalPath,
       //? this is when creating the database itself so create all your tables here
       onCreate: (db, version) async {
-        //? creating testing table
-        return db.execute(
-            'CREATE TABLE $quickActionsTableName ($idString TEXT PRIMARY KEY,$titleString TEXT,)');
+        //? creating cart items table
+        return db.execute(CartItemModel.toSqliteString());
       },
       version: 1,
     );

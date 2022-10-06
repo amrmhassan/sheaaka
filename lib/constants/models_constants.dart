@@ -66,3 +66,11 @@ String allProductsString = 'allProductsString';
 
 //? category model constants
 String categoryGenderIdString = 'categoryGenderIdString';
+
+//? cart item model constants
+String productImageString = 'productImageString';
+String productNameString = 'productNameString';
+String productPriceString = 'productPriceString';
+String sizeString = 'sizeString';
+String colorString = 'colorString';
+String quantityString = 'quantityString';

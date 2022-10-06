@@ -1,18 +1,10 @@
-const String dbName = 'my_wallet_app_production.db';
+//? sqlite databases names
+const String dbName = 'sheaaka_app_db_name.db';
+
 //? sqlite tables names
-const String transactionsTableName = 'transactions';
-const String quickActionsTableName = 'quickActions';
-const String profilesTableName = 'profilesTable';
-const String debtsTableName = 'debtsTable';
-const String userPrefsTableName = 'userPrefsTable';
+const String cartItemsTableName = 'cartItemsTable';
 
-//? firestore collection names
-const String usersCollectionName = 'users';
-const String profilesCollectionName = 'profiles';
-const String transactionsCollectionName = 'transactions';
-const String quickActionsCollectionName = 'quickActions';
-const String userPrefsCollectionName = 'userPreferences';
-
-//? keys on the user preference collection on firestore
-const String activeProfileFireStoreKeyName = 'activeProfile';
-const String activeThemeFireStoreKeyName = 'activeProfile';
+//? db types constants
+String dbNull = 'dbNull';
+String dbTrue = 'dbTrue';
+String dbFalse = 'dbFalse';

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/cupertino.dart';
+import 'package:project/constants/db_constants.dart';
+import 'package:project/helpers/db_helper.dart';
 import 'package:project/models/cart_item_model.dart';
 import 'package:project/models/types.dart';
 import 'package:uuid/uuid.dart';
@@ -29,6 +31,7 @@ class CartProvider extends ChangeNotifier {
     String productImage,
     double productPrice,
   ) {
+    //* add to the provider state
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now();
     CartItemModel cartItemModel = CartItemModel(
@@ -43,6 +46,13 @@ class CartProvider extends ChangeNotifier {
       productImage: productImage,
     );
     _cartItems.add(cartItemModel);
+
+    //* save to sqlite
+    DBHelper.insert(
+      cartItemsTableName,
+      cartItemModel.toJSON(),
+    );
+
     notifyListeners();
   }
 
@@ -90,12 +100,23 @@ class CartProvider extends ChangeNotifier {
             previousValue + element.productPrice * element.quantity);
   }
 
+//? to get the selected cart items
   List<CartItemModel> get getSelectedCartItems {
     return _cartItems.where((element) => element.selected).toList();
   }
 
+//? to check if a product is added to the cart
   bool productAddedToCart(String productId) {
     return _cartItems.indexWhere((element) => element.productId == productId) !=
         -1;
+  }
+
+  //? to fetch and update all cart items from the sqlite
+  Future<void> fetchAndUpdateCartItems() async {
+    var data = await DBHelper.getData(cartItemsTableName);
+    for (var cartItemMap in data) {
+      _cartItems.add(CartItemModel.fromJSON(cartItemMap));
+    }
+    notifyListeners();
   }
 }

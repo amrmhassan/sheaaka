@@ -118,13 +118,13 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
         children: [
           SizedBox(width: double.infinity),
           VSpace(factor: 2),
-          if (storesProvider.nearByStores.isNotEmpty)
-            OpenSearchBox(
-              onTap: () {
-                Navigator.pushNamed(context, SearchScreen.routeName,
-                    arguments: {'searchType': SearchTypes.store});
-              },
-            ),
+          // if (storesProvider.nearByStores.isNotEmpty)
+          OpenSearchBox(
+            onTap: () {
+              Navigator.pushNamed(context, SearchScreen.routeName,
+                  arguments: {'searchType': SearchTypes.store});
+            },
+          ),
           _loadingLocation
               ? Expanded(
                   child: Loading(
