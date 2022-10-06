@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/v_space.dart';
 
@@ -11,6 +12,18 @@ const double marginFactor = 5;
 
 const rotationSpeedFactor = 100;
 
+class Friend {
+  final String name;
+  final int age;
+  final DateTime birth;
+
+  const Friend({
+    required this.age,
+    required this.name,
+    required this.birth,
+  });
+}
+
 class TestingScreen extends StatefulWidget {
   static String routeName = '/testing-screen';
 
@@ -21,6 +34,20 @@ class TestingScreen extends StatefulWidget {
 }
 
 class _TestingScreenState extends State<TestingScreen> {
+  @override
+  void initState() {
+    Friend f = Friend(
+        age: 20,
+        name: 'osama',
+        birth: DateTime.now().subtract(Duration(days: 14 * 365)));
+
+    FirebaseFirestore.instance
+        .collection('TestingCollection')
+        .add({'dasta': f});
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

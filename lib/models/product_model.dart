@@ -30,6 +30,7 @@ class ProductModel {
   late bool hasOffer;
   DateTime? offerEnd;
   DateTime? offerStarted;
+  String? offerId;
   //! i don't know if a product can be in multiple categories or not, so make sure then edit it to list if needed
   // CategoryModel? category;
   String? categoryId;
@@ -54,6 +55,7 @@ class ProductModel {
     this.remainingNumber,
     this.offerEnd,
     this.offerStarted,
+    this.offerId,
     // this.favorite,
     this.fullDesc,
     this.shortDesc,
@@ -97,6 +99,7 @@ class ProductModel {
       // categoryString: category?.toJSON(),
       categoryIdString: categoryId,
       genderCategoryIdString: genderCategoryId,
+      offerIdString: offerId,
     };
   }
 
@@ -146,6 +149,7 @@ class ProductModel {
     //     catHelper == null ? catHelper : CategoryModel.fromJSON(catHelper);
     String? categoryId = productJSON[categoryIdString];
     String? genderCategoryId = productJSON[genderCategoryIdString];
+    String? offerId = productJSON[offerIdString];
 
     return ProductModel(
       id: id,
@@ -173,6 +177,7 @@ class ProductModel {
       // category: category,
       categoryId: categoryId,
       genderCategoryId: genderCategoryId,
+      offerId: offerId,
     );
   }
 }

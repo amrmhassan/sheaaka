@@ -31,6 +31,9 @@ class ProductsProvider extends ChangeNotifier {
 
   // //? fetch all products
   Future<void> _fetchAllProducts([bool noStateNotify = false]) async {
+    //! when fetching all products, fetch the offer data from offerIdString then add it to the product model,
+    //! don't save the offer end date on the product, just fetch it
+
     if (loadingAllProducts) return;
     loadingAllProducts = true;
     if (!noStateNotify) notifyListeners();

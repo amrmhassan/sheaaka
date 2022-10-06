@@ -27,6 +27,7 @@ String keyWordsString = 'keyWordsString';
 String categoryString = 'categoryString';
 String categoryIdString = 'categoryIdString';
 String genderCategoryIdString = 'genderCategoryIdString';
+String offerIdString = 'offerIdString';
 
 //? brand model constants
 String iconString = 'iconString';

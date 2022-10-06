@@ -7,6 +7,9 @@ import 'package:project/models/customer_gender_model.dart';
 import 'package:project/models/types.dart';
 
 class CategoriesProvider extends ChangeNotifier {
+  //# fetch categories from cloud
+  //? not now
+
   //# user genders
   List<CustomerGenderModel> genders = [...gendersConstants];
   String activeGenderId = gendersConstants.first.id;

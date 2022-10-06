@@ -4,8 +4,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/categories.dart';
 import 'package:project/constants/product_constants.dart';
+import 'package:project/helpers/data_creator/data_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/category_model.dart';
 import 'package:project/models/key_word_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
@@ -15,20 +18,24 @@ import 'package:project/models/whishlist_model.dart';
 import 'package:project/utils/general_utils.dart' as general_utils;
 import 'package:uuid/uuid.dart';
 
-int storesNumber = 2;
-int productsNumber = 20;
-int wishlistsNumber = 5;
-int offersNumber = 20;
-
 class DataCreator {
+  //? data limits
+  int storesNumber = 200;
+  int productsNumber = 500;
+  int wishlistsNumber = 5;
+  int offersNumber = 400;
+
+  //? data lists
   List<ProductModel> fProducts = [];
   List<StoreModel> fStores = [];
   List<WishListModel> fWishlists = [];
   List<OfferModel> fOffers = [];
 
+  //? instructor
   DataCreator() {
     createData();
   }
+
   //? to create fast bool random
   bool rb() {
     return Random().nextBool();
@@ -49,11 +56,6 @@ class DataCreator {
       n.add(letters[random]);
     }
     return n.join();
-  }
-
-  //? get random number of a list
-  List<dynamic> getRandomList(List<dynamic> list, int n) {
-    return List.generate(n, (index) => list[r(list.length)]);
   }
 
   //? to create random names in english with length
@@ -123,7 +125,7 @@ class DataCreator {
       desc: desc,
       rating: rating,
       keywords: keywords,
-      creatorUserUID: 'Jwqqj0UdfyRexLAQi4Tbieeiaej2',
+      creatorUserUID: 'qDjfg4sfaKOG2gY6Op6AdQiz5Ts1',
     );
   }
 
@@ -160,6 +162,8 @@ class DataCreator {
     );
     double oldPrice = Random().nextDouble() + Random().nextInt(200);
     List<KeyWordModel> keywords = makeKeyWordsList(r(20));
+    CategoryModel categoryModel =
+        categoriesConstants[r(categoriesConstants.length)];
 
     return ProductModel(
       id: id,
@@ -187,6 +191,8 @@ class DataCreator {
       offerEnd: null,
       oldPrice: oldPrice,
       keywords: keywords,
+      categoryId: categoryModel.id,
+      genderCategoryId: categoryModel.categoryGenderId,
     );
   }
 
@@ -203,11 +209,13 @@ class DataCreator {
     );
   }
 
-  void addOfferToProduct(String productId, DateTime endAt, DateTime startDate) {
+  void addOfferToProduct(
+      String productId, DateTime endAt, DateTime startDate, String offerId) {
     int i = fProducts.indexWhere((element) => element.id == productId);
     ProductModel p = fProducts[i];
     p.offerEnd = endAt;
     p.offerStarted = startDate;
+    p.offerId = offerId;
 
     fProducts[i] = p;
   }
@@ -234,7 +242,7 @@ class DataCreator {
 
       OfferModel offer =
           makeStoreOffer(rp.imagesPath[0], rp.name, rp.id, rp.storeId);
-      addOfferToProduct(rp.id, offer.endAt, offer.createdAt);
+      addOfferToProduct(rp.id, offer.endAt, offer.createdAt, offer.id);
       addOfferToStore(offer, rp.storeId);
       return offer;
     });
@@ -257,37 +265,3 @@ class DataCreator {
 }
 
 DataCreator dc = DataCreator();
-
-// //? a list of 50 offers
-// fOffers = List.generate(
-//   50,
-//   (index) => makeStoreOffer(),
-// );
-
-// //? a list of 5 wishlist
-// fWishlists = List.generate(
-//   2,
-//   (index) => makeWishListModel(),
-// );
-
-// //? a list of 50 store models
-
-// fStores = List.generate(
-//   5,
-//   (index) => makeStoreModel(
-//     rb() ? getRandomList(fOffers, r(20)) as List<OfferModel> : [],
-//   ),
-// );
-
-// //? a list of 10 products
-// fProducts = List.generate(
-//   10,
-//   (i) {
-//     int random = r(fStores.length);
-//     return makeProductModel(
-//       fStores[random],
-//       fOffers[random].createdAt,
-//       fWishlists[r(fWishlists.length)].id,
-//     );
-//   },
-// );
