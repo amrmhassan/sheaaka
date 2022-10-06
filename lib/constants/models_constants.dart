@@ -74,3 +74,6 @@ String productPriceString = 'productPriceString';
 String sizeString = 'sizeString';
 String colorString = 'colorString';
 String quantityString = 'quantityString';
+
+//? order model constants
+String cartItemsString = 'cartItemsString';

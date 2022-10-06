@@ -9,8 +9,10 @@ import 'package:project/screens/product_screen/product_screen.dart';
 
 // product description button
 class OpenProductDescriptionFromTrackerButton extends StatelessWidget {
+  final String productId;
   const OpenProductDescriptionFromTrackerButton({
     Key? key,
+    required this.productId,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,8 @@ class OpenProductDescriptionFromTrackerButton extends StatelessWidget {
       ),
       child: ButtonWrapper(
         onTap: () {
-          Navigator.pushNamed(context, ProductScreen.routeName);
+          Navigator.pushNamed(context, ProductScreen.routeName,
+              arguments: productId);
         },
         backgroundColor: kPrimaryColor,
         child: Text(

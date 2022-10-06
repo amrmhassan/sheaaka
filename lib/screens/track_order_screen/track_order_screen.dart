@@ -13,6 +13,7 @@ class TrackOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String productId = ModalRoute.of(context)!.settings.arguments as String;
     return ScreensWrapper(
       child: Column(
         children: [
@@ -21,7 +22,7 @@ class TrackOrderScreen extends StatelessWidget {
           ),
           VSpace(),
           TrackerSteps(),
-          OpenProductDescriptionFromTrackerButton(),
+          OpenProductDescriptionFromTrackerButton(productId: productId),
         ],
       ),
     );

@@ -54,6 +54,11 @@ class DBHelper {
 
   static Future<void> deleteById(String id, String table) async {
     final db = await DBHelper.database(table);
-    return db.execute("DELETE FROM $table WHERE id='$id'");
+    return db.execute("DELETE FROM $table WHERE $idString='$id'");
+  }
+
+  static Future<void> deleteTable(String table) async {
+    final db = await DBHelper.database(table);
+    return db.execute('DELETE FROM $table');
   }
 }

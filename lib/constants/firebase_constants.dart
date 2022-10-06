@@ -6,6 +6,7 @@ String storesCollectionName = 'storesCollectionName';
 String offersCollectionName = 'offersCollectionName';
 String usersCollectionName = 'usersCollectionName';
 String usersLikesCollectionName = 'usersLikesCollectionName';
+String ordersCollectionName = 'ordersCollectionName';
 
 //? firebase storage constants
 String profileImagesDir = 'profileImagesDir';

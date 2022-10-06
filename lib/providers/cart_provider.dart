@@ -15,15 +15,17 @@ class CartProvider extends ChangeNotifier {
   }
 
 //? empty the whole cart
-  void emptyAllCart() {
+  void emptyAllCart() async {
     _cartItems.clear();
+    await DBHelper.deleteTable(cartItemsTableName);
     notifyListeners();
   }
 
 //? empty card
-  void emptyCartFromSelectedItems(List<CartItemModel> selectedCartItems) {
+  void emptyCartFromSelectedItems(List<CartItemModel> selectedCartItems) async {
     for (var cartItem in selectedCartItems) {
       _cartItems.remove(cartItem);
+      await DBHelper.deleteById(cartItem.id, cartItemsTableName);
     }
     notifyListeners();
   }
@@ -93,8 +95,9 @@ class CartProvider extends ChangeNotifier {
   }
 
   //? delete cart item
-  void deleteCartItem(String cartItemId) {
+  Future<void> deleteCartItem(String cartItemId) async {
     _cartItems.removeWhere((element) => element.id == cartItemId);
+    await DBHelper.deleteById(cartItemId, cartItemsTableName);
     notifyListeners();
   }
 

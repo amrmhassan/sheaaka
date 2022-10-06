@@ -41,9 +41,9 @@ class UserProvider extends ChangeNotifier {
         .collection(usersCollectionName)
         .doc(userUID)
         .get();
+    var x = userData.data();
     UserModel userModel =
         UserModel.fromJSON(userData.data() as Map<String, dynamic>);
-
     return userModel;
   }
 

@@ -37,7 +37,8 @@ class OrderProductElement extends StatelessWidget {
             ProductCartImage(
               imagePath: cartItemModel.productImage,
               onTap: () {
-                Navigator.pushNamed(context, TrackOrderScreen.routeName);
+                Navigator.pushNamed(context, TrackOrderScreen.routeName,
+                    arguments: cartItemModel.productId);
               },
             ),
             HSpace(),
