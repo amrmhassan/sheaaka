@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
@@ -206,7 +207,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
 //? getting liked products
-  Future<void> fetchAndUpdateFavoriteProducts() async {
+  Future<void> fetchAndUpdateFavoriteProducts([bool notify = false]) async {
     _favoriteProductsIds.clear();
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
@@ -225,7 +226,13 @@ class ProductsProvider extends ChangeNotifier {
         _favoriteProductsIds.add(productId);
       }
     }
-    notifyListeners();
+    try {
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print('object');
+      }
+    }
   }
 
 //? update product loves number in firebase

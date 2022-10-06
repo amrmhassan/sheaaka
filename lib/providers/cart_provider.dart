@@ -14,6 +14,12 @@ class CartProvider extends ChangeNotifier {
     return [..._cartItems];
   }
 
+//? empty the whole cart
+  void emptyAllCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+
 //? empty card
   void emptyCartFromSelectedItems(List<CartItemModel> selectedCartItems) {
     for (var cartItem in selectedCartItems) {

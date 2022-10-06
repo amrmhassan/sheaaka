@@ -143,7 +143,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await Provider.of<authenticating>(context, listen: false)
+          await Provider.of<UserProvider>(context, listen: false)
               .googleSignIn();
 
       if (googleSignInAccount == null) {
@@ -156,11 +156,11 @@ class _SignUpUsernameState extends State<SignUpUsername> {
       String? photoUrl = googleSignInAccount.photoUrl;
       widget.emailController.text = email;
       UserModel? userModel =
-          await Provider.of<authenticating>(context, listen: false)
+          await Provider.of<UserProvider>(context, listen: false)
               .getUserDataByEmail(email);
       if (userModel != null) {
         //* here the user is already signed up and i will sign him in to
-        await Provider.of<authenticating>(context, listen: false)
+        await Provider.of<UserProvider>(context, listen: false)
             .firebaseSignInGoogle(googleSignInAccount);
         showSnackBar(context, 'أنت بالفعل مسجل', SnackBarType.info);
         Navigator.pushReplacementNamed(context, HolderScreen.routeName);

@@ -44,9 +44,9 @@ Future<void> checkTraderStore(BuildContext context) async {
         .fetchAndUpdateFavoriteProducts();
     //* get the user data by UID and set his
     UserModel userModel =
-        await Provider.of<authenticating>(context, listen: false)
+        await Provider.of<UserProvider>(context, listen: false)
             .getUserDataByUID(currentUser.uid);
-    Provider.of<authenticating>(context, listen: false)
+    Provider.of<UserProvider>(context, listen: false)
         .setCurrentUserData(currentUser, userModel);
 
     if (userModel.userRole == UserRole.trader) {
@@ -55,7 +55,7 @@ Future<void> checkTraderStore(BuildContext context) async {
             .getStoreByOwnerUID(currentUser.uid);
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
-        Provider.of<authenticating>(context, listen: false)
+        Provider.of<UserProvider>(context, listen: false)
             .setUserStoreWarning(true);
         // then forward him to the signup store
         showSnackBar(context, 'لم تقم باستكمال انشاء متجرك', SnackBarType.info);

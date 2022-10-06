@@ -14,7 +14,12 @@ import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
-class authenticating extends ChangeNotifier {
+class UserProvider extends ChangeNotifier {
+  final GoogleSignIn _google = GoogleSignIn();
+  //! i might need to use these props, and set their values once the app is initiated
+  User? user;
+  UserModel? userModel;
+
   //? creating user store warning
   bool userStoreWarning = false;
 
@@ -22,11 +27,6 @@ class authenticating extends ChangeNotifier {
     userStoreWarning = v;
     notifyListeners();
   }
-
-  final GoogleSignIn _google = GoogleSignIn();
-  //! i might need to use these props, and set their values once the app is initiated
-  User? user;
-  UserModel? userModel;
 
 //? setting user data
   void setCurrentUserData(User? u, UserModel? uM, [bool notify = false]) {
@@ -66,6 +66,16 @@ class authenticating extends ChangeNotifier {
   Future<String?> getUserPhoto(String userUID) async {
     UserModel userModel = await getUserDataByUID(userUID);
     return userModel.userProfilePhoto;
+  }
+
+  //? check if show the open store button
+  bool get showOpenStoreButton {
+    if (userModel != null) {
+      if ((userModel!.userRole == UserRole.trader) && !userStoreWarning) {
+        return true;
+      }
+    }
+    return false;
   }
 
   //# authenticating users

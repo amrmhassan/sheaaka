@@ -5,6 +5,7 @@ import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/language/lang_controller.dart';
@@ -41,7 +42,18 @@ class CartScreen extends StatelessWidget {
     return ScreensWrapper(
       child: Column(
         children: [
-          CustomAppBar(title: LC.langWord('cartTitle')),
+          CustomAppBar(
+              title: LC.langWord('cartTitle'),
+              rightIcon: AppBarIcon(
+                onTap: () {
+                  Provider.of<CartProvider>(context, listen: false)
+                      .emptyAllCart();
+                  // GoogleIdentity.
+                },
+                iconName: 'delete',
+                backgroundColor: Colors.transparent,
+                color: Colors.red,
+              )),
           VSpace(),
           cartProvider.cartItems.isNotEmpty
               ? Expanded(
