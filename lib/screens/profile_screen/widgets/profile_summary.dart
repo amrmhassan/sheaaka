@@ -10,6 +10,8 @@ import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/profile_screen/widgets/profile_summary_element.dart';
 import 'package:provider/provider.dart';
 
+double profileImageRadius = 80;
+
 class ProfileSummary extends StatelessWidget {
   const ProfileSummary({
     Key? key,
@@ -24,7 +26,7 @@ class ProfileSummary extends StatelessWidget {
       children: [
         ProfileImage(
           allowClick: false,
-          radius: 80,
+          radius: profileImageRadius,
           padding: EdgeInsets.all(smallPadding / 3),
         ),
         HSpace(),

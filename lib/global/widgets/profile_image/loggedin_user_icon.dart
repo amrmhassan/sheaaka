@@ -40,7 +40,7 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
     String? userPhotoPath;
     try {
       String userUID = FirebaseAuth.instance.currentUser!.uid;
-      userPhotoPath = await Provider.of<UserProvider>(context, listen: false)
+      userPhotoPath = await Provider.of<authenticating>(context, listen: false)
           .getUserPhoto(userUID);
     } catch (e) {
       showSnackBar(context, e.toString(), SnackBarType.error);

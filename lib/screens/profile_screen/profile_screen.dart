@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
     try {
       currentUser = FirebaseAuth.instance.currentUser as User;
-      userModel = await Provider.of<UserProvider>(context, listen: false)
+      userModel = await Provider.of<authenticating>(context, listen: false)
           .getUserDataByUID(currentUser.uid);
     } catch (e) {
       showSnackBar(context, 'فشل تحميل صورة المستخدم', SnackBarType.error);
@@ -77,7 +77,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () async {
                         Navigator.pushReplacementNamed(
                             context, HolderScreen.routeName);
-                        await Provider.of<UserProvider>(context, listen: false)
+                        await Provider.of<authenticating>(context,
+                                listen: false)
                             .logOutGoogle();
                         // GoogleIdentity.
                       },
@@ -101,6 +102,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: kSecondaryColor.withOpacity(.2)),
                         VSpace(),
                         ProfileScreenOptions(),
+                        Text(Provider.of<authenticating>(context)
+                            .userStoreWarning
+                            .toString()),
+                        Text(Provider.of<authenticating>(context)
+                            .userModel!
+                            .userName),
                         VSpace(),
                         OpenStoreDashboardButton(),
                       ],

@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       signingUp = true;
     });
     try {
-      await Provider.of<UserProvider>(context, listen: false).signUserUp(
+      await Provider.of<authenticating>(context, listen: false).signUserUp(
         email: emailController.text,
         password: passwordController.text,
         phone: phoneNumberController.text,

@@ -14,7 +14,7 @@ import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
-class UserProvider extends ChangeNotifier {
+class authenticating extends ChangeNotifier {
   //? creating user store warning
   bool userStoreWarning = false;
 
@@ -28,12 +28,47 @@ class UserProvider extends ChangeNotifier {
   User? user;
   UserModel? userModel;
 
-// //? setting user data
-//   void setCurrentUserData(User? u, UserModel? uM) {
-//     user = u;
-//     userModel = uM;
-//     notifyListeners();
-//   }
+//? setting user data
+  void setCurrentUserData(User? u, UserModel? uM, [bool notify = false]) {
+    user = u;
+    userModel = uM;
+    if (notify) notifyListeners();
+  }
+
+//? get user data by his uid
+  Future<UserModel> getUserDataByUID(String userUID) async {
+    var userData = await FirebaseFirestore.instance
+        .collection(usersCollectionName)
+        .doc(userUID)
+        .get();
+    UserModel userModel =
+        UserModel.fromJSON(userData.data() as Map<String, dynamic>);
+
+    return userModel;
+  }
+
+//? get user data by email
+  Future<UserModel?> getUserDataByEmail(String email) async {
+    var data = (await FirebaseFirestore.instance
+        .collection(usersCollectionName)
+        .where(emailString, isEqualTo: email)
+        .get());
+    bool empty = data.docs.isEmpty;
+    if (empty) {
+      return null;
+    }
+    var userData = data.docs.first.data();
+    UserModel userModel = UserModel.fromJSON(userData);
+    return userModel;
+  }
+
+  //? get user photo path by his uid
+  Future<String?> getUserPhoto(String userUID) async {
+    UserModel userModel = await getUserDataByUID(userUID);
+    return userModel.userProfilePhoto;
+  }
+
+  //# authenticating users
 
   //? sign user up
   Future<void> signUserUp({
@@ -80,7 +115,7 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-//? login user
+//? login user with email password
   Future<void> loginEmailPassword({
     required String email,
     required String password,
@@ -95,39 +130,6 @@ class UserProvider extends ChangeNotifier {
     //   setCurrentUserData(u, userModel);
     // }
     await fetchAndUpdateFavoriteProducts();
-  }
-
-//? get user data by his uid
-  Future<UserModel> getUserDataByUID(String userUID) async {
-    var userData = await FirebaseFirestore.instance
-        .collection(usersCollectionName)
-        .doc(userUID)
-        .get();
-    UserModel userModel =
-        UserModel.fromJSON(userData.data() as Map<String, dynamic>);
-
-    return userModel;
-  }
-
-//? get user data by email
-  Future<UserModel?> getUserDataByEmail(String email) async {
-    var data = (await FirebaseFirestore.instance
-        .collection(usersCollectionName)
-        .where(emailString, isEqualTo: email)
-        .get());
-    bool empty = data.docs.isEmpty;
-    if (empty) {
-      return null;
-    }
-    var userData = data.docs.first.data();
-    UserModel userModel = UserModel.fromJSON(userData);
-    return userModel;
-  }
-
-  //? get user photo path by his uid
-  Future<String?> getUserPhoto(String userUID) async {
-    UserModel userModel = await getUserDataByUID(userUID);
-    return userModel.userProfilePhoto;
   }
 
 //? sign in google account to get it's information

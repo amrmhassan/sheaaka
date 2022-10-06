@@ -113,6 +113,7 @@ class CartProvider extends ChangeNotifier {
 
   //? to fetch and update all cart items from the sqlite
   Future<void> fetchAndUpdateCartItems() async {
+    _cartItems.clear();
     var data = await DBHelper.getData(cartItemsTableName);
     for (var cartItemMap in data) {
       _cartItems.add(CartItemModel.fromJSON(cartItemMap));

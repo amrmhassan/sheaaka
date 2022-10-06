@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       var fetchLikes = Provider.of<ProductsProvider>(context, listen: false)
           .fetchAndUpdateFavoriteProducts;
-      await Provider.of<UserProvider>(context, listen: false)
+      await Provider.of<authenticating>(context, listen: false)
           .loginEmailPassword(
         email: _emailController.text,
         password: _passwordController.text,
@@ -171,7 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   try {
                                     final GoogleSignInAccount?
                                         googleSignInAccount =
-                                        await Provider.of<UserProvider>(context,
+                                        await Provider.of<authenticating>(
+                                                context,
                                                 listen: false)
                                             .googleSignIn();
 
@@ -182,12 +183,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                     String email = googleSignInAccount.email;
                                     UserModel? userModel =
-                                        await Provider.of<UserProvider>(context,
+                                        await Provider.of<authenticating>(
+                                                context,
                                                 listen: false)
                                             .getUserDataByEmail(email);
                                     if (userModel == null) {
                                       //* here the user isn't sign up and he must sign up first
-                                      Provider.of<UserProvider>(context,
+                                      Provider.of<authenticating>(context,
                                               listen: false)
                                           .logOutGoogle();
                                       return showSnackBar(
@@ -195,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           'قم بالتسجيل أولا',
                                           SnackBarType.error);
                                     } else {
-                                      await Provider.of<UserProvider>(context,
+                                      await Provider.of<authenticating>(context,
                                               listen: false)
                                           .firebaseSignInGoogle(
                                               googleSignInAccount);

@@ -27,6 +27,14 @@ Future<void> loadData(BuildContext context) async {
       .fetchAndUpdateCartItems();
 }
 
+//? load data for home screen
+Future<void> loadDataForHomeScreen(BuildContext context) async {
+  //* the loading in this screen only for the network checking
+  await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
+  await Provider.of<ProductsProvider>(context, listen: false)
+      .reloadHomeProducts(true);
+}
+
 //? checking user store if trader
 Future<void> checkTraderStore(BuildContext context) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
@@ -36,15 +44,18 @@ Future<void> checkTraderStore(BuildContext context) async {
         .fetchAndUpdateFavoriteProducts();
     //* get the user data by UID and set his
     UserModel userModel =
-        await Provider.of<UserProvider>(context, listen: false)
+        await Provider.of<authenticating>(context, listen: false)
             .getUserDataByUID(currentUser.uid);
+    Provider.of<authenticating>(context, listen: false)
+        .setCurrentUserData(currentUser, userModel);
+
     if (userModel.userRole == UserRole.trader) {
       try {
         Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
-        Provider.of<UserProvider>(context, listen: false)
+        Provider.of<authenticating>(context, listen: false)
             .setUserStoreWarning(true);
         // then forward him to the signup store
         showSnackBar(context, 'لم تقم باستكمال انشاء متجرك', SnackBarType.info);

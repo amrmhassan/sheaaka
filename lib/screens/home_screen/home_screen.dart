@@ -22,18 +22,24 @@ import 'package:provider/provider.dart';
 //? this screen will have the newest products, offers , ads etc...
 //? and it's filters will be applied to these products
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool loadingData = false;
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var homeProducts = productsProvider.homeProducts;
     var wishlistProvider = Provider.of<WishListsProvider>(context);
 
-    return productsProvider.loadingHomeProducts
+    return loadingData
         ? Container(
             height: double.infinity,
             width: double.infinity,
@@ -60,8 +66,14 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: ListLoader(
                       loadingNewAfterPixels: 0,
-                      onReload: () {
-                        loadData(context);
+                      onReload: () async {
+                        setState(() {
+                          loadingData = true;
+                        });
+                        await loadDataForHomeScreen(context);
+                        setState(() {
+                          loadingData = false;
+                        });
                       },
                       onLoadNew: () {
                         productsProvider.getNextHomeProducts();

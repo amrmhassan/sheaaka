@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => CartProvider()),
         ChangeNotifierProvider(create: (ctx) => SearchProvider()),
         ChangeNotifierProvider(create: (ctx) => OrdersProvider()),
-        ChangeNotifierProvider(create: (ctx) => UserProvider()),
+        ChangeNotifierProvider(create: (ctx) => authenticating()),
         ChangeNotifierProvider(create: (ctx) => LocationProvider()),
         ChangeNotifierProvider(create: (ctx) => CategoriesProvider()),
         ChangeNotifierProvider(create: (ctx) => AppStateProvider()),
