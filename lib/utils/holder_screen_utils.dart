@@ -2,8 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
@@ -11,17 +13,24 @@ import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
+//? loading data from firestore
 Future<void> loadData(BuildContext context) async {
-  //? the loading in this screen only for the network checking
+  await firstTimeOpenApp(context);
+  //* the loading in this screen only for the network checking
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
   await Provider.of<ProductsProvider>(context, listen: false)
       .reloadHomeProducts(true);
+  await checkTraderStore(context);
+}
+
+//? checking user store if trader
+Future<void> checkTraderStore(BuildContext context) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
-    //? fetch his liked products
+    //* fetch his liked products
     await Provider.of<ProductsProvider>(context, listen: false)
         .fetchAndUpdateFavoriteProducts();
-    //? get the user data by UID and set his
+    //* get the user data by UID and set his
     UserModel userModel =
         await Provider.of<UserProvider>(context, listen: false)
             .getUserDataByUID(currentUser.uid);
@@ -40,4 +49,10 @@ Future<void> loadData(BuildContext context) async {
       }
     }
   }
+}
+
+//? updating firstTimeOpenApp
+Future<void> firstTimeOpenApp(BuildContext context) async {
+  bool f = await SharedPrefHelper.firstTimeRunApp();
+  Provider.of<AppStateProvider>(context, listen: false).setFirstTime(f);
 }

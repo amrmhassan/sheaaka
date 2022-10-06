@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/categories.dart';
 import 'package:project/constants/product_constants.dart';
-import 'package:project/helpers/data_creator/data_constants.dart';
 import 'package:project/models/brand_model.dart';
 import 'package:project/models/category_model.dart';
 import 'package:project/models/key_word_model.dart';

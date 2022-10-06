@@ -9,6 +9,7 @@ import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
