@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project/constants/db_constants.dart';
+import 'package:project/constants/firebase_constants.dart';
+import 'package:project/helpers/db_helper.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:project/models/wishlist_item_model.dart';
@@ -13,6 +17,7 @@ class WishListsProvider extends ChangeNotifier {
 
   String? _activeWishListId;
 
+//? to get the acive wishlist id
   String? get activeWishListId {
     if (wishLists.isEmpty) {
       return null;
@@ -23,14 +28,25 @@ class WishListsProvider extends ChangeNotifier {
     }
   }
 
-  //? just for push test wishlist
-  void pushTestWishlists(List<WishListModel> w) {
-    wishLists.addAll(w);
+  // // just for push test wishlist
+  // void pushTestWishlists(List<WishListModel> w) {
+  //   wishLists.addAll(w);
+  //   notifyListeners();
+  // }
+
+//? fetch and update wishlists
+  Future<void> fetchWishlists() async {
+    wishLists.clear();
+    var data = await DBHelper.getData(wishlistsTableName);
+    for (var wishlist in data) {
+      wishLists.add(WishListModel.fromJSON(wishlist));
+    }
     notifyListeners();
   }
 
-//? for adding a new wishlist
-  void addWishList(String name) {
+//? for adding a new wishlist,
+  Future<void> addWishList(String name) async {
+    //* add it locally to provider
     String id = Uuid().v4();
     WishListModel w = WishListModel(
       id: id,
@@ -38,6 +54,8 @@ class WishListsProvider extends ChangeNotifier {
       createdAt: DateTime.now(),
     );
     wishLists.add(w);
+    //* add it to sqlite
+    await DBHelper.insert(wishlistsTableName, w.toJSON());
     notifyListeners();
   }
 

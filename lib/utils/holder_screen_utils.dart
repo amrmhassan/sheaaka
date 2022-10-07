@@ -11,6 +11,7 @@ import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
+import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ Future<void> loadData(BuildContext context) async {
   await handleUserData(context);
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
+  await Provider.of<WishListsProvider>(context, listen: false).fetchWishlists();
 }
 
 //? load data for home screen
