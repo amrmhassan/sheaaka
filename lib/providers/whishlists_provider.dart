@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project/constants/db_constants.dart';
-import 'package:project/constants/firebase_constants.dart';
 import 'package:project/helpers/db_helper.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/whishlist_model.dart';
@@ -35,12 +33,21 @@ class WishListsProvider extends ChangeNotifier {
   // }
 
 //? fetch and update wishlists
-  Future<void> fetchWishlists() async {
+  Future<void> fetchWishlistsAndWishlistsItems() async {
     wishLists.clear();
+    wishlistItems.clear();
+    //* for wishlists
     var data = await DBHelper.getData(wishlistsTableName);
     for (var wishlist in data) {
       wishLists.add(WishListModel.fromJSON(wishlist));
     }
+
+    //* for wishlits items
+    var items = await DBHelper.getData(wishlistItemsTableName);
+    for (var item in items) {
+      wishlistItems.add(WishListItemModel.fromJSON(item));
+    }
+
     notifyListeners();
   }
 
@@ -54,31 +61,37 @@ class WishListsProvider extends ChangeNotifier {
       createdAt: DateTime.now(),
     );
     wishLists.add(w);
+    notifyListeners();
+
     //* add it to sqlite
     await DBHelper.insert(wishlistsTableName, w.toJSON());
-    notifyListeners();
   }
 
 //? for setting the current active wishlist
+//! add it to the shared prefs
   void setActiveWishList(String id) {
     _activeWishListId = id;
     notifyListeners();
   }
 
   //? for adding a new wishlist item
-  void addWishlistItem(String productId, String wishListId, String note) {
+  Future<void> addWishlistItem(
+      String productId, String wishListId, String note) async {
+    //* add it to the provider
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now();
-    wishlistItems.add(
-      WishListItemModel(
-        id: id,
-        createdAt: createdAt,
-        productId: productId,
-        wishListId: wishListId,
-        note: note,
-      ),
+    WishListItemModel wim = WishListItemModel(
+      id: id,
+      createdAt: createdAt,
+      productId: productId,
+      wishListId: wishListId,
+      note: note,
     );
+    wishlistItems.add(wim);
     notifyListeners();
+
+    //* add it to sqlite
+    await DBHelper.insert(wishlistItemsTableName, wim.toJSON());
   }
 
 //? getWishlistItemByProductId

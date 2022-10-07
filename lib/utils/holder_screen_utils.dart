@@ -27,7 +27,8 @@ Future<void> loadData(BuildContext context) async {
   await handleUserData(context);
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
-  await Provider.of<WishListsProvider>(context, listen: false).fetchWishlists();
+  await Provider.of<WishListsProvider>(context, listen: false)
+      .fetchWishlistsAndWishlistsItems();
 }
 
 //? load data for home screen

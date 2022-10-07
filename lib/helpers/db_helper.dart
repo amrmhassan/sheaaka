@@ -2,6 +2,7 @@ import 'package:project/constants/db_constants.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/cart_item_model.dart';
 import 'package:project/models/whishlist_model.dart';
+import 'package:project/models/wishlist_item_model.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 
@@ -11,10 +12,14 @@ class DBHelper {
 
     String finalPath = path.join(databasePathDir, dbName);
 
+    // await sql.deleteDatabase(finalPath);
+
     return sql.openDatabase(
       finalPath,
       //? this is when creating the database itself so create all your tables here
       onCreate: (db, version) async {
+        //? creating wishlist items table
+        await db.execute(WishListItemModel.toSqliteString());
         //? creating wishlist  table
         await db.execute(WishListModel.toSqliteString());
         //? creating cart items table

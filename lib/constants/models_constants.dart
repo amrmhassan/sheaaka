@@ -77,3 +77,6 @@ String quantityString = 'quantityString';
 
 //? order model constants
 String cartItemsString = 'cartItemsString';
+
+//? wishlist item model
+String noteString = 'noteString';
