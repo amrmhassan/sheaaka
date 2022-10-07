@@ -50,7 +50,10 @@ class _HolderScreenState extends State<HolderScreen> {
       if (kDebugMode) {
         rethrow;
       }
-      showSnackBar(context, stack.toString(), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: stack.toString(),
+          snackBarType: SnackBarType.error);
     }
   }
 

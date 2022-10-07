@@ -34,14 +34,17 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
       );
 
       showSnackBar(
-        context,
-        'تم إنشاء متجرك بنجاح',
-        SnackBarType.success,
+        context: context,
+        message: 'تم إنشاء متجرك بنجاح',
+        snackBarType: SnackBarType.success,
       );
 
       incrementActiveIndex();
     } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
     }
 
     setSigningUp(false);

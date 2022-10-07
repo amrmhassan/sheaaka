@@ -57,10 +57,16 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         fetchAndUpdateFavoriteProducts: fetchLikes,
       );
-      showSnackBar(context, 'تم تسجيل الدخول', SnackBarType.success);
+      showSnackBar(
+          context: context,
+          message: 'تم تسجيل الدخول',
+          snackBarType: SnackBarType.success);
       Navigator.pushReplacementNamed(context, HolderScreen.routeName);
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: getReadableErrorMessage(e),
+          snackBarType: SnackBarType.error);
     }
     setState(() {
       loggingIn = false;
@@ -176,8 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                             .googleSignIn();
 
                                     if (googleSignInAccount == null) {
-                                      return showSnackBar(context,
-                                          'لم يتم التسجيل', SnackBarType.error);
+                                      return showSnackBar(
+                                          context: context,
+                                          message: 'لم يتم التسجيل',
+                                          snackBarType: SnackBarType.error);
                                     }
 
                                     String email = googleSignInAccount.email;
@@ -191,9 +199,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                               listen: false)
                                           .logOutGoogle();
                                       return showSnackBar(
-                                          context,
-                                          'قم بالتسجيل أولا',
-                                          SnackBarType.error);
+                                          context: context,
+                                          message: 'قم بالتسجيل أولا',
+                                          snackBarType: SnackBarType.error);
                                     } else {
                                       await Provider.of<UserProvider>(context,
                                               listen: false)
@@ -203,8 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context, HolderScreen.routeName);
                                     }
                                   } catch (e) {
-                                    showSnackBar(context, e.toString(),
-                                        SnackBarType.error);
+                                    showSnackBar(
+                                        context: context,
+                                        message: e.toString(),
+                                        snackBarType: SnackBarType.error);
                                   }
                                 },
                               ),

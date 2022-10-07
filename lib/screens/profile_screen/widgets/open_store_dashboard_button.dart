@@ -22,11 +22,16 @@ class OpenStoreDashboardButton extends StatelessWidget {
           ? () {
               //? open store
               showSnackBar(
-                  context, 'لم يتم برمجة هذا الجزء بعد', SnackBarType.info);
+                  context: context,
+                  message: 'لم يتم برمجة هذا الجزء بعد',
+                  snackBarType: SnackBarType.info);
             }
           : () {
               //? create new store
-              showSnackBar(context, 'سوف يتم برمجتها لاحقا', SnackBarType.info);
+              showSnackBar(
+                  context: context,
+                  message: 'سوف يتم برمجتها لاحقا',
+                  snackBarType: SnackBarType.info);
             },
       padding: EdgeInsets.symmetric(
         vertical: kVPad / 2,

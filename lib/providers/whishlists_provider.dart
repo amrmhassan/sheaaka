@@ -28,6 +28,14 @@ class WishListsProvider extends ChangeNotifier {
     }
   }
 
+//? get active wishlist mode
+  WishListModel? activeWishlistModel() {
+    if (activeWishListId == null) {
+      return null;
+    }
+    return wishLists.firstWhere((element) => element.id == activeWishListId);
+  }
+
   // // just for push test wishlist
   // void pushTestWishlists(List<WishListModel> w) {
   //   wishLists.addAll(w);
@@ -68,7 +76,13 @@ class WishListsProvider extends ChangeNotifier {
     );
     wishLists.add(w);
     notifyListeners();
+    print('next');
 
+//* set active wishlist id
+    if (wishLists.length == 1) {
+      print('here');
+      await setActiveWishList(id);
+    }
     //* add it to sqlite
     await DBHelper.insert(wishlistsTableName, w.toJSON());
   }
@@ -77,8 +91,8 @@ class WishListsProvider extends ChangeNotifier {
 //! add it to the shared prefs
   Future<void> setActiveWishList(String id) async {
     _activeWishListId = id;
-    await SharedPrefHelper.setString(activeWishlistIdKey, id);
     notifyListeners();
+    await SharedPrefHelper.setString(activeWishlistIdKey, id);
   }
 
   //? for adding a new wishlist item
@@ -127,8 +141,11 @@ class WishListsProvider extends ChangeNotifier {
     return wishlistProducts;
   }
 
-  void removeWishlistItem(String wishlistItemId) {
+  void removeWishlistItem(String wishlistItemId) async {
     wishlistItems.removeWhere((element) => element.id == wishlistItemId);
     notifyListeners();
+
+    //* remove from db
+    await DBHelper.deleteById(wishlistItemId, wishlistItemsTableName);
   }
 }

@@ -42,9 +42,9 @@ class SignUpFinishStore extends StatelessWidget {
           SubmitFormButton(
             onTap: () {
               showSnackBar(
-                context,
-                'لم يتم انشاء لوحة التحكم ف المتجر بعد',
-                SnackBarType.info,
+                context: context,
+                message: 'لم يتم انشاء لوحة التحكم ف المتجر بعد',
+                snackBarType: SnackBarType.info,
               );
             },
             title: 'فتح المتجر',

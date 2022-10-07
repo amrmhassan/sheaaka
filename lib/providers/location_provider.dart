@@ -23,7 +23,10 @@ class LocationProvider extends ChangeNotifier {
     //* enabling location service
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
-      showSnackBar(context, 'من فضلك قم بتفعيل خدمة الموقع', SnackBarType.info);
+      showSnackBar(
+          context: context,
+          message: 'من فضلك قم بتفعيل خدمة الموقع',
+          snackBarType: SnackBarType.info);
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
         throw CustomError(ErrorsTypes.locationNotEnabled);

@@ -47,7 +47,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       userModel = await Provider.of<UserProvider>(context, listen: false)
           .getUserDataByUID(currentUser.uid);
     } catch (e) {
-      showSnackBar(context, 'فشل تحميل صورة المستخدم', SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: 'فشل تحميل صورة المستخدم',
+          snackBarType: SnackBarType.error);
     }
 
     setState(() {

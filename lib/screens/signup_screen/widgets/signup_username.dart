@@ -147,7 +147,10 @@ class _SignUpUsernameState extends State<SignUpUsername> {
               .googleSignIn();
 
       if (googleSignInAccount == null) {
-        return showSnackBar(context, 'لم يتم التسجيل', SnackBarType.error);
+        return showSnackBar(
+            context: context,
+            message: 'لم يتم التسجيل',
+            snackBarType: SnackBarType.error);
       }
 
       widget.setGoogleAccount(googleSignInAccount);
@@ -162,14 +165,20 @@ class _SignUpUsernameState extends State<SignUpUsername> {
         //* here the user is already signed up and i will sign him in to
         await Provider.of<UserProvider>(context, listen: false)
             .firebaseSignInGoogle(googleSignInAccount);
-        showSnackBar(context, 'أنت بالفعل مسجل', SnackBarType.info);
+        showSnackBar(
+            context: context,
+            message: 'أنت بالفعل مسجل',
+            snackBarType: SnackBarType.info);
         Navigator.pushReplacementNamed(context, HolderScreen.routeName);
       }
 
       widget.userNameController.text = name ?? '';
       widget.setProfilePhoto(photoUrl);
     } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
     }
   }
 }

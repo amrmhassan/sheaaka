@@ -65,9 +65,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         signMethod: signMethod,
         googleSignInAccount: googleSignInAccount,
       );
-      showSnackBar(context, 'تم التسجيل بنجاح', SnackBarType.success);
+      showSnackBar(
+          context: context,
+          message: 'تم التسجيل بنجاح',
+          snackBarType: SnackBarType.success);
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, getReadableErrorMessage(e), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: getReadableErrorMessage(e),
+          snackBarType: SnackBarType.error);
     }
     setState(() {
       signingUp = false;

@@ -83,11 +83,17 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
           locationData = l;
         });
       } else {
-        showSnackBar(context, 'لم يتم تحديد موقعك', SnackBarType.error);
+        showSnackBar(
+            context: context,
+            message: 'لم يتم تحديد موقعك',
+            snackBarType: SnackBarType.error);
       }
     } catch (e) {
       try {
-        showSnackBar(context, e.toString(), SnackBarType.error);
+        showSnackBar(
+            context: context,
+            message: e.toString(),
+            snackBarType: SnackBarType.error);
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());

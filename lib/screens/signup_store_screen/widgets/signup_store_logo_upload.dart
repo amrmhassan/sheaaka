@@ -143,7 +143,9 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
           onTap: () async {
             if (widget.storeCoverPhoto == null) {
               return showSnackBar(
-                  context, 'قم بإضافة صورة غلاف أولا', SnackBarType.error);
+                  context: context,
+                  message: 'قم بإضافة صورة غلاف أولا',
+                  snackBarType: SnackBarType.error);
             }
             await widget.submitStoreData();
             //![That was here]
@@ -182,7 +184,7 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
 //                     //? here i will submit the store data to be registered
 //                     await widget.submitStoreData();
 //                     widget.incrementActiveIndex();
-//                     showSnackBar(context, 'تم إنشاء متجرك بنجاح',
+//                     showSnackBar(context:context, 'تم إنشاء متجرك بنجاح',
 //                         SnackBarType.success);
 //                     Navigator.pop(ctx);
 //                   },

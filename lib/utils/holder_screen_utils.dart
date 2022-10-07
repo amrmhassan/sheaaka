@@ -64,7 +64,11 @@ Future<void> handleUserData(BuildContext context) async {
         Provider.of<UserProvider>(context, listen: false)
             .setUserStoreWarning(true);
         // then forward him to the signup store
-        showSnackBar(context, 'لم تقم باستكمال انشاء متجرك', SnackBarType.info);
+        showSnackBar(
+          context: context,
+          message: 'لم تقم باستكمال انشاء متجرك',
+          snackBarType: SnackBarType.info,
+        );
         Navigator.of(context).pushNamed(SignUpStoreScreen.routeName,
             arguments: userModel.userProfilePhoto);
       }

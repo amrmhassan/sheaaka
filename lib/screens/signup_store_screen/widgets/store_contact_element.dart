@@ -72,14 +72,17 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
                     FocusManager.instance.primaryFocus?.unfocus();
 
                     showSnackBar(
-                      context,
-                      'تمت الإضافة',
-                      SnackBarType.info,
+                      context: context,
+                      message: 'تمت الإضافة',
+                      snackBarType: SnackBarType.info,
                     );
                     dataController.clear();
                   } else {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    showSnackBar(context, 'موجود بالفعل', SnackBarType.error);
+                    showSnackBar(
+                        context: context,
+                        message: 'موجود بالفعل',
+                        snackBarType: SnackBarType.error);
                   }
                 }
               },
@@ -96,8 +99,10 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
         GestureDetector(
           onTap: widget.data.isEmpty
               ? () {
-                  showSnackBar(context, 'لم تتم إضافة أي معلومات بعد',
-                      SnackBarType.info);
+                  showSnackBar(
+                      context: context,
+                      message: 'لم تتم إضافة أي معلومات بعد',
+                      snackBarType: SnackBarType.info);
                 }
               : () {},
           child: ButtonWrapper(
@@ -175,9 +180,15 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
             onApply: () {
               bool res = widget.removeData(data);
               if (res) {
-                showSnackBar(context, 'تم الحذف ', SnackBarType.info);
+                showSnackBar(
+                    context: context,
+                    message: 'تم الحذف ',
+                    snackBarType: SnackBarType.info);
               } else {
-                showSnackBar(context, 'لم يتم الحذف', SnackBarType.error);
+                showSnackBar(
+                    context: context,
+                    message: 'لم يتم الحذف',
+                    snackBarType: SnackBarType.error);
               }
               Navigator.pop(context);
             },

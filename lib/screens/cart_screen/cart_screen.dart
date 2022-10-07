@@ -48,7 +48,10 @@ class _CartScreenState extends State<CartScreen> {
         ScaffoldMessenger.of(context).showSnackBar(s);
       }
     } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
     }
 
     setState(() {

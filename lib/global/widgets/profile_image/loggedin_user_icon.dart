@@ -43,7 +43,10 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
       userPhotoPath = await Provider.of<UserProvider>(context, listen: false)
           .getUserPhoto(userUID);
     } catch (e) {
-      showSnackBar(context, e.toString(), SnackBarType.error);
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
     }
 
     setState(() {

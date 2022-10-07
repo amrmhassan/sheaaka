@@ -45,7 +45,8 @@ Future<void> pickImage({
     if (imageSize > maxAfterPickSize) {
       String msg =
           'لا يمكن أن يتعدي حجم الصورة ${maxAfterPickSize / 1000} ميجا';
-      return showSnackBar(context, msg, SnackBarType.error);
+      return showSnackBar(
+          context: context, message: msg, snackBarType: SnackBarType.error);
     }
     int quality = 500 ~/ imageSize;
     quality = quality > maxCompressQuality ? maxCompressQuality : quality;
@@ -62,7 +63,9 @@ Future<void> pickImage({
     callBack(profilePhotoUrl);
   } catch (e) {
     showSnackBar(
-        context, kDebugMode ? e.toString() : 'حدث خطأ', SnackBarType.error);
+        context: context,
+        message: kDebugMode ? e.toString() : 'حدث خطأ',
+        snackBarType: SnackBarType.error);
   }
 }
 
@@ -97,9 +100,11 @@ Future<String?> _uploadFile({
     fileUrl = await result.ref.getDownloadURL();
   } catch (e) {
     showSnackBar(
-        context,
-        kDebugMode ? 'upload error ${e.toString()}' : 'حدث خطأ في رفع الصورة',
-        SnackBarType.error);
+        context: context,
+        message: kDebugMode
+            ? 'upload error ${e.toString()}'
+            : 'حدث خطأ في رفع الصورة',
+        snackBarType: SnackBarType.error);
   }
   setEndLoading();
 

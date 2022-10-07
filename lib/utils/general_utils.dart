@@ -73,13 +73,13 @@ bool isNumeric(String? s) {
 }
 
 //? for showing a quick snack bar
-void showSnackBar(
-  BuildContext context,
-  String message,
-  SnackBarType snackBarType, [
+void showSnackBar({
+  required BuildContext context,
+  required String message,
+  required SnackBarType snackBarType,
   bool aboveBottomNavBar = false,
   EdgeInsets? margin,
-]) {
+}) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

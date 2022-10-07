@@ -39,9 +39,9 @@ class _AddWishListButtonState extends State<AddWishListButton> {
             child: AddWishlistModal(
               setWishListName: setWishListName,
             ),
-            onApply: () {
+            onApply: () async {
               if (wishListName.isNotEmpty) {
-                Provider.of<WishListsProvider>(context, listen: false)
+                await Provider.of<WishListsProvider>(context, listen: false)
                     .addWishList(wishListName);
               }
               // Navigator.pop(ctx);
