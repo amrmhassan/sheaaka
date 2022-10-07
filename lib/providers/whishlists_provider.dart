@@ -2,7 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:project/constants/db_constants.dart';
+import 'package:project/constants/shared_pref_constants.dart';
 import 'package:project/helpers/db_helper.dart';
+import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:project/models/wishlist_item_model.dart';
@@ -48,6 +50,10 @@ class WishListsProvider extends ChangeNotifier {
       wishlistItems.add(WishListItemModel.fromJSON(item));
     }
 
+    //* fetch active wishlist id
+    String? activeID = await SharedPrefHelper.getString(activeWishlistIdKey);
+    _activeWishListId = activeID;
+
     notifyListeners();
   }
 
@@ -69,8 +75,9 @@ class WishListsProvider extends ChangeNotifier {
 
 //? for setting the current active wishlist
 //! add it to the shared prefs
-  void setActiveWishList(String id) {
+  Future<void> setActiveWishList(String id) async {
     _activeWishListId = id;
+    await SharedPrefHelper.setString(activeWishlistIdKey, id);
     notifyListeners();
   }
 
