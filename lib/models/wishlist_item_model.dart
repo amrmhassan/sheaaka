@@ -4,11 +4,11 @@ import 'package:project/constants/models_constants.dart';
 class WishListItemModel {
   final String id;
   final String productId;
-  final String wishListId;
-  final String? note;
+  String wishListId;
+  String? note;
   final DateTime createdAt;
 
-  const WishListItemModel({
+  WishListItemModel({
     required this.id,
     required this.createdAt,
     required this.productId,

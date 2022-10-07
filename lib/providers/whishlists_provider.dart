@@ -28,12 +28,17 @@ class WishListsProvider extends ChangeNotifier {
     }
   }
 
-//? get active wishlist mode
+//? get active wishlist model
   WishListModel? activeWishlistModel() {
     if (activeWishListId == null) {
       return null;
     }
     return wishLists.firstWhere((element) => element.id == activeWishListId);
+  }
+
+  //? get wishlist item by id
+  WishListItemModel getItemById(String id) {
+    return wishlistItems.firstWhere((element) => element.id == id);
   }
 
   // // just for push test wishlist
@@ -96,8 +101,8 @@ class WishListsProvider extends ChangeNotifier {
   }
 
   //? for adding a new wishlist item
-  Future<void> addWishlistItem(
-      String productId, String wishListId, String note) async {
+  Future<String> addWishlistItem(
+      String productId, String wishListId, String? note) async {
     //* add it to the provider
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now();
@@ -113,6 +118,30 @@ class WishListsProvider extends ChangeNotifier {
 
     //* add it to sqlite
     await DBHelper.insert(wishlistItemsTableName, wim.toJSON());
+    return id;
+  }
+
+  //? for insta edit wishlit item after creatig it by the snack bar
+  Future<String> editWishlitItem(
+    String wishlistItemId,
+    String wishlistId, [
+    String? note,
+  ]) async {
+    int index =
+        wishlistItems.indexWhere((element) => element.id == wishlistItemId);
+    WishListItemModel wishListItemModel = wishlistItems[index];
+    wishlistItems.removeAt(index);
+    wishListItemModel.wishListId = wishlistId;
+    if (note != null) {
+      wishListItemModel.note = note;
+    }
+    await DBHelper.deleteById(wishlistItemId, wishlistItemsTableName);
+    //* add it again
+    return await addWishlistItem(
+      wishListItemModel.productId,
+      wishListItemModel.wishListId,
+      wishListItemModel.note,
+    );
   }
 
 //? getWishlistItemByProductId

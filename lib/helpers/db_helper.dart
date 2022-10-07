@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:project/constants/db_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/helpers/shared_pref_helper.dart';
+// import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/cart_item_model.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:project/models/wishlist_item_model.dart';
@@ -14,10 +14,10 @@ class DBHelper {
 
     String finalPath = path.join(databasePathDir, dbName);
 
-    if (kDebugMode) {
-      await sql.deleteDatabase(finalPath);
-      await SharedPrefHelper.removeAllSavedKeys();
-    }
+    // if (kDebugMode) {
+    //   await sql.deleteDatabase(finalPath);
+    //   await SharedPrefHelper.removeAllSavedKeys();
+    // }
 
     return sql.openDatabase(
       finalPath,

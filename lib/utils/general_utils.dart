@@ -79,6 +79,8 @@ void showSnackBar({
   required SnackBarType snackBarType,
   bool aboveBottomNavBar = false,
   EdgeInsets? margin,
+  VoidCallback? onActionTapped,
+  String? actionString,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
@@ -94,13 +96,13 @@ void showSnackBar({
               : null,
       margin: margin,
       action: SnackBarAction(
-        label: 'تم',
+        label: actionString ?? 'تم',
         textColor: snackBarType == SnackBarType.error ||
                 snackBarType == SnackBarType.success ||
                 snackBarType == SnackBarType.info
             ? Colors.white
             : null,
-        onPressed: () {},
+        onPressed: onActionTapped ?? () {},
       ),
     ),
   );

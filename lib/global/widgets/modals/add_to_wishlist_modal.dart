@@ -4,32 +4,62 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/wishlist_item_model.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/wishlist_screen/widgets/add_wishlist_button.dart';
 import 'package:project/screens/wishlist_screen/widgets/wishlist_names.dart';
 import 'package:provider/provider.dart';
 
-class AddToWishlistModal extends StatelessWidget {
+class AddToWishlistModal extends StatefulWidget {
   final VoidCallback onApply;
+  final String? editedWishlistItemId;
+
   const AddToWishlistModal({
     Key? key,
     required this.onApply,
+    this.editedWishlistItemId,
   }) : super(key: key);
+
+  @override
+  State<AddToWishlistModal> createState() => _AddToWishlistModalState();
+}
+
+class _AddToWishlistModalState extends State<AddToWishlistModal> {
+  WishListItemModel? wishListItemModel;
+  @override
+  void initState() {
+    if (widget.editedWishlistItemId != null) {
+      WishListItemModel w =
+          Provider.of<WishListsProvider>(context, listen: false)
+              .getItemById(widget.editedWishlistItemId!);
+
+      wishListItemModel = w;
+    }
+    super.initState();
+  }
+
+  String getModeString() {
+    if (wishListItemModel == null) {
+      return 'إضافة إلي قائمة التمني';
+    } else {
+      return 'تعديل ';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var wishlistProvider = Provider.of<WishListsProvider>(context);
     return ModalWrapper(
       showApplyModalButton: wishlistProvider.wishLists.isNotEmpty,
-      onApply: onApply,
+      onApply: widget.onApply,
       applyButtonTitle: 'إضافة',
       child: wishlistProvider.wishLists.isNotEmpty
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'إضافة إلي قائمة التمني',
+                  getModeString(),
                   style: h3TextStyle,
                 ),
                 VSpace(),
