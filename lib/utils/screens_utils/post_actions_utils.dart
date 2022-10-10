@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/modals/add_to_wishlist_modal.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/whishlist_model.dart';

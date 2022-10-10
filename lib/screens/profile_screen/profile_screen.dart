@@ -66,7 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userProvider = Provider.of<UserProvider>(context);
     return ScreensWrapper(
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

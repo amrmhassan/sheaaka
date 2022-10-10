@@ -81,11 +81,9 @@ class WishListsProvider extends ChangeNotifier {
     );
     wishLists.add(w);
     notifyListeners();
-    print('next');
 
 //* set active wishlist id
     if (wishLists.length == 1) {
-      print('here');
       await setActiveWishList(id);
     }
     //* add it to sqlite
