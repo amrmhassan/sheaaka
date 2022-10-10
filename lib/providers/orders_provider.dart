@@ -3,8 +3,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/cart_item_model.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/order_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -28,15 +30,18 @@ class OrdersProvider extends ChangeNotifier {
     try {
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
-        throw Exception('no user logged in');
+        throw CustomError(errorType: ErrorsTypes.noUserLoggedIn);
       }
       await FirebaseFirestore.instance
           .collection(usersCollectionName)
           .doc(currentUser.uid)
           .collection(ordersCollectionName)
           .add(o.toJSON());
-    } catch (e) {
-      //* do error handling here
+    } catch (e, stack) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorPlacingOrder,
+        stackTrace: stack,
+      );
     }
 
     notifyListeners();
@@ -44,16 +49,21 @@ class OrdersProvider extends ChangeNotifier {
 
   //? get user orders
   Future<void> fetchUpdateUserOrders() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    var data = await FirebaseFirestore.instance
-        .collection(usersCollectionName)
-        .doc(currentUser!.uid)
-        .collection(ordersCollectionName)
-        .get();
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      var data = await FirebaseFirestore.instance
+          .collection(usersCollectionName)
+          .doc(currentUser!.uid)
+          .collection(ordersCollectionName)
+          .get();
 
-    for (var order in data.docs) {
-      _orders.add(OrderModel.fromJSON(order.data()));
+      for (var order in data.docs) {
+        _orders.add(OrderModel.fromJSON(order.data()));
+      }
+      notifyListeners();
+    } catch (e, stack) {
+      throw CustomError(
+          errorType: ErrorsTypes.errorGettingOrders, stackTrace: stack);
     }
-    notifyListeners();
   }
 }

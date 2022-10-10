@@ -37,10 +37,12 @@ class UserProvider extends ChangeNotifier {
 
 //? get user data by his uid
   Future<UserModel> getUserDataByUID(String userUID) async {
-    var userData = await FirebaseFirestore.instance
+    DocumentSnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
+        .instance
         .collection(usersCollectionName)
         .doc(userUID)
         .get();
+
     UserModel userModel =
         UserModel.fromJSON(userData.data() as Map<String, dynamic>);
     return userModel;
@@ -48,10 +50,10 @@ class UserProvider extends ChangeNotifier {
 
 //? get user data by email
   Future<UserModel?> getUserDataByEmail(String email) async {
-    var data = (await FirebaseFirestore.instance
+    var data = await FirebaseFirestore.instance
         .collection(usersCollectionName)
         .where(emailString, isEqualTo: email)
-        .get());
+        .get();
     bool empty = data.docs.isEmpty;
     if (empty) {
       return null;
@@ -120,7 +122,7 @@ class UserProvider extends ChangeNotifier {
           .set(newUser.toJSON());
       // setCurrentUserData(user, newUser);
     } else {
-      throw CustomError(ErrorsTypes.unknownError);
+      throw CustomError(errorType: ErrorsTypes.unknownError);
     }
   }
 

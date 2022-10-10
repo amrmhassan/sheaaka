@@ -6,7 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/store_model.dart';
 
 import 'package:project/utils/general_utils.dart';
@@ -38,18 +40,26 @@ class StoreProvider extends ChangeNotifier {
     if (loadingStores) return;
     loadingStores = true;
     if (!noStateNotify) notifyListeners();
-    QuerySnapshot<Map<String, dynamic>> res;
-    res = await ref.collection(storesCollectionName).get();
-    List<StoreModel> helperList = [];
-    for (var element in res.docs) {
-      var s = StoreModel.fromJSON(element.data());
 
-      helperList.add(s);
+    try {
+      QuerySnapshot<Map<String, dynamic>> res;
+      res = await ref.collection(storesCollectionName).get();
+      List<StoreModel> helperList = [];
+      for (var element in res.docs) {
+        var s = StoreModel.fromJSON(element.data());
+
+        helperList.add(s);
+      }
+      _stores = helperList;
+      loadingStores = false;
+
+      notifyListeners();
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorGettingLikedProducts,
+        stackTrace: s,
+      );
     }
-    _stores = helperList;
-    loadingStores = false;
-
-    notifyListeners();
   }
 
   //? for signing up a store
@@ -61,7 +71,10 @@ class StoreProvider extends ChangeNotifier {
   }) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw Exception('No user is logged in');
+      throw CustomError(
+        errorType: ErrorsTypes.noUserLoggedIn,
+        stackTrace: StackTrace.current,
+      );
     }
     String id = Uuid().v4();
 
@@ -76,11 +89,17 @@ class StoreProvider extends ChangeNotifier {
       creatorUserUID: currentUser.uid,
       rating: 1,
     );
-
-    await FirebaseFirestore.instance
-        .collection(storesCollectionName)
-        .doc(id)
-        .set(s.toJSON());
+    try {
+      await FirebaseFirestore.instance
+          .collection(storesCollectionName)
+          .doc(id)
+          .set(s.toJSON());
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorGettingLikedProducts,
+        stackTrace: s,
+      );
+    }
   }
 
   //# nearby stores

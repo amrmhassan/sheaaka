@@ -29,7 +29,7 @@ class LocationProvider extends ChangeNotifier {
           snackBarType: SnackBarType.info);
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        throw CustomError(ErrorsTypes.locationNotEnabled);
+        throw CustomError(errorType: ErrorsTypes.locationNotEnabled);
       }
     }
     //* granting location permission
@@ -37,12 +37,18 @@ class LocationProvider extends ChangeNotifier {
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
-        throw CustomError(ErrorsTypes.locationPermissionNotGranted);
+        throw CustomError(errorType: ErrorsTypes.locationPermissionNotGranted);
       }
     }
 
-    locationData = await location.getLocation();
-    notifyListeners();
+    try {
+      locationData = await location.getLocation();
+      notifyListeners();
+    } catch (e, stack) {
+      throw CustomError(
+          errorType: ErrorsTypes.errorGettingLocation, stackTrace: stack);
+    }
+
     //* stopping the previous listener before creating a new one
     if (locationSubscription != null) {
       // print('---------------000000000');

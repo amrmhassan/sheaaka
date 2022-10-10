@@ -39,21 +39,26 @@ class ProductsProvider extends ChangeNotifier {
     loadingAllProducts = true;
     if (!noStateNotify) notifyListeners();
 
-    QuerySnapshot<Map<String, dynamic>> res;
-    res = await ref
-        .collection(productsCollectionName)
-        .orderBy(createdAtString, descending: true)
-        .get();
+    try {
+      QuerySnapshot<Map<String, dynamic>> res;
+      res = await ref
+          .collection(productsCollectionName)
+          .orderBy(createdAtString, descending: true)
+          .get();
 
-    List<ProductModel> helperList = [];
-    for (var element in res.docs) {
-      var p = ProductModel.fromJSON(element.data());
-      helperList.add(p);
+      List<ProductModel> helperList = [];
+      for (var element in res.docs) {
+        var p = ProductModel.fromJSON(element.data());
+        helperList.add(p);
+      }
+      _allProducts = helperList;
+      loadingAllProducts = false;
+
+      notifyListeners();
+    } catch (e, stack) {
+      throw CustomError(
+          errorType: ErrorsTypes.errorLoadingProducts, stackTrace: stack);
     }
-    _allProducts = helperList;
-    loadingAllProducts = false;
-
-    notifyListeners();
   }
 
   //# 2] HomeScreen Products
@@ -80,22 +85,29 @@ class ProductsProvider extends ChangeNotifier {
     loadingHomeProducts = true;
     if (!noStateNotify) notifyListeners();
 
-    QuerySnapshot<Map<String, dynamic>> res;
-    res = await ref
-        .collection(productsCollectionName)
-        .orderBy(createdAtString, descending: true)
-        .limit(loadingAtATime)
-        .get();
+    try {
+      QuerySnapshot<Map<String, dynamic>> res;
+      res = await ref
+          .collection(productsCollectionName)
+          .orderBy(createdAtString, descending: true)
+          .limit(loadingAtATime)
+          .get();
 
-    List<ProductModel> helperList = [];
-    for (var element in res.docs) {
-      var p = ProductModel.fromJSON(element.data());
-      helperList.add(p);
+      List<ProductModel> helperList = [];
+      for (var element in res.docs) {
+        var p = ProductModel.fromJSON(element.data());
+        helperList.add(p);
+      }
+      _homeProducts = helperList;
+
+      loadingHomeProducts = false;
+      notifyListeners();
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorLoadingProducts,
+        stackTrace: s,
+      );
     }
-    _homeProducts = helperList;
-
-    loadingHomeProducts = false;
-    notifyListeners();
   }
 
   //? loading the next 10 products
@@ -117,20 +129,27 @@ class ProductsProvider extends ChangeNotifier {
     }
     loadingNextHomeProducts = true;
     notifyListeners();
-    QuerySnapshot<Map<String, dynamic>> res;
-    res = await ref
-        .collection(productsCollectionName)
-        .orderBy(createdAtString, descending: true)
-        .limit(loadingAtATime)
-        .startAfter([_homeProducts.last.createdAt]).get();
+    try {
+      QuerySnapshot<Map<String, dynamic>> res;
+      res = await ref
+          .collection(productsCollectionName)
+          .orderBy(createdAtString, descending: true)
+          .limit(loadingAtATime)
+          .startAfter([_homeProducts.last.createdAt]).get();
 
-    for (var element in res.docs) {
-      var p = ProductModel.fromJSON(element.data());
-      _homeProducts.add(p);
+      for (var element in res.docs) {
+        var p = ProductModel.fromJSON(element.data());
+        _homeProducts.add(p);
+      }
+
+      loadingNextHomeProducts = false;
+      notifyListeners();
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorLoadingProducts,
+        stackTrace: s,
+      );
     }
-
-    loadingNextHomeProducts = false;
-    notifyListeners();
   }
 
   //# 3] suggestions products
@@ -190,19 +209,28 @@ class ProductsProvider extends ChangeNotifier {
   Future<bool> checkIfProductIsLiked(String productId) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw CustomError(ErrorsTypes.noUserLoggedIn);
+      throw CustomError(
+          errorType: ErrorsTypes.noUserLoggedIn,
+          stackTrace: StackTrace.current);
     }
-    var data = await FirebaseFirestore.instance
-        .collection(usersCollectionName)
-        .doc(currentUser.uid)
-        .collection(usersLikesCollectionName)
-        .doc(productId)
-        .get();
-    var res = data.data();
-    if (res != null && res.values.first == true) {
-      return true;
-    } else {
-      return false;
+    try {
+      var data = await FirebaseFirestore.instance
+          .collection(usersCollectionName)
+          .doc(currentUser.uid)
+          .collection(usersLikesCollectionName)
+          .doc(productId)
+          .get();
+      var res = data.data();
+      if (res != null && res.values.first == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorGettingLikedProducts,
+        stackTrace: s,
+      );
     }
   }
 
@@ -211,44 +239,59 @@ class ProductsProvider extends ChangeNotifier {
     _favoriteProductsIds.clear();
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw CustomError(ErrorsTypes.noUserLoggedIn);
-    }
-    var data = await FirebaseFirestore.instance
-        .collection(usersCollectionName)
-        .doc(currentUser.uid)
-        .collection(usersLikesCollectionName)
-        .get();
-
-    for (var doc in data.docs) {
-      var productId = doc.data().keys.first;
-      var productLoved = doc.data().values.first;
-      if (productLoved) {
-        _favoriteProductsIds.add(productId);
-      }
+      throw CustomError(errorType: ErrorsTypes.noUserLoggedIn);
     }
     try {
-      notifyListeners();
-    } catch (e) {
-      if (kDebugMode) {
-        print('object');
+      var data = await FirebaseFirestore.instance
+          .collection(usersCollectionName)
+          .doc(currentUser.uid)
+          .collection(usersLikesCollectionName)
+          .get();
+
+      for (var doc in data.docs) {
+        var productId = doc.data().keys.first;
+        var productLoved = doc.data().values.first;
+        if (productLoved) {
+          _favoriteProductsIds.add(productId);
+        }
       }
+      try {
+        notifyListeners();
+      } catch (e, s) {
+        throw CustomError(
+          errorType: ErrorsTypes.errorUpdatingState,
+          stackTrace: s,
+        );
+      }
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorGettingLikedProducts,
+        stackTrace: s,
+      );
     }
   }
 
 //? update product loves number in firebase
   Future<void> updateProductLovesNumber(String productId, bool loved) async {
-    var productData = (await FirebaseFirestore.instance
-            .collection(productsCollectionName)
-            .doc(productId)
-            .get())
-        .data();
-    int lovesNumber = productData![lovesNumberString];
-    int newLovesNumber = loved ? lovesNumber - 1 : lovesNumber + 1;
+    try {
+      var productData = (await FirebaseFirestore.instance
+              .collection(productsCollectionName)
+              .doc(productId)
+              .get())
+          .data();
+      int lovesNumber = productData![lovesNumberString];
+      int newLovesNumber = loved ? lovesNumber - 1 : lovesNumber + 1;
 
-    await FirebaseFirestore.instance
-        .collection(productsCollectionName)
-        .doc(productId)
-        .update({lovesNumberString: newLovesNumber});
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(productId)
+          .update({lovesNumberString: newLovesNumber});
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorGettingLikedProducts,
+        stackTrace: s,
+      );
+    }
   }
 
 //? to toggle a product love
@@ -256,7 +299,7 @@ class ProductsProvider extends ChangeNotifier {
     //! here i will need to update the value of number of loves in the product itself
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      throw CustomError(ErrorsTypes.noUserLoggedIn);
+      throw CustomError(errorType: ErrorsTypes.noUserLoggedIn);
     }
     ProductModel product =
         _homeProducts.firstWhere((element) => element.id == productId);
@@ -288,7 +331,7 @@ class ProductsProvider extends ChangeNotifier {
         //* update product loved number
         updateProductLovesNumber(productId, loved),
       ]);
-    } catch (e) {
+    } catch (e, s) {
       //* here i will reverse what just done in the first step
       if (lovedLocally) {
         _favoriteProductsIds.add(productId);
@@ -298,7 +341,7 @@ class ProductsProvider extends ChangeNotifier {
         product.lovesNumber = product.lovesNumber - 1;
       }
       notifyListeners();
-      throw CustomError(ErrorsTypes.loveError);
+      throw CustomError(errorType: ErrorsTypes.loveError, stackTrace: s);
     }
   }
 

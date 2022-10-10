@@ -2,7 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/global/widgets/profile_image/not_loggedin_user_icon.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
@@ -42,10 +44,14 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
       String userUID = FirebaseAuth.instance.currentUser!.uid;
       userPhotoPath = await Provider.of<UserProvider>(context, listen: false)
           .getUserPhoto(userUID);
-    } catch (e) {
+    } catch (e, stack) {
+      String errorMessage = CustomError(
+        errorType: ErrorsTypes.uploadPhoto,
+        stackTrace: stack,
+      ).toString();
       showSnackBar(
           context: context,
-          message: e.toString(),
+          message: errorMessage,
           snackBarType: SnackBarType.error);
     }
 
