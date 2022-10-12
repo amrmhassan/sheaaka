@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project/helpers/shared_pref_helper.dart';
-import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/app_state_provider.dart';

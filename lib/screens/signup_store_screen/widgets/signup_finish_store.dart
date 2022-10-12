@@ -5,6 +5,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
+import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
@@ -40,11 +41,7 @@ class SignUpFinishStore extends StatelessWidget {
           VSpace(factor: 2),
           SubmitFormButton(
             onTap: () {
-              showSnackBar(
-                context: context,
-                message: 'لم يتم انشاء لوحة التحكم ف المتجر بعد',
-                snackBarType: SnackBarType.info,
-              );
+              Navigator.pushReplacementNamed(context, HolderScreen.routeName);
             },
             title: 'فتح المتجر',
           ),

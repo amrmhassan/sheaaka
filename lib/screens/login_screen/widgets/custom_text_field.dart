@@ -9,7 +9,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class CustomTextField extends StatelessWidget {
   final String title;
-  final String iconName;
+  final String? iconName;
   final Function(String v)? onChange;
   final String? trailingIconName;
   final Widget? trailingIconWidget;
@@ -27,10 +27,12 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String? v)? validator;
   final bool enabled;
   final TextStyle? textStyle;
+  final bool? requiredField;
+  final BorderRadius? borderRadius;
 
   const CustomTextField({
     Key? key,
-    required this.iconName,
+    this.iconName,
     required this.title,
     this.onChange,
     this.trailingIconName,
@@ -49,6 +51,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.enabled = true,
     this.textStyle,
+    this.requiredField,
+    this.borderRadius,
   }) : super(key: key);
 
   @override
@@ -58,64 +62,85 @@ class CustomTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(smallBorderRadius),
-              border: Border.all(
-                width: 1,
-                color: errorText == null
-                    ? (borderColor ?? kBlackColor)
-                    : kDangerColor,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (requiredField == true)
+                Text(
+                  '*',
+                  style: TextStyle(
+                    height: 1,
+                    color: kDangerColor,
+                    fontSize: h2TextSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: borderRadius ??
+                        BorderRadius.circular(smallBorderRadius),
+                    border: Border.all(
+                      width: 1,
+                      color: errorText == null
+                          ? (borderColor ?? kBlackColor)
+                          : kDangerColor,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPad / 2,
+                    // vertical: kVPad / 2,
+                  ),
+                  child: Row(
+                    children: [
+                      if (iconName != null)
+                        Image.asset(
+                          'assets/icons/$iconName.png',
+                          width: mediumIconSize,
+                          color: errorText == null
+                              ? (color ?? kBlackColor)
+                              : kDangerColor,
+                        ),
+                      HSpace(factor: .5),
+                      Expanded(
+                        child: TextFormField(
+                          enabled: enabled,
+                          validator: validator,
+                          textInputAction:
+                              textInputAction ?? TextInputAction.next,
+                          obscureText: password,
+                          autocorrect: !password,
+                          controller: controller,
+                          onChanged: onChange,
+                          autofocus: autoFocus,
+                          keyboardType: textInputType,
+                          style: textStyle ?? h3LiteTextStyle,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: title,
+                            hintStyle: errorText == null
+                                ? h3LiteTextStyle
+                                : h3LiteTextStyle.copyWith(
+                                    color: kDangerColor,
+                                  ),
+                          ),
+                        ),
+                      ),
+                      if (trailingIconName != null)
+                        GestureDetector(
+                          onTap: handleShowPassword,
+                          child: Image.asset(
+                            'assets/icons/$trailingIconName.png',
+                            width: mediumIconSize,
+                            color: trailingIconColor ?? kSecondaryColor,
+                          ),
+                        ),
+                      if (trailingIconWidget != null) trailingIconWidget!
+                    ],
+                  ),
+                ),
               ),
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: kHPad / 2,
-              // vertical: kVPad / 2,
-            ),
-            child: Row(
-              children: [
-                Image.asset(
-                  'assets/icons/$iconName.png',
-                  width: mediumIconSize,
-                  color:
-                      errorText == null ? (color ?? kBlackColor) : kDangerColor,
-                ),
-                HSpace(factor: .5),
-                Expanded(
-                  child: TextFormField(
-                    enabled: enabled,
-                    validator: validator,
-                    textInputAction: textInputAction ?? TextInputAction.next,
-                    obscureText: password,
-                    autocorrect: !password,
-                    controller: controller,
-                    onChanged: onChange,
-                    autofocus: autoFocus,
-                    keyboardType: textInputType,
-                    style: textStyle ?? h3LiteTextStyle,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: title,
-                      hintStyle: errorText == null
-                          ? h3LiteTextStyle
-                          : h3LiteTextStyle.copyWith(
-                              color: kDangerColor,
-                            ),
-                    ),
-                  ),
-                ),
-                if (trailingIconName != null)
-                  GestureDetector(
-                    onTap: handleShowPassword,
-                    child: Image.asset(
-                      'assets/icons/$trailingIconName.png',
-                      width: mediumIconSize,
-                      color: trailingIconColor ?? kSecondaryColor,
-                    ),
-                  ),
-                if (trailingIconWidget != null) trailingIconWidget!
-              ],
-            ),
+            ],
           ),
           if (errorText != null)
             Text(

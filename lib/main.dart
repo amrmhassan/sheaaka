@@ -33,6 +33,7 @@ import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:provider/provider.dart';
@@ -112,6 +113,7 @@ class MyApp extends StatelessWidget {
           //? trader app screens
           THolderScreen.routeName: (context) => THolderScreen(),
           TProductsScreen.routeName: (context) => TProductsScreen(),
+          TAddProductScreen.routeName: (context) => TAddProductScreen(),
         },
       ),
     );
