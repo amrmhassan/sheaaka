@@ -4,9 +4,12 @@ import 'package:project/constants/styles.dart';
 
 class Loading extends StatelessWidget {
   final String? title;
+  final Color? color;
+
   const Loading({
     Key? key,
     this.title,
+    this.color,
   }) : super(key: key);
 
   @override
