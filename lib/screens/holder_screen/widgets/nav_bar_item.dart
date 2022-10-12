@@ -11,6 +11,8 @@ class NavBarItem extends StatelessWidget {
   final NavBarIcon navBarIcon;
   final int index;
   final Function(int index) setActiveIndex;
+  final Color? activeColor;
+  final Color? inactiveColor;
 
   const NavBarItem({
     Key? key,
@@ -18,6 +20,8 @@ class NavBarItem extends StatelessWidget {
     required this.navBarIcon,
     required this.index,
     required this.setActiveIndex,
+    this.activeColor,
+    this.inactiveColor,
   }) : super(key: key);
 
   @override
@@ -32,7 +36,9 @@ class NavBarItem extends StatelessWidget {
         ),
         child: Image.asset(
           'assets/icons/${active ? navBarIcon.active : navBarIcon.inactive}.png',
-          color: active ? kPrimaryColor : kSecondaryColor,
+          color: active
+              ? (activeColor ?? kPrimaryColor)
+              : (inactiveColor ?? kSecondaryColor),
           width: 30,
         ),
       ),

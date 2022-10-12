@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/global.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
+import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
-import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
-import 'package:project/screens/holder_screen/widgets/nav_bar_item.dart';
+import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
+import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/global/widgets/trader_nav_bar.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_holder_screen/widgets/show_my_store_button.dart';
 import 'package:provider/provider.dart';
 
 class THolderScreen extends StatefulWidget {
@@ -44,7 +45,6 @@ class _THolderScreenState extends State<THolderScreen> {
 
 //# holder screen stuff
   int activeIndex = 1;
-
   void setActiveIndex(int index) {
     setState(() {
       activeIndex = index;
@@ -57,16 +57,22 @@ class _THolderScreenState extends State<THolderScreen> {
       return CustomAppBar(
         title: storeName,
         home: true,
+        leftContent: [
+          ShowMyStoreButton(context: context),
+          HSpace(),
+        ],
       );
     } else if (activeIndex == 0) {
       return CustomAppBar(
         home: true,
-        title: 'التصنيفات',
+        title: 'إحصائيات',
+        leftContent: [],
       );
     } else if (activeIndex == 2) {
       return CustomAppBar(
         home: true,
-        title: 'المحلات',
+        title: 'الطلبيات',
+        leftContent: [],
       );
     } else {
       return CustomAppBar(

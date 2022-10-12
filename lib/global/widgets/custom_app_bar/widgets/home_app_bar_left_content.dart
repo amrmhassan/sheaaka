@@ -26,8 +26,7 @@ class HomeAppBarLeftContent extends StatelessWidget {
         (cartProvider.cartItems.length + ordersProvider.orders.length);
     return Row(
       children: [
-        if (leftContent != null) ...leftContent!,
-        FiltersIcon(),
+        if (leftContent != null) ...leftContent! else FiltersIcon(),
         HSpace(
           factor: .5,
         ),

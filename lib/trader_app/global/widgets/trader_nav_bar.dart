@@ -5,6 +5,7 @@ import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar_item.dart';
+import 'package:project/trader_app/constants/colors.dart';
 
 class TNavBar extends StatelessWidget {
   final int activeIndex;
@@ -33,6 +34,8 @@ class TNavBar extends StatelessWidget {
                   index: traderNavBarIconsList.indexOf(e),
                   setActiveIndex: setActiveIndex,
                   active: activeIndex == traderNavBarIconsList.indexOf(e),
+                  activeColor: kTraderPrimaryColor,
+                  inactiveColor: kTraderSecondaryColor,
                 ),
               )
               .toList(),
