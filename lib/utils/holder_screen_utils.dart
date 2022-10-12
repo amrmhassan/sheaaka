@@ -22,8 +22,7 @@ import 'package:provider/provider.dart';
 Future<void> loadData(BuildContext context) async {
   await firstTimeOpenApp(context);
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
-  bool continueLoading = await handleUserData(context);
-  if (!continueLoading) return;
+
   //* the loading in this screen only for the network checking
   await Provider.of<ProductsProvider>(context, listen: false)
       .reloadHomeProducts(true);
@@ -32,6 +31,8 @@ Future<void> loadData(BuildContext context) async {
       .fetchAndUpdateCartItems();
   await Provider.of<WishListsProvider>(context, listen: false)
       .fetchWishlistsAndWishlistsItems();
+  bool continueLoading = await handleUserData(context);
+  if (!continueLoading) return;
 }
 
 //? load data for home screen
