@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/utils/general_utils.dart';
 
 class ProductCartPrice extends StatelessWidget {
@@ -12,6 +13,7 @@ class ProductCartPrice extends StatelessWidget {
   final double price;
   final bool active;
   final Color? color;
+  final bool traderStyle;
 
   const ProductCartPrice({
     Key? key,
@@ -20,6 +22,7 @@ class ProductCartPrice extends StatelessWidget {
     this.fontSize,
     this.active = true,
     this.color,
+    this.traderStyle = false,
   }) : super(key: key);
 
   @override
@@ -39,14 +42,16 @@ class ProductCartPrice extends StatelessWidget {
           TextSpan(
             text: doubleToString(price),
             style: textStyle.copyWith(
-              color: color ?? (active ? kPrimaryColor : null),
+              color: traderStyle
+                  ? kTraderPrimaryColor
+                  : (color ?? (active ? kPrimaryColor : null)),
               decoration: active ? null : TextDecoration.lineThrough,
               height: 1,
             ),
           ),
-          // TextSpan(text: ' '),
+          TextSpan(text: ' '),
           TextSpan(
-            text: 'جنيه',
+            text: 'ج.م',
             style: textStyle.copyWith(
                 decoration: active ? null : TextDecoration.lineThrough,
                 color: color,

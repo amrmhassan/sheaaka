@@ -62,9 +62,8 @@ Future<bool> handleUserData(BuildContext context) async {
     if (userModel.userRole == UserRole.trader) {
       try {
         // to open store dashboard if trader and signup
-        StoreModel traderStore =
-            Provider.of<StoreProvider>(context, listen: false)
-                .getStoreByOwnerUID(currentUser.uid);
+        Provider.of<StoreProvider>(context, listen: false)
+            .getStoreByOwnerUID(currentUser.uid);
         Navigator.pushReplacementNamed(context, THolderScreen.routeName);
         return false;
       } catch (e) {

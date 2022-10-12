@@ -10,9 +10,11 @@ import 'package:project/models/brand_model.dart';
 
 class Brand extends StatelessWidget {
   final BrandModel? brand;
+  final Color? color;
   const Brand({
     Key? key,
     this.brand,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -34,12 +36,12 @@ class Brand extends StatelessWidget {
             : Image.asset(
                 handleBrandImage(brand),
                 width: smallIconSize,
-                color: kSecondaryColor,
+                color: color ?? kSecondaryColor,
               ),
         HSpace(factor: .2),
         Text(
           (brand == null) ? emptyBrand.name : brand!.name,
-          style: h4TextStyleInactive,
+          style: h4TextStyleInactive.copyWith(color: color),
         )
       ],
     );

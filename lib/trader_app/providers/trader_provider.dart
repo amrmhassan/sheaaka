@@ -18,7 +18,6 @@ class TraderProvider extends ChangeNotifier {
         .where(creatorUserUIDString, isEqualTo: currentUser.uid)
         .get();
     StoreModel storeModel = StoreModel.fromJSON(data.docs.first.data());
-    print(storeModel);
     myStore = storeModel;
     if (notify) notifyListeners();
   }

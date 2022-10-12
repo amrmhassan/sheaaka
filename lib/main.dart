@@ -34,6 +34,7 @@ import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
+import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:provider/provider.dart';
 
 bool testing = false;
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
           CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
           //? trader app screens
           THolderScreen.routeName: (context) => THolderScreen(),
+          TProductsScreen.routeName: (context) => TProductsScreen(),
         },
       ),
     );
