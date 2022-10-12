@@ -49,7 +49,6 @@ class SignUpFinishStore extends StatelessWidget {
             },
             title: 'فتح المتجر',
           ),
-          BackStepFormButton(onTap: decrementActiveIndex),
         ],
       ),
     );

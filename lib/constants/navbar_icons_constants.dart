@@ -14,3 +14,8 @@ List<NavBarIcon> navBarIconsList = [
   NavBarIcon('bookmark', 'book-mark', WishlistScreen()),
   NavBarIcon('nearby', 'nearby1', NearbyStoresScreen()),
 ];
+List<NavBarIcon> traderNavBarIconsList = [
+  NavBarIcon('trend1', 'trend', CategoriesScreen()),
+  NavBarIcon('home1', 'home', HomeScreen()),
+  NavBarIcon('shopping-bag1', 'shopping-bag', TrendScreen()),
+];

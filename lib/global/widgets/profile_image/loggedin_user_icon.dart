@@ -55,10 +55,14 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
           snackBarType: SnackBarType.error);
     }
 
-    setState(() {
-      userPhoto = userPhotoPath;
-      loading = false;
-    });
+    try {
+      setState(() {
+        userPhoto = userPhotoPath;
+        loading = false;
+      });
+    } catch (e, s) {
+      CustomError(errString: e.toString(), stackTrace: s);
+    }
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/user_provider.dart';
+import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +20,9 @@ class OpenStoreDashboardButton extends StatelessWidget {
     var userProvider = Provider.of<UserProvider>(context);
     return ButtonWrapper(
       onTap: userProvider.showOpenStoreButton
-          ? () {
-              //? open store
-              showSnackBar(
-                  context: context,
-                  message: 'لم يتم برمجة هذا الجزء بعد',
-                  snackBarType: SnackBarType.info);
+          ? () async {
+              await Navigator.pushReplacementNamed(
+                  context, THolderScreen.routeName);
             }
           : () {
               //? create new store

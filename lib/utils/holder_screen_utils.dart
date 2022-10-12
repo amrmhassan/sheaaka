@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project/helpers/shared_pref_helper.dart';
+import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/app_state_provider.dart';
@@ -13,18 +14,20 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
+import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 //? loading data from firestore
 Future<void> loadData(BuildContext context) async {
   await firstTimeOpenApp(context);
-  //* the loading in this screen only for the network checking
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
+  bool continueLoading = await handleUserData(context);
+  if (!continueLoading) return;
+  //* the loading in this screen only for the network checking
   await Provider.of<ProductsProvider>(context, listen: false)
       .reloadHomeProducts(true);
 
-  await handleUserData(context);
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
   await Provider.of<WishListsProvider>(context, listen: false)
@@ -40,7 +43,7 @@ Future<void> loadDataForHomeScreen(BuildContext context) async {
 }
 
 //? checking user store if trader
-Future<void> handleUserData(BuildContext context) async {
+Future<bool> handleUserData(BuildContext context) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
     //* fetch his liked products
@@ -57,8 +60,12 @@ Future<void> handleUserData(BuildContext context) async {
 
     if (userModel.userRole == UserRole.trader) {
       try {
-        Provider.of<StoreProvider>(context, listen: false)
-            .getStoreByOwnerUID(currentUser.uid);
+        // to open store dashboard if trader and signup
+        StoreModel traderStore =
+            Provider.of<StoreProvider>(context, listen: false)
+                .getStoreByOwnerUID(currentUser.uid);
+        Navigator.pushReplacementNamed(context, THolderScreen.routeName);
+        return false;
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
         Provider.of<UserProvider>(context, listen: false)
@@ -74,6 +81,7 @@ Future<void> handleUserData(BuildContext context) async {
       }
     }
   }
+  return true;
 }
 
 //? updating firstTimeOpenApp

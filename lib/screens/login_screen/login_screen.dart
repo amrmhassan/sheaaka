@@ -98,6 +98,46 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  //? handle google sign in
+
+  Future<void> handleGoogleSignIn() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await Provider.of<UserProvider>(context, listen: false)
+              .googleSignIn();
+
+      if (googleSignInAccount == null) {
+        return showSnackBar(
+          context: context,
+          message: 'لم يتم التسجيل',
+          snackBarType: SnackBarType.error,
+        );
+      }
+
+      String email = googleSignInAccount.email;
+      UserModel? userModel =
+          await Provider.of<UserProvider>(context, listen: false)
+              .getUserDataByEmail(email);
+      if (userModel == null) {
+        //* here the user isn't sign up and he must sign up first
+        Provider.of<UserProvider>(context, listen: false).logOutGoogle();
+        return showSnackBar(
+            context: context,
+            message: 'قم بالتسجيل أولا',
+            snackBarType: SnackBarType.error);
+      } else {
+        await Provider.of<UserProvider>(context, listen: false)
+            .firebaseSignInGoogle(googleSignInAccount);
+        Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+      }
+    } catch (e) {
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
@@ -173,50 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               SocialButton(
                                 title: 'Google',
                                 iconName: 'google',
-                                onTap: () async {
-                                  try {
-                                    final GoogleSignInAccount?
-                                        googleSignInAccount =
-                                        await Provider.of<UserProvider>(context,
-                                                listen: false)
-                                            .googleSignIn();
-
-                                    if (googleSignInAccount == null) {
-                                      return showSnackBar(
-                                          context: context,
-                                          message: 'لم يتم التسجيل',
-                                          snackBarType: SnackBarType.error);
-                                    }
-
-                                    String email = googleSignInAccount.email;
-                                    UserModel? userModel =
-                                        await Provider.of<UserProvider>(context,
-                                                listen: false)
-                                            .getUserDataByEmail(email);
-                                    if (userModel == null) {
-                                      //* here the user isn't sign up and he must sign up first
-                                      Provider.of<UserProvider>(context,
-                                              listen: false)
-                                          .logOutGoogle();
-                                      return showSnackBar(
-                                          context: context,
-                                          message: 'قم بالتسجيل أولا',
-                                          snackBarType: SnackBarType.error);
-                                    } else {
-                                      await Provider.of<UserProvider>(context,
-                                              listen: false)
-                                          .firebaseSignInGoogle(
-                                              googleSignInAccount);
-                                      Navigator.pushReplacementNamed(
-                                          context, HolderScreen.routeName);
-                                    }
-                                  } catch (e) {
-                                    showSnackBar(
-                                        context: context,
-                                        message: e.toString(),
-                                        snackBarType: SnackBarType.error);
-                                  }
-                                },
+                                onTap: handleGoogleSignIn,
                               ),
                               SocialButton(
                                 title: 'Facebook',

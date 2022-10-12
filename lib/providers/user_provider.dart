@@ -145,8 +145,13 @@ class UserProvider extends ChangeNotifier {
 
 //? sign in google account to get it's information
   Future<GoogleSignInAccount?> googleSignIn() async {
-    //* here just sign up with google
-    final GoogleSignInAccount? googleSignInAccount = await _google.signIn();
+    final GoogleSignInAccount? googleSignInAccount;
+    try {
+      //* here just sign up with google
+      googleSignInAccount = await _google.signIn();
+    } catch (e, s) {
+      throw CustomError(errorType: ErrorsTypes.cantGoogleSignIn, stackTrace: s);
+    }
 
     return googleSignInAccount;
   }
@@ -186,14 +191,11 @@ class UserProvider extends ChangeNotifier {
   //? logout google
   Future<void> logOutGoogle() async {
     try {
+      await FirebaseAuth.instance.signOut();
       await _google.signOut();
       await _google.disconnect();
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+    } catch (e, s) {
+      CustomError(errorType: ErrorsTypes.cantSignOut, stackTrace: s);
     }
-    // setCurrentUserData(null, null);
-    await FirebaseAuth.instance.signOut();
   }
 }

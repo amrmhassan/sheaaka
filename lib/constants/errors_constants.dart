@@ -20,7 +20,9 @@ const Map<ErrorsTypes, String> errorsMapping = {
   ErrorsTypes.errorUpdateLovesNumber: 'خطأ في تعديل عدد اللايكات',
   ErrorsTypes.errorFetchingStores: 'خطأ في تحميل المحلات',
   ErrorsTypes.errorSignUpStore: 'خطأ في تسجيل محل جديد',
-  ErrorsTypes.errorGettingUserData: 'خطأ في تحميل معلومات المسخدم'
+  ErrorsTypes.errorGettingUserData: 'خطأ في تحميل معلومات المسخدم',
+  ErrorsTypes.cantGoogleSignIn: 'لا يمكن استخدام تسجيل جوجل',
+  ErrorsTypes.cantSignOut: 'لا يمكن تسجيل الخروج',
 };
 
 enum ErrorsTypes {
@@ -41,5 +43,7 @@ enum ErrorsTypes {
   errorUpdateLovesNumber,
   errorFetchingStores,
   errorSignUpStore,
-  errorGettingUserData
+  errorGettingUserData,
+  cantGoogleSignIn,
+  cantSignOut,
 }

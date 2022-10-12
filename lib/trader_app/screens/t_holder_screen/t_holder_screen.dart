@@ -1,0 +1,127 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:project/constants/global.dart';
+import 'package:project/constants/navbar_icons_constants.dart';
+import 'package:project/constants/sizes.dart';
+import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
+import 'package:project/global/widgets/loading.dart';
+import 'package:project/global/widgets/screens_wrapper.dart';
+import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
+import 'package:project/screens/holder_screen/widgets/nav_bar_item.dart';
+import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
+import 'package:project/trader_app/global/widgets/trader_nav_bar.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:provider/provider.dart';
+
+class THolderScreen extends StatefulWidget {
+  const THolderScreen({Key? key}) : super(key: key);
+  static const String routeName = '/t-holder-screen';
+
+  @override
+  State<THolderScreen> createState() => _THolderScreenState();
+}
+
+class _THolderScreenState extends State<THolderScreen> {
+  //# loading
+  bool loading = false;
+  void toggleLoading() {
+    setState(() {
+      loading = !loading;
+    });
+  }
+
+  //# fetching data
+  Future<void> fetchStoreData() async {
+    toggleLoading();
+    await Provider.of<TraderProvider>(context, listen: false)
+        .fetchMyStoreData(false);
+    toggleLoading();
+  }
+
+//# holder screen stuff
+  int activeIndex = 1;
+
+  void setActiveIndex(int index) {
+    setState(() {
+      activeIndex = index;
+    });
+  }
+
+//? this will change the appbar of the holder screen according to the current active nav bar index
+  Widget appBarGenerator(String storeName) {
+    if (activeIndex == 1) {
+      return CustomAppBar(
+        title: storeName,
+        home: true,
+      );
+    } else if (activeIndex == 0) {
+      return CustomAppBar(
+        home: true,
+        title: 'التصنيفات',
+      );
+    } else if (activeIndex == 2) {
+      return CustomAppBar(
+        home: true,
+        title: 'المحلات',
+      );
+    } else {
+      return CustomAppBar(
+        title: storeName,
+        home: true,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    fetchStoreData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var traderProvider = Provider.of<TraderProvider>(context);
+    return ScreensWrapper(
+      child: loading
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: Loading(
+                title: 'جاري تحميل متجرك',
+              ),
+            )
+          : Stack(
+              children: [
+                Column(
+                  children: [
+                    appBarGenerator(traderProvider.myStore!.name),
+                    Expanded(
+                      child: traderNavBarIconsList[activeIndex].widget,
+                    ),
+                    TNavBar(
+                      activeIndex: activeIndex,
+                      setActiveIndex: setActiveIndex,
+                    ),
+                  ],
+                ),
+                if (allowRandomCreatorCheats && kDebugMode)
+                  GestureDetector(
+                    onDoubleTap: () {
+                      Navigator.pushNamed(context, UploadDataScreen.routeName);
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      color: Colors.transparent,
+                    ),
+                  ),
+              ],
+            ),
+    );
+  }
+}

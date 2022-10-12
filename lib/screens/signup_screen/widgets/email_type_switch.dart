@@ -62,7 +62,9 @@ class EmailTypeSwitch extends StatelessWidget {
                       child: Text(
                         'عادي',
                         style: h3TextStyle.copyWith(
-                          color: on ? Colors.white : kBlackColor,
+                          color: on
+                              ? Colors.white
+                              : kInActiveTextColor.withOpacity(.5),
                         ),
                       ),
                     ),
@@ -72,7 +74,9 @@ class EmailTypeSwitch extends StatelessWidget {
                       child: Text(
                         'تاجر',
                         style: h3TextStyle.copyWith(
-                          color: on ? kBlackColor : Colors.white,
+                          color: on
+                              ? kInActiveTextColor.withOpacity(.5)
+                              : Colors.white,
                         ),
                       ),
                     ),
