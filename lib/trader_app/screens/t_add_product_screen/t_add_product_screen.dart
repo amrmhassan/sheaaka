@@ -13,6 +13,9 @@ import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_photo_button.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_old_new.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_image_uploaded.dart';
 import 'package:project/utils/general_utils.dart';
 
 class TAddProductScreen extends StatelessWidget {
@@ -45,6 +48,7 @@ class TAddProductScreen extends StatelessWidget {
           VSpace(),
           Expanded(
             child: ListView(
+              physics: BouncingScrollPhysics(),
               children: [
                 PaddingWrapper(
                   child: Column(
@@ -97,6 +101,13 @@ class TAddProductScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                VSpace(),
+                PriceOldNew(),
+                VSpace(),
+                AddAvailableColors(),
+
+                //! just delete me after finishing
+                VSpace(factor: 5),
               ],
             ),
           ),
@@ -106,8 +117,68 @@ class TAddProductScreen extends StatelessWidget {
   }
 }
 
-class AddProductPhotoButton extends StatelessWidget {
-  const AddProductPhotoButton({
+class AddAvailableColors extends StatelessWidget {
+  const AddAvailableColors({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        PaddingWrapper(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'مواصفات المنتج',
+                style: h2TextStyle.copyWith(color: kTraderBlackColor),
+              ),
+              Text(
+                'الأولوان المتاحة',
+                style: h4TextStyleInactive.copyWith(
+                  color: kTraderSecondaryColor,
+                ),
+              ),
+              VSpace(factor: .5),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              HSpace(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              AddColorButton(),
+              HSpace(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AddColorButton extends StatelessWidget {
+  const AddColorButton({
     Key? key,
   }) : super(key: key);
 
@@ -115,57 +186,18 @@ class AddProductPhotoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonWrapper(
       onTap: () {},
-      margin: EdgeInsets.only(left: kVPad),
-      width: 180,
-      height: 280,
-      decoration: BoxDecoration(
-        color: kTraderSecondaryColor.withOpacity(.1),
-        border: Border.all(
-          width: 1,
-          color: kTraderSecondaryColor.withOpacity(.4),
-        ),
-      ),
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.all(ultraLargePadding),
-          width: largeIconSize * 2,
-          height: largeIconSize * 2,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(500),
-            color: kTraderPrimaryColor,
-          ),
-          child: Image.asset(
-            'assets/icons/plus.png',
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProductImageUploaded extends StatelessWidget {
-  const ProductImageUploaded({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: kVPad),
-      width: 180,
-      height: 280,
+      padding: EdgeInsets.all(largePadding),
+      width: ultraLargeIconSize,
+      height: ultraLargeIconSize,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: kTraderSecondaryColor.withOpacity(.3),
+          color: kTraderSecondaryColor.withOpacity(.5),
         ),
       ),
       child: Image.asset(
-        'assets/images/3.jpg',
-        height: double.infinity,
-        width: double.infinity,
-        fit: BoxFit.cover,
+        'assets/icons/plus.png',
+        color: kTraderNotifyColor,
       ),
     );
   }
