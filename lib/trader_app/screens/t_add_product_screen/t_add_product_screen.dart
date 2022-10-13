@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/h_space.dart';
@@ -14,6 +13,10 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_photo_button.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_props.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/check_box_with_period_picker.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_color_element.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_size_element.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_old_new.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_image_uploaded.dart';
 import 'package:project/utils/general_utils.dart';
@@ -104,7 +107,55 @@ class TAddProductScreen extends StatelessWidget {
                 VSpace(),
                 PriceOldNew(),
                 VSpace(),
-                AddAvailableColors(),
+                PaddingWrapper(
+                  child: Text(
+                    'مواصفات المنتج',
+                    style: h2TextStyle.copyWith(color: kTraderBlackColor),
+                  ),
+                ),
+                AddProductProps(
+                  title: 'الألوان المتاحة',
+                  children: [
+                    NewProductColorEelment(),
+                    NewProductColorEelment(),
+                    NewProductColorEelment(),
+                    NewProductColorEelment(),
+                    NewProductColorEelment(),
+                  ],
+                ),
+                VSpace(),
+                AddProductProps(
+                  title: 'الأحجام المتاحة',
+                  children: [
+                    ...Sizes.values.map(
+                      (e) {
+                        if (e == Sizes.allSizes) return SizedBox();
+                        return NewProductSizeElement(size: e.name);
+                      },
+                    ),
+                  ],
+                ),
+                VSpace(),
+                PaddingWrapper(
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        title: 'اسم البراند',
+                        padding: EdgeInsets.zero,
+                        borderColor: kTraderSecondaryColor.withOpacity(.5),
+                        borderRadius: BorderRadius.zero,
+                      ),
+                      VSpace(),
+                      CheckBoxWithPeriodPicker(
+                        title: 'عرض؟',
+                      ),
+                      VSpace(factor: .5),
+                      CheckBoxWithPeriodPicker(
+                        title: 'ترند؟',
+                      ),
+                    ],
+                  ),
+                ),
 
                 //! just delete me after finishing
                 VSpace(factor: 5),
@@ -112,92 +163,6 @@ class TAddProductScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class AddAvailableColors extends StatelessWidget {
-  const AddAvailableColors({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        PaddingWrapper(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'مواصفات المنتج',
-                style: h2TextStyle.copyWith(color: kTraderBlackColor),
-              ),
-              Text(
-                'الأولوان المتاحة',
-                style: h4TextStyleInactive.copyWith(
-                  color: kTraderSecondaryColor,
-                ),
-              ),
-              VSpace(factor: .5),
-            ],
-          ),
-        ),
-        SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              HSpace(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              AddColorButton(),
-              HSpace(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AddColorButton extends StatelessWidget {
-  const AddColorButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ButtonWrapper(
-      onTap: () {},
-      padding: EdgeInsets.all(largePadding),
-      width: ultraLargeIconSize,
-      height: ultraLargeIconSize,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: kTraderSecondaryColor.withOpacity(.5),
-        ),
-      ),
-      child: Image.asset(
-        'assets/icons/plus.png',
-        color: kTraderNotifyColor,
       ),
     );
   }
