@@ -46,7 +46,7 @@ Future<void> pickImage({
       maxSize: maxSize,
     );
     if (compressedFile == null) return;
-    String? profilePhotoUrl = await _uploadFile(
+    String? profilePhotoUrl = await uploadFile(
       context: context,
       path: compressedFile.path,
       setEndLoading: setEndLoading,
@@ -107,7 +107,7 @@ Future<File?> compressImage(String path, int quality) async {
 }
 
 //? for uploading a file to firebase storage
-Future<String?> _uploadFile({
+Future<String?> uploadFile({
   required BuildContext context,
   required String path,
   required VoidCallback setStartLoading,

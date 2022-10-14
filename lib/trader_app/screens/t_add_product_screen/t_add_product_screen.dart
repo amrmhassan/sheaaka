@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
@@ -10,10 +12,15 @@ import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart'
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/brand_model.dart';
+import 'package:project/models/product_model.dart';
+import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_props.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/check_box_with_period_picker.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/important_product_info.dart';
@@ -23,6 +30,9 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_ol
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_images.dart';
 import 'package:project/trader_app/utils/add_product_utils.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:project/utils/photo_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 enum PickedDateType {
   offerDate,
@@ -160,7 +170,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   }
 
 //? for validating the product data
-  void validateProductData() {
+  Future<void> validateProductData() async {
     //* validating the product name
     if (nameController.text.length < 5) {
       return showSnackBar(
@@ -210,10 +220,22 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       );
     }
     //* upload the product successfully
-    showSnackBar(
-        context: context,
-        message: 'Uploading product',
-        snackBarType: SnackBarType.success);
+    StoreModel myStore =
+        Provider.of<TraderProvider>(context, listen: false).myStore!;
+
+    Provider.of<AddProductProvider>(context, listen: false).uploadProduct(
+      nameController: nameController,
+      myStore: myStore,
+      imagesFiles: imagesFiles,
+      currentPriceController: currentPriceController,
+      availableColors: availableColors,
+      availableSizes: availableSizes,
+      brandNameController: brandNameController,
+      shortDescController: shortDescController,
+      oldPriceController: oldPriceController,
+      context: context,
+    );
+    Navigator.pop(context);
   }
 
   @override

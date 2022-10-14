@@ -14,3 +14,4 @@ String wishlistItemsCollectionName = 'wishlistsCollectionName';
 String profileImagesDir = 'profileImagesDir';
 String storeLogoImagesDir = 'storeLogoImagesDir';
 String storeCoverImagesDir = 'storeCoverImagesDir';
+String productsImagesDir = 'productsImagesDir';
