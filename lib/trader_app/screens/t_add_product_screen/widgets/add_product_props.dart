@@ -6,15 +6,18 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_color_button.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_prop_button.dart';
 
 class AddProductProps extends StatelessWidget {
   final String title;
   final List<Widget> children;
+  final VoidCallback onAddTapped;
+
   const AddProductProps({
     Key? key,
     required this.children,
     required this.title,
+    required this.onAddTapped,
   }) : super(key: key);
 
   @override
@@ -42,7 +45,9 @@ class AddProductProps extends StatelessWidget {
           child: Row(
             children: [
               HSpace(),
-              AddColorButton(),
+              AddPropButton(
+                onTap: onAddTapped,
+              ),
               ...children,
               HSpace(factor: .5),
             ],

@@ -20,6 +20,7 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_prod
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_size_element.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_old_new.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_images.dart';
+import 'package:project/trader_app/utils/add_product_utils.dart';
 import 'package:project/utils/general_utils.dart';
 
 class TAddProductScreen extends StatefulWidget {
@@ -133,8 +134,19 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 AddProductProps(
                   title: 'الألوان المتاحة',
                   children: availableColors
-                      .map((e) => NewProductColorEelment(color: e))
+                      .map((e) => NewProductColorEelment(
+                            color: e,
+                            onRemove: () {
+                              removeColor(e);
+                            },
+                          ))
                       .toList(),
+                  onAddTapped: () => showAddColorDialog(
+                    context: context,
+                    addColor: addColor,
+                    availableColors: availableColors,
+                    removeColor: removeColor,
+                  ),
                 ),
                 VSpace(),
                 AddProductProps(
@@ -142,16 +154,26 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                   children: [
                     ...availableSizes.map(
                       (e) {
-                        return NewProductSizeElement(size: e.name);
+                        return NewProductSizeElement(
+                          size: e.name,
+                          onRemove: () => removeSize(e),
+                        );
                       },
                     ),
                   ],
+                  onAddTapped: () => showAddSizeDialog(
+                    context: context,
+                    availableSizes: availableSizes,
+                    removeSize: removeSize,
+                    addSize: addSize,
+                  ),
                 ),
                 VSpace(),
                 PaddingWrapper(
                   child: Column(
                     children: [
                       CustomTextField(
+                        controller: brandNameController,
                         title: 'اسم البراند',
                         padding: EdgeInsets.zero,
                         borderColor: kTraderSecondaryColor.withOpacity(.5),

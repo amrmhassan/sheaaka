@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:project/models/types.dart';
 
 const List<Sizes> productSizes = Sizes.values;
+List<Sizes> get actualProductSizes {
+  List<Sizes> sizes = [...Sizes.values];
+  sizes.removeAt(0);
+  return sizes;
+}
 
 const List<Color> productColors = [
   Color(0xffffffff),

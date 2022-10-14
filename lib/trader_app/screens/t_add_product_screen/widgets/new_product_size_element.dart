@@ -10,16 +10,18 @@ import 'package:project/utils/general_utils.dart';
 
 class NewProductSizeElement extends StatelessWidget {
   final String size;
+  final VoidCallback onRemove;
   const NewProductSizeElement({
     Key? key,
     required this.size,
+    required this.onRemove,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
       margin: EdgeInsets.only(left: kHPad / 2),
-      onLongPress: () {},
+      onLongPress: onRemove,
       onTap: () {
         showSnackBar(
           context: context,

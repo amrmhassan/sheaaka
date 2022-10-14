@@ -11,15 +11,17 @@ import 'package:project/utils/general_utils.dart';
 
 class NewProductColorEelment extends StatelessWidget {
   final Color color;
+  final VoidCallback onRemove;
   const NewProductColorEelment({
     Key? key,
     required this.color,
+    required this.onRemove,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-        onLongPress: () {},
+        onLongPress: onRemove,
         onTap: () {
           showSnackBar(
             context: context,
