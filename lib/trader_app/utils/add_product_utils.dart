@@ -68,50 +68,48 @@ void showAddSizeDialog({
   required Function(Sizes color) removeSize,
   required Function(Sizes color) addSize,
 }) {
-  () {
-    showDialog(
-      context: context,
-      useSafeArea: true,
-      builder: (ctx) {
-        return DialogWrapper(
-          margin: EdgeInsets.symmetric(horizontal: kHPad * 2),
-          child: StatefulBuilder(builder: (context, localSetState) {
-            List<Sizes> localSizes = [...availableSizes];
-            return GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: actualProductSizes.length,
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 50,
-                childAspectRatio: 1,
-                crossAxisSpacing: kHPad / 2,
-                mainAxisSpacing: kHPad / 2,
-              ),
-              itemBuilder: (BuildContext context, int index) {
-                Sizes currentSize = actualProductSizes[index];
-                return ProductSizeElement(
-                  size: currentSize,
-                  onTap: () {
-                    if (localSizes.contains(currentSize)) {
-                      localSetState(() {
-                        localSizes.add(currentSize);
-                      });
-                      removeSize(currentSize);
-                    } else {
-                      localSetState(() {
-                        localSizes.remove(currentSize);
-                      });
-                      addSize(currentSize);
-                    }
-                  },
-                  active: localSizes.contains(currentSize),
-                );
-              },
-            );
-          }),
-        );
-      },
-    );
-  };
+  showDialog(
+    context: context,
+    useSafeArea: true,
+    builder: (ctx) {
+      return DialogWrapper(
+        margin: EdgeInsets.symmetric(horizontal: kHPad * 2),
+        child: StatefulBuilder(builder: (context, localSetState) {
+          List<Sizes> localSizes = [...availableSizes];
+          return GridView.builder(
+            padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: actualProductSizes.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 50,
+              childAspectRatio: 1,
+              crossAxisSpacing: kHPad / 2,
+              mainAxisSpacing: kHPad / 2,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              Sizes currentSize = actualProductSizes[index];
+              return ProductSizeElement(
+                size: currentSize,
+                onTap: () {
+                  if (localSizes.contains(currentSize)) {
+                    localSetState(() {
+                      localSizes.add(currentSize);
+                    });
+                    removeSize(currentSize);
+                  } else {
+                    localSetState(() {
+                      localSizes.remove(currentSize);
+                    });
+                    addSize(currentSize);
+                  }
+                },
+                active: localSizes.contains(currentSize),
+              );
+            },
+          );
+        }),
+      );
+    },
+  );
 }

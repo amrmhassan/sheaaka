@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/models/types.dart';
+import 'package:project/screens/offer_screen/show_single_image.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/utils/general_utils.dart';
 
@@ -54,9 +55,10 @@ class ProductImageUploaded extends StatelessWidget {
             top: largePadding,
             child: GestureDetector(
               onTap: () {
-                showSnackBar(
-                  context: context,
-                  message: 'soon',
+                Navigator.pushNamed(
+                  context,
+                  ShowSingleImage.routeName,
+                  arguments: imageFile.path,
                 );
               },
               child: Container(

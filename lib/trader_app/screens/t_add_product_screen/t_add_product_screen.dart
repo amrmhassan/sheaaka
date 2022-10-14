@@ -44,6 +44,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   TextEditingController oldPriceController = TextEditingController();
   TextEditingController currentPriceController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
+  // TextEditingController discountController = TextEditingController();
 
   //? product images
   List<File> imagesFiles = [];
@@ -88,7 +89,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   }
 
   //? is offer, offer end
-  bool isOffer = true;
+  bool isOffer = false;
   void toggleOffer() {
     setState(() {
       isOffer = !isOffer;
@@ -96,14 +97,26 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     if (isOffer == true && offerEnd == null) {
       handleDatePicker(PickedDateType.offerDate);
     }
+    if (oldPriceController.text.isEmpty && isOffer) {
+      showSnackBar(
+        context: context,
+        message: 'قم بكتابة السعر القديم',
+      );
+    }
   }
 
-  DateTime? offerEnd = DateTime(2022, 10, 30);
+  DateTime? offerEnd;
   void setOfferEnd(DateTime d) {
     setState(() {
       offerEnd = d;
       isOffer = true;
     });
+    if (oldPriceController.text.isEmpty && isOffer) {
+      showSnackBar(
+        context: context,
+        message: 'قم بكتابة السعر القديم',
+      );
+    }
   }
 
   //? is trend, trend end
@@ -174,12 +187,27 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     }
     if (!((double.tryParse(currentPriceController.text) ?? 0) > 0)) {
       return showSnackBar(
-          context: context, message: 'لابد من ادخال سعر المنتج الحالي');
+        context: context,
+        message: 'لابد من ادخال سعر المنتج الحالي',
+        snackBarType: SnackBarType.error,
+      );
     }
     //* old price
     if (oldPriceController.text.isNotEmpty &&
         double.tryParse(oldPriceController.text) == null) {
-      return showSnackBar(context: context, message: 'أدخل سعر قديم صحيح');
+      return showSnackBar(
+        context: context,
+        message: 'أدخل سعر قديم صحيح',
+        snackBarType: SnackBarType.error,
+      );
+    }
+    //* validating old price
+    if (isOffer && oldPriceController.text.isEmpty) {
+      return showSnackBar(
+        context: context,
+        message: 'لابد من إدخال السعر قبل الخصم',
+        snackBarType: SnackBarType.error,
+      );
     }
     //* upload the product successfully
     showSnackBar(
@@ -227,6 +255,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 PriceOldNew(
                   currentPrice: currentPriceController,
                   oldPrice: oldPriceController,
+                  // discount: discountController,
+                  isOffer: isOffer,
                 ),
                 VSpace(),
                 PaddingWrapper(

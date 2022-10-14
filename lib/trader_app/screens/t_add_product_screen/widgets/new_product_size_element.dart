@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
-import 'package:project/models/types.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/utils/general_utils.dart';
 

@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 
-class OfferScreen extends StatelessWidget {
+class ShowSingleImage extends StatelessWidget {
   static const String routeName = '/offer-screen';
-  const OfferScreen({super.key});
+  const ShowSingleImage({super.key});
 
   @override
   Widget build(BuildContext context) {

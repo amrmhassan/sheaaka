@@ -20,7 +20,7 @@ import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
-import 'package:project/screens/offer_screen/offer_screen.dart';
+import 'package:project/screens/offer_screen/show_single_image.dart';
 import 'package:project/screens/orders_screen/orders_screen.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
           TrackOrderScreen.routeName: (context) => TrackOrderScreen(),
           TrendScreen.routeName: (context) => TrendScreen(),
           UploadDataScreen.routeName: (context) => UploadDataScreen(),
-          OfferScreen.routeName: (context) => OfferScreen(),
+          ShowSingleImage.routeName: (context) => ShowSingleImage(),
           NoInternetScreen.routeName: (context) => NoInternetScreen(),
           CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
           //? trader app screens
