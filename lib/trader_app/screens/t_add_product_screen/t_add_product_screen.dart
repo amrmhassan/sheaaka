@@ -81,6 +81,49 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     });
   }
 
+  //? is offer, offer end
+  bool isOffer = true;
+  void toggleOffer() {
+    setState(() {
+      isOffer = !isOffer;
+    });
+    if (isOffer == true && offerEnd == null) {
+      handleDatePicker();
+    }
+  }
+
+  DateTime? offerEnd = DateTime(2022, 10, 30);
+  void setOfferEnd(DateTime d) {
+    setState(() {
+      offerEnd = d;
+      isOffer = true;
+    });
+  }
+
+  //? is trend, trend end
+  bool isTrend = false;
+  void toggleTrend() {
+    setState(() {
+      isTrend = !isTrend;
+    });
+    if (isTrend == true && trendEnd == null) {
+      handleDatePicker();
+    }
+  }
+
+  DateTime? trendEnd;
+  void setTrendEnd(DateTime d) {
+    setState(() {
+      trendEnd = d;
+      isTrend = true;
+    });
+  }
+
+  //? for handling date pickers
+  void handleDatePicker() {
+    print('picking date then returning it where its needed');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
@@ -182,10 +225,18 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                       VSpace(),
                       CheckBoxWithPeriodPicker(
                         title: 'عرض؟',
+                        checked: isOffer,
+                        dateEnd: offerEnd,
+                        pickDate: handleDatePicker,
+                        toggleChecked: toggleOffer,
                       ),
                       VSpace(factor: .5),
                       CheckBoxWithPeriodPicker(
                         title: 'ترند؟',
+                        checked: isTrend,
+                        dateEnd: trendEnd,
+                        pickDate: handleDatePicker,
+                        toggleChecked: toggleTrend,
                       ),
                     ],
                   ),
