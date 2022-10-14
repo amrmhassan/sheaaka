@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_photo_button.dart';
@@ -27,6 +25,9 @@ class ProductImages extends StatelessWidget {
 //? to pick image from the source
   Future<void> pickImage(BuildContext context, ImageSource source) async {
     File? imageFile = await getImageReadyToUploadFile(
+      finalQuality: 50,
+      initialQuality: 20,
+      maxSize: 5000,
       source: source,
       context: context,
       cropAspectRatio: CropAspectRatio(ratioX: 9, ratioY: 16),
@@ -38,7 +39,10 @@ class ProductImages extends StatelessWidget {
 
   void handlePickOptions(BuildContext context) {
     showPickImageOptions(
-        context, (source) => pickImage(context, source), 'من فضلك اختر الصورة');
+      context,
+      (source) => pickImage(context, source),
+      'من فضلك اختر الصورة',
+    );
   }
 
   @override

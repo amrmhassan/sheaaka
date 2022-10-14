@@ -30,6 +30,9 @@ Future<void> pickImage({
   required VoidCallback setEndLoading,
   required String cloudFolderName,
   CropAspectRatio? cropAspectRatio,
+  int? initialQuality,
+  int? maxSize,
+  int? finalQuality,
 }) async {
   Navigator.pop(context);
 
@@ -38,6 +41,9 @@ Future<void> pickImage({
       context: context,
       source: source,
       cropAspectRatio: cropAspectRatio,
+      finalQuality: finalQuality,
+      initialQuality: initialQuality,
+      maxSize: maxSize,
     );
     if (compressedFile == null) return;
     String? profilePhotoUrl = await _uploadFile(
@@ -59,11 +65,15 @@ Future<void> pickImage({
 //? to pick an image and return it's file
 Future<File?> getImageReadyToUploadFile({
   required ImageSource source,
-  CropAspectRatio? cropAspectRatio,
   required BuildContext context,
+  CropAspectRatio? cropAspectRatio,
+  int? initialQuality,
+  int? maxSize,
+  int? finalQuality,
 }) async {
   ImagePicker picker = ImagePicker();
-  XFile? image = await picker.pickImage(source: source, imageQuality: 5);
+  XFile? image =
+      await picker.pickImage(source: source, imageQuality: initialQuality ?? 5);
   if (image == null) return null;
   var file = await ImageCropper.platform.cropImage(
     sourcePath: image.path,
@@ -71,7 +81,7 @@ Future<File?> getImageReadyToUploadFile({
   );
   double imageSize =
       (await image.length()) / 1000; // this will return the image size in kb
-  if (imageSize > maxAfterPickSize) {
+  if (imageSize > (maxSize ?? maxAfterPickSize)) {
     String msg = 'لا يمكن أن يتعدي حجم الصورة ${maxAfterPickSize / 1000} ميجا';
     showSnackBar(
         context: context, message: msg, snackBarType: SnackBarType.error);
@@ -80,7 +90,8 @@ Future<File?> getImageReadyToUploadFile({
   int quality = 500 ~/ imageSize;
   quality = quality > maxCompressQuality ? maxCompressQuality : quality;
   if (file == null) return null;
-  File? compressedFile = await compressImage(file.path, quality);
+  File? compressedFile =
+      await compressImage(file.path, finalQuality ?? quality);
   return compressedFile;
 }
 
