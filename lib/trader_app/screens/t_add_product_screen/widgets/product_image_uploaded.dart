@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class ProductImageUploaded extends StatelessWidget {
+  final File imageFile;
+
   const ProductImageUploaded({
     Key? key,
+    required this.imageFile,
   }) : super(key: key);
 
   @override
@@ -21,8 +26,8 @@ class ProductImageUploaded extends StatelessWidget {
           color: kTraderSecondaryColor.withOpacity(.3),
         ),
       ),
-      child: Image.asset(
-        'assets/images/3.jpg',
+      child: Image.file(
+        imageFile,
         height: double.infinity,
         width: double.infinity,
         fit: BoxFit.cover,

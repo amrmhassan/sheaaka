@@ -6,14 +6,16 @@ import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class AddProductPhotoButton extends StatelessWidget {
+  final VoidCallback onTap;
   const AddProductPhotoButton({
     Key? key,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ButtonWrapper(
-      onTap: () {},
+      onTap: onTap,
       margin: EdgeInsets.only(left: kVPad),
       width: 150,
       height: 280,

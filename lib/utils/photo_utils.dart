@@ -29,29 +29,16 @@ Future<void> pickImage({
   required VoidCallback setStartLoading,
   required VoidCallback setEndLoading,
   required String cloudFolderName,
+  CropAspectRatio? cropAspectRatio,
 }) async {
   Navigator.pop(context);
 
   try {
-    ImagePicker picker = ImagePicker();
-    XFile? image = await picker.pickImage(source: source, imageQuality: 5);
-    if (image == null) return;
-    var file = await ImageCropper.platform.cropImage(
-      sourcePath: image.path,
-      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+    File? compressedFile = await getImageReadyToUploadFile(
+      context: context,
+      source: source,
+      cropAspectRatio: cropAspectRatio,
     );
-    double imageSize =
-        (await image.length()) / 1000; // this will return the image size in kb
-    if (imageSize > maxAfterPickSize) {
-      String msg =
-          'لا يمكن أن يتعدي حجم الصورة ${maxAfterPickSize / 1000} ميجا';
-      return showSnackBar(
-          context: context, message: msg, snackBarType: SnackBarType.error);
-    }
-    int quality = 500 ~/ imageSize;
-    quality = quality > maxCompressQuality ? maxCompressQuality : quality;
-    if (file == null) return;
-    File? compressedFile = await compressImage(file.path, quality);
     if (compressedFile == null) return;
     String? profilePhotoUrl = await _uploadFile(
       context: context,
@@ -67,6 +54,34 @@ Future<void> pickImage({
         message: kDebugMode ? e.toString() : 'حدث خطأ',
         snackBarType: SnackBarType.error);
   }
+}
+
+//? to pick an image and return it's file
+Future<File?> getImageReadyToUploadFile({
+  required ImageSource source,
+  CropAspectRatio? cropAspectRatio,
+  required BuildContext context,
+}) async {
+  ImagePicker picker = ImagePicker();
+  XFile? image = await picker.pickImage(source: source, imageQuality: 5);
+  if (image == null) return null;
+  var file = await ImageCropper.platform.cropImage(
+    sourcePath: image.path,
+    aspectRatio: cropAspectRatio ?? CropAspectRatio(ratioX: 1, ratioY: 1),
+  );
+  double imageSize =
+      (await image.length()) / 1000; // this will return the image size in kb
+  if (imageSize > maxAfterPickSize) {
+    String msg = 'لا يمكن أن يتعدي حجم الصورة ${maxAfterPickSize / 1000} ميجا';
+    showSnackBar(
+        context: context, message: msg, snackBarType: SnackBarType.error);
+    return null;
+  }
+  int quality = 500 ~/ imageSize;
+  quality = quality > maxCompressQuality ? maxCompressQuality : quality;
+  if (file == null) return null;
+  File? compressedFile = await compressImage(file.path, quality);
+  return compressedFile;
 }
 
 //? to compress an image
@@ -145,12 +160,18 @@ void showPickImageOptions(
                 children: [
                   ImagePickingOptionElement(
                     iconName: 'camera1',
-                    onTap: () => handlePickImage(ImageSource.camera),
+                    onTap: () {
+                      handlePickImage(ImageSource.camera);
+                      Navigator.pop(context);
+                    },
                   ),
                   HSpace(factor: .5),
                   ImagePickingOptionElement(
                     iconName: 'gallery',
-                    onTap: () => handlePickImage(ImageSource.gallery),
+                    onTap: () {
+                      handlePickImage(ImageSource.gallery);
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),
