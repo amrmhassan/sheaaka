@@ -9,8 +9,13 @@ import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class PriceOldNew extends StatelessWidget {
+  final TextEditingController oldPrice;
+  final TextEditingController currentPrice;
+
   const PriceOldNew({
     Key? key,
+    required this.currentPrice,
+    required this.oldPrice,
   }) : super(key: key);
 
   @override
@@ -42,6 +47,7 @@ class PriceOldNew extends StatelessWidget {
                 flex: 2,
                 child: CustomTextField(
                   requiredField: true,
+                  controller: currentPrice,
                   title: 'الحالي',
                   padding: EdgeInsets.zero,
                   borderColor: kTraderSecondaryColor.withOpacity(.5),
@@ -53,6 +59,7 @@ class PriceOldNew extends StatelessWidget {
                 flex: 2,
                 child: CustomTextField(
                   title: 'القديم',
+                  controller: oldPrice,
                   padding: EdgeInsets.zero,
                   borderColor: kTraderSecondaryColor.withOpacity(.5),
                   borderRadius: BorderRadius.zero,

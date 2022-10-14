@@ -73,7 +73,6 @@ Future<bool> handleUserData(BuildContext context) async {
         showSnackBar(
           context: context,
           message: 'لم تقم باستكمال انشاء متجرك',
-          snackBarType: SnackBarType.info,
         );
         Navigator.of(context).pushNamed(SignUpStoreScreen.routeName,
             arguments: userModel.userProfilePhoto);

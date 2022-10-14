@@ -80,7 +80,7 @@ bool isNumeric(String? s) {
 void showSnackBar({
   required BuildContext context,
   required String message,
-  required SnackBarType snackBarType,
+  SnackBarType? snackBarType,
   bool aboveBottomNavBar = false,
   EdgeInsets? margin,
   VoidCallback? onActionTapped,
@@ -93,17 +93,18 @@ void showSnackBar({
       content: Text(
         message,
       ),
-      backgroundColor: snackBarType == SnackBarType.success
-          ? kGreenColor
-          : snackBarType == SnackBarType.error
-              ? kDangerColor
-              : null,
+      backgroundColor:
+          (snackBarType ?? SnackBarType.info) == SnackBarType.success
+              ? kGreenColor
+              : (snackBarType ?? SnackBarType.info) == SnackBarType.error
+                  ? kDangerColor
+                  : null,
       margin: margin,
       action: SnackBarAction(
         label: actionString ?? 'تم',
-        textColor: snackBarType == SnackBarType.error ||
-                snackBarType == SnackBarType.success ||
-                snackBarType == SnackBarType.info
+        textColor: (snackBarType ?? SnackBarType.info) == SnackBarType.error ||
+                (snackBarType ?? SnackBarType.info) == SnackBarType.success ||
+                (snackBarType ?? SnackBarType.info) == SnackBarType.info
             ? Colors.white
             : null,
         onPressed: onActionTapped ?? () {},

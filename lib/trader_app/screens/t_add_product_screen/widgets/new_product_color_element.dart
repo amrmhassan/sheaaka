@@ -10,8 +10,10 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/utils/general_utils.dart';
 
 class NewProductColorEelment extends StatelessWidget {
+  final Color color;
   const NewProductColorEelment({
     Key? key,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,6 @@ class NewProductColorEelment extends StatelessWidget {
           showSnackBar(
             context: context,
             message: 'اضغط مطولا للحذف',
-            snackBarType: SnackBarType.info,
           );
         },
         margin: EdgeInsets.only(left: kHPad / 2),
@@ -30,7 +31,7 @@ class NewProductColorEelment extends StatelessWidget {
         width: ultraLargeIconSize,
         height: ultraLargeIconSize,
         decoration: BoxDecoration(
-          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+          color: color,
           border: Border.all(
             width: 1,
             color: kTraderSecondaryColor.withOpacity(.6),
@@ -39,3 +40,5 @@ class NewProductColorEelment extends StatelessWidget {
         child: SizedBox());
   }
 }
+
+// Colors.primaries[Random().nextInt(Colors.primaries.length)]

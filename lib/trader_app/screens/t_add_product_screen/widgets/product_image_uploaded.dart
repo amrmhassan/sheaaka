@@ -30,22 +30,51 @@ class ProductImageUploaded extends StatelessWidget {
       onLongPress: () {
         removeImageFile(imageFile);
       },
-      child: Container(
-        margin: EdgeInsets.only(left: kVPad),
-        width: 180,
-        height: 280,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: kTraderSecondaryColor.withOpacity(.3),
+      child: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: kVPad),
+            width: 180,
+            height: 280,
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: kTraderSecondaryColor.withOpacity(.3),
+              ),
+            ),
+            child: Image.file(
+              imageFile,
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Image.file(
-          imageFile,
-          height: double.infinity,
-          width: double.infinity,
-          fit: BoxFit.cover,
-        ),
+          Positioned(
+            right: largePadding,
+            top: largePadding,
+            child: GestureDetector(
+              onTap: () {
+                showSnackBar(
+                  context: context,
+                  message: 'soon',
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(largePadding),
+                width: largeIconSize,
+                height: largeIconSize,
+                decoration: BoxDecoration(
+                  color: kTraderPrimaryColor,
+                  borderRadius: BorderRadius.circular(500),
+                ),
+                child: Image.asset(
+                  'assets/icons/full-screen.png',
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

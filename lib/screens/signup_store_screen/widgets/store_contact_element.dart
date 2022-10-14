@@ -74,7 +74,6 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
                     showSnackBar(
                       context: context,
                       message: 'تمت الإضافة',
-                      snackBarType: SnackBarType.info,
                     );
                     dataController.clear();
                   } else {

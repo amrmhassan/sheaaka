@@ -19,7 +19,7 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/importan
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_color_element.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_size_element.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_old_new.dart';
-import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_image.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_images.dart';
 import 'package:project/utils/general_utils.dart';
 
 class TAddProductScreen extends StatefulWidget {
@@ -49,6 +49,34 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   void removeProductImage(File imageFile) {
     setState(() {
       imagesFiles.remove(imageFile);
+    });
+  }
+
+  //? product colors
+  List<Color> availableColors = [];
+  void addColor(Color color) {
+    setState(() {
+      availableColors.add(color);
+    });
+  }
+
+  void removeColor(Color color) {
+    setState(() {
+      availableColors.remove(color);
+    });
+  }
+
+  //? product sizes
+  List<Sizes> availableSizes = [];
+  void addSize(Sizes size) {
+    setState(() {
+      availableSizes.add(size);
+    });
+  }
+
+  void removeSize(Sizes size) {
+    setState(() {
+      availableSizes.remove(size);
     });
   }
 
@@ -91,7 +119,10 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                   removeProductImage: removeProductImage,
                 ),
                 VSpace(),
-                PriceOldNew(),
+                PriceOldNew(
+                  currentPrice: currentPriceController,
+                  oldPrice: oldPriceController,
+                ),
                 VSpace(),
                 PaddingWrapper(
                   child: Text(
@@ -101,21 +132,16 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 ),
                 AddProductProps(
                   title: 'الألوان المتاحة',
-                  children: [
-                    NewProductColorEelment(),
-                    NewProductColorEelment(),
-                    NewProductColorEelment(),
-                    NewProductColorEelment(),
-                    NewProductColorEelment(),
-                  ],
+                  children: availableColors
+                      .map((e) => NewProductColorEelment(color: e))
+                      .toList(),
                 ),
                 VSpace(),
                 AddProductProps(
                   title: 'الأحجام المتاحة',
                   children: [
-                    ...Sizes.values.map(
+                    ...availableSizes.map(
                       (e) {
-                        if (e == Sizes.allSizes) return SizedBox();
                         return NewProductSizeElement(size: e.name);
                       },
                     ),

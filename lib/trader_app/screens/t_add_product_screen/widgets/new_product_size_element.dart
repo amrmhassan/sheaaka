@@ -24,7 +24,6 @@ class NewProductSizeElement extends StatelessWidget {
         showSnackBar(
           context: context,
           message: 'اضغط مطولا للحذف',
-          snackBarType: SnackBarType.info,
         );
       },
       alignment: Alignment.center,
