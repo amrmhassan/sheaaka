@@ -10,7 +10,6 @@ import 'package:project/models/brand_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
-import 'package:project/providers/products_provider.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -48,6 +47,7 @@ class AddProductProvider extends ChangeNotifier {
     required TextEditingController shortDescController,
     required TextEditingController oldPriceController,
     required BuildContext context,
+    required String fullDesc,
   }) async {
     List<String> imagesLinks = await uploadImages(
       context: context,
@@ -57,8 +57,9 @@ class AddProductProvider extends ChangeNotifier {
 
     setUploadingProductData(true);
 
+    String productId = Uuid().v4();
     ProductModel productModel = ProductModel(
-      id: Uuid().v4(),
+      id: productId,
       name: nameController.text,
       storeId: myStore.id,
       storeName: myStore.name,
@@ -72,10 +73,12 @@ class AddProductProvider extends ChangeNotifier {
       shortDesc: shortDescController.text,
       oldPrice: double.tryParse(oldPriceController.text),
       storeLogo: myStore.logoImagePath,
+      fullDesc: fullDesc,
     );
     await FirebaseFirestore.instance
         .collection(productsCollectionName)
-        .add(productModel.toJSON());
+        .doc(productId)
+        .set(productModel.toJSON());
     if (kDebugMode && _sleepAlot) {
       await Future.delayed(Duration(seconds: 30));
     }

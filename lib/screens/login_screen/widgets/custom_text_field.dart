@@ -29,6 +29,8 @@ class CustomTextField extends StatelessWidget {
   final TextStyle? textStyle;
   final bool? requiredField;
   final BorderRadius? borderRadius;
+  final int? maxLines;
+  final String? initialValue;
 
   const CustomTextField({
     Key? key,
@@ -53,6 +55,8 @@ class CustomTextField extends StatelessWidget {
     this.textStyle,
     this.requiredField,
     this.borderRadius,
+    this.maxLines,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -104,6 +108,7 @@ class CustomTextField extends StatelessWidget {
                       HSpace(factor: .5),
                       Expanded(
                         child: TextFormField(
+                          maxLines: maxLines,
                           enabled: enabled,
                           validator: validator,
                           textInputAction:

@@ -187,7 +187,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               handleSecondaryProductInfo(productModel),
                               VSpace(factor: .5),
                               ProductDescriptionText(
-                                desc: productModel.fullDesc ?? 'لا يوجد وصف',
+                                desc: productModel.fullDesc ??
+                                    productModel.shortDesc ??
+                                    'لا يوجد وصف',
                               ),
                               VSpace(factor: .5),
                               productModel.remainingNumber != null &&

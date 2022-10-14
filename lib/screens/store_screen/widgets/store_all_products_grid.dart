@@ -112,7 +112,7 @@ class StoreProductCardSquare extends StatelessWidget {
           arguments: productId,
         );
       },
-      child: Image.asset(
+      child: Image.network(
         imagePath,
         width: double.infinity,
         alignment: Alignment.topCenter,

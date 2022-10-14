@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 
 class ProductDescriptionText extends StatelessWidget {
   final String desc;
@@ -12,11 +13,33 @@ class ProductDescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      desc,
-      style: h4TextStyleInactive,
-      maxLines: 3,
-      overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            context: context,
+            builder: (ctx) {
+              return ModalWrapper(
+                onApply: () {},
+                applyButtonTitle: 'applyButtonTitle',
+                showApplyModalButton: false,
+                child: Row(
+                  children: [
+                    Text(
+                      desc,
+                      style: h4TextStyleInactive,
+                    ),
+                  ],
+                ),
+              );
+            });
+      },
+      child: Text(
+        desc,
+        style: h4TextStyleInactive,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }

@@ -2,9 +2,7 @@
 
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
@@ -12,11 +10,8 @@ import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart'
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/brand_model.dart';
-import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
-import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
@@ -31,9 +26,7 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/price_ol
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_images.dart';
 import 'package:project/trader_app/utils/add_product_utils.dart';
 import 'package:project/utils/general_utils.dart';
-import 'package:project/utils/photo_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 enum PickedDateType {
   offerDate,
@@ -49,13 +42,20 @@ class TAddProductScreen extends StatefulWidget {
 }
 
 class _TAddProductScreenState extends State<TAddProductScreen> {
+  //? full desc
+  String fullDesc = '';
+  void setFullDesc(String v) {
+    setState(() {
+      fullDesc = v;
+    });
+  }
+
   //? texts controllers
   TextEditingController nameController = TextEditingController();
   TextEditingController shortDescController = TextEditingController();
   TextEditingController oldPriceController = TextEditingController();
   TextEditingController currentPriceController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
-  // TextEditingController discountController = TextEditingController();
 
   //? product images
   List<File> imagesFiles = [];
@@ -235,6 +235,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       shortDescController: shortDescController,
       oldPriceController: oldPriceController,
       context: context,
+      fullDesc: fullDesc,
     );
     Navigator.pop(context);
   }
@@ -267,6 +268,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 ImportantProductInfo(
                   name: nameController,
                   shortDesc: shortDescController,
+                  fullDesc: fullDesc,
+                  setFullDesc: setFullDesc,
                 ),
                 VSpace(),
                 ProductImages(
