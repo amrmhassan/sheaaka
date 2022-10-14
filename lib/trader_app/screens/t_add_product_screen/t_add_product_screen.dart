@@ -40,12 +40,16 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
 
   //? product images
   List<File> imagesFiles = [];
-  Future<void> addProductImage(File imageFile) async {
+  void addProductImage(File imageFile) {
     setState(() {
       imagesFiles.add(imageFile);
     });
+  }
 
-    //! upload image will be here then update the images paths
+  void removeProductImage(File imageFile) {
+    setState(() {
+      imagesFiles.remove(imageFile);
+    });
   }
 
   @override
@@ -84,6 +88,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 ProductImages(
                   imagesPaths: imagesFiles,
                   addProductImage: addProductImage,
+                  removeProductImage: removeProductImage,
                 ),
                 VSpace(),
                 PriceOldNew(),

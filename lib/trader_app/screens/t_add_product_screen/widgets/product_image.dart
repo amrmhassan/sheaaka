@@ -14,12 +14,14 @@ import 'package:project/utils/photo_utils.dart';
 
 class ProductImages extends StatelessWidget {
   final List<File> imagesPaths;
-  final Future Function(File path) addProductImage;
+  final Function(File imageFile) addProductImage;
+  final Function(File path) removeProductImage;
 
   const ProductImages({
     Key? key,
     required this.imagesPaths,
     required this.addProductImage,
+    required this.removeProductImage,
   }) : super(key: key);
 
 //? to pick image from the source
@@ -55,6 +57,7 @@ class ProductImages extends StatelessWidget {
                 (e) {
                   return ProductImageUploaded(
                     imageFile: e,
+                    removeImageFile: removeProductImage,
                   );
                 },
               ),
