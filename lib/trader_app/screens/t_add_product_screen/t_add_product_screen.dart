@@ -23,6 +23,11 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_
 import 'package:project/trader_app/utils/add_product_utils.dart';
 import 'package:project/utils/general_utils.dart';
 
+enum PickedDateType {
+  offerDate,
+  trendDate,
+}
+
 class TAddProductScreen extends StatefulWidget {
   static const String routeName = '/t-add-product-screen';
   const TAddProductScreen({super.key});
@@ -88,7 +93,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       isOffer = !isOffer;
     });
     if (isOffer == true && offerEnd == null) {
-      handleDatePicker();
+      handleDatePicker(PickedDateType.offerDate);
     }
   }
 
@@ -107,7 +112,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       isTrend = !isTrend;
     });
     if (isTrend == true && trendEnd == null) {
-      handleDatePicker();
+      handleDatePicker(PickedDateType.trendDate);
     }
   }
 
@@ -120,8 +125,24 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   }
 
   //? for handling date pickers
-  void handleDatePicker() {
-    print('picking date then returning it where its needed');
+  void handleDatePicker(PickedDateType pickedDateType) async {
+    DateTime initialDate = pickedDateType == PickedDateType.offerDate
+        ? offerEnd ?? DateTime.now()
+        : trendEnd ?? DateTime.now();
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(
+        Duration(days: 365),
+      ),
+    );
+    if (pickedDate == null) return;
+    if (pickedDateType == PickedDateType.offerDate) {
+      setOfferEnd(pickedDate);
+    } else {
+      setTrendEnd(pickedDate);
+    }
   }
 
   @override
@@ -227,7 +248,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                         title: 'عرض؟',
                         checked: isOffer,
                         dateEnd: offerEnd,
-                        pickDate: handleDatePicker,
+                        pickDate: () =>
+                            handleDatePicker(PickedDateType.offerDate),
                         toggleChecked: toggleOffer,
                       ),
                       VSpace(factor: .5),
@@ -235,7 +257,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                         title: 'ترند؟',
                         checked: isTrend,
                         dateEnd: trendEnd,
-                        pickDate: handleDatePicker,
+                        pickDate: () =>
+                            handleDatePicker(PickedDateType.trendDate),
                         toggleChecked: toggleTrend,
                       ),
                     ],
