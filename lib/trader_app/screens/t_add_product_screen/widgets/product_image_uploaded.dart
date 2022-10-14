@@ -58,7 +58,7 @@ class ProductImageUploaded extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   ShowSingleImage.routeName,
-                  arguments: imageFile.path,
+                  arguments: imageFile,
                 );
               },
               child: Container(

@@ -17,7 +17,7 @@ class ProductCartImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
+        Image.network(
           imagePath,
           width: 130,
           height: 130,

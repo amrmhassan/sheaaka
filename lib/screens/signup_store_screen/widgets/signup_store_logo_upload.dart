@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
@@ -88,6 +89,7 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
         setStartLoading: startCoverLoading,
         setEndLoading: endCoverLoading,
         cloudFolderName: storeCoverImagesDir,
+        cropAspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
       );
 
 //? choosing logo image, modal

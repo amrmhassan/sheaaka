@@ -16,6 +16,7 @@ import 'package:project/models/brand_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';

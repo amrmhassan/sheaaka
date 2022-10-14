@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/constants/sizes.dart';
@@ -7,6 +9,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 
 class ShowSingleImage extends StatelessWidget {
   static const String routeName = '/offer-screen';
+
   const ShowSingleImage({super.key});
 
   @override
@@ -15,7 +18,8 @@ class ShowSingleImage extends StatelessWidget {
       systemNavigationBarColor: Colors.black, // navigation bar color
       statusBarColor: Colors.black, // status bar color
     ));
-    var imagePath = ModalRoute.of(context)!.settings.arguments as String;
+    var imagePath = ModalRoute.of(context)!.settings.arguments;
+
     return ScreensWrapper(
       child: GestureDetector(
         onPanUpdate: (details) {
@@ -33,7 +37,9 @@ class ShowSingleImage extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               color: Colors.black,
-              child: Image.asset(imagePath),
+              child: imagePath is File
+                  ? Image.file(imagePath)
+                  : Image.network(imagePath as String),
             ),
             GestureDetector(
               onTap: () {

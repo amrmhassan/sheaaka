@@ -7,10 +7,12 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/add_product_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/products_number.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/t_product_screen_app_bar.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
+import 'package:provider/provider.dart';
 
 class TProductsScreen extends StatelessWidget {
   static const String routeName = '/t-products-screen';
@@ -32,7 +34,9 @@ class TProductsScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(largePadding),
           child: Image.asset(
-            'assets/icons/plus.png',
+            Provider.of<AddProductProvider>(context).loading
+                ? 'assets/icons/upload.png'
+                : 'assets/icons/plus.png',
             color: Colors.white,
           ),
         ),

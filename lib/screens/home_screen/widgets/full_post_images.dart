@@ -24,7 +24,7 @@ class FullPostImage extends StatelessWidget {
       ),
       items: List.generate(
         imagesPath.length,
-        (index) => Image.asset(
+        (index) => Image.network(
           imagesPath[index],
           width: double.infinity,
           height: double.infinity,

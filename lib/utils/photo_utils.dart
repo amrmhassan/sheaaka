@@ -34,7 +34,7 @@ Future<void> pickImage({
   int? maxSize,
   int? finalQuality,
 }) async {
-  Navigator.pop(context);
+  // Navigator.pop(context);
 
   try {
     File? compressedFile = await getImageReadyToUploadFile(

@@ -28,6 +28,10 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   bool loadingAllProducts = false;
+  void addProduct(ProductModel productModel) {
+    _allProducts.add(productModel);
+    notifyListeners();
+  }
 
   // //? fetch all products
   Future<void> _fetchAllProducts([bool noStateNotify = false]) async {
