@@ -65,9 +65,10 @@ class ProductImages extends StatelessWidget {
                   );
                 },
               ),
-              AddProductPhotoButton(
-                onTap: () => handlePickOptions(context),
-              ),
+              if (imagesPaths.length <= 3)
+                AddProductPhotoButton(
+                  onTap: () => handlePickOptions(context),
+                ),
             ],
           ),
         ),

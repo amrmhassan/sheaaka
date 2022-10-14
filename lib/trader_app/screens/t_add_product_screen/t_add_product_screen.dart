@@ -7,6 +7,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
+import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
@@ -145,6 +146,48 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     }
   }
 
+//? for validating the product data
+  void validateProductData() {
+    //* validating the product name
+    if (nameController.text.length < 5) {
+      return showSnackBar(
+        context: context,
+        message: 'لا يقل اسم المنتج عن 5 أحرف',
+        snackBarType: SnackBarType.error,
+      );
+    }
+    //* short desc
+    if (shortDescController.text.length < 5) {
+      return showSnackBar(
+        context: context,
+        message: 'لا يقل الوصف القصير عن 5 أحرف',
+        snackBarType: SnackBarType.error,
+      );
+    }
+    //* product images
+    if (imagesFiles.isEmpty) {
+      return showSnackBar(
+        context: context,
+        message: 'لابد من إضافة صورة علي الأقل',
+        snackBarType: SnackBarType.error,
+      );
+    }
+    if (!((double.tryParse(currentPriceController.text) ?? 0) > 0)) {
+      return showSnackBar(
+          context: context, message: 'لابد من ادخال سعر المنتج الحالي');
+    }
+    //* old price
+    if (oldPriceController.text.isNotEmpty &&
+        double.tryParse(oldPriceController.text) == null) {
+      return showSnackBar(context: context, message: 'أدخل سعر قديم صحيح');
+    }
+    //* upload the product successfully
+    showSnackBar(
+        context: context,
+        message: 'Uploading product',
+        snackBarType: SnackBarType.success);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
@@ -155,10 +198,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
             traderStyle: true,
             rightIcon: AppBarIcon(
               onTap: () {
-                showSnackBar(
-                    context: context,
-                    message: 'Upload product will be here soon',
-                    snackBarType: SnackBarType.info);
+                validateProductData();
               },
               backgroundColor: kTraderLightColor.withOpacity(.5),
               child: Image.asset(
@@ -266,7 +306,26 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 ),
 
                 //! just delete me after finishing
-                VSpace(factor: 5),
+
+                VSpace(factor: 2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'عند الانتهاء قم برفع المنتج من الزر بالأعلي',
+                      style: h4TextStyleInactive.copyWith(
+                        color: kTraderSecondaryColor,
+                      ),
+                    ),
+                    HSpace(factor: .1),
+                    Image.asset(
+                      'assets/icons/upload.png',
+                      width: smallIconSize,
+                      color: kTraderSecondaryColor,
+                    ),
+                  ],
+                ),
+                VSpace(factor: 2),
               ],
             ),
           ),

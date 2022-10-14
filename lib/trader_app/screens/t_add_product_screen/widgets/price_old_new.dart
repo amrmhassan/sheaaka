@@ -46,6 +46,7 @@ class PriceOldNew extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: CustomTextField(
+                  textInputType: TextInputType.number,
                   requiredField: true,
                   controller: currentPrice,
                   title: 'الحالي',
@@ -58,6 +59,7 @@ class PriceOldNew extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: CustomTextField(
+                  textInputType: TextInputType.number,
                   title: 'القديم',
                   controller: oldPrice,
                   padding: EdgeInsets.zero,
