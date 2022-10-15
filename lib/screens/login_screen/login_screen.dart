@@ -61,8 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           message: 'تم تسجيل الدخول',
           snackBarType: SnackBarType.success);
-      Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+      Navigator.popUntil(context, (route) => false);
+
+      Navigator.pushNamed(context, HolderScreen.routeName);
     } on FirebaseAuthException catch (e) {
       showSnackBar(
           context: context,
@@ -129,8 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         await Provider.of<UserProvider>(context, listen: false)
             .firebaseSignInGoogle(googleSignInAccount);
-        Navigator.pop(context);
-        Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+        Navigator.popUntil(context, (route) => false);
+
+        Navigator.pushNamed(context, HolderScreen.routeName);
       }
     } catch (e) {
       showSnackBar(

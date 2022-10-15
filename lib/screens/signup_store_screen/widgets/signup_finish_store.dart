@@ -39,7 +39,8 @@ class SignUpFinishStore extends StatelessWidget {
           VSpace(factor: 2),
           SubmitFormButton(
             onTap: () {
-              Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+              Navigator.popUntil(context, (route) => false);
+              Navigator.pushNamed(context, HolderScreen.routeName);
             },
             title: 'فتح المتجر',
           ),
