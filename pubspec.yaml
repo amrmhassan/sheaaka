@@ -90,7 +90,7 @@ flutter:
     - assets/icons/catIcons/
     - assets/fonts/
     - assets/animations/
-    # - assets/images/
+    - assets/images/
     # - assets/images/fake/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -45,8 +45,11 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   color: kSecondaryColor,
                 )
-              : Image.network(
-                  imagePath!,
+              : FadeInImage(
+                  placeholder: AssetImage('assets/images/placeholder.png'),
+                  image: NetworkImage(
+                    imagePath!,
+                  ),
                   width: double.infinity,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,

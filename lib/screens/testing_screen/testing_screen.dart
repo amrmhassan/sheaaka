@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/global/widgets/loading_image/loading_image.dart';
 import 'package:project/global/widgets/v_space.dart';
 
 const double maxLoaderRadius = 100;
@@ -35,18 +36,18 @@ class TestingScreen extends StatefulWidget {
 
 class _TestingScreenState extends State<TestingScreen> {
   @override
-  void initState() {
-    Friend f = Friend(
-        age: 20,
-        name: 'osama',
-        birth: DateTime.now().subtract(Duration(days: 14 * 365)));
+  // void initState() {
+  //   Friend f = Friend(
+  //       age: 20,
+  //       name: 'osama',
+  //       birth: DateTime.now().subtract(Duration(days: 14 * 365)));
 
-    FirebaseFirestore.instance
-        .collection('TestingCollection')
-        .add({'dasta': f});
+  //   FirebaseFirestore.instance
+  //       .collection('TestingCollection')
+  //       .add({'dasta': f});
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,23 +56,26 @@ class _TestingScreenState extends State<TestingScreen> {
         child: Column(
           children: [
             VSpace(),
-            Image.network(
-              'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-674010.jpg&fm=jpg',
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress != null) {
-                  if (loadingProgress.cumulativeBytesLoaded <
-                      loadingProgress.expectedTotalBytes!) {
-                    return Text('data');
-                  } else {
-                    return child;
-                  }
-                }
-
-                return child;
-              },
+            SizedBox(
               width: double.infinity,
-              fit: BoxFit.contain,
+              height: 300,
+              child: FadeInImage(
+                image: NetworkImage(
+                  'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-674010.jpg&fm=jpg',
+                ),
+                height: double.infinity,
+                fit: BoxFit.cover,
+                placeholder: AssetImage(
+                  'assets/images/placeholder.png',
+                ),
+                placeholderFit: BoxFit.cover,
+              ),
             )
+            // Container(
+            //   width: 200,
+            //   height: 200,
+            //   child: LoadingImage(),
+            // ),
           ],
         ),
       ),

@@ -21,11 +21,14 @@ class StorePageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var image = Image.network(
-      coverImagePath,
+    var image = FadeInImage(
+      placeholder: AssetImage('assets/images/placeholder.png'),
+      image: NetworkImage(
+        coverImagePath,
+      ),
       width: double.infinity,
       fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
+      imageErrorBuilder: (context, error, stackTrace) {
         return Container(
           width: double.infinity,
           height: double.infinity,

@@ -122,7 +122,11 @@ class ProductsProvider extends ChangeNotifier {
       int startIndex = _allProducts
               .indexWhere((element) => element.id == lastHomeProduct.id) +
           1;
-      int endIndex = startIndex + loadingAtATime;
+
+      int lengthDiff = _allProducts.length - _homeProducts.length;
+      int increaingAmount =
+          ((loadingAtATime < lengthDiff) ? loadingAtATime : lengthDiff);
+      int endIndex = startIndex + increaingAmount;
 
       List<ProductModel> nextProducts =
           _allProducts.sublist(startIndex, endIndex);

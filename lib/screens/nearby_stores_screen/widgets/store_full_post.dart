@@ -27,13 +27,16 @@ class StoreFullPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var coverImage = Image.network(
-      storeModel.coverImagePath,
+    var coverImage = FadeInImage(
+      placeholder: AssetImage('assets/images/placeholder.png'),
+      image: NetworkImage(
+        storeModel.coverImagePath,
+      ),
       width: double.infinity,
       fit: BoxFit.cover,
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       height: double.infinity,
-      errorBuilder: (context, error, stackTrace) {
+      imageErrorBuilder: (context, error, stackTrace) {
         return Container(
           width: double.infinity,
           height: double.infinity,
