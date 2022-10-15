@@ -108,7 +108,7 @@ class CustomTextField extends StatelessWidget {
                       HSpace(factor: .5),
                       Expanded(
                         child: TextFormField(
-                          maxLines: maxLines,
+                          maxLines: maxLines ?? 1,
                           enabled: enabled,
                           validator: validator,
                           textInputAction:

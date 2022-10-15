@@ -220,6 +220,16 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         snackBarType: SnackBarType.error,
       );
     }
+    //* validating that old price is bigger than price after offer
+    if (isOffer &&
+        (double.parse(oldPriceController.text) <
+            double.parse(currentPriceController.text))) {
+      return showSnackBar(
+        context: context,
+        message: 'لابد أن يكون السعر الحالي أصغر من السعر قبل الخصم',
+        snackBarType: SnackBarType.error,
+      );
+    }
     //* upload the product successfully
     StoreModel myStore =
         Provider.of<TraderProvider>(context, listen: false).myStore!;
@@ -236,6 +246,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       oldPriceController: oldPriceController,
       context: context,
       fullDesc: fullDesc,
+      isOffer: isOffer,
+      offerEnd: offerEnd,
     );
     Navigator.pop(context);
   }

@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
@@ -48,7 +49,10 @@ class AddProductProvider extends ChangeNotifier {
     required TextEditingController oldPriceController,
     required BuildContext context,
     required String fullDesc,
+    required DateTime? offerEnd,
+    required bool isOffer,
   }) async {
+    //* uploading images
     List<String> imagesLinks = await uploadImages(
       context: context,
       files: imagesFiles,
@@ -57,6 +61,7 @@ class AddProductProvider extends ChangeNotifier {
 
     setUploadingProductData(true);
 
+    //* uploading product data
     String productId = Uuid().v4();
     ProductModel productModel = ProductModel(
       id: productId,
@@ -81,6 +86,24 @@ class AddProductProvider extends ChangeNotifier {
         .set(productModel.toJSON());
     if (kDebugMode && _sleepAlot) {
       await Future.delayed(Duration(seconds: 30));
+    }
+
+    //* checking if product has offer, then upload it
+    if (isOffer) {
+      String id = Uuid().v4();
+      OfferModel offerModel = OfferModel(
+        id: id,
+        imagePath: imagesLinks[0],
+        title: shortDescController.text,
+        createdAt: DateTime.now(),
+        endAt: offerEnd!,
+        productId: productId,
+        storeId: myStore.id,
+      );
+      await FirebaseFirestore.instance
+          .collection(offersCollectionName)
+          .doc(id)
+          .set(offerModel.toJSON());
     }
     setUploadingProductData(false);
   }
