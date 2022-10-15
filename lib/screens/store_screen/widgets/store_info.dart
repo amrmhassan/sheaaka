@@ -8,8 +8,12 @@ import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/modals/store_info_modal.dart';
 
 class StoreInfo extends StatelessWidget {
+  final List<String> phones;
+  final List<String> emails;
   const StoreInfo({
     Key? key,
+    required this.phones,
+    required this.emails,
   }) : super(key: key);
 
   @override
@@ -25,7 +29,7 @@ class StoreInfo extends StatelessWidget {
             onApply: () {},
             applyButtonTitle: 'applyButtonTitle',
             showApplyModalButton: false,
-            child: StoreInfoModal(),
+            child: StoreInfoModal(emails: emails, phones: phones),
           ),
         );
       },

@@ -108,7 +108,6 @@ class StoreModel {
         (storeTabsHelper).map((e) => StoreTabModel.fromJSON(e)).toList();
     List<dynamic>? emailsHelper = storeJSON[emailsString];
     List<dynamic>? phonesHelper = storeJSON[phonesString];
-    print('object');
     List<String> emails = emailsHelper?.map((e) => e.toString()).toList() ?? [];
     List<String> phones = phonesHelper?.map((e) => e.toString()).toList() ?? [];
 
