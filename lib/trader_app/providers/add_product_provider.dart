@@ -7,10 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/key_word_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -51,6 +53,9 @@ class AddProductProvider extends ChangeNotifier {
     required String fullDesc,
     required DateTime? offerEnd,
     required bool isOffer,
+    required ProductsProvider productsProvider,
+    required TextEditingController offerNameController,
+    required TextEditingController keywordksController,
   }) async {
     //* uploading images
     List<String> imagesLinks = await uploadImages(
@@ -63,6 +68,10 @@ class AddProductProvider extends ChangeNotifier {
 
     //* uploading product data
     String productId = Uuid().v4();
+    String fullDescText = fullDesc.replaceAll('\n\n', '\n');
+    String keywordsString = keywordksController.text;
+    List<String> keywords = keywordsString.split('\n');
+
     ProductModel productModel = ProductModel(
       id: productId,
       name: nameController.text,
@@ -78,7 +87,8 @@ class AddProductProvider extends ChangeNotifier {
       shortDesc: shortDescController.text,
       oldPrice: double.tryParse(oldPriceController.text),
       storeLogo: myStore.logoImagePath,
-      fullDesc: fullDesc,
+      fullDesc: fullDescText,
+      keywords: keywords,
     );
     await FirebaseFirestore.instance
         .collection(productsCollectionName)
@@ -94,7 +104,7 @@ class AddProductProvider extends ChangeNotifier {
       OfferModel offerModel = OfferModel(
         id: id,
         imagePath: imagesLinks[0],
-        title: shortDescController.text,
+        title: offerNameController.text,
         createdAt: DateTime.now(),
         endAt: offerEnd!,
         productId: productId,
@@ -105,6 +115,7 @@ class AddProductProvider extends ChangeNotifier {
           .doc(id)
           .set(offerModel.toJSON());
     }
+    productsProvider.addProduct(productModel);
     setUploadingProductData(false);
   }
 

@@ -12,6 +12,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
@@ -56,6 +57,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   TextEditingController oldPriceController = TextEditingController();
   TextEditingController currentPriceController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
+  TextEditingController offerNameController = TextEditingController();
+  TextEditingController keywordsController = TextEditingController();
 
   //? product images
   List<File> imagesFiles = [];
@@ -162,7 +165,15 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         Duration(days: 365),
       ),
     );
-    if (pickedDate == null) return;
+    if (pickedDate == null) {
+      if (offerEnd == null) {
+        setState(() {
+          isOffer = false;
+        });
+      }
+      return;
+    }
+    ;
     if (pickedDateType == PickedDateType.offerDate) {
       setOfferEnd(pickedDate);
     } else {
@@ -230,9 +241,18 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         snackBarType: SnackBarType.error,
       );
     }
+    if (isOffer && offerNameController.text.length < 3) {
+      return showSnackBar(
+        context: context,
+        message: 'لا يقل اسم العرض عن 3 أحرف',
+        snackBarType: SnackBarType.error,
+      );
+    }
     //* upload the product successfully
     StoreModel myStore =
         Provider.of<TraderProvider>(context, listen: false).myStore!;
+    ProductsProvider productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
 
     Provider.of<AddProductProvider>(context, listen: false).uploadProduct(
       nameController: nameController,
@@ -248,6 +268,9 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       fullDesc: fullDesc,
       isOffer: isOffer,
       offerEnd: offerEnd,
+      productsProvider: productsProvider,
+      offerNameController: offerNameController,
+      keywordksController: keywordsController,
     );
     Navigator.pop(context);
   }
@@ -278,6 +301,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
               physics: BouncingScrollPhysics(),
               children: [
                 ImportantProductInfo(
+                  keywords: keywordsController,
                   name: nameController,
                   shortDesc: shortDescController,
                   fullDesc: fullDesc,
@@ -360,6 +384,47 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                             handleDatePicker(PickedDateType.offerDate),
                         toggleChecked: toggleOffer,
                       ),
+                      VSpace(factor: .3),
+                      if (isOffer)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                requiredField: true,
+                                controller: offerNameController,
+                                title: 'اسم العرض',
+                                padding: EdgeInsets.zero,
+                                borderColor:
+                                    kTraderSecondaryColor.withOpacity(.5),
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            HSpace(factor: .3),
+                            Expanded(
+                              child: CustomTextField(
+                                requiredField: true,
+                                textInputType: TextInputType.number,
+                                title: 'السعر القديم',
+                                controller: oldPriceController,
+                                padding: EdgeInsets.zero,
+                                borderColor:
+                                    kTraderSecondaryColor.withOpacity(.5),
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            // HSpace(factor: .3),
+                            // Expanded(
+                            //   child: CustomTextField(
+                            //     textInputType: TextInputType.number,
+                            //     title: '0%-',
+                            //     controller: discount,
+                            //     padding: EdgeInsets.zero,
+                            //     borderColor: kTraderSecondaryColor.withOpacity(.5),
+                            //     borderRadius: BorderRadius.zero,
+                            //   ),
+                            // ),
+                          ],
+                        ),
                       VSpace(factor: .5),
                       CheckBoxWithPeriodPicker(
                         title: 'ترند؟',

@@ -15,7 +15,7 @@ class ProductModel {
   List<String> imagesPath;
   int lovesNumber;
   double price;
-  List<KeyWordModel>? keywords;
+  List<String>? keywords;
   BrandModel? brand;
   List<Sizes>? availableSize;
   List<Color>? availableColors;
@@ -70,8 +70,8 @@ class ProductModel {
   Map<String, dynamic> toJSON() {
     List<String>? sizesConverted = availableSize?.map((e) => e.name).toList();
     List<int>? colorsConverted = availableColors?.map((e) => e.value).toList();
-    List<Map<String, dynamic>>? keywordsConverted =
-        keywords?.map((e) => e.toJSON()).toList();
+    // List<Map<String, dynamic>>? keywordsConverted =
+    //     keywords?.map((e) => e.toJSON()).toList();
     return {
       idString: id,
       nameString: name,
@@ -95,7 +95,7 @@ class ProductModel {
       fullDescString: fullDesc,
       shortDescString: shortDesc,
       availableColorsString: colorsConverted,
-      keyWordsString: keywordsConverted,
+      keyWordsString: keywords,
       // categoryString: category?.toJSON(),
       categoryIdString: categoryId,
       genderCategoryIdString: genderCategoryId,
@@ -136,12 +136,12 @@ class ProductModel {
         (productJSON[availableColorsString] as List<dynamic>?)
             ?.map((e) => intToColors(e))
             .toList();
-    var keywordsHelper = productJSON[keyWordsString];
+    var keywordsHelper = productJSON[keyWordsString] as List<dynamic>?;
 
-    List<dynamic>? keywords = keywordsHelper == null
-        ? keywordsHelper
-        : (productJSON[keyWordsString])
-            .map((k) => KeyWordModel.fromJSON(k!))
+    List<String>? keywords = keywordsHelper == null
+        ? keywordsHelper?.map((e) => e.toString()).toList()
+        : (productJSON[keyWordsString] as List<dynamic>)
+            .map((k) => k.toString())
             .toList();
     // var catHelper = productJSON[categoryString];
 
@@ -173,7 +173,7 @@ class ProductModel {
       rating: rating,
       remainingNumber: remainingNumber,
       shortDesc: shortDesc,
-      keywords: keywords == null ? null : [...keywords],
+      keywords: keywords,
       // category: category,
       categoryId: categoryId,
       genderCategoryId: genderCategoryId,

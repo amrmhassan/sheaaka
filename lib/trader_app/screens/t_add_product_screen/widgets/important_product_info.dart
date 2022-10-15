@@ -11,6 +11,7 @@ import 'package:project/trader_app/constants/colors.dart';
 class ImportantProductInfo extends StatelessWidget {
   final TextEditingController name;
   final TextEditingController shortDesc;
+  final TextEditingController keywords;
   final String fullDesc;
   final Function(String v) setFullDesc;
 
@@ -20,6 +21,7 @@ class ImportantProductInfo extends StatelessWidget {
     required this.shortDesc,
     required this.fullDesc,
     required this.setFullDesc,
+    required this.keywords,
   }) : super(key: key);
 
   @override
@@ -90,8 +92,19 @@ class ImportantProductInfo extends StatelessWidget {
             ),
           ),
           VSpace(),
+          Text(
+            'أضف كل جملة مفتاحية في سطر جديد',
+            style: h4TextStyleInactive.copyWith(
+              color: kTraderSecondaryColor,
+              height: 1,
+            ),
+          ),
           CustomTextField(
+            maxLines: 3,
+            minLines: 1,
+            textInputAction: TextInputAction.newline,
             title: 'إضافة كلمات مفتاحية',
+            controller: keywords,
             padding: EdgeInsets.zero,
             borderColor: kTraderSecondaryColor.withOpacity(.5),
             borderRadius: BorderRadius.zero,

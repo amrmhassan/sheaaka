@@ -6,6 +6,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/screens/offer_screen/show_single_image.dart';
+import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_offer_photo.dart'
     as store_offer_photo;
 
@@ -21,8 +22,8 @@ class StoreOfferElement extends StatelessWidget {
     return offer.active
         ? GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, ShowSingleImage.routeName,
-                  arguments: offer.imagePath);
+              Navigator.pushNamed(context, ProductScreen.routeName,
+                  arguments: offer.productId);
             },
             child: Container(
               margin: EdgeInsets.only(

@@ -59,38 +59,7 @@ class PriceOldNew extends StatelessWidget {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
-              if (isOffer)
-                Expanded(
-                  flex: 3,
-                  child: Row(
-                    children: [
-                      HSpace(factor: .3),
-                      Expanded(
-                        flex: 2,
-                        child: CustomTextField(
-                          textInputType: TextInputType.number,
-                          title: 'القديم',
-                          controller: oldPrice,
-                          padding: EdgeInsets.zero,
-                          borderColor: kTraderSecondaryColor.withOpacity(.5),
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      Spacer(),
-                      // HSpace(factor: .3),
-                      // Expanded(
-                      //   child: CustomTextField(
-                      //     textInputType: TextInputType.number,
-                      //     title: '0%-',
-                      //     controller: discount,
-                      //     padding: EdgeInsets.zero,
-                      //     borderColor: kTraderSecondaryColor.withOpacity(.5),
-                      //     borderRadius: BorderRadius.zero,
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
+              Spacer(),
             ],
           )
         ],

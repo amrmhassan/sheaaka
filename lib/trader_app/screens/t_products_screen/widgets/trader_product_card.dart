@@ -35,8 +35,11 @@ class TraderProductCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              productModel.imagesPath[0],
+            FadeInImage(
+              placeholder: AssetImage('assets/images/placeholder.png'),
+              image: NetworkImage(
+                productModel.imagesPath[0],
+              ),
               width: productImageDimensions,
               height: productImageDimensions,
               fit: BoxFit.cover,
