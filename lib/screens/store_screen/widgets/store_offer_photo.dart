@@ -48,9 +48,12 @@ class StoreOfferPhoto extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1000),
           ),
-          child: Image.asset(
-            imagePath,
-            // width: double.infinity,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/placeholder.png'),
+            image: NetworkImage(
+              imagePath,
+              // width: double.infinity,
+            ),
             fit: BoxFit.cover,
             width: double.infinity,
             alignment: Alignment.topCenter,

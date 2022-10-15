@@ -18,7 +18,7 @@ class StoreModel {
   List<KeyWordModel>? keywords;
 
   final String? desc;
-  final List<OfferModel>? offers;
+  List<OfferModel>? offers;
   final LatLng? location;
   double? distance;
   String creatorUserUID;
@@ -28,7 +28,6 @@ class StoreModel {
     required this.coverImagePath,
     required this.followers,
     required this.name,
-    required this.offers,
     required this.creatorUserUID,
     this.logoImagePath,
     this.location,
@@ -40,8 +39,8 @@ class StoreModel {
   });
 
   Map<String, dynamic> toJSON() {
-    List<Map<String, dynamic>>? offersJSON =
-        offers?.map((e) => e.toJSON()).toList();
+    // List<Map<String, dynamic>>? offersJSON =
+    //     offers?.map((e) => e.toJSON()).toList();
 
     GeoPoint? locationPoint = (location == null)
         ? null
@@ -61,7 +60,7 @@ class StoreModel {
       followersString: followers,
       ratingString: rating,
       descString: desc,
-      offersString: offersJSON,
+      // offersString: offersJSON,
       locationString: locationPoint,
       keyWordsString: keywordsConverted,
       creatorUserUIDString: creatorUserUID,
@@ -76,11 +75,11 @@ class StoreModel {
     int followersF = storeJSON[followersString];
     String nameF = storeJSON[nameString];
 
-    var offersHelper = storeJSON[offersString];
+    // var offersHelper = storeJSON[offersString];
 
-    List<dynamic>? offersF = offersHelper == null
-        ? null
-        : (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
+    // List<dynamic>? offersF = offersHelper == null
+    //     ? null
+    //     : (storeJSON[offersString]).map((e) => OfferModel.fromJSON(e)).toList();
 
     GeoPoint? locationGeoPoint = (storeJSON[locationString] as GeoPoint?);
     LatLng? locationF = locationGeoPoint == null
@@ -108,7 +107,7 @@ class StoreModel {
       logoImagePath: logoImagePathF,
       followers: followersF,
       name: nameF,
-      offers: offersF == null ? null : [...offersF],
+      // offers: offersF == null ? null : [...offersF],
       location: locationF,
       desc: descF,
       rating: ratingF,

@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/custom_error.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/store_model.dart';
 
 import 'package:project/utils/general_utils.dart';
@@ -17,6 +18,22 @@ import 'package:uuid/uuid.dart';
 class StoreProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
   bool loadingStores = false;
+
+  //# all offers
+  List<OfferModel> _offers = [];
+  List<OfferModel> get offers {
+    return [..._offers];
+  }
+
+  Future<void> fetchAndUpdateOffers([bool noStateNotify = false]) async {
+    _offers.clear();
+    var data = (await ref.collection(offersCollectionName).get()).docs;
+    for (var o in data) {
+      OfferModel offer = OfferModel.fromJSON(o.data());
+      _offers.add(offer);
+    }
+    if (!noStateNotify) notifyListeners();
+  }
 
 //# all stores
   List<StoreModel> _stores = [];
@@ -49,6 +66,7 @@ class StoreProvider extends ChangeNotifier {
         var s = StoreModel.fromJSON(element.data());
 
         helperList.add(s);
+        s.offers = _offers.where((element) => element.storeId == s.id).toList();
       }
       _stores = helperList;
       loadingStores = false;
@@ -84,7 +102,6 @@ class StoreProvider extends ChangeNotifier {
       logoImagePath: logoImagePath,
       followers: 0,
       name: name,
-      offers: [],
       location: location ?? LatLng(30, 30),
       creatorUserUID: currentUser.uid,
       rating: 1,

@@ -32,6 +32,7 @@ class OfferModel {
       endAtString: endAt,
       activeString: active,
       storeIdString: storeId,
+      productIdString: productId,
     };
   }
 
@@ -42,7 +43,7 @@ class OfferModel {
       title: offerJSON[titleString],
       createdAt: (offerJSON[createdAtString] as Timestamp).toDate(),
       endAt: (offerJSON[endAtString] as Timestamp).toDate(),
-      productId: offerJSON[productIdString] ?? '',
+      productId: offerJSON[productIdString],
       storeId: offerJSON[storeIdString],
     );
   }

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/customer_gender_model.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
@@ -34,7 +36,10 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   // //? fetch all products
-  Future<void> _fetchAllProducts([bool noStateNotify = false]) async {
+  Future<void> _fetchAllProducts(
+    List<OfferModel> offers, [
+    bool noStateNotify = false,
+  ]) async {
     //! when fetching all products, fetch the offer data from offerIdString then add it to the product model,
     //! don't save the offer end date on the product, just fetch it
 
@@ -52,6 +57,17 @@ class ProductsProvider extends ChangeNotifier {
       List<ProductModel> helperList = [];
       for (var element in res.docs) {
         var p = ProductModel.fromJSON(element.data());
+        try {
+          OfferModel offer =
+              offers.firstWhere((element) => element.productId == p.id);
+          p.offerEnd = offer.endAt;
+          p.offerStarted = offer.createdAt;
+          p.hasOffer = true;
+        } catch (e, s) {
+          if (kDebugMode) {
+            print('product has no offer');
+          }
+        }
         helperList.add(p);
       }
       _allProducts = helperList;
@@ -59,8 +75,12 @@ class ProductsProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e, stack) {
+      print(e);
       throw CustomError(
-          errorType: ErrorsTypes.errorLoadingProducts, stackTrace: stack);
+        errorType: ErrorsTypes.errorLoadingProducts,
+        stackTrace: stack,
+        errString: e.toString(),
+      );
     }
   }
 
@@ -80,8 +100,11 @@ class ProductsProvider extends ChangeNotifier {
 
   //? fetch and update home products
   //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
-  Future<void> reloadHomeProducts([bool noStateNotify = false]) async {
-    _fetchAllProducts(noStateNotify);
+  Future<void> reloadHomeProducts(
+    List<OfferModel> offers, [
+    bool noStateNotify = false,
+  ]) async {
+    _fetchAllProducts(offers, noStateNotify);
 
     if (loadingHomeProducts) return;
 

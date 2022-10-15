@@ -119,7 +119,7 @@ class DataCreator {
       coverImagePath: coverImagePath,
       followers: followers,
       name: name,
-      offers: [],
+      // offers: [],
       location: location,
       desc: desc,
       rating: rating,
@@ -187,7 +187,7 @@ class DataCreator {
           .getRandomList(Sizes.values)
           .map((e) => e as Sizes)
           .toList(),
-      offerEnd: null,
+      // offerEnd: null,
       oldPrice: oldPrice,
       keywords: keywords,
       categoryId: categoryModel.id,
@@ -214,7 +214,7 @@ class DataCreator {
     ProductModel p = fProducts[i];
     p.offerEnd = endAt;
     p.offerStarted = startDate;
-    p.offerId = offerId;
+    // p.offerId = offerId;
 
     fProducts[i] = p;
   }

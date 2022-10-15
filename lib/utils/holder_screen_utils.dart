@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project/helpers/shared_pref_helper.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
 import 'package:project/providers/app_state_provider.dart';
@@ -20,11 +21,15 @@ import 'package:provider/provider.dart';
 //? loading data from firestore
 Future<void> loadData(BuildContext context) async {
   await firstTimeOpenApp(context);
+  await Provider.of<StoreProvider>(context, listen: false)
+      .fetchAndUpdateOffers(true);
+  List<OfferModel> offers =
+      Provider.of<StoreProvider>(context, listen: false).offers;
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
 
   //* the loading in this screen only for the network checking
   await Provider.of<ProductsProvider>(context, listen: false)
-      .reloadHomeProducts(true);
+      .reloadHomeProducts(offers, true);
 
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
@@ -37,9 +42,14 @@ Future<void> loadData(BuildContext context) async {
 //? load data for home screen
 Future<void> loadDataForHomeScreen(BuildContext context) async {
   //* the loading in this screen only for the network checking
+  await Provider.of<StoreProvider>(context, listen: false)
+      .fetchAndUpdateOffers(true);
+  List<OfferModel> offers =
+      Provider.of<StoreProvider>(context, listen: false).offers;
+
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
   await Provider.of<ProductsProvider>(context, listen: false)
-      .reloadHomeProducts(true);
+      .reloadHomeProducts(offers, true);
 }
 
 //? checking user store if trader

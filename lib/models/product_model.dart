@@ -30,7 +30,7 @@ class ProductModel {
   late bool hasOffer;
   DateTime? offerEnd;
   DateTime? offerStarted;
-  String? offerId;
+//  late String? offerId;
   //! i don't know if a product can be in multiple categories or not, so make sure then edit it to list if needed
   // CategoryModel? category;
   String? categoryId;
@@ -53,9 +53,9 @@ class ProductModel {
     this.rating,
     this.oldPrice,
     this.remainingNumber,
-    this.offerEnd,
-    this.offerStarted,
-    this.offerId,
+    // this.offerEnd,
+    // this.offerStarted,
+    // this.offerId,
     // this.favorite,
     this.fullDesc,
     this.shortDesc,
@@ -99,7 +99,7 @@ class ProductModel {
       // categoryString: category?.toJSON(),
       categoryIdString: categoryId,
       genderCategoryIdString: genderCategoryId,
-      offerIdString: offerId,
+      // offerIdString: offerId,
     };
   }
 
@@ -125,9 +125,9 @@ class ProductModel {
     int? nOfComments = productJSON[nOfCommentsString] as int?;
     double? rating = productJSON[ratingString] as double?;
     int? remainingNumber = productJSON[remainingNumberString] as int?;
-    DateTime? offerEnd = (productJSON[offerEndString] as Timestamp?)?.toDate();
-    DateTime? offerStarted =
-        (productJSON[offerStartedString] as Timestamp?)?.toDate();
+    // DateTime? offerEnd = (productJSON[offerEndString] as Timestamp?)?.toDate();
+    // DateTime? offerStarted =
+    //     (productJSON[offerStartedString] as Timestamp?)?.toDate();
     List<Sizes>? availableSize =
         (productJSON[availableSizeString] as List<dynamic>?)
             ?.map((e) => stringToEnum(e, Sizes.values) as Sizes)
@@ -149,7 +149,7 @@ class ProductModel {
     //     catHelper == null ? catHelper : CategoryModel.fromJSON(catHelper);
     String? categoryId = productJSON[categoryIdString];
     String? genderCategoryId = productJSON[genderCategoryIdString];
-    String? offerId = productJSON[offerIdString];
+    // String? offerId = productJSON[offerIdString];
 
     return ProductModel(
       id: id,
@@ -167,8 +167,8 @@ class ProductModel {
       // favorite: favorite,
       fullDesc: fullDesc,
       nOfComments: nOfComments,
-      offerEnd: offerEnd,
-      offerStarted: offerStarted,
+      // offerEnd: offerEnd,
+      // offerStarted: offerStarted,
       oldPrice: oldPrice,
       rating: rating,
       remainingNumber: remainingNumber,
@@ -177,7 +177,7 @@ class ProductModel {
       // category: category,
       categoryId: categoryId,
       genderCategoryId: genderCategoryId,
-      offerId: offerId,
+      // offerId: offerId,
     );
   }
 }
