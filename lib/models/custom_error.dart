@@ -14,7 +14,6 @@ class CustomError implements Exception {
     if (rethrowError != null && rethrowError == true) {
       throw Exception(toString());
     }
-    print(errString);
   }
 
   @override

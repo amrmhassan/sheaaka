@@ -7,7 +7,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/screens/offer_screen/show_single_image.dart';
 import 'package:project/screens/store_screen/widgets/store_offer_photo.dart'
-    as storeOfferPhoto;
+    as store_offer_photo;
 
 class StoreOfferElement extends StatelessWidget {
   final OfferModel offer;
@@ -30,14 +30,14 @@ class StoreOfferElement extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  storeOfferPhoto.StoreOfferPhoto(
+                  store_offer_photo.StoreOfferPhoto(
                     imagePath: offer.imagePath,
                     createdAt: offer.createdAt,
                     endAt: offer.endAt,
                   ),
                   VSpace(factor: .4),
                   SizedBox(
-                    width: storeOfferPhoto.radius,
+                    width: store_offer_photo.radius,
                     child: Text(
                       offer.title,
                       overflow: TextOverflow.ellipsis,

@@ -92,6 +92,7 @@ class _FullPostState extends State<FullPost> {
                 if (showOfferTimer())
                   OfferTimer(
                     offerEndDate: widget.fullPostModel.offerEnd,
+                    offerStartDate: widget.fullPostModel.offerStarted,
                   ),
               ],
             ),

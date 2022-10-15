@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
-import 'package:project/helpers/data_creator/data_creator.dart';
 
 class UploadDataScreen extends StatefulWidget {
   static String routeName = '/upload-data-screen';

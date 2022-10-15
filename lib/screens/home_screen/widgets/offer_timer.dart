@@ -9,14 +9,16 @@ import 'package:project/utils/borders.dart';
 
 class OfferTimer extends StatelessWidget {
   final DateTime? offerEndDate;
+  final DateTime? offerStartDate;
 
-  const OfferTimer({
-    Key? key,
-    this.offerEndDate,
-  }) : super(key: key);
+  const OfferTimer({Key? key, this.offerEndDate, required this.offerStartDate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int allDuration = offerEndDate!.difference(offerStartDate!).inMinutes;
+    int remainingDuration = offerEndDate!.difference(DateTime.now()).inMinutes;
+    double ratio = remainingDuration / allDuration;
     return Positioned(
       bottom: kVPad / 2,
       right: kHPad / 2,
@@ -24,10 +26,11 @@ class OfferTimer extends StatelessWidget {
         borderType: BorderType.Circle,
         padding: EdgeInsets.zero,
         color: kLoveColor,
-        dashPattern: getPattern(.75, 45),
+        dashPattern: getPattern(ratio, 45),
         strokeCap: StrokeCap.round,
         strokeWidth: 5,
         child: Container(
+          padding: EdgeInsets.all(smallPadding),
           alignment: Alignment.center,
           width: 45,
           height: 45,
@@ -35,10 +38,13 @@ class OfferTimer extends StatelessWidget {
             color: kBlackColor,
             borderRadius: BorderRadius.circular(500),
           ),
-          child: Text(
-            formatOfferEndData,
-            style: h4LightTextStyle.copyWith(
-              fontWeight: FontWeight.bold,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              formatOfferEndData,
+              style: h4LightTextStyle.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

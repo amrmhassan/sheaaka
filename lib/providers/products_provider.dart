@@ -63,7 +63,7 @@ class ProductsProvider extends ChangeNotifier {
           p.offerEnd = offer.endAt;
           p.offerStarted = offer.createdAt;
           p.hasOffer = true;
-        } catch (e, s) {
+        } catch (e) {
           if (kDebugMode) {
             print('product has no offer');
           }

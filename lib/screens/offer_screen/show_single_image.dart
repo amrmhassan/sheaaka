@@ -38,7 +38,12 @@ class ShowSingleImage extends StatelessWidget {
               alignment: Alignment.center,
               color: Colors.black,
               child: imagePath is File
-                  ? Image.file(imagePath)
+                  ? Image.file(
+                      imagePath,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('assets/images/placeholder.png');
+                      },
+                    )
                   : Image.network(imagePath as String),
             ),
             GestureDetector(
