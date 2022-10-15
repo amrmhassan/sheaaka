@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 
@@ -46,6 +47,8 @@ class StoreLogoPhotoStorePage extends StatelessWidget {
                   color: kSecondaryColor,
                 )
               : FadeInImage(
+                  fadeInDuration: fadeInImageDuration,
+                  fadeOutDuration: fadeInImageDuration,
                   placeholder: AssetImage('assets/images/placeholder.png'),
                   image: NetworkImage(
                     imagePath!,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/n_of_followers.dart';
@@ -28,6 +29,8 @@ class StoreFullPost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var coverImage = FadeInImage(
+      fadeInDuration: fadeInImageDuration,
+      fadeOutDuration: fadeInImageDuration,
       placeholder: AssetImage('assets/images/placeholder.png'),
       image: NetworkImage(
         storeModel.coverImagePath,
