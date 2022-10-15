@@ -75,7 +75,6 @@ class ProductsProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e, stack) {
-      print(e);
       throw CustomError(
         errorType: ErrorsTypes.errorLoadingProducts,
         stackTrace: stack,
@@ -104,7 +103,7 @@ class ProductsProvider extends ChangeNotifier {
     List<OfferModel> offers, [
     bool noStateNotify = false,
   ]) async {
-    _fetchAllProducts(offers, noStateNotify);
+    await _fetchAllProducts(offers, noStateNotify);
 
     if (loadingHomeProducts) return;
 
@@ -112,19 +111,20 @@ class ProductsProvider extends ChangeNotifier {
     if (!noStateNotify) notifyListeners();
 
     try {
-      QuerySnapshot<Map<String, dynamic>> res;
-      res = await ref
-          .collection(productsCollectionName)
-          .orderBy(createdAtString, descending: true)
-          .limit(loadingAtATime)
-          .get();
+      // QuerySnapshot<Map<String, dynamic>> res;
+      // res = await ref
+      //     .collection(productsCollectionName)
+      //     .orderBy(createdAtString, descending: true)
+      //     .limit(loadingAtATime)
+      //     .get();
 
-      List<ProductModel> helperList = [];
-      for (var element in res.docs) {
-        var p = ProductModel.fromJSON(element.data());
-        helperList.add(p);
-      }
-      _homeProducts = helperList;
+      // List<ProductModel> helperList = [];
+      // for (var element in res.docs) {
+      //   var p = ProductModel.fromJSON(element.data());
+      //   helperList.add(p);
+      // }
+      // _homeProducts = helperList;
+      _homeProducts = [..._allProducts];
 
       loadingHomeProducts = false;
       notifyListeners();
