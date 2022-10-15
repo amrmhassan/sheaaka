@@ -8,9 +8,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
+import 'package:project/constants/models_constants.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/store_model.dart';
+import 'package:project/models/types.dart';
 
 import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
@@ -115,6 +117,11 @@ class StoreProvider extends ChangeNotifier {
           .collection(storesCollectionName)
           .doc(id)
           .set(s.toJSON());
+
+      await FirebaseFirestore.instance
+          .collection(usersCollectionName)
+          .doc(s.creatorUserUID)
+          .update({userRoleString: UserRole.trader.name});
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorGettingLikedProducts,

@@ -5,7 +5,9 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/models/types.dart';
+import 'package:project/models/user_model.dart';
 import 'package:project/providers/user_provider.dart';
+import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
@@ -26,10 +28,11 @@ class OpenStoreDashboardButton extends StatelessWidget {
             }
           : () {
               //? create new store
-              showSnackBar(
-                  context: context,
-                  message: 'سوف يتم برمجتها لاحقا',
-                  snackBarType: SnackBarType.info);
+              UserModel? user =
+                  Provider.of<UserProvider>(context, listen: false).userModel;
+              Navigator.pushReplacementNamed(
+                  context, SignUpStoreScreen.routeName,
+                  arguments: user?.userProfilePhoto);
             },
       padding: EdgeInsets.symmetric(
         vertical: kVPad / 2,
