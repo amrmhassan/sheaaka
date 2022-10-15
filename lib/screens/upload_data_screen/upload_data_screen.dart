@@ -24,26 +24,26 @@ class _UploadDataScreenState extends State<UploadDataScreen> {
       setState(() {
         uploading = true;
       });
-      DataCreator uploadDc = DataCreator();
+      // DataCreator uploadDc = DataCreator();
 
-      for (var product in uploadDc.fProducts) {
-        await ref
-            .collection(productsCollectionName)
-            .doc(product.id)
-            .set(product.toJSON());
-      }
-      for (var store in uploadDc.fStores) {
-        await ref
-            .collection(storesCollectionName)
-            .doc(store.id)
-            .set(store.toJSON());
-      }
-      for (var offer in uploadDc.fOffers) {
-        await ref
-            .collection(offersCollectionName)
-            .doc(offer.id)
-            .set(offer.toJSON());
-      }
+      // for (var product in uploadDc.fProducts) {
+      //   await ref
+      //       .collection(productsCollectionName)
+      //       .doc(product.id)
+      //       .set(product.toJSON());
+      // }
+      // for (var store in uploadDc.fStores) {
+      //   await ref
+      //       .collection(storesCollectionName)
+      //       .doc(store.id)
+      //       .set(store.toJSON());
+      // }
+      // for (var offer in uploadDc.fOffers) {
+      //   await ref
+      //       .collection(offersCollectionName)
+      //       .doc(offer.id)
+      //       .set(offer.toJSON());
+      // }
 
       setState(() {
         uploading = false;

@@ -14,6 +14,8 @@ class StoreModel {
   final int followers;
   final double? rating;
   final List<StoreTabModel> storeTabs;
+  final List<String> phones;
+  final List<String> emails;
 
   List<KeyWordModel>? keywords;
 
@@ -29,6 +31,8 @@ class StoreModel {
     required this.followers,
     required this.name,
     required this.creatorUserUID,
+    required this.phones,
+    required this.emails,
     this.logoImagePath,
     this.location,
     this.keywords,
@@ -65,6 +69,8 @@ class StoreModel {
       keyWordsString: keywordsConverted,
       creatorUserUIDString: creatorUserUID,
       storeTabsString: storeTabsJSON,
+      emailsString: emails,
+      phonesString: phones,
     };
   }
 
@@ -100,6 +106,11 @@ class StoreModel {
     var storeTabsHelper = storeJSON[storeTabsString] as List<dynamic>;
     List<StoreTabModel> storeTabs =
         (storeTabsHelper).map((e) => StoreTabModel.fromJSON(e)).toList();
+    List<dynamic>? emailsHelper = storeJSON[emailsString];
+    List<dynamic>? phonesHelper = storeJSON[phonesString];
+    print('object');
+    List<String> emails = emailsHelper?.map((e) => e.toString()).toList() ?? [];
+    List<String> phones = phonesHelper?.map((e) => e.toString()).toList() ?? [];
 
     return StoreModel(
       id: idF,
@@ -114,6 +125,8 @@ class StoreModel {
       keywords: keywords == null ? null : [...keywords],
       creatorUserUID: creatorUserUID,
       storeTabs: storeTabs,
+      emails: [...emails],
+      phones: [...phones],
     );
   }
 }

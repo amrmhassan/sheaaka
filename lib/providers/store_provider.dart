@@ -70,12 +70,12 @@ class StoreProvider extends ChangeNotifier {
       }
       _stores = helperList;
       loadingStores = false;
-
       notifyListeners();
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorGettingLikedProducts,
         stackTrace: s,
+        errString: e.toString(),
       );
     }
   }
@@ -86,6 +86,8 @@ class StoreProvider extends ChangeNotifier {
     required String? logoImagePath,
     required String name,
     required LatLng? location,
+    required List<String> phones,
+    required List<String> emails,
   }) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
@@ -105,6 +107,8 @@ class StoreProvider extends ChangeNotifier {
       location: location ?? LatLng(30, 30),
       creatorUserUID: currentUser.uid,
       rating: 1,
+      emails: emails,
+      phones: phones,
     );
     try {
       await FirebaseFirestore.instance

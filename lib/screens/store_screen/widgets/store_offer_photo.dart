@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/utils/borders.dart';
 
-const double _radius = 80;
-const double _storeWidth = 3;
+const double radius = 80;
+const double _strokeWidth = 3;
 // const double _borderPercentage = .40;
 
 class StoreOfferPhoto extends StatelessWidget {
@@ -31,15 +31,15 @@ class StoreOfferPhoto extends StatelessWidget {
       borderType: BorderType.Circle,
       padding: EdgeInsets.zero,
       color: kPrimaryColor,
-      dashPattern: getPattern(ratio, _radius),
+      dashPattern: getPattern(ratio, radius),
       strokeCap: StrokeCap.round,
-      strokeWidth: _storeWidth,
+      strokeWidth: _strokeWidth,
       child: Container(
-        margin: EdgeInsets.all(_storeWidth / 2),
+        margin: EdgeInsets.all(_strokeWidth / 2),
         clipBehavior: Clip.hardEdge,
         alignment: Alignment.center,
-        width: _radius,
-        height: _radius,
+        width: radius,
+        height: radius,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(500),
         ),

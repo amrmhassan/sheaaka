@@ -31,6 +31,8 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         location: storeLocation,
         logoImagePath: storeLogoPhoto,
         name: storeNameController.text,
+        emails: storeEmails,
+        phones: storePhoneNumbers,
       );
 
       showSnackBar(

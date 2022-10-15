@@ -42,6 +42,8 @@ String locationString = 'locationString';
 String distanceString = 'distanceString';
 String creatorUserUIDString = 'creatorUserUIDString';
 String storeTabsString = 'storeTabsString';
+String emailsString = 'emailsString';
+String phonesString = 'phonesString';
 
 //? offer model constants
 String titleString = 'titleString';
