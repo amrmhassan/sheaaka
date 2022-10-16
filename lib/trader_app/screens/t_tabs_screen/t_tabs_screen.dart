@@ -22,17 +22,67 @@ import 'package:project/trader_app/screens/t_tabs_screen/widgets/tab_card.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
-class TTabsScreen extends StatelessWidget {
+class TTabsScreen extends StatefulWidget {
   static const String routeName = '/t-tabs-screen';
 
   const TTabsScreen({super.key});
+
+  @override
+  State<TTabsScreen> createState() => _TTabsScreenState();
+}
+
+class _TTabsScreenState extends State<TTabsScreen> {
+  TextEditingController tabTitleController = TextEditingController();
+
+  bool loading = false;
+  void toggleLoading() {
+    setState(() {
+      loading = !loading;
+    });
+  }
+
+  //? adding a new tab
+  Future<void> handleAddNewTab(StoreModel myStore) async {
+    if (tabTitleController.text.isEmpty) {
+      return showSnackBar(
+        context: context,
+        message: 'لا يمكن أن يكون فارغا',
+        snackBarType: SnackBarType.error,
+      );
+    }
+    for (var tab in myStore.storeTabs) {
+      if (tabTitleController.text == tab.title) {
+        return showSnackBar(
+          context: context,
+          message: 'القسم موجود حاول تغيير الاسم',
+          snackBarType: SnackBarType.error,
+        );
+      }
+    }
+    toggleLoading();
+    try {
+      var traderProviderFalse =
+          Provider.of<TraderProvider>(context, listen: false);
+      await traderProviderFalse.addNewTab(tabTitleController.text);
+      showSnackBar(
+          context: context,
+          message: 'تمت إضافة قسم جديد',
+          snackBarType: SnackBarType.success);
+    } catch (e) {
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
+    }
+
+    toggleLoading();
+  }
 
   @override
   Widget build(BuildContext context) {
     var traderProvider = Provider.of<TraderProvider>(context);
     StoreModel myStore = traderProvider.myStore!;
 
-    TextEditingController tabTitleController = TextEditingController();
     return ScreensWrapper(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
@@ -45,26 +95,7 @@ class TTabsScreen extends StatelessWidget {
               builder: (ctx) {
                 return ModalWrapper(
                   applyButtonColor: kTraderPrimaryColor,
-                  onApply: () async {
-                    if (tabTitleController.text.isEmpty) {
-                      return showSnackBar(
-                        context: context,
-                        message: 'لا يمكن أن يكون فارغا',
-                        snackBarType: SnackBarType.error,
-                      );
-                    }
-                    //? adding a new tab
-                    await FirebaseFirestore.instance
-                        .collection(storesCollectionName)
-                        .doc(myStore.id)
-                        .update({
-                      storeTabsString: [
-                        StoreTabModel(
-                            productsIds: [], title: tabTitleController.text),
-                        ...myStore.storeTabs.map((e) => e.toJSON())
-                      ]
-                    });
-                  },
+                  onApply: () => handleAddNewTab(myStore),
                   applyButtonTitle: 'إضافة ',
                   child: CustomTextField(
                     title: 'اسم القسم',

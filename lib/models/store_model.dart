@@ -13,7 +13,7 @@ class StoreModel {
   final String coverImagePath;
   final int followers;
   final double? rating;
-  final List<StoreTabModel> storeTabs;
+  List<StoreTabModel> storeTabs;
   final List<String> phones;
   final List<String> emails;
 
