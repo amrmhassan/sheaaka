@@ -67,9 +67,10 @@ class _TTabsScreenState extends State<TTabsScreen> {
           snackBarType: SnackBarType.success);
     } catch (e) {
       showSnackBar(
-          context: context,
-          message: e.toString(),
-          snackBarType: SnackBarType.error);
+        context: context,
+        message: e.toString(),
+        snackBarType: SnackBarType.error,
+      );
     }
 
     toggleLoading();

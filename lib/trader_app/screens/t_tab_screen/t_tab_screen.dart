@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/models_constants.dart';
-import 'package:project/constants/sizes.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -67,7 +64,9 @@ class _TTabsScreenState extends State<TTabScreen> {
                 modifedListIds.length,
                 (index) {
                   if (modifedListIds[index] == 'add') {
-                    return AddTabProduct();
+                    return AddTabProduct(
+                      currentActiveStoreTab: storeTabModel,
+                    );
                   } else {
                     ProductModel productModel =
                         productsProvider.findProductById(modifedListIds[index]);

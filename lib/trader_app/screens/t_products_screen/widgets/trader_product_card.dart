@@ -6,6 +6,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/wishlist_screen/widgets/brand.dart';
@@ -19,76 +20,106 @@ class TraderProductCard extends StatelessWidget {
   const TraderProductCard({
     Key? key,
     required this.productModel,
+    this.enableSelection = false,
+    this.onSelectionChanged,
+    this.selected = false,
   }) : super(key: key);
 
   final ProductModel productModel;
+  final bool enableSelection;
+  final VoidCallback? onSelectionChanged;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
+    if (enableSelection && onSelectionChanged == null) {
+      throw Exception('enableSelection==true && onSelectionChanged=null');
+    }
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, ProductScreen.routeName,
-            arguments: productModel.id);
-      },
-      child: Container(
-        height: productImageDimensions,
-        margin: EdgeInsets.only(bottom: kVPad / 2),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FadeInImage(
-              imageErrorBuilder: (context, error, stackTrace) {
-                return Image(image: loadingImage);
-              },
-              placeholder: loadingImage,
-              image: NetworkImage(
-                productModel.imagesPath[0],
-              ),
-              width: productImageDimensions,
+      onTap: enableSelection
+          ? onSelectionChanged
+          : () {
+              Navigator.pushNamed(context, ProductScreen.routeName,
+                  arguments: productModel.id);
+            },
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: selected ? 0.5 : 1,
+            child: Container(
               height: productImageDimensions,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
-            Expanded(
-              child: PaddingWrapper(
-                padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    VSpace(factor: .5),
-                    ProductNamePrice(
-                      name: productModel.name,
-                      price: productModel.price,
+              margin: EdgeInsets.only(bottom: kVPad / 2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FadeInImage(
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image(image: loadingImage);
+                    },
+                    placeholder: loadingImage,
+                    image: NetworkImage(
+                      productModel.imagesPath[0],
                     ),
-                    VSpace(factor: .3),
-                    Row(
-                      children: [
-                        NumberOfProductPhotos(
-                          number: productModel.imagesPath.length,
-                        ),
-                        Spacer(),
-                        Brand(
-                          brand: productModel.brand,
-                          color: kTraderSecondaryColor,
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Text(
-                        productModel.fullDesc ??
-                            productModel.shortDesc ??
-                            'لا يوجد وصف',
-                        style: h4TextStyleInactive.copyWith(
-                          color: kTraderSecondaryColor.withOpacity(.6),
-                        ),
+                    width: productImageDimensions,
+                    height: productImageDimensions,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                  Expanded(
+                    child: PaddingWrapper(
+                      padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          VSpace(factor: .5),
+                          ProductNamePrice(
+                            name: productModel.name,
+                            price: productModel.price,
+                          ),
+                          VSpace(factor: .3),
+                          Row(
+                            children: [
+                              NumberOfProductPhotos(
+                                number: productModel.imagesPath.length,
+                              ),
+                              Spacer(),
+                              Brand(
+                                brand: productModel.brand,
+                                color: kTraderSecondaryColor,
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: Text(
+                              productModel.fullDesc ??
+                                  productModel.shortDesc ??
+                                  'لا يوجد وصف',
+                              style: h4TextStyleInactive.copyWith(
+                                color: kTraderSecondaryColor.withOpacity(.6),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          if (enableSelection)
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: kHPad / 2,
+                vertical: kVPad / 2,
+              ),
+              child: ProductCartCheckBox(
+                onTap: onSelectionChanged,
+                checked: selected,
+                color: kTraderPrimaryColor,
+              ),
+            ),
+        ],
       ),
     );
   }
