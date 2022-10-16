@@ -66,7 +66,7 @@ class THomeScreen extends StatelessWidget {
                         arguments: storeProducts);
                   },
                   title: 'أقسام المحل',
-                  value: myStore.storeTabs.length.toString(),
+                  value: (myStore.storeTabs.length - 1).toString(),
                 ),
                 TraderHomeElement(
                   iconName: 'fire1',

@@ -10,6 +10,7 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
+import 'package:project/trader_app/screens/t_tab_screen/t_tab_screen.dart';
 import 'package:provider/provider.dart';
 
 class TabCard extends StatelessWidget {
@@ -23,6 +24,7 @@ class TabCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool allProducts = storeTabModel.allProducts;
+    int tabsNum = storeTabModel.productsIds.length;
     return ButtonWrapper(
       onTap: allProducts
           ? () {
@@ -35,7 +37,13 @@ class TabCard extends StatelessWidget {
               Navigator.pushNamed(context, TProductsScreen.routeName,
                   arguments: storeProducts);
             }
-          : () {},
+          : () {
+              Navigator.pushNamed(
+                context,
+                TTabScreen.routeName,
+                arguments: storeTabModel,
+              );
+            },
       backgroundColor: kTraderSecondaryColor.withOpacity(.05),
       margin: EdgeInsets.only(bottom: kVPad / 2),
       width: double.infinity,
@@ -52,7 +60,7 @@ class TabCard extends StatelessWidget {
           ),
           HSpace(factor: .5),
           Text(
-            storeTabModel.title,
+            storeTabModel.allProducts ? 'كل المنتجات' : storeTabModel.title,
             style: h3TextStyle.copyWith(
               color: kTraderBlackColor,
             ),
@@ -60,7 +68,7 @@ class TabCard extends StatelessWidget {
           Spacer(),
           if (!allProducts)
             Text(
-              '${storeTabModel.productsIds.length} منتج',
+              tabsNum == 0 ? 'قسم فارغ' : '$tabsNum منتج',
               style: h3InactiveTextStyle.copyWith(
                 color: kTraderSecondaryColor.withOpacity(1),
               ),
