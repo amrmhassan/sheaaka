@@ -6,6 +6,7 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
+import 'package:project/models/store_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
@@ -58,12 +59,13 @@ class _TTabsScreenState extends State<TTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    StoreTabModel storeTabModel =
-        ModalRoute.of(context)!.settings.arguments as StoreTabModel;
-    List<String> productsIDs = storeTabModel.productsIds;
+    int tabIndex = ModalRoute.of(context)!.settings.arguments as int;
     var productsProvider = Provider.of<ProductsProvider>(context);
 
-    List<String> modifedListIds = ['add', ...productsIDs];
+    var traderProvider = Provider.of<TraderProvider>(context);
+    StoreModel myStore = traderProvider.myStore!;
+    StoreTabModel stateStoreTab = myStore.storeTabs[tabIndex];
+    List<String> modifedListIds = ['add', ...stateStoreTab.productsIds];
 
     return ScreensWrapper(
       child: Column(
@@ -71,7 +73,7 @@ class _TTabsScreenState extends State<TTabScreen> {
           CustomAppBar(
             traderStyle: true,
             rightTitle: true,
-            title: storeTabModel.title,
+            title: stateStoreTab.title,
           ),
           VSpace(factor: .5),
           HLine(
@@ -80,7 +82,7 @@ class _TTabsScreenState extends State<TTabScreen> {
           ),
           VSpace(factor: .5),
           SectionElementsNumber(
-            number: storeTabModel.productsIds.length,
+            number: stateStoreTab.productsIds.length,
             trailingTitle: 'منتج في هذا القسم',
             leadingTitle: 'يوجد',
           ),
@@ -97,9 +99,9 @@ class _TTabsScreenState extends State<TTabScreen> {
                 (index) {
                   if (modifedListIds[index] == 'add') {
                     return AddTabProduct(
-                      currentActiveStoreTab: storeTabModel,
+                      currentActiveStoreTab: stateStoreTab,
                       handleAddProductsToTab: (List<ProductModel> products) =>
-                          handleAddProductsToTab(products, storeTabModel),
+                          handleAddProductsToTab(products, stateStoreTab),
                     );
                   } else {
                     ProductModel productModel =

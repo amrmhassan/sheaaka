@@ -1,16 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
-import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/providers/products_provider.dart';
-import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_choose_product_screen/widgets/choose_product_app_bar.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';

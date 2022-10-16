@@ -74,10 +74,7 @@ class TraderProvider extends ChangeNotifier {
         ...activeStoreTab.productsIds
       ];
 
-      await FirebaseFirestore.instance
-          .collection(storesCollectionName)
-          .doc(myStore!.id)
-          .update({storeTabsString: updatedIDs}); //* gettings all store tabs
+      //* gettings all store tabs
       List<StoreTabModel> tabs = myStore!.storeTabs;
       //* index of the active store tab
       int tabIndex = tabs.indexOf(activeStoreTab);
@@ -91,7 +88,14 @@ class TraderProvider extends ChangeNotifier {
       tabs.insert(tabIndex, newStoreTab);
       //* updating the store tabs to be viewed
       myStore!.storeTabs = tabs;
+
       notifyListeners();
+      await FirebaseFirestore.instance
+          .collection(storesCollectionName)
+          .doc(myStore!.id)
+          .update({
+        storeTabsString: tabs.map((e) => e.toJSON()).toList(),
+      });
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorAddingProductsToTab,

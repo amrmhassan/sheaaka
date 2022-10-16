@@ -38,10 +38,13 @@ class TabCard extends StatelessWidget {
                   arguments: storeProducts);
             }
           : () {
+              var traderProvider =
+                  Provider.of<TraderProvider>(context, listen: false);
               Navigator.pushNamed(
                 context,
                 TTabScreen.routeName,
-                arguments: storeTabModel,
+                arguments:
+                    traderProvider.myStore!.storeTabs.indexOf(storeTabModel),
               );
             },
       backgroundColor: kTraderSecondaryColor.withOpacity(.05),
