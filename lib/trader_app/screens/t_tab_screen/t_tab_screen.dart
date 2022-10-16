@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -12,6 +14,7 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/store_screen/widgets/store_all_products_grid.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
+import 'package:project/trader_app/screens/t_tab_screen/widgets/add_tab_product.dart';
 import 'package:provider/provider.dart';
 
 class TTabScreen extends StatefulWidget {
@@ -30,6 +33,8 @@ class _TTabsScreenState extends State<TTabScreen> {
         ModalRoute.of(context)!.settings.arguments as StoreTabModel;
     List<String> productsIDs = storeTabModel.productsIds;
     var productsProvider = Provider.of<ProductsProvider>(context);
+
+    List<String> modifedListIds = ['add', ...productsIDs];
 
     return ScreensWrapper(
       child: Column(
@@ -58,17 +63,19 @@ class _TTabsScreenState extends State<TTabScreen> {
               shrinkWrap: true,
               crossAxisCount: 3,
               childAspectRatio: 1,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
               children: List.generate(
-                productsIDs.length,
+                modifedListIds.length,
                 (index) {
-                  ProductModel productModel =
-                      productsProvider.findProductById(productsIDs[index]);
-                  return StoreProductCardSquare(
-                    imagePath: productModel.imagesPath[0],
-                    productId: productModel.id,
-                  );
+                  if (modifedListIds[index] == 'add') {
+                    return AddTabProduct();
+                  } else {
+                    ProductModel productModel =
+                        productsProvider.findProductById(modifedListIds[index]);
+                    return StoreProductCardSquare(
+                      imagePath: productModel.imagesPath[0],
+                      productId: productModel.id,
+                    );
+                  }
                 },
               ),
             ),
