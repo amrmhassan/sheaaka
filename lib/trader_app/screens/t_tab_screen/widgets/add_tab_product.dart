@@ -10,14 +10,12 @@ import 'package:project/trader_app/screens/t_choose_product_screen/t_choose_prod
 
 class AddTabProduct extends StatelessWidget {
   final StoreTabModel currentActiveStoreTab;
+  final Function(List<ProductModel> products) handleAddProductsToTab;
   const AddTabProduct({
     super.key,
     required this.currentActiveStoreTab,
+    required this.handleAddProductsToTab,
   });
-
-  void handleAddProductsToTab(List<ProductModel> products) {
-    print(products.length);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class AddTabProduct extends StatelessWidget {
           TChooseProductScreen.routeName,
           arguments: currentActiveStoreTab,
         ) as List<ProductModel>?;
-        if (selectedProducts != null && selectedProducts.isEmpty) {
+        if (selectedProducts != null && selectedProducts.isNotEmpty) {
           handleAddProductsToTab(selectedProducts);
         }
       },
