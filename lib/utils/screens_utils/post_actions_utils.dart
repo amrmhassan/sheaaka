@@ -160,6 +160,7 @@ Future<void> addWishListItem(
 //? show the edit wishlit item after adding it already modal
 void handleEditAddedWishlistItem(BuildContext context, String wishlistItemId) {
   showModalBottomSheet(
+    isScrollControlled: true,
     context: context,
     backgroundColor: Colors.transparent,
     builder: (ctx) {

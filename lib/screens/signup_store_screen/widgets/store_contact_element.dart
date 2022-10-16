@@ -124,6 +124,7 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
   //? show all data modal
   void showDataAddedModal() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (ctx) {
@@ -171,6 +172,7 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
 //? show delete data model
   Future<dynamic> showDeleteDataModal(BuildContext context, String data) {
     return showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         backgroundColor: Colors.transparent,
         builder: (ctx) {

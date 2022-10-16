@@ -53,6 +53,7 @@ class TraderProductCard extends StatelessWidget {
               child: PaddingWrapper(
                 padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     VSpace(factor: .5),
                     ProductNamePrice(

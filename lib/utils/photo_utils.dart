@@ -144,6 +144,7 @@ void showPickImageOptions(
   String? title,
 ]) {
   showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) {

@@ -1,4 +1,4 @@
-# add tabs screen
+# add lazy loading images
 
 # add new tab functionallity
 

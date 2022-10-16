@@ -34,9 +34,11 @@ class ModalWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double bottomPadding = MediaQuery.of(context).viewInsets.bottom;
+
     return PaddingWrapper(
+      margin: EdgeInsets.only(bottom: bottomPadding),
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
         right: kHPad,
         left: kHPad,
       ),

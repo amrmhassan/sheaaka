@@ -16,6 +16,7 @@ class ProductDescriptionText extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             context: context,
             builder: (ctx) {
