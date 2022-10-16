@@ -6,7 +6,11 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/models/store_tab_model.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
+import 'package:provider/provider.dart';
 
 class TabCard extends StatelessWidget {
   const TabCard({
@@ -20,7 +24,18 @@ class TabCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool allProducts = storeTabModel.allProducts;
     return ButtonWrapper(
-      onTap: () {},
+      onTap: allProducts
+          ? () {
+              var traderProvider =
+                  Provider.of<TraderProvider>(context, listen: false);
+              var productsProvider =
+                  Provider.of<ProductsProvider>(context, listen: false);
+              var storeProducts =
+                  productsProvider.getStoreProducts(traderProvider.myStore!.id);
+              Navigator.pushNamed(context, TProductsScreen.routeName,
+                  arguments: storeProducts);
+            }
+          : () {},
       backgroundColor: kTraderSecondaryColor.withOpacity(.05),
       margin: EdgeInsets.only(bottom: kVPad / 2),
       width: double.infinity,

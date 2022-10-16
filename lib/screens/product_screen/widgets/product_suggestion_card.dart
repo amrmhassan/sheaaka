@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
@@ -35,8 +36,11 @@ class ProductSuggestionCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            Image.asset(
-              imagePath,
+            FadeInImage(
+              placeholder: loadingImage,
+              image: NetworkImage(
+                imagePath,
+              ),
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
@@ -55,14 +59,14 @@ class ProductSuggestionCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            if (kDebugMode)
-              Positioned(
-                top: 0,
-                child: Text(
-                  name,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+            // if (kDebugMode)
+            //   Positioned(
+            //     top: 0,
+            //     child: Text(
+            //       name,
+            //       style: TextStyle(color: Colors.white),
+            //     ),
+            //   ),
           ],
         ),
       ),

@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
-import 'package:project/models/key_word_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';

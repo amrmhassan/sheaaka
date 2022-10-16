@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -36,7 +37,10 @@ class TraderProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FadeInImage(
-              placeholder: AssetImage('assets/images/placeholder.png'),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image(image: loadingImage);
+              },
+              placeholder: loadingImage,
               image: NetworkImage(
                 productModel.imagesPath[0],
               ),

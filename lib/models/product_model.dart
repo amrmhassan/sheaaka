@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/models_constants.dart';
 import 'package:project/models/brand_model.dart';
-import 'package:project/models/key_word_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/utils/string_to_type_utils.dart';
 

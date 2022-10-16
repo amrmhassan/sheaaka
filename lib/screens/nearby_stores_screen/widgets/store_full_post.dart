@@ -31,7 +31,7 @@ class StoreFullPost extends StatelessWidget {
     var coverImage = FadeInImage(
       fadeInDuration: fadeInImageDuration,
       fadeOutDuration: fadeInImageDuration,
-      placeholder: AssetImage('assets/images/placeholder.png'),
+      placeholder: loadingImage,
       image: NetworkImage(
         storeModel.coverImagePath,
       ),

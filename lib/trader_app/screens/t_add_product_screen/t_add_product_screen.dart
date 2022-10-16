@@ -174,7 +174,6 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       }
       return;
     }
-    ;
     if (pickedDateType == PickedDateType.offerDate) {
       setOfferEnd(pickedDate);
     } else {

@@ -36,7 +36,7 @@ class FullPostImage extends StatelessWidget {
           child: FadeInImage(
             fadeInDuration: fadeInImageDuration,
             fadeOutDuration: fadeInImageDuration,
-            placeholder: AssetImage('assets/images/placeholder.png'),
+            placeholder: loadingImage,
             placeholderFit: BoxFit.cover,
             image: NetworkImage(
               imagesPath[index],

@@ -5,6 +5,7 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/store_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
@@ -21,8 +22,8 @@ class THomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var traderProvider = Provider.of<TraderProvider>(context);
     var productsProvider = Provider.of<ProductsProvider>(context);
-    var storeProducts =
-        productsProvider.getStoreProducts(traderProvider.myStore!.id);
+    StoreModel myStore = traderProvider.myStore!;
+    var storeProducts = productsProvider.getStoreProducts(myStore.id);
 
     return PaddingWrapper(
       child: Column(
@@ -51,8 +52,8 @@ class THomeScreen extends StatelessWidget {
                   iconName: 'offer',
                   onTap: () {},
                   title: 'العروض',
-                  value: traderProvider.myStore!.offers != null
-                      ? traderProvider.myStore!.offers!
+                  value: myStore.offers != null
+                      ? myStore.offers!
                           .where((element) => element.active)
                           .length
                           .toString()
@@ -65,7 +66,7 @@ class THomeScreen extends StatelessWidget {
                         arguments: storeProducts);
                   },
                   title: 'أقسام المحل',
-                  value: traderProvider.myStore!.storeTabs.length.toString(),
+                  value: myStore.storeTabs.length.toString(),
                 ),
                 TraderHomeElement(
                   iconName: 'fire1',
