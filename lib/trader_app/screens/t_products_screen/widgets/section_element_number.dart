@@ -5,10 +5,15 @@ import 'package:project/constants/styles.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
-class ProductsNumber extends StatelessWidget {
-  const ProductsNumber({
+class SectionElementsNumber extends StatelessWidget {
+  final String? leadingTitle;
+  final String? trailingTitle;
+
+  const SectionElementsNumber({
     Key? key,
     required this.number,
+    this.leadingTitle,
+    this.trailingTitle,
   }) : super(key: key);
   final int number;
 
@@ -24,7 +29,7 @@ class ProductsNumber extends StatelessWidget {
               ),
               children: [
                 TextSpan(
-                  text: 'لديك',
+                  text: leadingTitle ?? 'لديك',
                 ),
                 TextSpan(
                   text: ' ',
@@ -37,7 +42,7 @@ class ProductsNumber extends StatelessWidget {
                   text: ' ',
                 ),
                 TextSpan(
-                  text: 'منتج',
+                  text: trailingTitle ?? 'منتج',
                 ),
               ],
             ),

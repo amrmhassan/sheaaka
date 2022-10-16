@@ -19,6 +19,7 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_props.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/widgets/adding_product_advice.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/check_box_with_period_picker.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/important_product_info.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/new_product_color_element.dart';
@@ -441,23 +442,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 //! just delete me after finishing
 
                 VSpace(factor: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'عند الانتهاء قم برفع المنتج من الزر بالأعلي',
-                      style: h4TextStyleInactive.copyWith(
-                        color: kTraderSecondaryColor,
-                      ),
-                    ),
-                    HSpace(factor: .1),
-                    Image.asset(
-                      'assets/icons/upload.png',
-                      width: smallIconSize,
-                      color: kTraderSecondaryColor,
-                    ),
-                  ],
-                ),
+                AddingProductAdvice(),
+
                 VSpace(factor: 2),
               ],
             ),

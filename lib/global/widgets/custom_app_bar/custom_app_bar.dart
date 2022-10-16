@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget {
   final List<Widget>? leftContent;
   final bool boundRightIconWidth;
   final bool traderStyle;
+  final bool rightTitle;
 
   const CustomAppBar({
     Key? key,
@@ -23,11 +24,18 @@ class CustomAppBar extends StatelessWidget {
     this.rightIcon,
     this.boundRightIconWidth = false,
     this.traderStyle = false,
+    this.rightTitle = false,
   }) : super(key: key);
 
   Widget getAppBarChild(BuildContext context) {
     return Row(
       children: [
+        if (rightTitle)
+          Text(
+            title ?? '',
+            style: h1TextStyle,
+            textAlign: TextAlign.center,
+          ),
         rightIcon != null
             ? SizedBox(
                 width: roundIconRadius,
@@ -36,13 +44,15 @@ class CustomAppBar extends StatelessWidget {
             : SizedBox(
                 width: roundIconRadius,
               ),
-        Expanded(
-          child: Text(
-            title ?? '',
-            style: h1TextStyle,
-            textAlign: TextAlign.center,
+        if (!rightTitle)
+          Expanded(
+            child: Text(
+              title ?? '',
+              style: h1TextStyle,
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
+        if (rightTitle) Spacer(),
         AppBarIcon(
           backgroundColor:
               traderStyle ? kTraderLightColor.withOpacity(.5) : null,

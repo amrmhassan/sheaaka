@@ -11,6 +11,7 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_element.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
+import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
 import 'package:provider/provider.dart';
 
 class THomeScreen extends StatelessWidget {
@@ -59,7 +60,10 @@ class THomeScreen extends StatelessWidget {
                 ),
                 TraderHomeElement(
                   iconName: 'sections',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, TTabsScreen.routeName,
+                        arguments: storeProducts);
+                  },
                   title: 'أقسام المحل',
                   value: traderProvider.myStore!.storeTabs.length.toString(),
                 ),
