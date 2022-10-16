@@ -56,6 +56,11 @@ class _StoreScreenState extends State<StoreScreen> {
         ? []
         : storeModel.offers!.where((element) => element.active).toList();
 
+    List<StoreTabModel> arrangedStoreTabs = [
+      ...storeModel.storeTabs.where((element) => element.allProducts),
+      ...storeModel.storeTabs.where((element) => !element.allProducts)
+    ];
+
     return ScreensWrapper(
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -117,7 +122,7 @@ class _StoreScreenState extends State<StoreScreen> {
                 Taps(
                   taps: [
                     SizedBox(width: storeTitleHSpace),
-                    ...storeModel.storeTabs.map(
+                    ...arrangedStoreTabs.map(
                       (e) {
                         int index = storeModel.storeTabs.indexOf(e);
                         return StoreCategoryElement(

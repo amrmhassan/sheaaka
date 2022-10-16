@@ -71,7 +71,11 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
             ? Column(
                 children: [
                   VSpace(factor: 2),
-                  EmptyWidget(title: 'لا يوجد منتجات في هذا المحل'),
+                  EmptyWidget(
+                    title: widget.storeActiveTab.allProducts
+                        ? 'لا يوجد منتجات في هذا المحل'
+                        : 'لا يوجد منتجات في هذا القسم',
+                  ),
                 ],
               )
             : GridView.count(
