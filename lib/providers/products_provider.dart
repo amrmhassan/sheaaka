@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
@@ -39,6 +38,7 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+//? deleting product
   Future<void> deleteProduct(
       String productId, StoreProvider storeProvider) async {
     try {
@@ -110,9 +110,9 @@ class ProductsProvider extends ChangeNotifier {
           p.offerStarted = offer.createdAt;
           p.hasOffer = true;
         } catch (e) {
-          if (kDebugMode) {
-            print('product has no offer');
-          }
+          // if (kDebugMode) {
+          //   print('product has no offer');
+          // }
         }
         helperList.add(p);
       }

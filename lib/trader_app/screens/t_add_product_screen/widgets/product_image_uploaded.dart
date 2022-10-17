@@ -48,6 +48,7 @@ class ProductImageUploaded extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
           ),
           Positioned(

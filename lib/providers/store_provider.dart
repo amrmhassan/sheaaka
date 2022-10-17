@@ -51,6 +51,7 @@ class StoreProvider extends ChangeNotifier {
       OfferModel offer = OfferModel.fromJSON(o.data());
       _offers.add(offer);
     }
+
     if (!noStateNotify) notifyListeners();
   }
 

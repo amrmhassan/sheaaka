@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
 import 'package:project/models/offer_model.dart';
@@ -15,8 +14,6 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
-
-bool _sleepAlot = false;
 
 class AddProductProvider extends ChangeNotifier {
   //? uploading images
@@ -96,9 +93,6 @@ class AddProductProvider extends ChangeNotifier {
         .collection(productsCollectionName)
         .doc(productId)
         .set(productModel.toJSON());
-    if (kDebugMode && _sleepAlot) {
-      await Future.delayed(Duration(seconds: 30));
-    }
 
     //* checking if product has offer, then upload it
     if (isOffer) {
@@ -142,9 +136,7 @@ class AddProductProvider extends ChangeNotifier {
         uploadedImagesLinks.add(imageLink);
       }
     }
-    if (kDebugMode && _sleepAlot) {
-      await Future.delayed(Duration(seconds: 30));
-    }
+
     setUploadingImages(false);
     return uploadedImagesLinks;
   }

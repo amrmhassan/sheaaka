@@ -2,9 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
@@ -26,7 +24,6 @@ import 'package:project/screens/product_screen/widgets/product_screen_app_bar.da
 import 'package:project/screens/product_screen/widgets/product_size_color.dart';
 import 'package:project/screens/product_screen/widgets/product_suggestions.dart';
 import 'package:project/screens/product_screen/widgets/store_box_product_desc.dart';
-import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -112,7 +109,7 @@ class _ProductScreenState extends State<ProductScreen> {
           wishlistProvider.getWishlistItemByProductId(productModel.id)?.id;
     } catch (e) {
       if (kDebugMode) {
-        print(e);
+        // print(e);
       }
     }
 

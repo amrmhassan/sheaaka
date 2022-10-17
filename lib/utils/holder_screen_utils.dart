@@ -73,7 +73,7 @@ Future<bool> handleUserData(BuildContext context) async {
         // to open store dashboard if trader and signup
         Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
-        Navigator.pushReplacementNamed(context, THolderScreen.routeName);
+        await Navigator.pushReplacementNamed(context, THolderScreen.routeName);
         return false;
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him

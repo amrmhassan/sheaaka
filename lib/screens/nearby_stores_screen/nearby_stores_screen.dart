@@ -96,7 +96,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
             snackBarType: SnackBarType.error);
       } catch (e) {
         if (kDebugMode) {
-          print(e.toString());
+          // print(e.toString());
           rethrow;
         }
       }

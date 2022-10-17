@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/models/custom_error.dart';
@@ -51,27 +50,11 @@ class LocationProvider extends ChangeNotifier {
 
     //* stopping the previous listener before creating a new one
     if (locationSubscription != null) {
-      // print('---------------000000000');
-
-      if (kDebugMode) {
-        // print('*********');
-        // print("Location subscription isn't null");
-        // print('*********');
-      }
       await locationSubscription!.cancel();
     }
     locationSubscription = location.onLocationChanged.listen((event) {
       locationData = event;
       if (callback != null) {
-        // print('---------------000000000');
-        if (kDebugMode) {
-          // print('---------------------------');
-          // print('Updating stores distances');
-          // print(event.latitude);
-          // print(event.longitude);
-          // print('---------------------------');
-        }
-
         callback(event);
       }
     });
