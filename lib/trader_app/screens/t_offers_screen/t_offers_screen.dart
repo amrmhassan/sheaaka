@@ -10,6 +10,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/screens/t_offers_screen/widgets/trader_offer_card.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
@@ -70,58 +71,7 @@ class TOffersScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 OfferModel offer = offers[index];
-                return Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(
-                      mediumBorderRadius,
-                    ),
-                    boxShadow: [
-                      liteBoxShadow,
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          offer.imagePath,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: kHPad / 2,
-                          vertical: kVPad / 2,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  offer.title,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  dateToString(offer.endAt),
-                                  style: h4TextStyleInactive.copyWith(
-                                    color:
-                                        kTraderSecondaryColor.withOpacity(.8),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+                return TraderOfferCard(offer: offer);
               },
             ),
           ),

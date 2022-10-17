@@ -96,6 +96,9 @@ class AddProductProvider extends ChangeNotifier {
 
     //* checking if product has offer, then upload it
     if (isOffer) {
+      double currentPrice = double.parse(currentPriceController.text);
+      double oldPirce = double.parse(oldPriceController.text);
+      double discountPercentage = ((oldPirce - currentPrice) / oldPirce) * 100;
       String id = Uuid().v4();
       OfferModel offerModel = OfferModel(
         id: id,
@@ -105,6 +108,8 @@ class AddProductProvider extends ChangeNotifier {
         endAt: offerEnd!,
         productId: productId,
         storeId: myStore.id,
+        discountPercentage: discountPercentage,
+        productName: nameController.text,
       );
       await FirebaseFirestore.instance
           .collection(offersCollectionName)

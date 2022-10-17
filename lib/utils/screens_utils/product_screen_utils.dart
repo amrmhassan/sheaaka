@@ -24,7 +24,9 @@ Widget handleShowOldPrice(ProductModel productModel) {
 }
 
 Widget handleShowBrand(ProductModel productModel) {
-  return (productModel.brand == null)
+  return (productModel.brand == null ||
+          (productModel.brand!.name.isEmpty &&
+              productModel.brand!.icon == null))
       ? SizedBox()
       : Positioned(
           bottom: 0,

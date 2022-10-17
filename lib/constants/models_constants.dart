@@ -50,6 +50,7 @@ String titleString = 'titleString';
 String endAtString = 'endAtString';
 String activeString = 'activeString';
 String productIdString = 'productIdString';
+String discountPercentageString = 'discountPercentageString';
 
 //? user model constants
 String emailString = 'emailString';
