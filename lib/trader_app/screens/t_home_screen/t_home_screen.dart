@@ -5,8 +5,10 @@ import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
@@ -24,6 +26,12 @@ class THomeScreen extends StatelessWidget {
     var productsProvider = Provider.of<ProductsProvider>(context);
     StoreModel myStore = traderProvider.myStore!;
     var storeProducts = productsProvider.getStoreProducts(myStore.id);
+    var storeProvider = Provider.of<StoreProvider>(context);
+    List<OfferModel> myStoreOffers = storeProvider.offers
+        .where(
+          (element) => element.storeId == myStore.id,
+        )
+        .toList();
 
     return PaddingWrapper(
       child: Column(
@@ -52,12 +60,10 @@ class THomeScreen extends StatelessWidget {
                   iconName: 'offer',
                   onTap: () {},
                   title: 'العروض',
-                  value: myStore.offers != null
-                      ? myStore.offers!
-                          .where((element) => element.active)
-                          .length
-                          .toString()
-                      : '0',
+                  value: myStoreOffers
+                      .where((element) => element.active)
+                      .length
+                      .toString(),
                 ),
                 TraderHomeElement(
                   iconName: 'sections',

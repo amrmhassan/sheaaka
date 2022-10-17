@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Sheaaka</string>
+  <string name="facebook_app_id">843817989956867</string>
+  <string name="fb_login_protocol_scheme">fb843817989956867</string>
+  <string name="facebook_client_token">51b5a82eb133d5de5357efe2da76b9c2</string>
+</resources>
