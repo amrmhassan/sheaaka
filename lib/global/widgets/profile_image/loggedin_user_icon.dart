@@ -8,6 +8,7 @@ import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
+import 'package:project/trader_app/screens/t_store_profile_screen/t_store_profile_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class LoggedInUserIcon extends StatefulWidget {
     required this.border,
     this.allowClick = true,
     this.color,
+    required this.userRole,
   }) : super(key: key);
 
   final double? radius;
@@ -26,6 +28,7 @@ class LoggedInUserIcon extends StatefulWidget {
   final Border? border;
   final Color? color;
   final bool allowClick;
+  final UserRole userRole;
 
   @override
   State<LoggedInUserIcon> createState() => _LoggedInUserIconState();
@@ -82,9 +85,15 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
               )
             : GestureDetector(
                 onTap: widget.allowClick
-                    ? () async {
-                        Navigator.pushNamed(context, ProfileScreen.routeName);
-                      }
+                    ? widget.userRole == UserRole.normal
+                        ? () async {
+                            Navigator.pushNamed(
+                                context, ProfileScreen.routeName);
+                          }
+                        : () {
+                            Navigator.pushNamed(
+                                context, TStoreProfileScreen.routeName);
+                          }
                     : () {},
                 child: Container(
                   clipBehavior: Clip.hardEdge,

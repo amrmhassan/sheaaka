@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/profile_image/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
@@ -27,6 +28,7 @@ class ProfileSummary extends StatelessWidget {
         ProfileImage(
           allowClick: false,
           radius: profileImageRadius,
+          userRole: UserRole.normal,
           padding: EdgeInsets.all(smallPadding / 3),
         ),
         HSpace(),

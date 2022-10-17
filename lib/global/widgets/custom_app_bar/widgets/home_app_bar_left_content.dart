@@ -6,16 +6,17 @@ import 'package:project/global/widgets/custom_app_bar/widgets/filters_icon.dart'
 import 'package:project/global/widgets/custom_app_bar/widgets/n_of_notifications.dart';
 import 'package:project/global/widgets/profile_image/profile_image.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/models/types.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeAppBarLeftContent extends StatelessWidget {
   final List<Widget>? leftContent;
-  const HomeAppBarLeftContent({
-    Key? key,
-    this.leftContent,
-  }) : super(key: key);
+  final UserRole userRole;
+  const HomeAppBarLeftContent(
+      {Key? key, this.leftContent, required this.userRole})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,9 @@ class HomeAppBarLeftContent extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             //! this gesture detector was only for testing just remove it
-            ProfileImage(),
+            ProfileImage(
+              userRole: userRole,
+            ),
             if (nOfNotifications > 0 && user != null)
               NOfNotifications(
                 nOfNotifications: nOfNotifications,

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
@@ -12,7 +11,6 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
 import 'package:project/trader_app/screens/t_offers_screen/widgets/trader_offer_card.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
-import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 class TOffersScreen extends StatelessWidget {
@@ -22,7 +20,9 @@ class TOffersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<OfferModel> offers =
-        ModalRoute.of(context)!.settings.arguments as List<OfferModel>;
+        (ModalRoute.of(context)!.settings.arguments as List<OfferModel>)
+            .reversed
+            .toList();
     return ScreensWrapper(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(

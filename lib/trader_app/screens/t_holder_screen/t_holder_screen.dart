@@ -8,6 +8,7 @@ import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/global/widgets/trader_nav_bar.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
@@ -51,6 +52,7 @@ class _THolderScreenState extends State<THolderScreen> {
   Widget appBarGenerator(String storeName) {
     if (activeIndex == 1) {
       return CustomAppBar(
+        userRole: UserRole.trader,
         title: storeName,
         home: true,
         leftContent: [
@@ -60,18 +62,21 @@ class _THolderScreenState extends State<THolderScreen> {
       );
     } else if (activeIndex == 0) {
       return CustomAppBar(
+        userRole: UserRole.trader,
         home: true,
         title: 'إحصائيات',
         leftContent: [],
       );
     } else if (activeIndex == 2) {
       return CustomAppBar(
+        userRole: UserRole.trader,
         home: true,
         title: 'الطلبيات',
         leftContent: [],
       );
     } else {
       return CustomAppBar(
+        userRole: UserRole.trader,
         title: storeName,
         home: true,
       );

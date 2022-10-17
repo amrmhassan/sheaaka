@@ -39,6 +39,7 @@ import 'package:project/trader_app/screens/t_choose_product_screen/t_choose_prod
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
+import 'package:project/trader_app/screens/t_store_profile_screen/t_store_profile_screen.dart';
 import 'package:project/trader_app/screens/t_tab_screen/t_tab_screen.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
 
@@ -124,6 +125,7 @@ class MyApp extends StatelessWidget {
           TTabScreen.routeName: (context) => TTabScreen(),
           TChooseProductScreen.routeName: (context) => TChooseProductScreen(),
           TOffersScreen.routeName: (context) => TOffersScreen(),
+          TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
         },
       ),
     );

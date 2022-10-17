@@ -11,6 +11,7 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
+import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/store_screen/store_screen.dart';
 import 'package:project/screens/store_screen/widgets/store_category_element.dart';
@@ -153,7 +154,9 @@ class Comment extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileImage(),
+            ProfileImage(
+              userRole: UserRole.normal,
+            ),
             HSpace(factor: .8),
             Expanded(
               child: Column(

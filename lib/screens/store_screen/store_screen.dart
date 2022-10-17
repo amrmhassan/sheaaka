@@ -54,7 +54,7 @@ class _StoreScreenState extends State<StoreScreen> {
     // List<OfferModel> activeOffers = storeModel.offers == null
     //     ? []
     //     : storeModel.offers!.where((element) => element.active).toList();
-    List<OfferModel> modifiedActiveOffers = storeProvider.offers
+    List<OfferModel> activeOffers = storeProvider.offers
         .where((element) => element.active && element.storeId == storeId)
         .toList();
 
@@ -113,10 +113,10 @@ class _StoreScreenState extends State<StoreScreen> {
                 ],
               ),
             ),
-            if (modifiedActiveOffers.isNotEmpty) VSpace(factor: .5),
-            if (modifiedActiveOffers.isNotEmpty)
+            if (activeOffers.isNotEmpty) VSpace(factor: .5),
+            if (activeOffers.isNotEmpty)
               StoreOffers(
-                offers: modifiedActiveOffers,
+                offers: activeOffers.reversed.toList(),
               ),
             VSpace(factor: .8),
             Column(

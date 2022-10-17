@@ -19,7 +19,7 @@ import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 //? loading data from firestore
-Future<void> loadData(BuildContext context) async {
+Future<void> loadData(BuildContext context, bool? redirectToStore) async {
   await firstTimeOpenApp(context);
   await Provider.of<StoreProvider>(context, listen: false)
       .fetchAndUpdateOffers(true);
@@ -35,7 +35,7 @@ Future<void> loadData(BuildContext context) async {
       .fetchAndUpdateCartItems();
   await Provider.of<WishListsProvider>(context, listen: false)
       .fetchWishlistsAndWishlistsItems();
-  bool continueLoading = await handleUserData(context);
+  bool continueLoading = await handleUserData(context, redirectToStore);
   if (!continueLoading) return;
 }
 
@@ -53,7 +53,7 @@ Future<void> loadDataForHomeScreen(BuildContext context) async {
 }
 
 //? checking user store if trader
-Future<bool> handleUserData(BuildContext context) async {
+Future<bool> handleUserData(BuildContext context, bool? redirectToStore) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
     //* fetch his liked products
@@ -73,8 +73,11 @@ Future<bool> handleUserData(BuildContext context) async {
         // to open store dashboard if trader and signup
         Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
-        await Navigator.pushReplacementNamed(context, THolderScreen.routeName);
-        return false;
+        if (redirectToStore == true) {
+          await Navigator.pushReplacementNamed(
+              context, THolderScreen.routeName);
+        }
+        return redirectToStore ?? false;
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
         Provider.of<UserProvider>(context, listen: false)

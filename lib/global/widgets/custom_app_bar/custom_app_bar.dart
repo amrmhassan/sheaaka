@@ -5,6 +5,7 @@ import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/home_app_bar_left_content.dart';
+import 'package:project/models/types.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -15,6 +16,7 @@ class CustomAppBar extends StatelessWidget {
   final bool boundRightIconWidth;
   final bool traderStyle;
   final bool rightTitle;
+  final UserRole userRole;
 
   const CustomAppBar({
     Key? key,
@@ -25,6 +27,7 @@ class CustomAppBar extends StatelessWidget {
     this.boundRightIconWidth = false,
     this.traderStyle = false,
     this.rightTitle = false,
+    this.userRole = UserRole.normal,
   }) : super(key: key);
 
   Widget getAppBarChild(BuildContext context) {
@@ -85,6 +88,7 @@ class CustomAppBar extends StatelessWidget {
                 Spacer(),
                 HomeAppBarLeftContent(
                   leftContent: leftContent,
+                  userRole: userRole,
                 ),
               ],
             ),

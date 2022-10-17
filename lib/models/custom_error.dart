@@ -18,6 +18,8 @@ class CustomError implements Exception {
   }) {
     if (kDebugMode) {
       print('Error Message : $errString');
+      print(toString());
+      // print(stackTrace);
     }
     if (rethrowError != null && rethrowError == true) {
       throw Exception(toString());

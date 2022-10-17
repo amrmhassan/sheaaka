@@ -30,12 +30,12 @@ class _HolderScreenState extends State<HolderScreen> {
   bool loading = false;
 
   //# home Screen stuff
-  Future<void> reloadProductsHolderScreen() async {
+  Future<void> reloadProductsHolderScreen(bool? redirectToStore) async {
     setState(() {
       loading = true;
     });
     try {
-      await loadData(context);
+      await loadData(context, redirectToStore);
       int products = Provider.of<ProductsProvider>(context, listen: false)
           .homeProducts
           .length;
@@ -51,15 +51,22 @@ class _HolderScreenState extends State<HolderScreen> {
         rethrow;
       }
       showSnackBar(
-          context: context,
-          message: stack.toString(),
-          snackBarType: SnackBarType.error);
+        context: context,
+        message: stack.toString(),
+        snackBarType: SnackBarType.error,
+      );
     }
   }
 
   @override
   void initState() {
-    reloadProductsHolderScreen();
+    Future.delayed(Duration.zero).then((value) {
+      bool redirectToStore =
+          (ModalRoute.of(context)?.settings.arguments as bool?) ?? true;
+
+      reloadProductsHolderScreen(redirectToStore);
+    });
+
     super.initState();
   }
 
