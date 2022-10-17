@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/global.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
+import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
@@ -23,19 +24,27 @@ class TraderProductCard extends StatelessWidget {
     this.enableSelection = false,
     this.onSelectionChanged,
     this.selected = false,
+    this.removeProduct,
   }) : super(key: key);
 
   final ProductModel productModel;
   final bool enableSelection;
   final VoidCallback? onSelectionChanged;
   final bool selected;
+  final Function(String productId)? removeProduct;
 
   @override
   Widget build(BuildContext context) {
     if (enableSelection && onSelectionChanged == null) {
       throw Exception('enableSelection==true && onSelectionChanged=null');
     }
-    return GestureDetector(
+    if (!enableSelection && removeProduct == null) {
+      throw Exception('enableSelection==false && removeProduct=null');
+    }
+    return ButtonWrapper(
+      backgroundColor: Colors.transparent,
+      onLongPress:
+          enableSelection ? null : () => removeProduct!(productModel.id),
       onTap: enableSelection
           ? onSelectionChanged
           : () {

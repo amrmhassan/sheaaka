@@ -117,3 +117,17 @@ void showSnackBar({
 LatLng locationFromLocationData(LocationData locationData) {
   return LatLng(locationData.latitude!, locationData.longitude!);
 }
+
+//? get file ref from it's link
+String getFileRefFromLink(String link) {
+  String path = link.replaceFirst(
+      'https://firebasestorage.googleapis.com/v0/b/sheaka-sheaka.appspot.com/o/',
+      '');
+
+  path = path.replaceAll(RegExp(r'%2F'), '/');
+  path = path.replaceAll(RegExp(r'%20'), ' ');
+  path = path.replaceAll(RegExp(r'%3A'), ':');
+
+  path = path.replaceAll(RegExp(r'(\?alt).*'), '');
+  return path;
+}

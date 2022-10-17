@@ -27,6 +27,7 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
   bool loading = false;
   List<ProductModel> storeProducts = [];
 
+//? getting all store products
   Future<void> fetchStoreProducts() async {
     setState(() {
       loading = true;
@@ -79,7 +80,6 @@ class _StoreAllProductsGridState extends State<StoreAllProductsGrid> {
                 ],
               )
             : GridView.count(
-                // padding: EdgeInsets.symmetric(vertical: kVPad),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 3,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
@@ -12,6 +13,7 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/categories_provider.dart';
+import 'package:project/utils/general_utils.dart';
 
 int loadingAtATime = 10;
 
@@ -31,8 +33,37 @@ class ProductsProvider extends ChangeNotifier {
 
   bool loadingAllProducts = false;
   void addProduct(ProductModel productModel) {
-    _allProducts.add(productModel);
+    _allProducts.insert(0, productModel);
+
     notifyListeners();
+  }
+
+  Future<void> deleteProduct(String productId) async {
+    try {
+      ProductModel p =
+          _allProducts.firstWhere((element) => element.id == productId);
+      //* removing product data
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(productId)
+          .delete();
+      //* removing product images
+      for (var imagePath in p.imagesPath) {
+        String path = getFileRefFromLink(imagePath);
+        await FirebaseStorage.instance.ref(path).delete();
+      }
+
+      //* removing product from local state
+      _allProducts.removeWhere((element) => element.id == productId);
+      _homeProducts.removeWhere((element) => element.id == productId);
+      notifyListeners();
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorRemovingProduct,
+        stackTrace: s,
+        errString: e.toString(),
+      );
+    }
   }
 
   // //? fetch all products
@@ -383,11 +414,21 @@ class ProductsProvider extends ChangeNotifier {
 
 //? getting store tab products
   List<ProductModel> getStoreTabProducts(
-      StoreTabModel storeTabModel, String storeId) {
-    return storeTabModel.productsIds.map((e) {
-      ProductModel productModel = findProductById(e);
-      return productModel;
-    }).toList();
+    StoreTabModel storeTabModel,
+    String storeId,
+  ) {
+    List<ProductModel> tabProducts = [];
+
+    for (var productId in storeTabModel.productsIds) {
+      try {
+        ProductModel p = findProductById(productId);
+        tabProducts.add(p);
+      } catch (e) {
+        //
+      }
+    }
+
+    return tabProducts;
   }
 
   //? get store products

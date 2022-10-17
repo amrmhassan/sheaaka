@@ -25,6 +25,7 @@ const Map<ErrorsTypes, String> errorsMapping = {
   ErrorsTypes.cantSignOut: 'لا يمكن تسجيل الخروج',
   ErrorsTypes.addingStoreTabError: 'خطأ في إنشاء قسم جديد',
   ErrorsTypes.errorAddingProductsToTab: 'خطأ في إضافة المنتجات',
+  ErrorsTypes.errorRemovingProduct: 'خطأ في حذف المنتج',
 };
 
 enum ErrorsTypes {
@@ -50,4 +51,5 @@ enum ErrorsTypes {
   cantSignOut,
   addingStoreTabError,
   errorAddingProductsToTab,
+  errorRemovingProduct,
 }

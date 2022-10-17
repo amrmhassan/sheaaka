@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:project/constants/errors_constants.dart';
 
 //! handle the errors to let known and unknown errors appear in the debugging mode
@@ -9,8 +10,15 @@ class CustomError implements Exception {
   String? errString;
   bool? rethrowError;
 
-  CustomError(
-      {this.errorType, this.stackTrace, this.errString, this.rethrowError}) {
+  CustomError({
+    this.errorType,
+    this.stackTrace,
+    this.errString,
+    this.rethrowError,
+  }) {
+    if (kDebugMode) {
+      print('Error Message : $errString');
+    }
     if (rethrowError != null && rethrowError == true) {
       throw Exception(toString());
     }
