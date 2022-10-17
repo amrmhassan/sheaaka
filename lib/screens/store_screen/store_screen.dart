@@ -49,12 +49,14 @@ class _StoreScreenState extends State<StoreScreen> {
   @override
   Widget build(BuildContext context) {
     String storeId = ModalRoute.of(context)!.settings.arguments as String;
-
-    StoreModel storeModel =
-        Provider.of<StoreProvider>(context).getStoreById(storeId);
-    List<OfferModel> activeOffers = storeModel.offers == null
-        ? []
-        : storeModel.offers!.where((element) => element.active).toList();
+    StoreProvider storeProvider = Provider.of<StoreProvider>(context);
+    StoreModel storeModel = storeProvider.getStoreById(storeId);
+    // List<OfferModel> activeOffers = storeModel.offers == null
+    //     ? []
+    //     : storeModel.offers!.where((element) => element.active).toList();
+    List<OfferModel> modifiedActiveOffers = storeProvider.offers
+        .where((element) => element.active && element.storeId == storeId)
+        .toList();
 
     List<StoreTabModel> arrangedStoreTabs = [
       ...storeModel.storeTabs.where((element) => element.allProducts),
@@ -111,10 +113,10 @@ class _StoreScreenState extends State<StoreScreen> {
                 ],
               ),
             ),
-            if (activeOffers.isNotEmpty) VSpace(factor: .5),
-            if (activeOffers.isNotEmpty)
+            if (modifiedActiveOffers.isNotEmpty) VSpace(factor: .5),
+            if (modifiedActiveOffers.isNotEmpty)
               StoreOffers(
-                offers: activeOffers,
+                offers: modifiedActiveOffers,
               ),
             VSpace(factor: .8),
             Column(

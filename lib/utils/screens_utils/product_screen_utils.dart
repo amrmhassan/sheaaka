@@ -40,7 +40,7 @@ Widget handleShowBrand(ProductModel productModel) {
               productModel.brand == null
                   ? emptyBrand.name
                   : productModel.brand!.name,
-              style: h3TextStyle,
+              style: h4TextStyleInactive,
             ),
           ),
         );
