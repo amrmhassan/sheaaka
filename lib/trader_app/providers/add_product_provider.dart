@@ -12,6 +12,7 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -55,6 +56,8 @@ class AddProductProvider extends ChangeNotifier {
     required ProductsProvider productsProvider,
     required TextEditingController offerNameController,
     required TextEditingController keywordksController,
+    //! add the offer to the local state
+    required StoreProvider storeProvider,
   }) async {
     //* uploading images
     List<String> imagesLinks = await uploadImages(
@@ -113,6 +116,7 @@ class AddProductProvider extends ChangeNotifier {
           .collection(offersCollectionName)
           .doc(id)
           .set(offerModel.toJSON());
+      storeProvider.addOffer(offerModel);
     }
     productsProvider.addProduct(productModel);
     setUploadingProductData(false);

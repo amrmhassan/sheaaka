@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
-import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
@@ -16,9 +12,9 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
-import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/t_product_screen_app_bar.dart';
@@ -55,8 +51,8 @@ class _TProductsScreenState extends State<TProductsScreen> {
   //? handle removing a product
   Future<void> handleRemoveProduct(String productId) async {
     try {
-      await Provider.of<ProductsProvider>(context, listen: false)
-          .deleteProduct(productId);
+      await Provider.of<ProductsProvider>(context, listen: false).deleteProduct(
+          productId, Provider.of<StoreProvider>(context, listen: false));
       showSnackBar(
         context: context,
         message: 'تم حذف المنتج',

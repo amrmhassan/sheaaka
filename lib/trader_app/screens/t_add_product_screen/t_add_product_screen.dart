@@ -13,6 +13,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
@@ -233,7 +234,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     }
     //* validating that old price is bigger than price after offer
     if (isOffer &&
-        (double.parse(oldPriceController.text) <
+        (double.parse(oldPriceController.text) <=
             double.parse(currentPriceController.text))) {
       return showSnackBar(
         context: context,
@@ -253,6 +254,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         Provider.of<TraderProvider>(context, listen: false).myStore!;
     ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
+    StoreProvider storeProvider =
+        Provider.of<StoreProvider>(context, listen: false);
 
     Provider.of<AddProductProvider>(context, listen: false).uploadProduct(
       nameController: nameController,
@@ -271,6 +274,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       productsProvider: productsProvider,
       offerNameController: offerNameController,
       keywordksController: keywordsController,
+      storeProvider: storeProvider,
     );
     Navigator.pop(context);
   }

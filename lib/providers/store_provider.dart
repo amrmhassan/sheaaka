@@ -27,6 +27,23 @@ class StoreProvider extends ChangeNotifier {
     return [..._offers];
   }
 
+//? delete offer
+  void deleteOffer(String offerId) {
+    _offers.removeWhere((element) => element.id == offerId);
+    notifyListeners();
+  }
+
+  //? add offer
+  void addOffer(OfferModel offerModel) {
+    _offers.add(offerModel);
+    try {
+      notifyListeners();
+    } catch (e) {
+      //
+    }
+  }
+
+//? fetch offers
   Future<void> fetchAndUpdateOffers([bool noStateNotify = false]) async {
     _offers.clear();
     var data = (await ref.collection(offersCollectionName).get()).docs;

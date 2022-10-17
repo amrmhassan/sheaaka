@@ -13,6 +13,7 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/categories_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/utils/general_utils.dart';
 
 int loadingAtATime = 10;
@@ -38,7 +39,8 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteProduct(String productId) async {
+  Future<void> deleteProduct(
+      String productId, StoreProvider storeProvider) async {
     try {
       ProductModel p =
           _allProducts.firstWhere((element) => element.id == productId);
@@ -56,7 +58,20 @@ class ProductsProvider extends ChangeNotifier {
       //* removing product from local state
       _allProducts.removeWhere((element) => element.id == productId);
       _homeProducts.removeWhere((element) => element.id == productId);
+
       notifyListeners();
+
+      //* delete offers from fire store
+      var data = await FirebaseFirestore.instance
+          .collection(offersCollectionName)
+          .where(productIdString, isEqualTo: p.id)
+          .get();
+      for (var doc in data.docs) {
+        storeProvider.deleteOffer(doc.id);
+        await doc.reference.delete();
+      }
+
+      //* delete offers from local state
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorRemovingProduct,

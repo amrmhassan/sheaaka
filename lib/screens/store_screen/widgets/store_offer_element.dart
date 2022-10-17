@@ -40,6 +40,7 @@ class StoreOfferElement extends StatelessWidget {
                     width: store_offer_photo.radius,
                     child: Text(
                       offer.title,
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: h4TextStyle.copyWith(
                         height: 1,
