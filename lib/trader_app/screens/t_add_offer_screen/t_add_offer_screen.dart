@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
@@ -9,8 +11,10 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
@@ -18,6 +22,8 @@ import 'package:project/trader_app/screens/t_add_offer_screen/widgets/customer_n
 import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class TAddOfferScreen extends StatefulWidget {
   static const String routeName = 't-add-offer-screen';
@@ -31,6 +37,7 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
   double discountValue = 10;
   String? discountError;
   TextEditingController discountController = TextEditingController();
+  TextEditingController offerTitleController = TextEditingController();
   ProductModel? productModel;
 
   //? date data
@@ -77,254 +84,205 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
     if (!validateDiscountField()) {
       return;
     }
+    if (productModel == null) {
+      showSnackBar(
+        context: context,
+        message: 'قم باختيار المنتج أولا',
+        snackBarType: SnackBarType.error,
+      );
+      return;
+    }
+    String id = Uuid().v4();
+    OfferModel offerModel = OfferModel(
+      id: id,
+      imagePath: productModel!.imagesPath.first,
+      title: offerTitleController.text,
+      createdAt: DateTime.now(),
+      endAt: offerEndDate(),
+      productId: productModel!.id,
+      storeId: productModel!.storeId,
+      discountPercentage: discountValue,
+      productName: productModel!.name,
+    );
+
+    await FirebaseFirestore.instance
+        .collection(offersCollectionName)
+        .add(offerModel.toJSON());
     showSnackBar(
       context: context,
-      message: 'done',
+      message: 'تم انشاء العرض بنجاح',
       snackBarType: SnackBarType.success,
     );
+    //! here just edit the product model to have what its offer have from end date and other stuff
+    //! add edit product method to product provider
+
+    //
+    //! then prevent the choose products screen from viewing products which already have offer on them
+    //! by passing product models from this screen to the choosing screen then return the product that has been chosen
+    Provider.of<StoreProvider>(context, listen: false).addOffer(offerModel);
   }
 
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppBar(
-            traderStyle: true,
-            rightTitle: true,
-            title: 'عرض جديد',
-          ),
-          VSpace(factor: .5),
-          HLine(
-            color: kTraderLightColor.withOpacity(.2),
-            thickness: 2,
-          ),
-          VSpace(factor: .5),
-          PaddingWrapper(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                productModel == null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'لابد من اختيار منتج',
-                            style: h4TextStyleInactive.copyWith(
-                              color: kTraderBlackColor,
-                            ),
-                          ),
-                          VSpace(factor: .5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ButtonWrapper(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: kHPad,
-                                  vertical: kVPad / 2,
-                                ),
-                                onTap: () async {
-                                  ProductModel? p = await Navigator.pushNamed(
-                                          context,
-                                          TChooseSingleProductsScreen.routeName)
-                                      as ProductModel?;
-                                  if (p != null) {
-                                    setState(() {
-                                      productModel = p;
-                                    });
-                                  } else {
-                                    showSnackBar(
-                                        context: context,
-                                        message: 'لم يتم اختيار منتج');
-                                  }
-                                },
-                                borderRadius: 0,
-                                backgroundColor: kTraderPrimaryColor,
-                                child: Text(
-                                  'اختيار منتج',
-                                  style: h3LiteTextStyle.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'اضغط مطولا للتغيير',
-                            style: h4TextStyleInactive.copyWith(
-                              color: kTraderSecondaryColor.withOpacity(.8),
-                            ),
-                          ),
-                          TraderProductCard(
-                            productModel: productModel!,
-                            onLongPressed: () async {
-                              ProductModel? p = await Navigator.pushNamed(
-                                context,
-                                TChooseSingleProductsScreen.routeName,
-                              ) as ProductModel?;
-                              if (p != null) {
-                                setState(() {
-                                  productModel = p;
-                                });
-                              } else {
-                                showSnackBar(
-                                    context: context,
-                                    message: 'لم يتم اختيار منتج');
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                VSpace(),
-                Row(
-                  children: [
-                    Text(
-                      'مدة العرض',
-                      style: h3TextStyle.copyWith(
-                        color: kTraderBlackColor,
-                      ),
-                    ),
-                    HSpace(factor: .5),
-                    Text(
-                      'قم بالسحب لأسفل وأعلي',
-                      style: h4TextStyleInactive.copyWith(
-                        color: kTraderSecondaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-                VSpace(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomNumberPicker(
-                      onChanged: (v) {
-                        setState(() {
-                          hours = v;
-                        });
-                      },
-                      maxValue: 24,
-                      minValue: 0,
-                      value: hours,
-                      title: 'ساعة',
-                    ),
-                    CustomNumberPicker(
-                      onChanged: (v) {
-                        setState(() {
-                          days = v;
-                        });
-                      },
-                      maxValue: 29,
-                      minValue: 0,
-                      value: days,
-                      title: 'يوم',
-                    ),
-                    CustomNumberPicker(
-                      onChanged: (v) {
-                        setState(() {
-                          months = v;
-                        });
-                      },
-                      maxValue: 5 * 12,
-                      minValue: 0,
-                      value: months,
-                      title: 'شهر',
-                    ),
-                  ],
-                ),
-                VSpace(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'سيتم الانتهاء في',
-                      style: h3TextStyle.copyWith(
-                        color: kTraderBlackColor,
-                      ),
-                    ),
-                    Text(
-                      dateToString(
-                        offerEndDate(),
-                      ),
-                      style: h3TextStyle.copyWith(
-                        color: kTraderBlackColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(
+              traderStyle: true,
+              rightTitle: true,
+              title: 'عرض جديد',
             ),
-          ),
-          VSpace(factor: 2),
-          CustomTextField(
-            title: 'قيمة خصم العرض',
-            errorText: discountError,
-            borderRadius: BorderRadius.zero,
-            borderColor: kTraderSecondaryColor,
-            controller: discountController,
-            requiredField: true,
-            textInputType: TextInputType.number,
-            textInputAction: TextInputAction.done,
-            onChange: (v) {
-              if (!validateDiscountField()) {
-                return;
-              }
-              setState(() {
-                discountValue = double.parse(v);
-              });
-            },
-            trailingIcon: Image.asset(
-              'assets/icons/percentage.png',
-              width: ultraSmallIconSize,
-              color: kTraderPrimaryColor,
+            VSpace(factor: .5),
+            HLine(
+              color: kTraderLightColor.withOpacity(.2),
+              thickness: 2,
             ),
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            thumbColor: kTraderPrimaryColor,
-            activeColor: kTraderPrimaryColor,
-            inactiveColor: kTraderPrimaryColor.withOpacity(.3),
-            value: discountValue,
-            onChanged: (value) {
-              setState(() {
-                discountValue = value;
-                if (discountError != null) {
-                  discountError = null;
+            VSpace(factor: .5),
+            PaddingWrapper(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  productModel == null
+                      ? NoProductChosen(setProductModel: setProductModel)
+                      : ProductChosen(
+                          productModel: productModel!,
+                          setProductModel: setProductModel,
+                        ),
+                  VSpace(),
+                  Row(
+                    children: [
+                      Text(
+                        'مدة العرض',
+                        style: h3TextStyle.copyWith(
+                          color: kTraderBlackColor,
+                        ),
+                      ),
+                      HSpace(factor: .5),
+                      Text(
+                        'قم بالسحب لأسفل وأعلي',
+                        style: h4TextStyleInactive.copyWith(
+                          color: kTraderSecondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  VSpace(),
+                  OfferDatePicker(
+                      hours: hours,
+                      days: days,
+                      months: months,
+                      setHours: (h) {
+                        setState(() {
+                          hours = h;
+                        });
+                      },
+                      setDays: (d) {
+                        setState(() {
+                          days = d;
+                        });
+                      },
+                      setMonths: (m) {
+                        setState(() {
+                          months = m;
+                        });
+                      }),
+                  VSpace(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'سيتم الانتهاء في',
+                        style: h3TextStyle.copyWith(
+                          color: kTraderBlackColor,
+                        ),
+                      ),
+                      Text(
+                        dateToString(
+                          offerEndDate(),
+                        ),
+                        style: h3TextStyle.copyWith(
+                          color: kTraderBlackColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            VSpace(factor: 2),
+            CustomTextField(
+              title: 'قيمة خصم العرض',
+              errorText: discountError,
+              borderRadius: BorderRadius.zero,
+              borderColor: kTraderSecondaryColor,
+              controller: discountController,
+              requiredField: true,
+              textInputType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              onChange: (v) {
+                if (!validateDiscountField()) {
+                  return;
                 }
-              });
-              discountController.text = value.toStringAsFixed(0);
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ButtonWrapper(
-                onTap: handleCreateOffer,
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHPad,
-                  vertical: kVPad / 2,
-                ),
-                borderRadius: 0,
-                backgroundColor: kTraderPrimaryColor,
-                child: Text(
-                  'إنشاء',
-                  style: h3LiteTextStyle.copyWith(
-                    color: Colors.white,
+                setState(() {
+                  discountValue = double.parse(v);
+                });
+              },
+              trailingIcon: Image.asset(
+                'assets/icons/percentage.png',
+                width: ultraSmallIconSize,
+                color: kTraderPrimaryColor,
+              ),
+            ),
+            Slider(
+              min: 0,
+              max: 100,
+              thumbColor: kTraderPrimaryColor,
+              activeColor: kTraderPrimaryColor,
+              inactiveColor: kTraderPrimaryColor.withOpacity(.3),
+              value: discountValue,
+              onChanged: (value) {
+                setState(() {
+                  discountValue = value;
+                  if (discountError != null) {
+                    discountError = null;
+                  }
+                });
+                discountController.text = value.toStringAsFixed(0);
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonWrapper(
+                  onTap: handleCreateOffer,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPad,
+                    vertical: kVPad / 2,
+                  ),
+                  borderRadius: 0,
+                  backgroundColor: kTraderPrimaryColor,
+                  child: Text(
+                    'إنشاء',
+                    style: h3LiteTextStyle.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  setProductModel(p) {
+    setState(() {
+      productModel = p;
+    });
   }
 
   DateTime offerEndDate() {
@@ -337,6 +295,143 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
         hours: hours,
         days: days + months * 30,
       ),
+    );
+  }
+}
+
+class NoProductChosen extends StatelessWidget {
+  final Function(ProductModel p) setProductModel;
+  const NoProductChosen({super.key, required this.setProductModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'لابد من اختيار منتج',
+          style: h4TextStyleInactive.copyWith(
+            color: kTraderBlackColor,
+          ),
+        ),
+        VSpace(factor: .5),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ButtonWrapper(
+              padding: EdgeInsets.symmetric(
+                horizontal: kHPad,
+                vertical: kVPad / 2,
+              ),
+              onTap: () async {
+                ProductModel? p = await Navigator.pushNamed(
+                        context, TChooseSingleProductsScreen.routeName)
+                    as ProductModel?;
+                if (p != null) {
+                  setProductModel(p);
+                } else {
+                  showSnackBar(context: context, message: 'لم يتم اختيار منتج');
+                }
+              },
+              borderRadius: 0,
+              backgroundColor: kTraderPrimaryColor,
+              child: Text(
+                'اختيار منتج',
+                style: h3LiteTextStyle.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class ProductChosen extends StatelessWidget {
+  final ProductModel productModel;
+  final Function(ProductModel p) setProductModel;
+  const ProductChosen({
+    super.key,
+    required this.productModel,
+    required this.setProductModel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'اضغط مطولا للتغيير',
+          style: h4TextStyleInactive.copyWith(
+            color: kTraderSecondaryColor.withOpacity(.8),
+          ),
+        ),
+        TraderProductCard(
+          productModel: productModel,
+          onLongPressed: () async {
+            ProductModel? p = await Navigator.pushNamed(
+              context,
+              TChooseSingleProductsScreen.routeName,
+            ) as ProductModel?;
+            if (p != null) {
+              setProductModel(p);
+            } else {
+              showSnackBar(context: context, message: 'لم يتم اختيار منتج');
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class OfferDatePicker extends StatelessWidget {
+  final int hours;
+  final int days;
+  final int months;
+  final Function(int hours) setHours;
+  final Function(int days) setDays;
+  final Function(int months) setMonths;
+  const OfferDatePicker({
+    super.key,
+    required this.hours,
+    required this.days,
+    required this.months,
+    required this.setHours,
+    required this.setDays,
+    required this.setMonths,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CustomNumberPicker(
+          onChanged: setHours,
+          maxValue: 24,
+          minValue: 0,
+          value: hours,
+          title: 'ساعة',
+        ),
+        CustomNumberPicker(
+          onChanged: setDays,
+          maxValue: 29,
+          minValue: 0,
+          value: days,
+          title: 'يوم',
+        ),
+        CustomNumberPicker(
+          onChanged: setMonths,
+          maxValue: 5 * 12,
+          minValue: 0,
+          value: months,
+          title: 'شهر',
+        ),
+      ],
     );
   }
 }
