@@ -9,6 +9,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/widgets/trader_offer_card.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:provider/provider.dart';
@@ -31,9 +32,7 @@ class TOffersScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(largePadding),
           child: Image.asset(
-            Provider.of<AddProductProvider>(context).loading
-                ? 'assets/icons/upload.png'
-                : 'assets/icons/plus.png',
+            'assets/icons/plus.png',
             color: Colors.white,
           ),
         ),
