@@ -8,6 +8,7 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/widgets/trader_offer_card.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 
@@ -25,7 +26,9 @@ class TOffersScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: kTraderPrimaryColor,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, TAddOfferScreen.routeName);
+        },
         child: Container(
           padding: EdgeInsets.all(largePadding),
           child: Image.asset(

@@ -25,6 +25,8 @@ class TraderProductCard extends StatelessWidget {
     this.onSelectionChanged,
     this.selected = false,
     this.removeProduct,
+    this.onTap,
+    this.onLongPressed,
   }) : super(key: key);
 
   final ProductModel productModel;
@@ -32,25 +34,30 @@ class TraderProductCard extends StatelessWidget {
   final VoidCallback? onSelectionChanged;
   final bool selected;
   final Function(String productId)? removeProduct;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPressed;
 
   @override
   Widget build(BuildContext context) {
     if (enableSelection && onSelectionChanged == null) {
       throw Exception('enableSelection==true && onSelectionChanged=null');
     }
-    if (!enableSelection && removeProduct == null) {
-      throw Exception('enableSelection==false && removeProduct=null');
-    }
+    // if (!enableSelection && removeProduct == null && onLongPressed == null) {
+    //   throw Exception(
+    //       'enableSelection==false && removeProduct=null && onLongPressed==null');
+    // }
     return ButtonWrapper(
       backgroundColor: Colors.transparent,
-      onLongPress:
-          enableSelection ? null : () => removeProduct!(productModel.id),
+      onLongPress: enableSelection
+          ? null
+          : onLongPressed ?? () => removeProduct!(productModel.id),
       onTap: enableSelection
           ? onSelectionChanged
-          : () {
-              Navigator.pushNamed(context, ProductScreen.routeName,
-                  arguments: productModel.id);
-            },
+          : onTap ??
+              () {
+                Navigator.pushNamed(context, ProductScreen.routeName,
+                    arguments: productModel.id);
+              },
       child: Stack(
         children: [
           Opacity(

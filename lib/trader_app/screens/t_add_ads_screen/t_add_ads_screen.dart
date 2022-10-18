@@ -14,7 +14,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class TAddAdsScreen extends StatelessWidget {
-  static const String routeName = 't-add-offer-screen';
+  static const String routeName = 't-add-ads-screen';
   const TAddAdsScreen({super.key});
 
   @override

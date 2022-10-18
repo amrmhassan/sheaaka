@@ -18,7 +18,11 @@ class ScreensWrapper extends StatelessWidget {
       floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButton: floatingActionButton,
       resizeToAvoidBottomInset: false,
-      body: GestureDetector(
+      //! i make gesture detector to be inkwell to accept clicks even if the area is blank
+      body: InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        focusColor: Colors.transparent,
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },

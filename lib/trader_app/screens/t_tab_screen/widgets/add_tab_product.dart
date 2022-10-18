@@ -6,7 +6,7 @@ import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/screens/t_choose_product_screen/t_choose_product_screen.dart';
+import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
 
 class AddTabProduct extends StatelessWidget {
   final StoreTabModel currentActiveStoreTab;
@@ -23,7 +23,7 @@ class AddTabProduct extends StatelessWidget {
       onTap: () async {
         List<ProductModel>? selectedProducts = await Navigator.pushNamed(
           context,
-          TChooseProductScreen.routeName,
+          TChooseMultipleProductsScreen.routeName,
           arguments: currentActiveStoreTab,
         ) as List<ProductModel>?;
         if (selectedProducts != null && selectedProducts.isNotEmpty) {

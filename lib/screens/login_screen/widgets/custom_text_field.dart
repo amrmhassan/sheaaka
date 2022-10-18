@@ -32,6 +32,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final int? minLines;
   final String? initialValue;
+  final Widget? trailingIcon;
 
   const CustomTextField({
     Key? key,
@@ -59,6 +60,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.initialValue,
+    this.trailingIcon,
   }) : super(key: key);
 
   @override
@@ -134,6 +136,7 @@ class CustomTextField extends StatelessWidget {
                           ),
                         ),
                       ),
+                      if (trailingIcon != null) trailingIcon!,
                       if (trailingIconName != null)
                         GestureDetector(
                           onTap: handleShowPassword,

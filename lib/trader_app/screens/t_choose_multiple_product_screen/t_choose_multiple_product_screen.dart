@@ -7,19 +7,21 @@ import 'package:project/models/store_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
-import 'package:project/trader_app/screens/t_choose_product_screen/widgets/choose_product_app_bar.dart';
+import 'package:project/trader_app/screens/t_choose_multiple_product_screen/widgets/choose_product_app_bar.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
 import 'package:provider/provider.dart';
 
-class TChooseProductScreen extends StatefulWidget {
-  static const String routeName = 't-choose-product-screen';
-  const TChooseProductScreen({super.key});
+class TChooseMultipleProductsScreen extends StatefulWidget {
+  static const String routeName = 't-choose-multiple-product-screen';
+  const TChooseMultipleProductsScreen({super.key});
 
   @override
-  State<TChooseProductScreen> createState() => _TChooseProductScreenState();
+  State<TChooseMultipleProductsScreen> createState() =>
+      _TChooseMultipleProductsScreenState();
 }
 
-class _TChooseProductScreenState extends State<TChooseProductScreen> {
+class _TChooseMultipleProductsScreenState
+    extends State<TChooseMultipleProductsScreen> {
   //? selected products
   List<ProductModel> selectedProducts = [];
   void toggleSelectProduct(ProductModel p) {
@@ -55,6 +57,7 @@ class _TChooseProductScreenState extends State<TChooseProductScreen> {
           ),
           Expanded(
             child: ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: nonSelectedProducts.length,
               itemBuilder: ((context, index) {
                 var productModel = nonSelectedProducts[index];

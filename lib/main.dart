@@ -35,8 +35,9 @@ import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/providers/add_product_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
+import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
-import 'package:project/trader_app/screens/t_choose_product_screen/t_choose_product_screen.dart';
+import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
@@ -45,6 +46,8 @@ import 'package:project/trader_app/screens/t_tab_screen/t_tab_screen.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
 
 import 'package:provider/provider.dart';
+
+import 'trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 
 bool testing = false;
 Future main(List<String> args) async {
@@ -124,10 +127,14 @@ class MyApp extends StatelessWidget {
           TAddProductScreen.routeName: (context) => TAddProductScreen(),
           TTabsScreen.routeName: (context) => TTabsScreen(),
           TTabScreen.routeName: (context) => TTabScreen(),
-          TChooseProductScreen.routeName: (context) => TChooseProductScreen(),
+          TChooseMultipleProductsScreen.routeName: (context) =>
+              TChooseMultipleProductsScreen(),
+          TChooseSingleProductsScreen.routeName: (context) =>
+              TChooseSingleProductsScreen(),
           TOffersScreen.routeName: (context) => TOffersScreen(),
           TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
           TAddAdsScreen.routeName: (context) => TAddAdsScreen(),
+          TAddOfferScreen.routeName: (context) => TAddOfferScreen(),
         },
       ),
     );
