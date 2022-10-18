@@ -12,6 +12,7 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
 import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_element.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
@@ -53,15 +54,20 @@ class THomeScreen extends StatelessWidget {
                 ),
                 TraderHomeElement(
                   iconName: 'megaphone',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, TAddAdsScreen.routeName);
+                  },
                   title: 'عروض ممولة',
                   value: '34',
                 ),
                 TraderHomeElement(
                   iconName: 'offer',
                   onTap: () {
-                    Navigator.pushNamed(context, TOffersScreen.routeName,
-                        arguments: myStoreOffers);
+                    Navigator.pushNamed(
+                      context,
+                      TOffersScreen.routeName,
+                      arguments: myStoreOffers,
+                    );
                   },
                   title: 'العروض',
                   value: myStoreOffers

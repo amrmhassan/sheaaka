@@ -26,6 +26,7 @@ const Map<ErrorsTypes, String> errorsMapping = {
   ErrorsTypes.addingStoreTabError: 'خطأ في إنشاء قسم جديد',
   ErrorsTypes.errorAddingProductsToTab: 'خطأ في إضافة المنتجات',
   ErrorsTypes.errorRemovingProduct: 'خطأ في حذف المنتج',
+  ErrorsTypes.errorDeletingOffer: 'خطأ في حذف العرض',
 };
 
 enum ErrorsTypes {
@@ -52,4 +53,5 @@ enum ErrorsTypes {
   addingStoreTabError,
   errorAddingProductsToTab,
   errorRemovingProduct,
+  errorDeletingOffer,
 }

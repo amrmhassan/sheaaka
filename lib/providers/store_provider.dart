@@ -28,9 +28,24 @@ class StoreProvider extends ChangeNotifier {
   }
 
 //? delete offer
-  void deleteOffer(String offerId) {
+  Future<void> deleteOffer(String offerId) async {
     _offers.removeWhere((element) => element.id == offerId);
-    notifyListeners();
+    try {
+      notifyListeners();
+    } catch (e, s) {
+      CustomError(errString: e.toString(), stackTrace: s);
+    }
+    try {
+      await FirebaseFirestore.instance
+          .collection(offersCollectionName)
+          .doc(offerId)
+          .delete();
+    } catch (e, s) {
+      throw CustomError(
+          errorType: ErrorsTypes.errorDeletingOffer,
+          errString: e.toString(),
+          stackTrace: s);
+    }
   }
 
   //? add offer

@@ -40,7 +40,9 @@ class ProductsProvider extends ChangeNotifier {
 
 //? deleting product
   Future<void> deleteProduct(
-      String productId, StoreProvider storeProvider) async {
+    String productId,
+    StoreProvider storeProvider,
+  ) async {
     try {
       ProductModel p =
           _allProducts.firstWhere((element) => element.id == productId);
@@ -61,14 +63,13 @@ class ProductsProvider extends ChangeNotifier {
 
       notifyListeners();
 
-      //* delete offers from fire store
-      var data = await FirebaseFirestore.instance
-          .collection(offersCollectionName)
-          .where(productIdString, isEqualTo: p.id)
-          .get();
-      for (var doc in data.docs) {
-        storeProvider.deleteOffer(doc.id);
-        await doc.reference.delete();
+      //* delete offers
+
+      List<OfferModel> offers = storeProvider.offers
+          .where((element) => element.productId == p.id)
+          .toList();
+      for (var offer in offers) {
+        await storeProvider.deleteOffer(offer.id);
       }
 
       //* delete offers from local state

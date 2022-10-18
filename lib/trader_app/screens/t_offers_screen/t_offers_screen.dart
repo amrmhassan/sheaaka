@@ -8,11 +8,8 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/providers/add_product_provider.dart';
-import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/widgets/trader_offer_card.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
-import 'package:provider/provider.dart';
 
 class TOffersScreen extends StatelessWidget {
   static const String routeName = 't-offers-screen';
