@@ -34,7 +34,7 @@ class TStoreProfileScreen extends StatelessWidget {
                 style: h3LightTextStyle,
               ),
               onTap: () {
-                Navigator.pushNamed(context, HolderScreen.routeName,
+                Navigator.pushReplacementNamed(context, HolderScreen.routeName,
                     arguments: false);
               },
             ),

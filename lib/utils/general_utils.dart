@@ -86,31 +86,36 @@ void showSnackBar({
   VoidCallback? onActionTapped,
   String? actionString,
 }) {
-  ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      behavior: aboveBottomNavBar ? SnackBarBehavior.floating : null,
-      content: Text(
-        message,
+  try {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: aboveBottomNavBar ? SnackBarBehavior.floating : null,
+        content: Text(
+          message,
+        ),
+        backgroundColor:
+            (snackBarType ?? SnackBarType.info) == SnackBarType.success
+                ? kGreenColor
+                : (snackBarType ?? SnackBarType.info) == SnackBarType.error
+                    ? kDangerColor
+                    : null,
+        margin: margin,
+        action: SnackBarAction(
+          label: actionString ?? 'تم',
+          textColor: (snackBarType ?? SnackBarType.info) ==
+                      SnackBarType.error ||
+                  (snackBarType ?? SnackBarType.info) == SnackBarType.success ||
+                  (snackBarType ?? SnackBarType.info) == SnackBarType.info
+              ? Colors.white
+              : null,
+          onPressed: onActionTapped ?? () {},
+        ),
       ),
-      backgroundColor:
-          (snackBarType ?? SnackBarType.info) == SnackBarType.success
-              ? kGreenColor
-              : (snackBarType ?? SnackBarType.info) == SnackBarType.error
-                  ? kDangerColor
-                  : null,
-      margin: margin,
-      action: SnackBarAction(
-        label: actionString ?? 'تم',
-        textColor: (snackBarType ?? SnackBarType.info) == SnackBarType.error ||
-                (snackBarType ?? SnackBarType.info) == SnackBarType.success ||
-                (snackBarType ?? SnackBarType.info) == SnackBarType.info
-            ? Colors.white
-            : null,
-        onPressed: onActionTapped ?? () {},
-      ),
-    ),
-  );
+    );
+  } catch (e) {
+    //
+  }
 }
 
 //? get location from location data

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
@@ -12,8 +11,6 @@ import 'package:project/models/product_model.dart';
 import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/categories_provider.dart';
-import 'package:project/providers/store_provider.dart';
-import 'package:project/utils/general_utils.dart';
 
 int loadingAtATime = 10;
 
@@ -47,18 +44,17 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //? editing a product
-  Future<void> editProduct(ProductModel newProduct) async {
-    try {
-      await ref
-          .collection(productsCollectionName)
-          .doc(newProduct.id)
-          .update(newProduct.toJSON());
-    } catch (e, s) {
-      throw CustomError(
-          errString: e.toString(),
-          stackTrace: s,
-          errorType: ErrorsTypes.errorEditingProduct);
-    }
+  void editProduct(ProductModel newProductModel) {
+    int allProductsIndex =
+        _allProducts.indexWhere((element) => element.id == newProductModel.id);
+    _allProducts.removeAt(allProductsIndex);
+    _allProducts.insert(allProductsIndex, newProductModel);
+
+    int homeProductsIndex =
+        _homeProducts.indexWhere((element) => element.id == newProductModel.id);
+    _homeProducts.removeAt(homeProductsIndex);
+    _homeProducts.insert(homeProductsIndex, newProductModel);
+    notifyListeners();
   }
 
   // //? fetch all products

@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
@@ -14,16 +12,17 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/screens/t_add_offer_screen/widgets/customer_number_picker.dart';
 import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class TAddOfferScreen extends StatefulWidget {
   static const String routeName = 't-add-offer-screen';
@@ -34,6 +33,7 @@ class TAddOfferScreen extends StatefulWidget {
 }
 
 class _TAddOfferScreenState extends State<TAddOfferScreen> {
+  bool loading = false;
   double discountValue = 10;
   String? discountError;
   TextEditingController discountController = TextEditingController();
@@ -109,8 +109,16 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
       return;
     }
 
+    if (loading) {
+      showSnackBar(context: context, message: 'already uploading');
+      return;
+    }
     try {
-      await Provider.of<StoreProvider>(context, listen: false).addOffer(
+      setState(() {
+        loading = true;
+      });
+      OfferModel offerModel =
+          await Provider.of<StoreProvider>(context, listen: false).addOffer(
         discountPercentage: discountValue,
         endAt: offerEndDate(),
         imagePath: productModel!.imagesPath.first,
@@ -119,17 +127,25 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
         storeId: productModel!.storeId,
         title: offerTitleController.text,
       );
-      //! here just edit the product model to have what its offer have from end date and other stuff
-      //! add edit product method to product provider
+      //* edit product
+      var productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      ProductModel newProduct = productModel!;
+      newProduct.offerEnd = offerModel.endAt;
+      newProduct.offerStarted = offerModel.createdAt;
 
-      //
-      //! then prevent the choose products screen from viewing products which already have offer on them
-      //! by passing product models from this screen to the choosing screen then return the product that has been chosen
+      await Provider.of<ProductsControlProvider>(context, listen: false)
+          .editProduct(newProduct, productsProvider);
+
+      setState(() {
+        loading = false;
+      });
       showSnackBar(
         context: context,
         message: 'تم انشاء العرض بنجاح',
         snackBarType: SnackBarType.success,
       );
+      Navigator.pop(context);
     } catch (e) {
       showSnackBar(
         context: context,
@@ -168,6 +184,15 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
                           productModel: productModel!,
                           setProductModel: setProductModel,
                         ),
+                  VSpace(),
+                  CustomTextField(
+                    title: 'عنوان قصير للعرض',
+                    borderRadius: BorderRadius.zero,
+                    borderColor: kTraderSecondaryColor,
+                    controller: offerTitleController,
+                    textInputAction: TextInputAction.done,
+                    padding: EdgeInsets.zero,
+                  ),
                   VSpace(),
                   Row(
                     children: [
@@ -289,7 +314,8 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
                   ),
                 ),
               ],
-            )
+            ),
+            VSpace(),
           ],
         ),
       ),

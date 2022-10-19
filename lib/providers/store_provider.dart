@@ -49,7 +49,7 @@ class StoreProvider extends ChangeNotifier {
   }
 
   //? add offer
-  Future<void> addOffer({
+  Future<OfferModel> addOffer({
     required String imagePath,
     required String title,
     required DateTime endAt,
@@ -85,10 +85,12 @@ class StoreProvider extends ChangeNotifier {
           .set(offerModel.toJSON());
     } catch (e, s) {
       throw CustomError(
-          errString: e.toString(),
-          stackTrace: s,
-          errorType: ErrorsTypes.errorCreatingOffer);
+        errString: e.toString(),
+        stackTrace: s,
+        errorType: ErrorsTypes.errorCreatingOffer,
+      );
     }
+    return offerModel;
   }
 
 //? fetch offers

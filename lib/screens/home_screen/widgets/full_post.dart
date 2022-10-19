@@ -122,6 +122,7 @@ class _FullPostState extends State<FullPost> {
   bool showOfferTimer() {
     // bool t = widget.fullPostModel.hasOffer;
 
-    return widget.fullPostModel.hasOffer;
+    return widget.fullPostModel.offerEnd != null &&
+        widget.fullPostModel.offerEnd!.isAfter(DateTime.now());
   }
 }

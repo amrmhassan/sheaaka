@@ -143,6 +143,25 @@ class ProductsControlProvider extends ChangeNotifier {
     return uploadedImagesLinks;
   }
 
+//? editing a product
+  Future<void> editProduct(
+    ProductModel newProduct,
+    ProductsProvider productsProvider,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(newProduct.id)
+          .update(newProduct.toJSON());
+      productsProvider.editProduct(newProduct);
+    } catch (e, s) {
+      throw CustomError(
+          errString: e.toString(),
+          stackTrace: s,
+          errorType: ErrorsTypes.errorEditingProduct);
+    }
+  }
+
   //? deleting product
   Future<void> deleteProduct(
     ProductModel p,

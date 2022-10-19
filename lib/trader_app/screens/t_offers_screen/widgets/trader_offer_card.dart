@@ -1,13 +1,16 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/models/offer_model.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +28,15 @@ class TraderOfferCard extends StatelessWidget {
     try {
       await Provider.of<StoreProvider>(context, listen: false)
           .deleteOffer(offerId);
-      //! edit the offer product and remove offer data from it
+      var productsProvider =
+          Provider.of<ProductsProvider>(context, listen: false);
+      ProductModel newProduct =
+          productsProvider.findProductById(offer.productId);
+      newProduct.offerEnd = null;
+      newProduct.offerStarted = null;
+      await Provider.of<ProductsControlProvider>(context, listen: false)
+          .editProduct(newProduct, productsProvider);
+
       showSnackBar(context: context, message: 'تم حذف العرض');
     } catch (e) {
       showSnackBar(
