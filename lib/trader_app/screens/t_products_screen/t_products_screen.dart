@@ -15,6 +15,7 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/t_product_screen_app_bar.dart';
@@ -56,6 +57,7 @@ class _TProductsScreenState extends State<TProductsScreen> {
         productModel,
         Provider.of<StoreProvider>(context, listen: false),
         Provider.of<ProductsProvider>(context, listen: false),
+        Provider.of<TraderProvider>(context, listen: false),
       );
       showSnackBar(
         context: context,

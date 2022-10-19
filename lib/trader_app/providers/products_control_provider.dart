@@ -15,6 +15,7 @@ import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
@@ -88,11 +89,15 @@ class ProductsControlProvider extends ChangeNotifier {
       availableSize: availableSizes,
       brand: BrandModel(name: brandNameController.text, id: Uuid().v4()),
       shortDesc: shortDescController.text,
-      oldPrice: double.tryParse(oldPriceController.text),
+      // oldPrice: isOffer ? double.tryParse(oldPriceController.text) : null,
       storeLogo: myStore.logoImagePath,
       fullDesc: fullDescText,
       keywords: keywords,
     );
+    productModel.offerEnd = isOffer ? offerEnd : null;
+    productModel.offerStarted = isOffer ? DateTime.now() : null;
+    productModel.oldPrice =
+        isOffer ? double.tryParse(oldPriceController.text) : null;
     await FirebaseFirestore.instance
         .collection(productsCollectionName)
         .doc(productId)
@@ -167,6 +172,7 @@ class ProductsControlProvider extends ChangeNotifier {
     ProductModel p,
     StoreProvider storeProvider,
     ProductsProvider productsProvider,
+    TraderProvider traderProvider,
   ) async {
     try {
       //* removing product data
@@ -191,6 +197,8 @@ class ProductsControlProvider extends ChangeNotifier {
       for (var offer in offers) {
         await storeProvider.deleteOffer(offer.id);
       }
+      //* delete it from store tabs
+      await traderProvider.removeProductFromTabs(p.id);
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorRemovingProduct,

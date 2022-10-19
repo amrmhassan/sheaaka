@@ -18,6 +18,7 @@ class OfferTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     int allDuration = offerEndDate!.difference(offerStartDate!).inMinutes;
     int remainingDuration = offerEndDate!.difference(DateTime.now()).inMinutes;
+
     double ratio = remainingDuration / allDuration;
     return Positioned(
       bottom: kVPad / 2,

@@ -62,6 +62,53 @@ class TraderProvider extends ChangeNotifier {
     }
   }
 
+  //? remove product from all tabs
+  Future<void> removeProductFromTabs(String productId) async {
+    List<StoreTabModel> newTabs = [];
+    for (var tab in myStore!.storeTabs) {
+      StoreTabModel? newTab;
+      if (tab.productsIds.contains(productId)) {
+        //? remove product from tab
+        newTab = _removeProductFromOneTab(productId, tab);
+      }
+      if (newTab == null) {
+        newTabs.add(tab);
+      } else {
+        newTabs.add(newTab);
+      }
+    }
+    await _editMyStoreTabs(newTabs);
+  }
+
+  //? remove product from tab
+  StoreTabModel _removeProductFromOneTab(String productId, StoreTabModel tab) {
+    List<String> newProductsIds = [...tab.productsIds];
+    newProductsIds.remove(productId);
+    StoreTabModel newTab = StoreTabModel(
+      productsIds: newProductsIds,
+      title: tab.title,
+      allProducts: false,
+    );
+    return newTab;
+  }
+
+//? edit current store tabs
+  Future<void> _editMyStoreTabs(List<StoreTabModel> newTabs) async {
+    try {
+      myStore!.storeTabs = newTabs;
+
+      notifyListeners();
+      await FirebaseFirestore.instance
+          .collection(storesCollectionName)
+          .doc(myStore!.id)
+          .update({
+        storeTabsString: newTabs.map((e) => e.toJSON()).toList(),
+      });
+    } catch (e, s) {
+      throw CustomError(errString: e.toString(), stackTrace: s);
+    }
+  }
+
   //? adding products to a tab
   Future<void> addProductsToTab(
     List<ProductModel> products,
@@ -87,15 +134,7 @@ class TraderProvider extends ChangeNotifier {
       //* inserting it into the tabs
       tabs.insert(tabIndex, newStoreTab);
       //* updating the store tabs to be viewed
-      myStore!.storeTabs = tabs;
-
-      notifyListeners();
-      await FirebaseFirestore.instance
-          .collection(storesCollectionName)
-          .doc(myStore!.id)
-          .update({
-        storeTabsString: tabs.map((e) => e.toJSON()).toList(),
-      });
+      await _editMyStoreTabs(tabs);
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorAddingProductsToTab,
