@@ -99,25 +99,10 @@ class AddProductProvider extends ChangeNotifier {
       double currentPrice = double.parse(currentPriceController.text);
       double oldPirce = double.parse(oldPriceController.text);
       double discountPercentage = ((oldPirce - currentPrice) / oldPirce) * 100;
-      String id = Uuid().v4();
-      OfferModel offerModel = OfferModel(
-        id: id,
-        imagePath: imagesLinks[0],
-        title: offerNameController.text,
-        createdAt: DateTime.now(),
+
+      await storeProvider.addOffer(
+        discountPercentage: discountPercentage,
         endAt: offerEnd!,
-        productId: productId,
-        storeId: myStore.id,
-        discountPercentage: discountPercentage,
-        productName: nameController.text,
-      );
-      await FirebaseFirestore.instance
-          .collection(offersCollectionName)
-          .doc(id)
-          .set(offerModel.toJSON());
-      storeProvider.addOffer(
-        discountPercentage: discountPercentage,
-        endAt: offerEnd,
         imagePath: imagesLinks[0],
         productId: productId,
         productName: nameController.text,
