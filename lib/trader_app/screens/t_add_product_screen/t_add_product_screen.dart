@@ -17,7 +17,7 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/add_product_props.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/widgets/adding_product_advice.dart';
@@ -257,7 +257,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     StoreProvider storeProvider =
         Provider.of<StoreProvider>(context, listen: false);
 
-    Provider.of<AddProductProvider>(context, listen: false).uploadProduct(
+    Provider.of<ProductsControlProvider>(context, listen: false).uploadProduct(
       nameController: nameController,
       myStore: myStore,
       imagesFiles: imagesFiles,

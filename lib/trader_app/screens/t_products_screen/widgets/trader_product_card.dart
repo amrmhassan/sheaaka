@@ -33,7 +33,7 @@ class TraderProductCard extends StatelessWidget {
   final bool enableSelection;
   final VoidCallback? onSelectionChanged;
   final bool selected;
-  final Function(String productId)? removeProduct;
+  final Function(ProductModel productModel)? removeProduct;
   final VoidCallback? onTap;
   final VoidCallback? onLongPressed;
 
@@ -50,7 +50,7 @@ class TraderProductCard extends StatelessWidget {
       backgroundColor: Colors.transparent,
       onLongPress: enableSelection
           ? null
-          : onLongPressed ?? () => removeProduct!(productModel.id),
+          : onLongPressed ?? () => removeProduct!(productModel),
       onTap: enableSelection
           ? onSelectionChanged
           : onTap ??

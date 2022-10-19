@@ -12,7 +12,7 @@ import 'package:project/models/store_tab_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/widgets/tab_card.dart';
@@ -105,7 +105,7 @@ class _TTabsScreenState extends State<TTabsScreen> {
         child: Container(
           padding: EdgeInsets.all(largePadding),
           child: Image.asset(
-            Provider.of<AddProductProvider>(context).loading
+            Provider.of<ProductsControlProvider>(context).loading
                 ? 'assets/icons/upload.png'
                 : 'assets/icons/plus.png',
             color: Colors.white,

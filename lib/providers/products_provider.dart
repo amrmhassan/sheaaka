@@ -39,48 +39,11 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//? deleting product
-  Future<void> deleteProduct(
-    String productId,
-    StoreProvider storeProvider,
-  ) async {
-    try {
-      ProductModel p =
-          _allProducts.firstWhere((element) => element.id == productId);
-      //* removing product data
-      await FirebaseFirestore.instance
-          .collection(productsCollectionName)
-          .doc(productId)
-          .delete();
-      //* removing product images
-      for (var imagePath in p.imagesPath) {
-        String path = getFileRefFromLink(imagePath);
-        await FirebaseStorage.instance.ref(path).delete();
-      }
-
-      //* removing product from local state
-      _allProducts.removeWhere((element) => element.id == productId);
-      _homeProducts.removeWhere((element) => element.id == productId);
-
-      notifyListeners();
-
-      //* delete offers
-
-      List<OfferModel> offers = storeProvider.offers
-          .where((element) => element.productId == p.id)
-          .toList();
-      for (var offer in offers) {
-        await storeProvider.deleteOffer(offer.id);
-      }
-
-      //* delete offers from local state
-    } catch (e, s) {
-      throw CustomError(
-        errorType: ErrorsTypes.errorRemovingProduct,
-        stackTrace: s,
-        errString: e.toString(),
-      );
-    }
+  //? remove product
+  void removeProduct(String productID) {
+    _allProducts.removeWhere((element) => element.id == productID);
+    _homeProducts.removeWhere((element) => element.id == productID);
+    notifyListeners();
   }
 
   //? editing a product

@@ -3,19 +3,23 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
 
-class AddProductProvider extends ChangeNotifier {
+class ProductsControlProvider extends ChangeNotifier {
   //? uploading images
   bool uploadingImages = false;
   void setUploadingImages(bool b) {
@@ -137,5 +141,43 @@ class AddProductProvider extends ChangeNotifier {
 
     setUploadingImages(false);
     return uploadedImagesLinks;
+  }
+
+  //? deleting product
+  Future<void> deleteProduct(
+    ProductModel p,
+    StoreProvider storeProvider,
+    ProductsProvider productsProvider,
+  ) async {
+    try {
+      //* removing product data
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(p.id)
+          .delete();
+      //* removing product images
+      for (var imagePath in p.imagesPath) {
+        String path = getFileRefFromLink(imagePath);
+        await FirebaseStorage.instance.ref(path).delete();
+      }
+
+      //* removing product from local state
+      productsProvider.removeProduct(p.id);
+
+      //* delete offers
+
+      List<OfferModel> offers = storeProvider.offers
+          .where((element) => element.productId == p.id)
+          .toList();
+      for (var offer in offers) {
+        await storeProvider.deleteOffer(offer.id);
+      }
+    } catch (e, s) {
+      throw CustomError(
+        errorType: ErrorsTypes.errorRemovingProduct,
+        stackTrace: s,
+        errString: e.toString(),
+      );
+    }
   }
 }

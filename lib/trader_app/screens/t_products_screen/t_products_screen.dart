@@ -14,7 +14,7 @@ import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/trader_app/constants/colors.dart';
-import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/t_product_screen_app_bar.dart';
@@ -33,7 +33,7 @@ class TProductsScreen extends StatefulWidget {
 
 class _TProductsScreenState extends State<TProductsScreen> {
   //? showing remove product modal
-  void showRemoveProductModal(String productId) {
+  void showRemoveProductModal(ProductModel productModel) {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -41,7 +41,7 @@ class _TProductsScreenState extends State<TProductsScreen> {
           return DeleteModal(
             title: 'هل تريد حذف هذا المنتج؟',
             onRemove: () {
-              handleRemoveProduct(productId);
+              handleRemoveProduct(productModel);
             },
             subTitle: 'سيتم حذف المنتج من جميع الأقسام أيضا',
           );
@@ -49,10 +49,14 @@ class _TProductsScreenState extends State<TProductsScreen> {
   }
 
   //? handle removing a product
-  Future<void> handleRemoveProduct(String productId) async {
+  Future<void> handleRemoveProduct(ProductModel productModel) async {
     try {
-      await Provider.of<ProductsProvider>(context, listen: false).deleteProduct(
-          productId, Provider.of<StoreProvider>(context, listen: false));
+      await Provider.of<ProductsControlProvider>(context, listen: false)
+          .deleteProduct(
+        productModel,
+        Provider.of<StoreProvider>(context, listen: false),
+        Provider.of<ProductsProvider>(context, listen: false),
+      );
       showSnackBar(
         context: context,
         message: 'تم حذف المنتج',
@@ -81,7 +85,7 @@ class _TProductsScreenState extends State<TProductsScreen> {
         child: Container(
           padding: EdgeInsets.all(largePadding),
           child: Image.asset(
-            Provider.of<AddProductProvider>(context).loading
+            Provider.of<ProductsControlProvider>(context).loading
                 ? 'assets/icons/upload.png'
                 : 'assets/icons/plus.png',
             color: Colors.white,

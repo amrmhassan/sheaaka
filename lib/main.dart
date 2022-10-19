@@ -32,7 +32,7 @@ import 'package:project/screens/testing_screen/testing_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
-import 'package:project/trader_app/providers/add_product_provider.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
 import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen.dart';
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => CategoriesProvider()),
         ChangeNotifierProvider(create: (ctx) => AppStateProvider()),
         ChangeNotifierProvider(create: (ctx) => TraderProvider()),
-        ChangeNotifierProvider(create: (ctx) => AddProductProvider()),
+        ChangeNotifierProvider(create: (ctx) => ProductsControlProvider()),
       ],
       child: MaterialApp(
         localizationsDelegates: [
