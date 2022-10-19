@@ -131,10 +131,7 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
       var productsProvider =
           Provider.of<ProductsProvider>(context, listen: false);
       ProductModel newProduct = productModel!;
-      newProduct.offerEnd = offerModel.endAt;
-      newProduct.offerStarted = offerModel.createdAt;
-      newProduct.oldPrice = newProduct.price +
-          (offerModel.discountPercentage / 100) * newProduct.price;
+      newProduct.offerId = offerModel.id;
 
       await Provider.of<ProductsControlProvider>(context, listen: false)
           .editProduct(newProduct, productsProvider);
@@ -283,6 +280,7 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
             Slider(
               min: 0,
               max: 100,
+              divisions: 100,
               thumbColor: kTraderPrimaryColor,
               activeColor: kTraderPrimaryColor,
               inactiveColor: kTraderPrimaryColor.withOpacity(.3),

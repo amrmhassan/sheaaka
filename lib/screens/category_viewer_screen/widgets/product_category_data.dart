@@ -27,9 +27,9 @@ class ProductCategoryData extends StatelessWidget {
           children: [
             Row(
               children: [
-                if (p.oldPrice != null)
+                if (p.offerId != null)
                   ProductCartPrice(
-                    price: p.oldPrice!,
+                    price: p.price,
                     active: false,
                     color: kSecondaryColor,
                     fontSize: h4TextSize,

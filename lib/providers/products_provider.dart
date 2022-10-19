@@ -79,17 +79,7 @@ class ProductsProvider extends ChangeNotifier {
       List<ProductModel> helperList = [];
       for (var element in res.docs) {
         var p = ProductModel.fromJSON(element.data());
-        try {
-          OfferModel offer =
-              offers.firstWhere((element) => element.productId == p.id);
-          p.offerEnd = offer.endAt;
-          p.offerStarted = offer.createdAt;
-          p.hasOffer = true;
-        } catch (e) {
-          // if (kDebugMode) {
-          //   print('product has no offer');
-          // }
-        }
+
         helperList.add(p);
       }
       _allProducts = helperList;
@@ -113,9 +103,6 @@ class ProductsProvider extends ChangeNotifier {
 
 //? to get the home products after applying its filters
   List<ProductModel> get homeProducts {
-    if (onlyOffers) {
-      return [..._allProducts.where((element) => element.hasOffer)];
-    }
     return [..._homeProducts];
   }
 

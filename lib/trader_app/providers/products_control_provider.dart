@@ -75,6 +75,7 @@ class ProductsControlProvider extends ChangeNotifier {
     String fullDescText = fullDesc.replaceAll('\n\n', '\n');
     String keywordsString = keywordksController.text;
     List<String> keywords = keywordsString.split('\n');
+    String offerId = Uuid().v4();
 
     ProductModel productModel = ProductModel(
       id: productId,
@@ -89,15 +90,11 @@ class ProductsControlProvider extends ChangeNotifier {
       availableSize: availableSizes,
       brand: BrandModel(name: brandNameController.text, id: Uuid().v4()),
       shortDesc: shortDescController.text,
-      // oldPrice: isOffer ? double.tryParse(oldPriceController.text) : null,
       storeLogo: myStore.logoImagePath,
       fullDesc: fullDescText,
       keywords: keywords,
     );
-    productModel.offerEnd = isOffer ? offerEnd : null;
-    productModel.offerStarted = isOffer ? DateTime.now() : null;
-    productModel.oldPrice =
-        isOffer ? double.tryParse(oldPriceController.text) : null;
+    productModel.offerId = isOffer ? offerId : null;
     await FirebaseFirestore.instance
         .collection(productsCollectionName)
         .doc(productId)
@@ -117,6 +114,7 @@ class ProductsControlProvider extends ChangeNotifier {
         productName: nameController.text,
         storeId: myStore.id,
         title: offerNameController.text,
+        offerId: offerId,
       );
     }
     productsProvider.addProduct(productModel);

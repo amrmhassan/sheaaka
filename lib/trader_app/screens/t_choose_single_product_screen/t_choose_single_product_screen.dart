@@ -27,7 +27,7 @@ class _TChooseMultipleProductsScreenState
     StoreModel myStore = traderProvider.myStore!;
     var nonSelectedProducts = productsProvider
         .getStoreProducts(myStore.id)
-        .where((element) => element.offerEnd == null)
+        .where((element) => element.offerId == null)
         .toList();
 
     return ScreensWrapper(

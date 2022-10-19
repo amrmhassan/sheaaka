@@ -27,6 +27,11 @@ class StoreProvider extends ChangeNotifier {
     return [..._offers];
   }
 
+//? get offer by id
+  OfferModel findOfferById(String id) {
+    return _offers.firstWhere((element) => element.id == id);
+  }
+
 //? delete offer
   Future<void> deleteOffer(String offerId) async {
     _offers.removeWhere((element) => element.id == offerId);
@@ -42,9 +47,10 @@ class StoreProvider extends ChangeNotifier {
           .delete();
     } catch (e, s) {
       throw CustomError(
-          errorType: ErrorsTypes.errorDeletingOffer,
-          errString: e.toString(),
-          stackTrace: s);
+        errorType: ErrorsTypes.errorDeletingOffer,
+        errString: e.toString(),
+        stackTrace: s,
+      );
     }
   }
 
@@ -57,12 +63,13 @@ class StoreProvider extends ChangeNotifier {
     required String storeId,
     required double discountPercentage,
     required String productName,
+    String? offerId,
   }) async {
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now();
 
     OfferModel offerModel = OfferModel(
-      id: id,
+      id: offerId ?? id,
       imagePath: imagePath,
       title: title,
       createdAt: createdAt,
