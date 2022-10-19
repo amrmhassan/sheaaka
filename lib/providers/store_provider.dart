@@ -49,12 +49,45 @@ class StoreProvider extends ChangeNotifier {
   }
 
   //? add offer
-  void addOffer(OfferModel offerModel) {
+  Future<void> addOffer({
+    required String imagePath,
+    required String title,
+    required DateTime endAt,
+    required String productId,
+    required String storeId,
+    required double discountPercentage,
+    required String productName,
+  }) async {
+    String id = Uuid().v4();
+    DateTime createdAt = DateTime.now();
+
+    OfferModel offerModel = OfferModel(
+      id: id,
+      imagePath: imagePath,
+      title: title,
+      createdAt: createdAt,
+      endAt: endAt,
+      productId: productId,
+      storeId: storeId,
+      discountPercentage: discountPercentage,
+      productName: productName,
+    );
     _offers.add(offerModel);
     try {
       notifyListeners();
     } catch (e) {
       //
+    }
+    try {
+      await FirebaseFirestore.instance
+          .collection(offersCollectionName)
+          .doc(id)
+          .set(offerModel.toJSON());
+    } catch (e, s) {
+      throw CustomError(
+          errString: e.toString(),
+          stackTrace: s,
+          errorType: ErrorsTypes.errorCreatingOffer);
     }
   }
 

@@ -32,6 +32,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   bool loadingAllProducts = false;
+  //? adding a new product directrly to state
   void addProduct(ProductModel productModel) {
     _allProducts.insert(0, productModel);
 
@@ -79,6 +80,21 @@ class ProductsProvider extends ChangeNotifier {
         stackTrace: s,
         errString: e.toString(),
       );
+    }
+  }
+
+  //? editing a product
+  Future<void> editProduct(ProductModel newProduct) async {
+    try {
+      await ref
+          .collection(productsCollectionName)
+          .doc(newProduct.id)
+          .update(newProduct.toJSON());
+    } catch (e, s) {
+      throw CustomError(
+          errString: e.toString(),
+          stackTrace: s,
+          errorType: ErrorsTypes.errorEditingProduct);
     }
   }
 

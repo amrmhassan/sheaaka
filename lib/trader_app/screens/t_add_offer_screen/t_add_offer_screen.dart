@@ -79,47 +79,64 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
     return true;
   }
 
-//? to send the offer data to be created
-  Future<void> handleCreateOffer() async {
-    if (!validateDiscountField()) {
-      return;
-    }
+  //? validate other inputs
+  bool validateOtherInputs() {
     if (productModel == null) {
       showSnackBar(
         context: context,
         message: 'قم باختيار المنتج أولا',
         snackBarType: SnackBarType.error,
       );
+      return false;
+    }
+    if (hours == 0 && days == 0 && months == 0) {
+      showSnackBar(
+        context: context,
+        message: 'قم بتعديل مدة العرض',
+        snackBarType: SnackBarType.error,
+      );
+      return false;
+    }
+    return true;
+  }
+
+//? to send the offer data to be created
+  Future<void> handleCreateOffer() async {
+    if (!validateDiscountField()) {
       return;
     }
-    String id = Uuid().v4();
-    OfferModel offerModel = OfferModel(
-      id: id,
-      imagePath: productModel!.imagesPath.first,
-      title: offerTitleController.text,
-      createdAt: DateTime.now(),
-      endAt: offerEndDate(),
-      productId: productModel!.id,
-      storeId: productModel!.storeId,
-      discountPercentage: discountValue,
-      productName: productModel!.name,
-    );
+    if (!validateOtherInputs()) {
+      return;
+    }
 
-    await FirebaseFirestore.instance
-        .collection(offersCollectionName)
-        .add(offerModel.toJSON());
-    showSnackBar(
-      context: context,
-      message: 'تم انشاء العرض بنجاح',
-      snackBarType: SnackBarType.success,
-    );
-    //! here just edit the product model to have what its offer have from end date and other stuff
-    //! add edit product method to product provider
+    try {
+      await Provider.of<StoreProvider>(context, listen: false).addOffer(
+        discountPercentage: discountValue,
+        endAt: offerEndDate(),
+        imagePath: productModel!.imagesPath.first,
+        productId: productModel!.id,
+        productName: productModel!.name,
+        storeId: productModel!.storeId,
+        title: offerTitleController.text,
+      );
+      //! here just edit the product model to have what its offer have from end date and other stuff
+      //! add edit product method to product provider
 
-    //
-    //! then prevent the choose products screen from viewing products which already have offer on them
-    //! by passing product models from this screen to the choosing screen then return the product that has been chosen
-    Provider.of<StoreProvider>(context, listen: false).addOffer(offerModel);
+      //
+      //! then prevent the choose products screen from viewing products which already have offer on them
+      //! by passing product models from this screen to the choosing screen then return the product that has been chosen
+      showSnackBar(
+        context: context,
+        message: 'تم انشاء العرض بنجاح',
+        snackBarType: SnackBarType.success,
+      );
+    } catch (e) {
+      showSnackBar(
+        context: context,
+        message: e.toString(),
+        snackBarType: SnackBarType.error,
+      );
+    }
   }
 
   @override
@@ -286,11 +303,17 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
   }
 
   DateTime offerEndDate() {
-    return DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    ).add(
+    // return DateTime(
+    //   DateTime.now().year,
+    //   DateTime.now().month,
+    //   DateTime.now().day,
+    // ).add(
+    //   Duration(
+    //     hours: hours,
+    //     days: days + months * 30,
+    //   ),
+    // );
+    return DateTime.now().add(
       Duration(
         hours: hours,
         days: days + months * 30,

@@ -20,10 +20,12 @@ class TraderOfferCard extends StatelessWidget {
 
   final OfferModel offer;
 
+//? handle delete offer
   Future<void> handleDeleteOffer(BuildContext context, String offerId) async {
     try {
       await Provider.of<StoreProvider>(context, listen: false)
           .deleteOffer(offerId);
+      //! edit the offer product and remove offer data from it
       showSnackBar(context: context, message: 'تم حذف العرض');
     } catch (e) {
       showSnackBar(

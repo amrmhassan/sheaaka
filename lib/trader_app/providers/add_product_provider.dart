@@ -115,7 +115,15 @@ class AddProductProvider extends ChangeNotifier {
           .collection(offersCollectionName)
           .doc(id)
           .set(offerModel.toJSON());
-      storeProvider.addOffer(offerModel);
+      storeProvider.addOffer(
+        discountPercentage: discountPercentage,
+        endAt: offerEnd,
+        imagePath: imagesLinks[0],
+        productId: productId,
+        productName: nameController.text,
+        storeId: myStore.id,
+        title: offerNameController.text,
+      );
     }
     productsProvider.addProduct(productModel);
     setUploadingProductData(false);
