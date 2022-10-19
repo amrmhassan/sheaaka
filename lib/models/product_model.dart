@@ -93,7 +93,7 @@ class ProductModel {
         .toList();
     DateTime createdAt = (productJSON[createdAtString] as Timestamp).toDate();
     int lovesNumber = productJSON[lovesNumberString];
-    double price = productJSON[priceString];
+    double price = double.parse((productJSON[priceString]).toString());
     BrandModel? brand = BrandModel.fromJSON(productJSON[brandString]);
     String? fullDesc = productJSON[fullDescString] as String?;
     String? shortDesc = productJSON[shortDescString] as String?;

@@ -100,7 +100,7 @@ class TraderOfferCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        '-%${offer.discountPercentage.toStringAsFixed(0)}',
+                        '-%${(offer.discountPercentage * 100).toStringAsFixed(0)}',
                       )
                     ],
                   ),

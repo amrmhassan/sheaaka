@@ -13,16 +13,29 @@ import 'package:project/models/product_model.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
 
-//? before applying the offer
-Widget handleShowOldPrice(ProductModel productModel, OfferModel? offerModel) {
-  return offerModel == null
+//? after aplying the offer
+Widget handleShowCurrentPrice(
+  ProductModel productModel,
+  OfferModel? offerModel,
+) {
+  double priceBefore = productModel.price;
+  double discount = offerModel?.discountPercentage ?? 0;
+  double priceNow = priceBefore * (1 - discount);
+  return ProductCartPrice(
+    fontSize: h2TextSize,
+    fontWeight: FontWeight.bold,
+    price: priceNow,
+  );
+}
+
+Widget handleShowOldPrice(ProductModel productModel) {
+  return productModel.offerId == null
       ? SizedBox()
       : ProductCartPrice(
           active: false,
-          color: kInActiveTextColor,
           fontSize: 12,
-          price:
-              productModel.price * (1 / (offerModel.discountPercentage / 100)),
+          color: kInActiveTextColor,
+          price: productModel.price,
         );
 }
 

@@ -8,16 +8,14 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
-class PriceOldNew extends StatelessWidget {
-  final TextEditingController oldPrice;
-  final TextEditingController currentPrice;
+class OriginalPrice extends StatelessWidget {
+  final TextEditingController originalPrice;
   // final TextEditingController discount;
   final bool isOffer;
 
-  const PriceOldNew({
+  const OriginalPrice({
     Key? key,
-    required this.currentPrice,
-    required this.oldPrice,
+    required this.originalPrice,
     // required this.discount,
     required this.isOffer,
   }) : super(key: key);
@@ -30,16 +28,9 @@ class PriceOldNew extends StatelessWidget {
           Row(
             children: [
               Text(
-                'السعر',
+                'السعر الأصلي',
                 style: h2TextStyle.copyWith(
                   color: kTraderBlackColor,
-                ),
-              ),
-              HSpace(factor: .5),
-              Text(
-                'عند إضافة سعر قديم سيتم اعتبار المنتج كعرض',
-                style: h4TextStyleInactive.copyWith(
-                  color: kTraderSecondaryColor.withOpacity(.5),
                 ),
               ),
             ],
@@ -52,8 +43,8 @@ class PriceOldNew extends StatelessWidget {
                 child: CustomTextField(
                   textInputType: TextInputType.number,
                   requiredField: true,
-                  controller: currentPrice,
-                  title: 'الحالي',
+                  controller: originalPrice,
+                  title: 'الأصلي',
                   padding: EdgeInsets.zero,
                   borderColor: kTraderSecondaryColor.withOpacity(.5),
                   borderRadius: BorderRadius.zero,

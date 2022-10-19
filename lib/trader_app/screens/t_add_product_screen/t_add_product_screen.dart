@@ -56,8 +56,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   //? texts controllers
   TextEditingController nameController = TextEditingController();
   TextEditingController shortDescController = TextEditingController();
-  TextEditingController oldPriceController = TextEditingController();
-  TextEditingController currentPriceController = TextEditingController();
+  TextEditingController originalPriceController = TextEditingController();
+  TextEditingController offerPriceController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
   TextEditingController offerNameController = TextEditingController();
   TextEditingController keywordsController = TextEditingController();
@@ -113,7 +113,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     if (isOffer == true && offerEnd == null) {
       handleDatePicker(PickedDateType.offerDate);
     }
-    if (oldPriceController.text.isEmpty && isOffer) {
+    if (originalPriceController.text.isEmpty && isOffer) {
       showSnackBar(
         context: context,
         message: 'قم بكتابة السعر القديم',
@@ -127,7 +127,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       offerEnd = d;
       isOffer = true;
     });
-    if (oldPriceController.text.isEmpty && isOffer) {
+    if (originalPriceController.text.isEmpty && isOffer) {
       showSnackBar(
         context: context,
         message: 'قم بكتابة السعر القديم',
@@ -208,7 +208,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         snackBarType: SnackBarType.error,
       );
     }
-    if (!((double.tryParse(currentPriceController.text) ?? 0) > 0)) {
+    if (!((double.tryParse(offerPriceController.text) ?? 0) > 0)) {
       return showSnackBar(
         context: context,
         message: 'لابد من ادخال سعر المنتج الحالي',
@@ -216,8 +216,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       );
     }
     //* old price
-    if (oldPriceController.text.isNotEmpty &&
-        double.tryParse(oldPriceController.text) == null) {
+    if (originalPriceController.text.isNotEmpty &&
+        double.tryParse(originalPriceController.text) == null) {
       return showSnackBar(
         context: context,
         message: 'أدخل سعر قديم صحيح',
@@ -225,7 +225,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       );
     }
     //* validating old price
-    if (isOffer && oldPriceController.text.isEmpty) {
+    if (isOffer && originalPriceController.text.isEmpty) {
       return showSnackBar(
         context: context,
         message: 'لابد من إدخال السعر قبل الخصم',
@@ -234,11 +234,11 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     }
     //* validating that old price is bigger than price after offer
     if (isOffer &&
-        (double.parse(oldPriceController.text) <=
-            double.parse(currentPriceController.text))) {
+        (double.parse(originalPriceController.text) <=
+            double.parse(offerPriceController.text))) {
       return showSnackBar(
         context: context,
-        message: 'لابد أن يكون السعر الحالي أصغر من السعر قبل الخصم',
+        message: 'لابد أن يكون السعر الأصلي أكبر من سعر العرض',
         snackBarType: SnackBarType.error,
       );
     }
@@ -261,12 +261,12 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       nameController: nameController,
       myStore: myStore,
       imagesFiles: imagesFiles,
-      currentPriceController: currentPriceController,
+      offerPriceController: offerPriceController,
       availableColors: availableColors,
       availableSizes: availableSizes,
       brandNameController: brandNameController,
       shortDescController: shortDescController,
-      oldPriceController: oldPriceController,
+      originalPriceController: originalPriceController,
       context: context,
       fullDesc: fullDesc,
       isOffer: isOffer,
@@ -318,10 +318,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                   removeProductImage: removeProductImage,
                 ),
                 VSpace(),
-                PriceOldNew(
-                  currentPrice: currentPriceController,
-                  oldPrice: oldPriceController,
-                  // discount: discountController,
+                OriginalPrice(
+                  originalPrice: originalPriceController,
                   isOffer: isOffer,
                 ),
                 VSpace(),
@@ -408,8 +406,8 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                               child: CustomTextField(
                                 requiredField: true,
                                 textInputType: TextInputType.number,
-                                title: 'السعر القديم',
-                                controller: oldPriceController,
+                                title: 'سعر العرض',
+                                controller: offerPriceController,
                                 padding: EdgeInsets.zero,
                                 borderColor:
                                     kTraderSecondaryColor.withOpacity(.5),

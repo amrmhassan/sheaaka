@@ -119,7 +119,7 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
       });
       OfferModel offerModel =
           await Provider.of<StoreProvider>(context, listen: false).addOffer(
-        discountPercentage: discountValue,
+        discountPercentage: discountValue / 100,
         endAt: offerEndDate(),
         imagePath: productModel!.imagesPath.first,
         productId: productModel!.id,

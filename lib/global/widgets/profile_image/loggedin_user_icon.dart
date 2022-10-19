@@ -70,7 +70,11 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
 
   @override
   void initState() {
-    fetchUserPhoto();
+    Future.delayed(Duration.zero).then(
+      (value) {
+        fetchUserPhoto();
+      },
+    );
     super.initState();
   }
 

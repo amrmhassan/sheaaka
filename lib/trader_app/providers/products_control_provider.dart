@@ -45,12 +45,12 @@ class ProductsControlProvider extends ChangeNotifier {
     required TextEditingController nameController,
     required StoreModel myStore,
     required List<File> imagesFiles,
-    required TextEditingController currentPriceController,
+    required TextEditingController offerPriceController,
     required List<Color> availableColors,
     required List<Sizes> availableSizes,
     required TextEditingController brandNameController,
     required TextEditingController shortDescController,
-    required TextEditingController oldPriceController,
+    required TextEditingController originalPriceController,
     required BuildContext context,
     required String fullDesc,
     required DateTime? offerEnd,
@@ -85,7 +85,7 @@ class ProductsControlProvider extends ChangeNotifier {
       imagesPath: imagesLinks,
       createdAt: DateTime.now(),
       lovesNumber: 0,
-      price: double.parse(currentPriceController.text),
+      price: double.parse(originalPriceController.text),
       availableColors: availableColors,
       availableSize: availableSizes,
       brand: BrandModel(name: brandNameController.text, id: Uuid().v4()),
@@ -102,12 +102,12 @@ class ProductsControlProvider extends ChangeNotifier {
 
     //* checking if product has offer, then upload it
     if (isOffer) {
-      double currentPrice = double.parse(currentPriceController.text);
-      double oldPirce = double.parse(oldPriceController.text);
-      double discountPercentage = ((oldPirce - currentPrice) / oldPirce) * 100;
+      double currentPrice = double.parse(offerPriceController.text);
+      double oldPirce = double.parse(originalPriceController.text);
+      double discount = 1 - currentPrice / oldPirce;
 
       await storeProvider.addOffer(
-        discountPercentage: discountPercentage,
+        discountPercentage: discount,
         endAt: offerEnd!,
         imagePath: imagesLinks[0],
         productId: productId,
@@ -189,11 +189,8 @@ class ProductsControlProvider extends ChangeNotifier {
 
       //* delete offers
 
-      List<OfferModel> offers = storeProvider.offers
-          .where((element) => element.productId == p.id)
-          .toList();
-      for (var offer in offers) {
-        await storeProvider.deleteOffer(offer.id);
+      if (p.offerId != null) {
+        await storeProvider.deleteOffer(p.offerId!);
       }
       //* delete it from store tabs
       await traderProvider.removeProductFromTabs(p.id);

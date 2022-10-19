@@ -187,13 +187,9 @@ class _ProductScreenState extends State<ProductScreen> {
                                     name: productModel.name,
                                   ),
                                   Spacer(),
-                                  handleShowOldPrice(productModel, offer),
+                                  handleShowOldPrice(productModel),
                                   HSpace(factor: .3),
-                                  ProductCartPrice(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: h2TextSize,
-                                    price: productModel.price,
-                                  ),
+                                  handleShowCurrentPrice(productModel, offer),
                                 ],
                               ),
                               //? this row is for remaining in stock, rating, number of comments

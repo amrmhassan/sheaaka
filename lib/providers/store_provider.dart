@@ -88,7 +88,7 @@ class StoreProvider extends ChangeNotifier {
     try {
       await FirebaseFirestore.instance
           .collection(offersCollectionName)
-          .doc(id)
+          .doc(offerId ?? id)
           .set(offerModel.toJSON());
     } catch (e, s) {
       throw CustomError(
