@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
@@ -25,8 +26,10 @@ class _TChooseMultipleProductsScreenState
     var traderProvider = Provider.of<TraderProvider>(context);
     var productsProvider = Provider.of<ProductsProvider>(context);
     StoreModel myStore = traderProvider.myStore!;
-    var nonSelectedProducts =
-        productsProvider.getStoreProducts(myStore.id).toList();
+    var nonSelectedProducts = productsProvider
+        .getStoreProducts(myStore.id)
+        .where((element) => element.offerEnd == null)
+        .toList();
 
     return ScreensWrapper(
       child: Column(

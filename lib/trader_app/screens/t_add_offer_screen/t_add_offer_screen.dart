@@ -18,6 +18,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
+import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_offer_screen/widgets/customer_number_picker.dart';
 import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
@@ -374,8 +375,9 @@ class NoProductChosen extends StatelessWidget {
               ),
               onTap: () async {
                 ProductModel? p = await Navigator.pushNamed(
-                        context, TChooseSingleProductsScreen.routeName)
-                    as ProductModel?;
+                  context,
+                  TChooseSingleProductsScreen.routeName,
+                ) as ProductModel?;
                 if (p != null) {
                   setProductModel(p);
                 } else {
