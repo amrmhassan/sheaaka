@@ -9,7 +9,6 @@ import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
 import 'package:project/models/custom_error.dart';
-import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';

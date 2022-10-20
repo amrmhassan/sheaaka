@@ -253,7 +253,7 @@ class ProductsProvider extends ChangeNotifier {
           stackTrace: StackTrace.current);
     }
     try {
-      var data = await FirebaseFirestore.instance
+      var data = await ref
           .collection(usersCollectionName)
           .doc(currentUser.uid)
           .collection(usersLikesCollectionName)
@@ -281,7 +281,7 @@ class ProductsProvider extends ChangeNotifier {
       throw CustomError(errorType: ErrorsTypes.noUserLoggedIn);
     }
     try {
-      var data = await FirebaseFirestore.instance
+      var data = await ref
           .collection(usersCollectionName)
           .doc(currentUser.uid)
           .collection(usersLikesCollectionName)
@@ -313,15 +313,13 @@ class ProductsProvider extends ChangeNotifier {
 //? update product loves number in firebase
   Future<void> updateProductLovesNumber(String productId, bool loved) async {
     try {
-      var productData = (await FirebaseFirestore.instance
-              .collection(productsCollectionName)
-              .doc(productId)
-              .get())
-          .data();
+      var productData =
+          (await ref.collection(productsCollectionName).doc(productId).get())
+              .data();
       int lovesNumber = productData![lovesNumberString];
       int newLovesNumber = loved ? lovesNumber - 1 : lovesNumber + 1;
 
-      await FirebaseFirestore.instance
+      await ref
           .collection(productsCollectionName)
           .doc(productId)
           .update({lovesNumberString: newLovesNumber});
@@ -360,7 +358,7 @@ class ProductsProvider extends ChangeNotifier {
 
       await Future.wait([
 //* add the product to the loved numbers
-        FirebaseFirestore.instance
+        ref
             .collection(usersCollectionName)
             .doc(currentUser.uid)
             .collection(usersLikesCollectionName)

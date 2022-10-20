@@ -23,10 +23,14 @@ class PostInfo extends StatelessWidget {
           Text(
             name,
             style: h3TextStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           Text(
             shortDescription ?? '',
             style: h4TextStyleInactive,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

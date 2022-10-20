@@ -14,7 +14,6 @@ import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
-import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';

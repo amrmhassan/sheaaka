@@ -31,11 +31,18 @@ class PostHeader extends StatelessWidget {
           HSpace(
             factor: 0.5,
           ),
-          Text(
-            storeName,
-            style: h3TextStyle,
+          Expanded(
+            flex: 3,
+            child: Text(
+              storeName,
+              style: h3TextStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          Spacer(),
+          Spacer(
+            flex: 1,
+          ),
           Row(
             children: [
               CustomIconButton(iconName: 'add-friend', onTap: () {}),
