@@ -32,12 +32,14 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: navBarIconsList(loadingData)
+            .asMap()
+            .entries
             .map(
               (e) => NavBarItem(
-                navBarIcon: e,
-                index: navBarIconsList(loadingData).indexOf(e),
+                navBarIcon: e.value,
+                index: e.key,
                 setActiveIndex: setActiveIndex,
-                active: activeIndex == navBarIconsList(loadingData).indexOf(e),
+                active: activeIndex == e.key,
               ),
             )
             .toList(),

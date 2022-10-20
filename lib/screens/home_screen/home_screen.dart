@@ -54,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         (widget.loadingData || localLoading)
             ? Expanded(
                 child: ListView(
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
                     PostSimmerLoading(),
                     PostSimmerLoading(),

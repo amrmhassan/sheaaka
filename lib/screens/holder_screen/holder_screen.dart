@@ -2,7 +2,6 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project/constants/global.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
@@ -11,7 +10,6 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/screens/holder_screen/widgets/nav_bar.dart';
-import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/holder_screen_utils.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +32,7 @@ class _HolderScreenState extends State<HolderScreen> {
       loading = true;
     });
     try {
+      // if (kDebugMode) await Future.delayed(Duration(seconds: 5));
       await loadData(context, redirectToStore);
       int products = Provider.of<ProductsProvider>(context, listen: false)
           .homeProducts
@@ -73,6 +72,7 @@ class _HolderScreenState extends State<HolderScreen> {
   int activeIndex = 0;
 
   void setActiveIndex(int index) {
+    if (loading) return;
     setState(() {
       activeIndex = index;
     });
@@ -117,48 +117,36 @@ class _HolderScreenState extends State<HolderScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child:
-          //  loading
-          //     ? Container(
-          //         height: double.infinity,
-          //         width: double.infinity,
-          //         alignment: Alignment.center,
-          //         child: Loading(
-          //           title: 'جاري تحميل أحدث المنتجات',
-          //         ),
-          //       )
-          //     :
-          noInternetNoData
-              ? NoInternetFullScreen()
-              : Stack(
+      child: noInternetNoData
+          ? NoInternetFullScreen()
+          : Stack(
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        appBarGenerator(),
-                        Expanded(
-                          child: navBarIconsList(loading)[activeIndex].widget,
-                        ),
-                        NavBar(
-                          activeIndex: activeIndex,
-                          setActiveIndex: setActiveIndex,
-                          loadingData: loading,
-                        ),
-                      ],
+                    appBarGenerator(),
+                    Expanded(
+                      child: navBarIconsList(loading)[activeIndex].widget,
                     ),
-                    if (allowRandomCreatorCheats && kDebugMode)
-                      GestureDetector(
-                        onDoubleTap: () {
-                          Navigator.pushNamed(
-                              context, UploadDataScreen.routeName);
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          color: Colors.transparent,
-                        ),
-                      ),
+                    NavBar(
+                      activeIndex: activeIndex,
+                      setActiveIndex: setActiveIndex,
+                      loadingData: loading,
+                    ),
                   ],
                 ),
+                // if (allowRandomCreatorCheats && kDebugMode)
+                //   GestureDetector(
+                //     onDoubleTap: () {
+                //       Navigator.pushNamed(context, UploadDataScreen.routeName);
+                //     },
+                //     child: Container(
+                //       width: 60,
+                //       height: 60,
+                //       color: Colors.transparent,
+                //     ),
+                //   ),
+              ],
+            ),
     );
   }
 }
