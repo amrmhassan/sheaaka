@@ -27,6 +27,9 @@ class ProductModel {
   String? offerId;
   String? categoryId;
   String? genderCategoryId;
+  DateTime? offerEnd;
+  DateTime? offerStarted;
+  double? discount;
 
   ProductModel({
     required this.id,

@@ -79,6 +79,10 @@ class ProductsProvider extends ChangeNotifier {
       List<ProductModel> helperList = [];
       for (var element in res.docs) {
         var p = ProductModel.fromJSON(element.data());
+        OfferModel offer = offers.firstWhere((o) => o.id == p.offerId);
+        p.offerEnd = offer.endAt;
+        p.offerStarted = offer.createdAt;
+        p.discount = offer.discountPercentage;
 
         helperList.add(p);
       }

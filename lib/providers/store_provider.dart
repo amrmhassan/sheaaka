@@ -28,9 +28,9 @@ class StoreProvider extends ChangeNotifier {
   }
 
 //? get offer by id
-  OfferModel findOfferById(String id) {
-    return _offers.firstWhere((element) => element.id == id);
-  }
+  // OfferModel findOfferById(String id) {
+  //   return _offers.firstWhere((element) => element.id == id);
+  // }
 
 //? delete offer
   Future<void> deleteOffer(String offerId) async {

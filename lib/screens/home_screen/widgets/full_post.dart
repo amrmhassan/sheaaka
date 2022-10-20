@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
@@ -38,23 +37,7 @@ class _FullPostState extends State<FullPost> {
     });
   }
 
-  OfferModel? offer;
-
   @override
-  void initState() {
-    Future.delayed(Duration.zero).then((value) {
-      if (widget.fullPostModel.offerId != null) {
-        OfferModel offerModel =
-            Provider.of<StoreProvider>(context, listen: false)
-                .findOfferById(widget.fullPostModel.offerId!);
-        setState(() {
-          offer = offerModel;
-        });
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var storesProvider = Provider.of<StoreProvider>(context);
@@ -99,10 +82,10 @@ class _FullPostState extends State<FullPost> {
                   setActiveDot: setActiveDot,
                 ),
                 //? this will take the offer bool and the offer end date
-                if (offer != null)
+                if (widget.fullPostModel.offerId != null)
                   OfferTimer(
-                    offerEndDate: offer!.endAt,
-                    offerStartDate: offer!.createdAt,
+                    offerEndDate: widget.fullPostModel.offerEnd,
+                    offerStartDate: widget.fullPostModel.offerStarted,
                   ),
               ],
             ),

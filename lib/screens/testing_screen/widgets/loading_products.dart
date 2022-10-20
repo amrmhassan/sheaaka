@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/product_model.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/full_post.dart';
 
 class LoadingProductsScreen extends StatefulWidget {

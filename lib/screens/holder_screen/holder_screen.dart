@@ -83,6 +83,16 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
             ],
           ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Provider.of<UserProvider>(context, listen: false).logOutGoogle();
+          //   },
+          //   child: Container(
+          //     width: 50,
+          //     height: 50,
+          //     color: Colors.red,
+          //   ),
+          // ),
         ],
       ),
     );

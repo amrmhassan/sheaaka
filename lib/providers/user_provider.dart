@@ -8,8 +8,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/constants/shared_pref_constants.dart';
-import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
@@ -107,10 +105,10 @@ class UserProvider extends ChangeNotifier {
       user = await firebaseSignUpEmailPassword(email, password);
     } else if (signMethod == SignMethod.google) {
       user = await firebaseSignInGoogle(
-        appStateProvider: appStateProvider,
-        context: context,
+        // appStateProvider: appStateProvider,
+        // context: context,
         googleSignInAccount: googleSignInAccount!,
-        storeProvider: storeProvider,
+        // storeProvider: storeProvider,
       );
     }
     if (user != null) {
@@ -131,7 +129,6 @@ class UserProvider extends ChangeNotifier {
           .collection(usersCollectionName)
           .doc(user.uid)
           .set(newUser.toJSON());
-      // setCurrentUserData(user, newUser);
     } else {
       throw CustomError(errorType: ErrorsTypes.unknownError);
     }
@@ -174,9 +171,9 @@ class UserProvider extends ChangeNotifier {
 //? sign in google account to firebase to add it to firebase auth
   Future<User?> firebaseSignInGoogle({
     required GoogleSignInAccount googleSignInAccount,
-    required StoreProvider storeProvider,
-    required AppStateProvider appStateProvider,
-    required BuildContext context,
+    StoreProvider? storeProvider,
+    AppStateProvider? appStateProvider,
+    BuildContext? context,
   }) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -188,12 +185,14 @@ class UserProvider extends ChangeNotifier {
       accessToken: googleSignInAuthentication.accessToken,
     );
     UserCredential result = await auth.signInWithCredential(authCredential);
-    await handleSettingAppMainScreen(
-      user: result.user,
-      storeProvider: storeProvider,
-      appStateProvider: appStateProvider,
-      context: context,
-    );
+    if (storeProvider != null && appStateProvider != null && context != null) {
+      await handleSettingAppMainScreen(
+        user: result.user,
+        storeProvider: storeProvider,
+        appStateProvider: appStateProvider,
+        context: context,
+      );
+    }
 
     return result.user;
   }
@@ -213,11 +212,14 @@ class UserProvider extends ChangeNotifier {
   }
 
   //? logout google
-  Future<void> logOutGoogle() async {
+  Future<void> logOutGoogle([AppStateProvider? appStateProvider]) async {
     try {
       await FirebaseAuth.instance.signOut();
       await _google.signOut();
       await _google.disconnect();
+      if (appStateProvider != null) {
+        await appStateProvider.setTraderMode(false);
+      }
     } catch (e, s) {
       CustomError(errorType: ErrorsTypes.cantSignOut, stackTrace: s);
     }
@@ -237,10 +239,7 @@ class UserProvider extends ChangeNotifier {
           // to open store dashboard if trader and signup
           storeProvider.getStoreByOwnerUID(user.uid);
           //* checking if has a store but never opened it before then open the store
-          bool? appMode = await SharedPrefHelper.getBool(appTarderModeKey);
-          if (appMode == null) {
-            return await appStateProvider.setTraderMode(true);
-          }
+          return await appStateProvider.setTraderMode(true);
         } catch (e) {
           // the user is a trader but didn't create his store yet, so you must warn him
           setUserStoreWarning(true);
@@ -254,7 +253,6 @@ class UserProvider extends ChangeNotifier {
             arguments: userModel.userProfilePhoto,
           );
         }
-        await appStateProvider.setTraderMode(true);
       } else {
         await appStateProvider.setTraderMode(false);
       }

@@ -12,8 +12,8 @@ import 'package:project/global/widgets/v_p_space.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/user_provider.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/profile_screen/widgets/copy_rights.dart';
@@ -79,8 +79,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'حسابي',
                     rightIcon: AppBarIcon(
                       onTap: () async {
+                        var appStateProvider = Provider.of<AppStateProvider>(
+                            context,
+                            listen: false);
                         await Provider.of<UserProvider>(context, listen: false)
-                            .logOutGoogle();
+                            .logOutGoogle(appStateProvider);
                         Navigator.pop(context);
                         Navigator.pushReplacementNamed(
                           context,

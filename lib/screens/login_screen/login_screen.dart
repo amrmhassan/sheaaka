@@ -13,9 +13,7 @@ import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
@@ -70,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         message: 'تم تسجيل الدخول',
         snackBarType: SnackBarType.success,
       );
-      Navigator.popUntil(context, (route) => false);
-
-      Navigator.pushNamed(context, InitScreen.routeName);
+      Navigator.pop(context, (route) => false);
     } on FirebaseAuthException catch (e) {
       showSnackBar(
           context: context,
@@ -137,19 +133,17 @@ class _LoginScreenState extends State<LoginScreen> {
             message: 'قم بالتسجيل أولا',
             snackBarType: SnackBarType.error);
       } else {
-        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
         var appStateProvider =
             Provider.of<AppStateProvider>(context, listen: false);
+        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
         await Provider.of<UserProvider>(context, listen: false)
             .firebaseSignInGoogle(
           googleSignInAccount: googleSignInAccount,
           appStateProvider: appStateProvider,
-          context: context,
           storeProvider: storeProvider,
+          context: context,
         );
-        Navigator.popUntil(context, (route) => false);
-
-        Navigator.pushNamed(context, InitScreen.routeName);
+        Navigator.pop(context);
       }
     } catch (e) {
       showSnackBar(

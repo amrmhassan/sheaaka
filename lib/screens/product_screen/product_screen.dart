@@ -8,11 +8,9 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/products_provider.dart';
-import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/home_screen/widgets/full_post_images.dart';
 import 'package:project/screens/home_screen/widgets/image_slider_dots_container.dart';
@@ -43,7 +41,6 @@ class _ProductScreenState extends State<ProductScreen> {
   late bool addedToCart;
   String? wishlistItemId;
   final ScrollController _scrollController = ScrollController();
-  OfferModel? offer;
 
   int? activeSizeIndex = 0;
   int? activeColorIndex = 0;
@@ -94,14 +91,6 @@ class _ProductScreenState extends State<ProductScreen> {
         fetchProduct(productModelId);
         Provider.of<ProductsProvider>(context, listen: false)
             .fetchSuggestionProducts(productModelId);
-        if (productModel.offerId != null) {
-          OfferModel offerModel =
-              Provider.of<StoreProvider>(context, listen: false)
-                  .findOfferById(productModel.offerId!);
-          setState(() {
-            offer = offerModel;
-          });
-        }
       },
     );
 
@@ -188,7 +177,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                   Spacer(),
                                   handleShowOldPrice(productModel),
                                   HSpace(factor: .3),
-                                  handleShowCurrentPrice(productModel, offer),
+                                  handleShowCurrentPrice(
+                                      productModel, productModel.discount),
                                 ],
                               ),
                               //? this row is for remaining in stock, rating, number of comments

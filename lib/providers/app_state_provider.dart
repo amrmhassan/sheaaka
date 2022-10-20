@@ -18,8 +18,6 @@ class AppStateProvider extends ChangeNotifier {
     traderMode = t;
     notifyListeners();
     await SharedPrefHelper.setBool(appTarderModeKey, t);
-    // bool canPop = Navigator.canPop(context);
-    // Navigator.popUntil(context, (route) => canPop);
   }
 
   Future<void> initTraderModeBool() async {
