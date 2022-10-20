@@ -78,7 +78,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         message: 'تم التسجيل بنجاح',
         snackBarType: SnackBarType.success,
       );
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       showSnackBar(
           context: context,
