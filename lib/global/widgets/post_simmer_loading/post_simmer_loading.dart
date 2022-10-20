@@ -11,6 +11,8 @@ import 'package:shimmer/shimmer.dart';
 
 Color color = Colors.grey.withOpacity(.5);
 Color iconsColor = Colors.grey.withOpacity(.8);
+Color shimmerBaseColor = Colors.grey.withOpacity(.8);
+Color shimmerLightColor = Colors.grey.withOpacity(.2);
 
 class PostSimmerLoading extends StatelessWidget {
   const PostSimmerLoading({
@@ -20,6 +22,7 @@ class PostSimmerLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: largePadding * 2),
       padding: EdgeInsets.only(top: kVPad / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,6 +51,7 @@ class PostSimmerLoading extends StatelessWidget {
           VSpace(factor: .3),
           PaddingWrapper(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProductNamePlace(),
                 VSpace(factor: .3),
@@ -71,8 +75,8 @@ class ShimmerWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.grey,
-      highlightColor: Colors.grey.withOpacity(.2),
+      baseColor: shimmerBaseColor,
+      highlightColor: shimmerLightColor,
       child: child,
     );
   }
@@ -104,7 +108,7 @@ class ProductNamePlace extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShimmerWrapper(
       child: Container(
-        width: double.infinity,
+        width: Responsive.getWidth(context) / 3,
         height: 15,
         color: color,
       ),

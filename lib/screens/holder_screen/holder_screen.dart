@@ -6,7 +6,6 @@ import 'package:project/constants/global.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/custom_app_bar/widgets/share_wishlist_icon.dart';
-import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/no_internet_full_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -118,16 +117,18 @@ class _HolderScreenState extends State<HolderScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreensWrapper(
-      child: loading
-          ? Container(
-              height: double.infinity,
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: Loading(
-                title: 'جاري تحميل أحدث المنتجات',
-              ),
-            )
-          : noInternetNoData
+      child:
+          //  loading
+          //     ? Container(
+          //         height: double.infinity,
+          //         width: double.infinity,
+          //         alignment: Alignment.center,
+          //         child: Loading(
+          //           title: 'جاري تحميل أحدث المنتجات',
+          //         ),
+          //       )
+          //     :
+          noInternetNoData
               ? NoInternetFullScreen()
               : Stack(
                   children: [
@@ -135,11 +136,12 @@ class _HolderScreenState extends State<HolderScreen> {
                       children: [
                         appBarGenerator(),
                         Expanded(
-                          child: navBarIconsList[activeIndex].widget,
+                          child: navBarIconsList(loading)[activeIndex].widget,
                         ),
                         NavBar(
                           activeIndex: activeIndex,
                           setActiveIndex: setActiveIndex,
+                          loadingData: loading,
                         ),
                       ],
                     ),

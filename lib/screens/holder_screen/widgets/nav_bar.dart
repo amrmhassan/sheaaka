@@ -8,12 +8,15 @@ import 'package:project/screens/holder_screen/widgets/nav_bar_item.dart';
 
 class NavBar extends StatelessWidget {
   final int activeIndex;
+  final bool loadingData;
+
   final Function(int index) setActiveIndex;
 
   const NavBar({
     Key? key,
     required this.activeIndex,
     required this.setActiveIndex,
+    required this.loadingData,
   }) : super(key: key);
 
   @override
@@ -28,13 +31,13 @@ class NavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: navBarIconsList
+        children: navBarIconsList(loadingData)
             .map(
               (e) => NavBarItem(
                 navBarIcon: e,
-                index: navBarIconsList.indexOf(e),
+                index: navBarIconsList(loadingData).indexOf(e),
                 setActiveIndex: setActiveIndex,
-                active: activeIndex == navBarIconsList.indexOf(e),
+                active: activeIndex == navBarIconsList(loadingData).indexOf(e),
               ),
             )
             .toList(),

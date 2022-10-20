@@ -5,7 +5,7 @@ import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
-import 'package:project/global/widgets/loading.dart';
+import 'package:project/global/widgets/post_simmer_loading/post_simmer_loading.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
@@ -22,8 +22,10 @@ import 'package:provider/provider.dart';
 //? and it's filters will be applied to these products
 
 class HomeScreen extends StatefulWidget {
+  final bool loadingData;
   const HomeScreen({
     Key? key,
+    required this.loadingData,
   }) : super(key: key);
 
   @override
@@ -31,47 +33,48 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool loadingData = false;
+  bool localLoading = false;
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
     var homeProducts = productsProvider.homeProducts;
     var wishlistProvider = Provider.of<WishListsProvider>(context);
 
-    return loadingData
-        ? Container(
-            height: double.infinity,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: Loading(
-              title: 'جاري تحميل أحدث المنتجات',
-            ),
-          )
-        : productsProvider.homeProducts.isEmpty
-            ? EmptyWidget(
-                title: 'لا توجد منتجات بعد',
+    return Column(
+      children: [
+        VSpace(),
+        OpenSearchBox(
+          onTap: () {
+            Navigator.pushNamed(context, SearchScreen.routeName,
+                arguments: {'searchType': SearchTypes.product});
+          },
+        ),
+        VSpace(),
+        HLine(),
+        (widget.loadingData || localLoading)
+            ? Expanded(
+                child: ListView(
+                  children: [
+                    PostSimmerLoading(),
+                    PostSimmerLoading(),
+                    PostSimmerLoading(),
+                  ],
+                ),
               )
-            : Column(
-                children: [
-                  VSpace(),
-                  OpenSearchBox(
-                    onTap: () {
-                      Navigator.pushNamed(context, SearchScreen.routeName,
-                          arguments: {'searchType': SearchTypes.product});
-                    },
-                  ),
-                  VSpace(),
-                  HLine(),
-                  Expanded(
+            : productsProvider.homeProducts.isEmpty
+                ? EmptyWidget(
+                    title: 'لا توجد منتجات بعد',
+                  )
+                : Expanded(
                     child: ListLoader(
                       loadingNewAfterPixels: 0,
                       onReload: () async {
                         setState(() {
-                          loadingData = true;
+                          localLoading = true;
                         });
                         await loadDataForHomeScreen(context);
                         setState(() {
-                          loadingData = false;
+                          localLoading = false;
                         });
                       },
                       onLoadNew: () {
@@ -91,17 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       showBottomLoader: false,
                     ),
                   ),
-                  if (productsProvider.loadingNextHomeProducts)
-                    Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(vertical: kVPad / 2),
-                      width: double.infinity,
-                      child: Text(
-                        'جاري التحميل',
-                        style: h3InactiveTextStyle,
-                      ),
-                    )
-                ],
-              );
+        if (productsProvider.loadingNextHomeProducts)
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: kVPad / 2),
+            width: double.infinity,
+            child: Text(
+              'جاري التحميل',
+              style: h3InactiveTextStyle,
+            ),
+          )
+      ],
+    );
   }
 }

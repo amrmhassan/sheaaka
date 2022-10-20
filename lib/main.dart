@@ -48,7 +48,7 @@ import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
 
 import 'package:provider/provider.dart';
 
-bool testing = true;
+bool testing = false;
 Future main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

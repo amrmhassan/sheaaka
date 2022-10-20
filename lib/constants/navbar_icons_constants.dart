@@ -11,13 +11,18 @@ import 'package:project/trader_app/screens/t_orders_screen/t_orders_screen.dart'
 import 'package:project/trader_app/screens/t_stats_screen/t_stats_screen.dart';
 
 //? normal user nav bar icons
-List<NavBarIcon> navBarIconsList = [
-  NavBarIcon('home1', 'home', HomeScreen()),
-  NavBarIcon('category', 'menu', CategoriesScreen()),
-  NavBarIcon('add-friend1', 'add-friend', TrendScreen()),
-  NavBarIcon('bookmark', 'book-mark', WishlistScreen()),
-  NavBarIcon('nearby', 'nearby1', NearbyStoresScreen()),
-];
+List<NavBarIcon> navBarIconsList(bool loadingData) => [
+      NavBarIcon(
+          'home1',
+          'home',
+          HomeScreen(
+            loadingData: loadingData,
+          )),
+      NavBarIcon('category', 'menu', CategoriesScreen()),
+      NavBarIcon('add-friend1', 'add-friend', TrendScreen()),
+      NavBarIcon('bookmark', 'book-mark', WishlistScreen()),
+      NavBarIcon('nearby', 'nearby1', NearbyStoresScreen()),
+    ];
 
 //? trader nav bar icons
 List<NavBarIcon> traderNavBarIconsList = [
