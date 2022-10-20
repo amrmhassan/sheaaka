@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:project/constants/shared_pref_constants.dart';
 import 'package:project/helpers/shared_pref_helper.dart';
@@ -12,9 +14,16 @@ class AppStateProvider extends ChangeNotifier {
 
   //? trader mode
   bool traderMode = false;
-  void setTraderMode(bool t) async {
+  Future<void> setTraderMode(bool t) async {
     traderMode = t;
-    await SharedPrefHelper.setBool(kAppStartModeKey, t);
     notifyListeners();
+    await SharedPrefHelper.setBool(appTarderModeKey, t);
+    // bool canPop = Navigator.canPop(context);
+    // Navigator.popUntil(context, (route) => canPop);
+  }
+
+  Future<void> initTraderModeBool() async {
+    bool traderMode = await SharedPrefHelper.getBool(appTarderModeKey) ?? false;
+    setTraderMode(traderMode);
   }
 }

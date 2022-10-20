@@ -8,15 +8,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
+import 'package:project/constants/shared_pref_constants.dart';
+import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/providers/app_state_provider.dart';
+import 'package:project/providers/store_provider.dart';
+import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
+import 'package:project/utils/general_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProvider extends ChangeNotifier {
   final GoogleSignIn _google = GoogleSignIn();
   //! i might need to use these props, and set their values once the app is initiated
-  User? user;
   UserModel? userModel;
 
   //? creating user store warning
@@ -28,8 +33,7 @@ class UserProvider extends ChangeNotifier {
   }
 
 //? setting user data
-  void setCurrentUserData(User? u, UserModel? uM, [bool notify = false]) {
-    user = u;
+  void setCurrentUserData(UserModel? uM, [bool notify = false]) {
     userModel = uM;
     if (notify) notifyListeners();
   }
@@ -94,12 +98,20 @@ class UserProvider extends ChangeNotifier {
     required String? userProfilePhoto,
     required SignMethod signMethod,
     required GoogleSignInAccount? googleSignInAccount,
+    required StoreProvider storeProvider,
+    required AppStateProvider appStateProvider,
+    required BuildContext context,
   }) async {
     User? user;
     if (signMethod == SignMethod.email) {
       user = await firebaseSignUpEmailPassword(email, password);
     } else if (signMethod == SignMethod.google) {
-      user = await firebaseSignInGoogle(googleSignInAccount!);
+      user = await firebaseSignInGoogle(
+        appStateProvider: appStateProvider,
+        context: context,
+        googleSignInAccount: googleSignInAccount!,
+        storeProvider: storeProvider,
+      );
     }
     if (user != null) {
       UserModel newUser = UserModel(
@@ -131,14 +143,18 @@ class UserProvider extends ChangeNotifier {
     required String password,
     required BuildContext context,
     required Future<void> Function() fetchAndUpdateFavoriteProducts,
+    required AppStateProvider appStateProvider,
+    required StoreProvider storeProvider,
   }) async {
-    await FirebaseAuth.instance
+    UserCredential userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-    // User? u = userCredential.user;
-    // if (u != null) {
-    //   UserModel userModel = await getUserDataByUID(u.uid);
-    //   setCurrentUserData(u, userModel);
-    // }
+    User? u = userCredential.user;
+    await handleSettingAppMainScreen(
+      user: u,
+      appStateProvider: appStateProvider,
+      context: context,
+      storeProvider: storeProvider,
+    );
     await fetchAndUpdateFavoriteProducts();
   }
 
@@ -156,9 +172,12 @@ class UserProvider extends ChangeNotifier {
   }
 
 //? sign in google account to firebase to add it to firebase auth
-  Future<User?> firebaseSignInGoogle(
-    GoogleSignInAccount googleSignInAccount,
-  ) async {
+  Future<User?> firebaseSignInGoogle({
+    required GoogleSignInAccount googleSignInAccount,
+    required StoreProvider storeProvider,
+    required AppStateProvider appStateProvider,
+    required BuildContext context,
+  }) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
 
     //* here the user chose an account
@@ -169,6 +188,12 @@ class UserProvider extends ChangeNotifier {
       accessToken: googleSignInAuthentication.accessToken,
     );
     UserCredential result = await auth.signInWithCredential(authCredential);
+    await handleSettingAppMainScreen(
+      user: result.user,
+      storeProvider: storeProvider,
+      appStateProvider: appStateProvider,
+      context: context,
+    );
 
     return result.user;
   }
@@ -195,6 +220,45 @@ class UserProvider extends ChangeNotifier {
       await _google.disconnect();
     } catch (e, s) {
       CustomError(errorType: ErrorsTypes.cantSignOut, stackTrace: s);
+    }
+  }
+
+  //? handle setting app main screen
+  Future<void> handleSettingAppMainScreen({
+    required User? user,
+    required StoreProvider storeProvider,
+    required AppStateProvider appStateProvider,
+    required BuildContext context,
+  }) async {
+    if (user != null) {
+      UserModel userModel = await getUserDataByUID(user.uid);
+      if (userModel.userRole == UserRole.trader) {
+        try {
+          // to open store dashboard if trader and signup
+          storeProvider.getStoreByOwnerUID(user.uid);
+          //* checking if has a store but never opened it before then open the store
+          bool? appMode = await SharedPrefHelper.getBool(appTarderModeKey);
+          if (appMode == null) {
+            return await appStateProvider.setTraderMode(true);
+          }
+        } catch (e) {
+          // the user is a trader but didn't create his store yet, so you must warn him
+          setUserStoreWarning(true);
+          // then forward him to the signup store
+          showSnackBar(
+            context: context,
+            message: 'لم تقم باستكمال انشاء متجرك',
+          );
+          Navigator.of(context).pushNamed(
+            SignUpStoreScreen.routeName,
+            arguments: userModel.userProfilePhoto,
+          );
+        }
+        await appStateProvider.setTraderMode(true);
+      } else {
+        await appStateProvider.setTraderMode(false);
+      }
+      setCurrentUserData(userModel);
     }
   }
 }

@@ -75,9 +75,7 @@ class _LoadingProductsScreenState extends State<LoadingProductsScreen> {
                         child: Text('Get Products'),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, HolderScreen.routeName);
-                        },
+                        onPressed: () {},
                         child: Text('Go Home'),
                       ),
                     ],

@@ -6,6 +6,7 @@ import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
@@ -64,8 +65,7 @@ class SignUpCongrats extends StatelessWidget {
         userRole != UserRole.trader
             ? SubmitFormButton(
                 onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, HolderScreen.routeName);
+                  Navigator.pushReplacementNamed(context, InitScreen.routeName);
                 },
                 title: 'فتح',
               )

@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:project/constants/shared_pref_constants.dart';
 import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/types.dart';
@@ -36,8 +37,10 @@ Future<void> loadData(BuildContext context) async {
   // await Provider.of<ProductsProvider>(context, listen: false)
   //     .reloadHomeProducts(offers, true);
 
+  //* getting cart items from local sqlite
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
+  //* getting wshlists from local sqlite
   await Provider.of<WishListsProvider>(context, listen: false)
       .fetchWishlistsAndWishlistsItems();
   await handleUserData(context);
@@ -52,8 +55,8 @@ Future<void> loadDataForHomeScreen(BuildContext context) async {
       Provider.of<StoreProvider>(context, listen: false).offers;
 
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
-  // await Provider.of<ProductsProvider>(context, listen: false)
-  //     .reloadHomeProducts(offers, true);
+  await Provider.of<ProductsProvider>(context, listen: false)
+      .fetchAllProducts(offers, true);
 }
 
 //? checking user store if trader
@@ -68,7 +71,8 @@ Future<void> handleUserData(BuildContext context) async {
         await Provider.of<UserProvider>(context, listen: false)
             .getUserDataByUID(currentUser.uid);
     Provider.of<UserProvider>(context, listen: false)
-        .setCurrentUserData(currentUser, userModel);
+        .setCurrentUserData(userModel);
+    //* getting user orders
     await Provider.of<OrdersProvider>(context, listen: false)
         .fetchUpdateUserOrders();
 
@@ -77,6 +81,12 @@ Future<void> handleUserData(BuildContext context) async {
         // to open store dashboard if trader and signup
         Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
+        //* checking if has a store but never opened it before then open the store
+        bool? appMode = await SharedPrefHelper.getBool(appTarderModeKey);
+        if (appMode == null) {
+          return await Provider.of<AppStateProvider>(context, listen: false)
+              .setTraderMode(true);
+        }
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
         Provider.of<UserProvider>(context, listen: false)

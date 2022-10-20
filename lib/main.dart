@@ -17,7 +17,6 @@ import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
@@ -40,7 +39,6 @@ import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
 import 'trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
-import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/trader_app/screens/t_store_profile_screen/t_store_profile_screen.dart';
@@ -104,7 +102,7 @@ class MyApp extends StatelessWidget {
         routes: {
           TestingScreen.routeName: (context) => TestingScreen(),
           InitScreen.routeName: (context) => InitScreen(),
-          HolderScreen.routeName: (context) => HolderScreen(),
+          // HolderScreen.routeName: (context) => HolderScreen(),
           ProductScreen.routeName: (context) => ProductScreen(),
           CartScreen.routeName: (context) => CartScreen(),
           StoreScreen.routeName: (context) => StoreScreen(),
@@ -122,7 +120,7 @@ class MyApp extends StatelessWidget {
           NoInternetScreen.routeName: (context) => NoInternetScreen(),
           CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
           //? trader app screens
-          THolderScreen.routeName: (context) => THolderScreen(),
+          // THolderScreen.routeName: (context) => THolderScreen(loadingData: false),
           TProductsScreen.routeName: (context) => TProductsScreen(),
           TAddProductScreen.routeName: (context) => TAddProductScreen(),
           TTabsScreen.routeName: (context) => TTabsScreen(),

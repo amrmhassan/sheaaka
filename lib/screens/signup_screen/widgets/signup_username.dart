@@ -6,8 +6,11 @@ import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/providers/app_state_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
+import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
@@ -161,14 +164,22 @@ class _SignUpUsernameState extends State<SignUpUsername> {
           await Provider.of<UserProvider>(context, listen: false)
               .getUserDataByEmail(email);
       if (userModel != null) {
+        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
+        var appStateProvider =
+            Provider.of<AppStateProvider>(context, listen: false);
         //* here the user is already signed up and i will sign him in to
         await Provider.of<UserProvider>(context, listen: false)
-            .firebaseSignInGoogle(googleSignInAccount);
+            .firebaseSignInGoogle(
+          googleSignInAccount: googleSignInAccount,
+          appStateProvider: appStateProvider,
+          context: context,
+          storeProvider: storeProvider,
+        );
         showSnackBar(
             context: context,
             message: 'أنت بالفعل مسجل',
             snackBarType: SnackBarType.info);
-        Navigator.pushReplacementNamed(context, HolderScreen.routeName);
+        Navigator.pushReplacementNamed(context, InitScreen.routeName);
       }
 
       widget.userNameController.text = name ?? '';

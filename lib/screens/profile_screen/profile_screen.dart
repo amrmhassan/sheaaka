@@ -15,6 +15,7 @@ import 'package:project/models/user_model.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/profile_screen/widgets/copy_rights.dart';
 import 'package:project/screens/profile_screen/widgets/open_store_dashboard_button.dart';
 import 'package:project/screens/profile_screen/widgets/policy_part.dart';
@@ -83,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.pop(context);
                         Navigator.pushReplacementNamed(
                           context,
-                          HolderScreen.routeName,
+                          InitScreen.routeName,
                         );
                       },
                       iconName: 'logout',

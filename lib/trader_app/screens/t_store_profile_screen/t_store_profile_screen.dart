@@ -7,8 +7,9 @@ import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/screens/holder_screen/holder_screen.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:provider/provider.dart';
 
 class TStoreProfileScreen extends StatelessWidget {
   static const String routeName = '/t-store-profile-screen';
@@ -28,14 +29,17 @@ class TStoreProfileScreen extends StatelessWidget {
           PaddingWrapper(
             child: ButtonWrapper(
               padding: EdgeInsets.symmetric(
-                  horizontal: kHPad / 2, vertical: kVPad / 2),
+                horizontal: kHPad / 2,
+                vertical: kVPad / 2,
+              ),
               child: Text(
                 'تصفح المنتجات',
                 style: h3LightTextStyle,
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, HolderScreen.routeName,
-                    arguments: false);
+                Navigator.pop(context);
+                Provider.of<AppStateProvider>(context, listen: false)
+                    .setTraderMode(false);
               },
             ),
           )

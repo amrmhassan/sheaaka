@@ -7,6 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/app_state_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/signup_congrats.dart';
@@ -51,6 +53,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       signingUp = true;
     });
     try {
+      var storeProvider = Provider.of<StoreProvider>(context, listen: false);
+      var appStateProvider =
+          Provider.of<AppStateProvider>(context, listen: false);
       await Provider.of<UserProvider>(context, listen: false).signUserUp(
         email: emailController.text,
         password: passwordController.text,
@@ -64,6 +69,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userName: userNameController.text,
         signMethod: signMethod,
         googleSignInAccount: googleSignInAccount,
+        appStateProvider: appStateProvider,
+        context: context,
+        storeProvider: storeProvider,
       );
       showSnackBar(
           context: context,

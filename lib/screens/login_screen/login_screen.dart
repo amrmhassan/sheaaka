@@ -9,10 +9,13 @@ import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/types.dart';
 import 'package:project/models/user_model.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
+import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/title_subtitle.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
@@ -50,20 +53,26 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       var fetchLikes = Provider.of<ProductsProvider>(context, listen: false)
           .fetchAndUpdateFavoriteProducts;
+      var appStateProvider =
+          Provider.of<AppStateProvider>(context, listen: false);
+      var storeProvider = Provider.of<StoreProvider>(context, listen: false);
       await Provider.of<UserProvider>(context, listen: false)
           .loginEmailPassword(
         email: _emailController.text,
         password: _passwordController.text,
         context: context,
         fetchAndUpdateFavoriteProducts: fetchLikes,
+        appStateProvider: appStateProvider,
+        storeProvider: storeProvider,
       );
       showSnackBar(
-          context: context,
-          message: 'تم تسجيل الدخول',
-          snackBarType: SnackBarType.success);
+        context: context,
+        message: 'تم تسجيل الدخول',
+        snackBarType: SnackBarType.success,
+      );
       Navigator.popUntil(context, (route) => false);
 
-      Navigator.pushNamed(context, HolderScreen.routeName);
+      Navigator.pushNamed(context, InitScreen.routeName);
     } on FirebaseAuthException catch (e) {
       showSnackBar(
           context: context,
@@ -128,11 +137,19 @@ class _LoginScreenState extends State<LoginScreen> {
             message: 'قم بالتسجيل أولا',
             snackBarType: SnackBarType.error);
       } else {
+        var storeProvider = Provider.of<StoreProvider>(context, listen: false);
+        var appStateProvider =
+            Provider.of<AppStateProvider>(context, listen: false);
         await Provider.of<UserProvider>(context, listen: false)
-            .firebaseSignInGoogle(googleSignInAccount);
+            .firebaseSignInGoogle(
+          googleSignInAccount: googleSignInAccount,
+          appStateProvider: appStateProvider,
+          context: context,
+          storeProvider: storeProvider,
+        );
         Navigator.popUntil(context, (route) => false);
 
-        Navigator.pushNamed(context, HolderScreen.routeName);
+        Navigator.pushNamed(context, InitScreen.routeName);
       }
     } catch (e) {
       showSnackBar(

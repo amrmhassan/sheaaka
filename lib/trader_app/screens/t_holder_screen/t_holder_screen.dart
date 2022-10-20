@@ -16,7 +16,8 @@ import 'package:project/trader_app/screens/t_holder_screen/widgets/show_my_store
 import 'package:provider/provider.dart';
 
 class THolderScreen extends StatefulWidget {
-  const THolderScreen({Key? key}) : super(key: key);
+  final bool loadingData;
+  const THolderScreen({Key? key, required this.loadingData}) : super(key: key);
   static const String routeName = '/t-holder-screen';
 
   @override
