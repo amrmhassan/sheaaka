@@ -14,29 +14,33 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
-import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 //? loading data from firestore
-Future<void> loadData(BuildContext context, bool? redirectToStore) async {
+Future<void> loadData(BuildContext context) async {
+  //* setting first time open
   await firstTimeOpenApp(context);
+  //* getting offers from database
   await Provider.of<StoreProvider>(context, listen: false)
       .fetchAndUpdateOffers(true);
   List<OfferModel> offers =
       Provider.of<StoreProvider>(context, listen: false).offers;
+  //* getting stores
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
+  //* fetching all products
+  await Provider.of<ProductsProvider>(context, listen: false)
+      .fetchAllProducts(offers);
 
   //* the loading in this screen only for the network checking
-  await Provider.of<ProductsProvider>(context, listen: false)
-      .reloadHomeProducts(offers, true);
+  // await Provider.of<ProductsProvider>(context, listen: false)
+  //     .reloadHomeProducts(offers, true);
 
   await Provider.of<CartProvider>(context, listen: false)
       .fetchAndUpdateCartItems();
   await Provider.of<WishListsProvider>(context, listen: false)
       .fetchWishlistsAndWishlistsItems();
-  bool continueLoading = await handleUserData(context, redirectToStore);
-  if (!continueLoading) return;
+  await handleUserData(context);
 }
 
 //? load data for home screen
@@ -48,12 +52,12 @@ Future<void> loadDataForHomeScreen(BuildContext context) async {
       Provider.of<StoreProvider>(context, listen: false).offers;
 
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
-  await Provider.of<ProductsProvider>(context, listen: false)
-      .reloadHomeProducts(offers, true);
+  // await Provider.of<ProductsProvider>(context, listen: false)
+  //     .reloadHomeProducts(offers, true);
 }
 
 //? checking user store if trader
-Future<bool> handleUserData(BuildContext context, bool? redirectToStore) async {
+Future<void> handleUserData(BuildContext context) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
     //* fetch his liked products
@@ -73,11 +77,6 @@ Future<bool> handleUserData(BuildContext context, bool? redirectToStore) async {
         // to open store dashboard if trader and signup
         Provider.of<StoreProvider>(context, listen: false)
             .getStoreByOwnerUID(currentUser.uid);
-        if (redirectToStore == true) {
-          await Navigator.pushReplacementNamed(
-              context, THolderScreen.routeName);
-        }
-        return redirectToStore ?? false;
       } catch (e) {
         // the user is a trader but didn't create his store yet, so you must warn him
         Provider.of<UserProvider>(context, listen: false)
@@ -92,7 +91,6 @@ Future<bool> handleUserData(BuildContext context, bool? redirectToStore) async {
       }
     }
   }
-  return true;
 }
 
 //? updating firstTimeOpenApp

@@ -50,7 +50,7 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
         VSpace(factor: .5),
         ChooseProductSize(
           availableSizes: Provider.of<ProductsProvider>(context, listen: false)
-              .homeProducts[0]
+              .allProducts[0]
               .availableSize,
           activeSizeIndex: 0,
           setActiveSize: (int x) {},

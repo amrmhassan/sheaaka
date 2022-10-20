@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/empty_widget.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/post_simmer_loading/post_simmer_loading.dart';
@@ -37,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var productsProvider = Provider.of<ProductsProvider>(context);
-    var homeProducts = productsProvider.homeProducts;
+    var allProducts = productsProvider.allProducts;
     var wishlistProvider = Provider.of<WishListsProvider>(context);
 
     return Column(
@@ -62,9 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               )
-            : productsProvider.homeProducts.isEmpty
-                ? EmptyWidget(
-                    title: 'لا توجد منتجات بعد',
+            : allProducts.isEmpty
+                ? Expanded(
+                    child: EmptyWidget(
+                      title: 'لا توجد منتجات بعد',
+                    ),
                   )
                 : Expanded(
                     child: ListLoader(
@@ -79,12 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       onLoadNew: () {
-                        productsProvider.getNextHomeProducts();
+                        // productsProvider.getNextHomeProducts();
                       },
                       padding: EdgeInsets.only(bottom: kVPad / 2),
-                      itemCount: homeProducts.length,
+                      itemCount: allProducts.length,
                       itemBuilder: (context, index) {
-                        ProductModel p = homeProducts[index];
+                        ProductModel p = allProducts[index];
                         return FullPost(
                           fullPostModel: p,
                           wishlistItemId: wishlistProvider
@@ -95,16 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       showBottomLoader: false,
                     ),
                   ),
-        if (productsProvider.loadingNextHomeProducts)
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: kVPad / 2),
-            width: double.infinity,
-            child: Text(
-              'جاري التحميل',
-              style: h3InactiveTextStyle,
-            ),
-          )
+        // if (productsProvider.loadingNextHomeProducts)
+        // Container(
+        //   alignment: Alignment.center,
+        //   padding: EdgeInsets.symmetric(vertical: kVPad / 2),
+        //   width: double.infinity,
+        //   child: Text(
+        //     'جاري التحميل',
+        //     style: h3InactiveTextStyle,
+        //   ),
+        // )
       ],
     );
   }

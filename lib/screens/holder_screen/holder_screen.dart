@@ -27,22 +27,20 @@ class _HolderScreenState extends State<HolderScreen> {
   bool loading = false;
 
   //# home Screen stuff
-  Future<void> reloadProductsHolderScreen(bool? redirectToStore) async {
+  Future<void> reloadProductsHolderScreen() async {
     setState(() {
       loading = true;
     });
     try {
-      // if (kDebugMode) await Future.delayed(Duration(seconds: 5));
-      await loadData(context, redirectToStore);
+      await loadData(context);
       int products = Provider.of<ProductsProvider>(context, listen: false)
-          .homeProducts
+          .allProducts
           .length;
 
       bool online = await checkConnectivity();
       bool allowTheApp = online || products > 0;
       setState(() {
         noInternetNoData = !allowTheApp;
-        loading = false;
       });
     } catch (e, stack) {
       if (kDebugMode) {
@@ -54,15 +52,15 @@ class _HolderScreenState extends State<HolderScreen> {
         snackBarType: SnackBarType.error,
       );
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   void initState() {
     Future.delayed(Duration.zero).then((value) {
-      bool redirectToStore =
-          (ModalRoute.of(context)?.settings.arguments as bool?) ?? true;
-
-      reloadProductsHolderScreen(redirectToStore);
+      reloadProductsHolderScreen();
     });
 
     super.initState();

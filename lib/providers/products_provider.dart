@@ -39,7 +39,7 @@ class ProductsProvider extends ChangeNotifier {
   //? remove product
   void removeProduct(String productID) {
     _allProducts.removeWhere((element) => element.id == productID);
-    _homeProducts.removeWhere((element) => element.id == productID);
+    // _homeProducts.removeWhere((element) => element.id == productID);
     notifyListeners();
   }
 
@@ -50,15 +50,15 @@ class ProductsProvider extends ChangeNotifier {
     _allProducts.removeAt(allProductsIndex);
     _allProducts.insert(allProductsIndex, newProductModel);
 
-    int homeProductsIndex =
-        _homeProducts.indexWhere((element) => element.id == newProductModel.id);
-    _homeProducts.removeAt(homeProductsIndex);
-    _homeProducts.insert(homeProductsIndex, newProductModel);
+    // int homeProductsIndex =
+    //     _homeProducts.indexWhere((element) => element.id == newProductModel.id);
+    // _homeProducts.removeAt(homeProductsIndex);
+    // _homeProducts.insert(homeProductsIndex, newProductModel);
     notifyListeners();
   }
 
   // //? fetch all products
-  Future<void> _fetchAllProducts(
+  Future<void> fetchAllProducts(
     List<OfferModel> offers, [
     bool noStateNotify = false,
   ]) async {
@@ -96,100 +96,87 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //# 2] HomeScreen Products
-  List<ProductModel> _homeProducts = [];
+  // List<ProductModel> _homeProducts = [];
 
-  bool loadingHomeProducts = false;
-  bool loadingNextHomeProducts = false;
+  // bool loadingHomeProducts = false;
+  // bool loadingNextHomeProducts = false;
 
 //? to get the home products after applying its filters
-  List<ProductModel> get homeProducts {
-    return [..._homeProducts];
-  }
+  // List<ProductModel> get homeProducts {
+  //   return [..._homeProducts];
+  // }
 
   //? fetch and update home products
   //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
-  Future<void> reloadHomeProducts(
-    List<OfferModel> offers, [
-    bool noStateNotify = false,
-  ]) async {
-    await _fetchAllProducts(offers, noStateNotify);
+  // Future<void> reloadHomeProducts(
+  //   List<OfferModel> offers, [
+  //   bool noStateNotify = false,
+  // ]) async {
+  //   await fetchAllProducts(offers, noStateNotify);
 
-    if (loadingHomeProducts) return;
+  //   if (loadingHomeProducts) return;
 
-    loadingHomeProducts = true;
-    if (!noStateNotify) notifyListeners();
+  //   loadingHomeProducts = true;
+  //   if (!noStateNotify) notifyListeners();
 
-    try {
-      // QuerySnapshot<Map<String, dynamic>> res;
-      // res = await ref
-      //     .collection(productsCollectionName)
-      //     .orderBy(createdAtString, descending: true)
-      //     .limit(loadingAtATime)
-      //     .get();
+  //   try {
+  //     _homeProducts = [..._allProducts];
 
-      // List<ProductModel> helperList = [];
-      // for (var element in res.docs) {
-      //   var p = ProductModel.fromJSON(element.data());
-      //   helperList.add(p);
-      // }
-      // _homeProducts = helperList;
-      _homeProducts = [..._allProducts];
-
-      loadingHomeProducts = false;
-      notifyListeners();
-    } catch (e, s) {
-      throw CustomError(
-        errorType: ErrorsTypes.errorLoadingProducts,
-        stackTrace: s,
-      );
-    }
-  }
+  //     loadingHomeProducts = false;
+  //     notifyListeners();
+  //   } catch (e, s) {
+  //     throw CustomError(
+  //       errorType: ErrorsTypes.errorLoadingProducts,
+  //       stackTrace: s,
+  //     );
+  //   }
+  // }
 
   //? loading the next 10 products
-  Future<void> getNextHomeProducts() async {
-    if (loadingNextHomeProducts) return;
-    if (_allProducts.isNotEmpty) {
-      //* this will load the home products from the already loaded products if they exist
-      ProductModel lastHomeProduct = _homeProducts.last;
-      int startIndex = _allProducts
-              .indexWhere((element) => element.id == lastHomeProduct.id) +
-          1;
+  // Future<void> getNextHomeProducts() async {
+  //   if (loadingNextHomeProducts) return;
+  //   if (_allProducts.isNotEmpty) {
+  //     //* this will load the home products from the already loaded products if they exist
+  //     ProductModel lastHomeProduct = _homeProducts.last;
+  //     int startIndex = _allProducts
+  //             .indexWhere((element) => element.id == lastHomeProduct.id) +
+  //         1;
 
-      int lengthDiff = _allProducts.length - _homeProducts.length;
-      int increaingAmount =
-          ((loadingAtATime < lengthDiff) ? loadingAtATime : lengthDiff);
-      int endIndex = startIndex + increaingAmount;
+  //     int lengthDiff = _allProducts.length - _homeProducts.length;
+  //     int increaingAmount =
+  //         ((loadingAtATime < lengthDiff) ? loadingAtATime : lengthDiff);
+  //     int endIndex = startIndex + increaingAmount;
 
-      List<ProductModel> nextProducts =
-          _allProducts.sublist(startIndex, endIndex);
-      _homeProducts.addAll(nextProducts);
-      notifyListeners();
-      return;
-    }
-    loadingNextHomeProducts = true;
-    notifyListeners();
-    try {
-      QuerySnapshot<Map<String, dynamic>> res;
-      res = await ref
-          .collection(productsCollectionName)
-          .orderBy(createdAtString, descending: true)
-          .limit(loadingAtATime)
-          .startAfter([_homeProducts.last.createdAt]).get();
+  //     List<ProductModel> nextProducts =
+  //         _allProducts.sublist(startIndex, endIndex);
+  //     _homeProducts.addAll(nextProducts);
+  //     notifyListeners();
+  //     return;
+  //   }
+  //   loadingNextHomeProducts = true;
+  //   notifyListeners();
+  //   try {
+  //     QuerySnapshot<Map<String, dynamic>> res;
+  //     res = await ref
+  //         .collection(productsCollectionName)
+  //         .orderBy(createdAtString, descending: true)
+  //         .limit(loadingAtATime)
+  //         .startAfter([_homeProducts.last.createdAt]).get();
 
-      for (var element in res.docs) {
-        var p = ProductModel.fromJSON(element.data());
-        _homeProducts.add(p);
-      }
+  //     for (var element in res.docs) {
+  //       var p = ProductModel.fromJSON(element.data());
+  //       _homeProducts.add(p);
+  //     }
 
-      loadingNextHomeProducts = false;
-      notifyListeners();
-    } catch (e, s) {
-      throw CustomError(
-        errorType: ErrorsTypes.errorLoadingProducts,
-        stackTrace: s,
-      );
-    }
-  }
+  //     loadingNextHomeProducts = false;
+  //     notifyListeners();
+  //   } catch (e, s) {
+  //     throw CustomError(
+  //       errorType: ErrorsTypes.errorLoadingProducts,
+  //       stackTrace: s,
+  //     );
+  //   }
+  // }
 
   //# 3] suggestions products
   final List<ProductModel> _suggestionsProducts = [];
@@ -339,7 +326,7 @@ class ProductsProvider extends ChangeNotifier {
       throw CustomError(errorType: ErrorsTypes.noUserLoggedIn);
     }
     ProductModel product =
-        _homeProducts.firstWhere((element) => element.id == productId);
+        _allProducts.firstWhere((element) => element.id == productId);
 
     //* updating in the local provider
     bool lovedLocally = _favoriteProductsIds.contains(productId);

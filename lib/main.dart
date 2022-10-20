@@ -18,6 +18,7 @@ import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
+import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
 import 'package:project/screens/offer_screen/show_single_image.dart';
@@ -99,10 +100,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute:
-            testing ? TestingScreen.routeName : HolderScreen.routeName,
+        initialRoute: testing ? TestingScreen.routeName : InitScreen.routeName,
         routes: {
           TestingScreen.routeName: (context) => TestingScreen(),
+          InitScreen.routeName: (context) => InitScreen(),
           HolderScreen.routeName: (context) => HolderScreen(),
           ProductScreen.routeName: (context) => ProductScreen(),
           CartScreen.routeName: (context) => CartScreen(),
