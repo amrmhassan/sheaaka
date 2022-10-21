@@ -54,6 +54,13 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   void initState() {
+    if (kDebugMode) {
+      showSnackBar(
+        context: context,
+        message: 'Starting the app from the beggining',
+        snackBarType: SnackBarType.error,
+      );
+    }
     Future.delayed(Duration.zero).then((value) async {
       //* updating the app mode
       await Provider.of<AppStateProvider>(context, listen: false)

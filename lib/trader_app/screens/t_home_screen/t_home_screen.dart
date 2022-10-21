@@ -17,6 +17,7 @@ import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_ele
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
+import 'package:project/trader_app/screens/t_trends_screen/t_trends_screen.dart';
 import 'package:provider/provider.dart';
 
 class THomeScreen extends StatelessWidget {
@@ -86,7 +87,9 @@ class THomeScreen extends StatelessWidget {
                 ),
                 TraderHomeElement(
                   iconName: 'fire1',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, TTrendsScreen.routeName);
+                  },
                   title: 'الترند',
                   value: '9',
                 ),

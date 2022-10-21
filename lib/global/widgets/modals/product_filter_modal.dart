@@ -23,14 +23,14 @@ class ProductFiltersModal extends StatefulWidget {
 
 class _ProductFiltersModalState extends State<ProductFiltersModal> {
   late bool onlyOffersLocal;
-  @override
-  void initState() {
-    setState(() {
-      onlyOffersLocal =
-          Provider.of<ProductsProvider>(context, listen: false).onlyOffers;
-    });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   setState(() {
+  //     onlyOffersLocal =
+  //         Provider.of<ProductsProvider>(context, listen: false).onlyOffers;
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class _ProductFiltersModalState extends State<ProductFiltersModal> {
       children: [
         OnlyOffersFilter(
           onTap: () {
-            Provider.of<ProductsProvider>(context, listen: false)
-                .toggleOnlyOffers();
-            setState(() {
-              onlyOffersLocal = !onlyOffersLocal;
-            });
+            // Provider.of<ProductsProvider>(context, listen: false)
+            //     .toggleOnlyOffers();
+            // setState(() {
+            //   onlyOffersLocal = !onlyOffersLocal;
+            // });
           },
           onlyOffersLocal: onlyOffersLocal,
         ),

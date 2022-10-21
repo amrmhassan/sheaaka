@@ -20,19 +20,17 @@ int loadingAtATime = 10;
 
 class ProductsProvider extends ChangeNotifier {
   FirebaseFirestore ref = FirebaseFirestore.instance;
+  // bool loadingAllProducts = false;
 
   // //# 1] All Products
   List<ProductModel> _allProducts = [];
-
   List<ProductModel> get allProducts {
     return [..._allProducts];
   }
 
-  bool loadingAllProducts = false;
   //? adding a new product directrly to state
   void addProduct(ProductModel productModel) {
     _allProducts.insert(0, productModel);
-
     notifyListeners();
   }
 
@@ -62,11 +60,8 @@ class ProductsProvider extends ChangeNotifier {
     List<OfferModel> offers, [
     bool noStateNotify = false,
   ]) async {
-    //! when fetching all products, fetch the offer data from offerIdString then add it to the product model,
-    //! don't save the offer end date on the product, just fetch it
-
-    if (loadingAllProducts) return;
-    loadingAllProducts = true;
+    // if (loadingAllProducts) return;
+    // loadingAllProducts = true;
     if (!noStateNotify) notifyListeners();
 
     try {
@@ -87,7 +82,7 @@ class ProductsProvider extends ChangeNotifier {
         helperList.add(p);
       }
       _allProducts = helperList;
-      loadingAllProducts = false;
+      // loadingAllProducts = false;
 
       notifyListeners();
     } catch (e, stack) {
@@ -105,13 +100,13 @@ class ProductsProvider extends ChangeNotifier {
   // bool loadingHomeProducts = false;
   // bool loadingNextHomeProducts = false;
 
-//? to get the home products after applying its filters
+// to get the home products after applying its filters
   // List<ProductModel> get homeProducts {
   //   return [..._homeProducts];
   // }
 
-  //? fetch and update home products
-  //* this noStateNotify fixes a problem with the holder screen when trying to reload the home products
+  // fetch and update home products
+  // this noStateNotify fixes a problem with the holder screen when trying to reload the home products
   // Future<void> reloadHomeProducts(
   //   List<OfferModel> offers, [
   //   bool noStateNotify = false,
@@ -136,11 +131,11 @@ class ProductsProvider extends ChangeNotifier {
   //   }
   // }
 
-  //? loading the next 10 products
+  // loading the next 10 products
   // Future<void> getNextHomeProducts() async {
   //   if (loadingNextHomeProducts) return;
   //   if (_allProducts.isNotEmpty) {
-  //     //* this will load the home products from the already loaded products if they exist
+  //     // this will load the home products from the already loaded products if they exist
   //     ProductModel lastHomeProduct = _homeProducts.last;
   //     int startIndex = _allProducts
   //             .indexWhere((element) => element.id == lastHomeProduct.id) +
@@ -184,7 +179,6 @@ class ProductsProvider extends ChangeNotifier {
 
   //# 3] suggestions products
   final List<ProductModel> _suggestionsProducts = [];
-
   List<ProductModel> get suggestionsProducts {
     return [..._suggestionsProducts];
   }
@@ -218,15 +212,15 @@ class ProductsProvider extends ChangeNotifier {
   }
 
 //@ only offers filter
-  bool onlyOffers = false;
-  void toggleOnlyOffers() {
-    onlyOffers = !onlyOffers;
-  }
+  // bool onlyOffers = false;
+  // void toggleOnlyOffers() {
+  //   onlyOffers = !onlyOffers;
+  // }
 
   //@ applying filters
-  void applyHomeFilters() {
-    notifyListeners();
-  }
+  // void applyHomeFilters() {
+  //   notifyListeners();
+  // }
 
 //# user favorite products
   final List<String> _favoriteProductsIds = [];

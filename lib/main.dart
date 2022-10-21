@@ -38,12 +38,13 @@ import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dar
 import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
-import 'trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
+import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/trader_app/screens/t_store_profile_screen/t_store_profile_screen.dart';
 import 'package:project/trader_app/screens/t_tab_screen/t_tab_screen.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
+import 'package:project/trader_app/screens/t_trends_screen/t_trends_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -133,6 +134,7 @@ class MyApp extends StatelessWidget {
           TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
           TAddAdsScreen.routeName: (context) => TAddAdsScreen(),
           TAddOfferScreen.routeName: (context) => TAddOfferScreen(),
+          TTrendsScreen.routeName: (context) => TTrendsScreen(),
         },
       ),
     );
