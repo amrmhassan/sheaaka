@@ -12,14 +12,23 @@ import 'package:project/models/product_model.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_price.dart';
 import 'package:project/screens/product_screen/widgets/remain_in_stock.dart';
 
-//? after aplying the offer
-Widget handleShowCurrentPrice(
+//? get the current price double
+double getCurreentPrice(
   ProductModel productModel,
   double? discountPercentage,
 ) {
   double priceBefore = productModel.price;
   double discount = discountPercentage ?? 0;
   double priceNow = priceBefore * (1 - discount);
+  return priceNow;
+}
+
+//? after aplying the offer
+Widget handleShowCurrentPrice(
+  ProductModel productModel,
+  double? discountPercentage,
+) {
+  double priceNow = getCurreentPrice(productModel, discountPercentage);
   return ProductCartPrice(
     fontSize: h2TextSize,
     fontWeight: FontWeight.bold,

@@ -22,6 +22,7 @@ import 'package:project/trader_app/screens/t_add_offer_screen/widgets/no_product
 import 'package:project/trader_app/screens/t_add_offer_screen/widgets/offer_date_picker.dart';
 import 'package:project/trader_app/screens/t_add_offer_screen/widgets/product_chosen.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:project/utils/screens_utils/product_screen_utils.dart';
 import 'package:provider/provider.dart';
 
 class TAddOfferScreen extends StatefulWidget {
@@ -255,7 +256,44 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
                 ],
               ),
             ),
-            VSpace(factor: 2),
+            VSpace(factor: 1),
+            if (productModel != null && discountController.text.isNotEmpty)
+              PaddingWrapper(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'السعر :',
+                        style: h3TextStyle.copyWith(
+                          color: kTraderBlackColor,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      doubleToString(productModel!.price),
+                      style: h3LiteTextStyle.copyWith(
+                        color: kTraderBlackColor,
+                      ),
+                    ),
+                    HSpace(),
+                    Image.asset(
+                      'assets/icons/previous.png',
+                      width: mediumIconSize,
+                      color: kTraderSecondaryColor,
+                    ),
+                    HSpace(),
+                    Text(
+                      doubleToString(
+                        getCurreentPrice(productModel!, discountValue / 100),
+                      ),
+                      style: h3LiteTextStyle.copyWith(
+                        color: kTraderPrimaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            VSpace(),
             CustomTextField(
               title: 'قيمة خصم العرض',
               errorText: discountError,
