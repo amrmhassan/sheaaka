@@ -22,6 +22,7 @@ class AdsProvider extends ChangeNotifier {
     required String storeName,
     required String storeId,
     required String? storeLogo,
+    required String productId,
   }) async {
     String id = Uuid().v4();
     DateTime createdAt = DateTime.now();
@@ -32,6 +33,7 @@ class AdsProvider extends ChangeNotifier {
       endDate: endDate,
       imagePath: imagePath,
       productName: productName,
+      productId: productId,
       storeId: storeId,
       storeLogo: storeLogo,
       storeName: storeName,

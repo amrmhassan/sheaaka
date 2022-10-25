@@ -6,6 +6,7 @@ class AdsModel {
   final DateTime createdAt;
   final DateTime endDate;
   final String productName;
+  final String productId;
   final String imagePath;
   final String storeId;
   final String? storeLogo;
@@ -17,6 +18,7 @@ class AdsModel {
     required this.endDate,
     required this.imagePath,
     required this.productName,
+    required this.productId,
     required this.storeId,
     required this.storeLogo,
     required this.storeName,
@@ -29,6 +31,7 @@ class AdsModel {
       endDateString: endDate,
       imagePathString: imagePath,
       productNameString: productName,
+      productIdString: productId,
       storeIdString: storeId,
       storeLogoString: storeLogo,
       storeNameString: storeName,
@@ -42,6 +45,7 @@ class AdsModel {
       endDate: (adsJSON[endDateString] as Timestamp).toDate(),
       imagePath: adsJSON[imagePathString],
       productName: adsJSON[productNameString],
+      productId: adsJSON[productIdString],
       storeId: adsJSON[storeIdString],
       storeLogo: adsJSON[storeLogoString],
       storeName: adsJSON[storeNameString],

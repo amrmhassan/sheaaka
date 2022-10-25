@@ -9,7 +9,6 @@ import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/ads_model.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -71,6 +70,7 @@ class _TAddAdsScreenState extends State<TAddAdsScreen> {
         storeId: productModel!.storeId,
         storeLogo: productModel!.storeLogo,
         storeName: productModel!.storeName,
+        productId: productModel!.id,
       );
       showSnackBar(
         context: context,

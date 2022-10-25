@@ -37,9 +37,11 @@ class THomeScreen extends StatelessWidget {
         )
         .toList();
     var adsProvider = Provider.of<AdsProvider>(context);
-    var ads = adsProvider.ads.where(
-      (element) => element.storeId == myStore.id,
-    );
+    var ads = adsProvider.ads
+        .where(
+          (element) => element.storeId == myStore.id,
+        )
+        .toList();
 
     return PaddingWrapper(
       child: Column(
