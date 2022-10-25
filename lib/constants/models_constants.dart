@@ -83,3 +83,7 @@ String cartItemsString = 'cartItemsString';
 
 //? wishlist item model
 String noteString = 'noteString';
+
+//? ads model
+String endDateString = 'endDateString';
+String imagePathString = 'imagePathString';

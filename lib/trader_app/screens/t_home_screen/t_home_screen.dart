@@ -11,8 +11,9 @@ import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
+import 'package:project/trader_app/providers/ads_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
-import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
+import 'package:project/trader_app/screens/t_ads_screen/t_ads_screen.dart';
 import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_element.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
@@ -35,6 +36,10 @@ class THomeScreen extends StatelessWidget {
           (element) => element.storeId == myStore.id,
         )
         .toList();
+    var adsProvider = Provider.of<AdsProvider>(context);
+    var ads = adsProvider.ads.where(
+      (element) => element.storeId == myStore.id,
+    );
 
     return PaddingWrapper(
       child: Column(
@@ -56,10 +61,11 @@ class THomeScreen extends StatelessWidget {
                 TraderHomeElement(
                   iconName: 'megaphone',
                   onTap: () {
-                    Navigator.pushNamed(context, TAddAdsScreen.routeName);
+                    Navigator.pushNamed(context, TAdsScreen.routeName,
+                        arguments: ads);
                   },
-                  title: 'عروض ممولة',
-                  value: '34',
+                  title: 'إعلانات ممولة',
+                  value: ads.length.toString(),
                 ),
                 TraderHomeElement(
                   iconName: 'offer',

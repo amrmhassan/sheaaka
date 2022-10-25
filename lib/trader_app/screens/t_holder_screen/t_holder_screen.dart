@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 class THolderScreen extends StatefulWidget {
   final bool loadingData;
   const THolderScreen({Key? key, required this.loadingData}) : super(key: key);
-  static const String routeName = '/t-holder-screen';
+  // static const String routeName = '/t-holder-screen';
 
   @override
   State<THolderScreen> createState() => _THolderScreenState();

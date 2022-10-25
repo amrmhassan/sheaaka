@@ -62,7 +62,7 @@ class ProductsProvider extends ChangeNotifier {
   ]) async {
     // if (loadingAllProducts) return;
     // loadingAllProducts = true;
-    if (!noStateNotify) notifyListeners();
+    // if (!noStateNotify) notifyListeners();
 
     try {
       QuerySnapshot<Map<String, dynamic>> res;
@@ -74,17 +74,23 @@ class ProductsProvider extends ChangeNotifier {
       List<ProductModel> helperList = [];
       for (var element in res.docs) {
         var p = ProductModel.fromJSON(element.data());
-        OfferModel offer = offers.firstWhere((o) => o.id == p.offerId);
-        p.offerEnd = offer.endAt;
-        p.offerStarted = offer.createdAt;
-        p.discount = offer.discountPercentage;
+        if (p.offerId != null) {
+          OfferModel offer = offers.firstWhere((o) => o.id == p.offerId);
+          p.offerEnd = offer.endAt;
+          p.offerStarted = offer.createdAt;
+          p.discount = offer.discountPercentage;
+        }
 
         helperList.add(p);
       }
       _allProducts = helperList;
       // loadingAllProducts = false;
 
-      notifyListeners();
+      try {
+        notifyListeners();
+      } catch (e) {
+        //
+      }
     } catch (e, stack) {
       throw CustomError(
         errorType: ErrorsTypes.errorLoadingProducts,

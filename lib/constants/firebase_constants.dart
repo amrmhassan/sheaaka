@@ -6,6 +6,7 @@ String storesCollectionName = 'storesCollectionName';
 String offersCollectionName = 'offersCollectionName';
 String usersCollectionName = 'usersCollectionName';
 String trendsCollectionName = 'trendsCollectionName';
+String adsCollectionName = 'adsCollectionName';
 String usersLikesCollectionName = 'usersLikesCollectionName';
 String ordersCollectionName = 'ordersCollectionName';
 String wishlistsCollectionName = 'wishlistsCollectionName';

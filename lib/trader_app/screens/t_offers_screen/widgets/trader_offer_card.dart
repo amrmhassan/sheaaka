@@ -33,6 +33,9 @@ class TraderOfferCard extends StatelessWidget {
       ProductModel newProduct =
           productsProvider.findProductById(offer.productId);
       newProduct.offerId = null;
+      newProduct.offerEnd = null;
+      newProduct.offerStarted = null;
+      newProduct.discount = null;
       await Provider.of<ProductsControlProvider>(context, listen: false)
           .editProduct(newProduct, productsProvider);
 

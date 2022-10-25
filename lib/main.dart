@@ -32,11 +32,13 @@ import 'package:project/screens/testing_screen/testing_screen.dart';
 import 'package:project/screens/track_order_screen/track_order_screen.dart';
 import 'package:project/screens/trend_screen/trend_screen.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
+import 'package:project/trader_app/providers/ads_provider.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_ads_screen/t_add_ads_screen.dart';
 import 'package:project/trader_app/screens/t_add_offer_screen/t_add_offer_screen.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
+import 'package:project/trader_app/screens/t_ads_screen/t_ads_screen.dart';
 import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
 import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => AppStateProvider()),
         ChangeNotifierProvider(create: (ctx) => TraderProvider()),
         ChangeNotifierProvider(create: (ctx) => ProductsControlProvider()),
+        ChangeNotifierProvider(create: (ctx) => AdsProvider()),
       ],
       child: MaterialApp(
         localizationsDelegates: [
@@ -131,9 +134,10 @@ class MyApp extends StatelessWidget {
           TChooseSingleProductsScreen.routeName: (context) =>
               TChooseSingleProductsScreen(),
           TOffersScreen.routeName: (context) => TOffersScreen(),
-          TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
-          TAddAdsScreen.routeName: (context) => TAddAdsScreen(),
           TAddOfferScreen.routeName: (context) => TAddOfferScreen(),
+          TAdsScreen.routeName: (context) => TAdsScreen(),
+          TAddAdsScreen.routeName: (context) => TAddAdsScreen(),
+          TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
           TTrendsScreen.routeName: (context) => TTrendsScreen(),
         },
       ),

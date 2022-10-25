@@ -15,14 +15,12 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
+import 'package:project/trader_app/providers/ads_provider.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
-//? loading data from firestore
-Future<void> loadData(BuildContext context) async {
-  //* setting first time open
-  await firstTimeOpenApp(context);
-  //* getting offers from database
+//? reload data for home refresh or for the app loading
+Future<void> _reloadData(BuildContext context) async {
   await Provider.of<StoreProvider>(context, listen: false)
       .fetchAndUpdateOffers(true);
   List<OfferModel> offers =
@@ -31,7 +29,19 @@ Future<void> loadData(BuildContext context) async {
   await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
   //* fetching all products
   await Provider.of<ProductsProvider>(context, listen: false)
-      .fetchAllProducts(offers);
+      .fetchAllProducts(offers, false);
+  await Provider.of<ProductsProvider>(context, listen: false)
+      .fetchAllProducts(offers, false);
+  await Provider.of<AdsProvider>(context, listen: false)
+      .fetchAndUpdateAds(true);
+}
+
+//? loading data from firestore
+Future<void> loadData(BuildContext context) async {
+  //* setting first time open
+  await firstTimeOpenApp(context);
+  //* getting offers from database
+  await _reloadData(context);
 
   //* the loading in this screen only for the network checking
   // await Provider.of<ProductsProvider>(context, listen: false)
@@ -49,14 +59,7 @@ Future<void> loadData(BuildContext context) async {
 //? load data for home screen
 Future<void> loadDataForHomeScreen(BuildContext context) async {
   //* the loading in this screen only for the network checking
-  await Provider.of<StoreProvider>(context, listen: false)
-      .fetchAndUpdateOffers(true);
-  List<OfferModel> offers =
-      Provider.of<StoreProvider>(context, listen: false).offers;
-
-  await Provider.of<StoreProvider>(context, listen: false).fetchStores(true);
-  await Provider.of<ProductsProvider>(context, listen: false)
-      .fetchAllProducts(offers, true);
+  await _reloadData(context);
 }
 
 //? checking user store if trader

@@ -184,6 +184,9 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
 
 //? for validating the product data
   Future<void> validateProductData() async {
+    double calcedOfferPrice = double.tryParse(offerPriceController.text) ?? 0;
+    double calcedOriginalPrice =
+        double.tryParse(originalPriceController.text) ?? 0;
     //* validating the product name
     if (nameController.text.length < 5) {
       return showSnackBar(
@@ -208,30 +211,23 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
         snackBarType: SnackBarType.error,
       );
     }
-    if (!((double.tryParse(offerPriceController.text) ?? 0) > 0)) {
+    //* offer price
+    if (!(calcedOfferPrice > 0) && isOffer) {
       return showSnackBar(
         context: context,
         message: 'لابد من ادخال سعر المنتج الحالي',
         snackBarType: SnackBarType.error,
       );
     }
-    //* old price
-    if (originalPriceController.text.isNotEmpty &&
-        double.tryParse(originalPriceController.text) == null) {
+    //* original price
+    if (!(calcedOriginalPrice > 0)) {
       return showSnackBar(
         context: context,
         message: 'أدخل سعر قديم صحيح',
         snackBarType: SnackBarType.error,
       );
     }
-    //* validating old price
-    if (isOffer && originalPriceController.text.isEmpty) {
-      return showSnackBar(
-        context: context,
-        message: 'لابد من إدخال السعر قبل الخصم',
-        snackBarType: SnackBarType.error,
-      );
-    }
+
     //* validating that old price is bigger than price after offer
     if (isOffer &&
         (double.parse(originalPriceController.text) <=

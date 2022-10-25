@@ -18,9 +18,9 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
-import 'package:project/trader_app/screens/t_add_offer_screen/widgets/customer_number_picker.dart';
-import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
-import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
+import 'package:project/trader_app/screens/t_add_offer_screen/widgets/no_product_chosen.dart';
+import 'package:project/trader_app/screens/t_add_offer_screen/widgets/offer_date_picker.dart';
+import 'package:project/trader_app/screens/t_add_offer_screen/widgets/product_chosen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -132,7 +132,9 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
           Provider.of<ProductsProvider>(context, listen: false);
       ProductModel newProduct = productModel!;
       newProduct.offerId = offerModel.id;
-
+      newProduct.offerEnd = offerModel.endAt;
+      newProduct.offerStarted = offerModel.createdAt;
+      newProduct.discount = offerModel.discountPercentage;
       await Provider.of<ProductsControlProvider>(context, listen: false)
           .editProduct(newProduct, productsProvider);
 
@@ -329,159 +331,11 @@ class _TAddOfferScreenState extends State<TAddOfferScreen> {
   }
 
   DateTime offerEndDate() {
-    // return DateTime(
-    //   DateTime.now().year,
-    //   DateTime.now().month,
-    //   DateTime.now().day,
-    // ).add(
-    //   Duration(
-    //     hours: hours,
-    //     days: days + months * 30,
-    //   ),
-    // );
     return DateTime.now().add(
       Duration(
         hours: hours,
         days: days + months * 30,
       ),
-    );
-  }
-}
-
-class NoProductChosen extends StatelessWidget {
-  final Function(ProductModel p) setProductModel;
-  const NoProductChosen({super.key, required this.setProductModel});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'لابد من اختيار منتج',
-          style: h4TextStyleInactive.copyWith(
-            color: kTraderBlackColor,
-          ),
-        ),
-        VSpace(factor: .5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ButtonWrapper(
-              padding: EdgeInsets.symmetric(
-                horizontal: kHPad,
-                vertical: kVPad / 2,
-              ),
-              onTap: () async {
-                ProductModel? p = await Navigator.pushNamed(
-                  context,
-                  TChooseSingleProductsScreen.routeName,
-                ) as ProductModel?;
-                if (p != null) {
-                  setProductModel(p);
-                } else {
-                  showSnackBar(context: context, message: 'لم يتم اختيار منتج');
-                }
-              },
-              borderRadius: 0,
-              backgroundColor: kTraderPrimaryColor,
-              child: Text(
-                'اختيار منتج',
-                style: h3LiteTextStyle.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class ProductChosen extends StatelessWidget {
-  final ProductModel productModel;
-  final Function(ProductModel p) setProductModel;
-  const ProductChosen({
-    super.key,
-    required this.productModel,
-    required this.setProductModel,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'اضغط مطولا للتغيير',
-          style: h4TextStyleInactive.copyWith(
-            color: kTraderSecondaryColor.withOpacity(.8),
-          ),
-        ),
-        TraderProductCard(
-          productModel: productModel,
-          onLongPressed: () async {
-            ProductModel? p = await Navigator.pushNamed(
-              context,
-              TChooseSingleProductsScreen.routeName,
-            ) as ProductModel?;
-            if (p != null) {
-              setProductModel(p);
-            } else {
-              showSnackBar(context: context, message: 'لم يتم اختيار منتج');
-            }
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class OfferDatePicker extends StatelessWidget {
-  final int hours;
-  final int days;
-  final int months;
-  final Function(int hours) setHours;
-  final Function(int days) setDays;
-  final Function(int months) setMonths;
-  const OfferDatePicker({
-    super.key,
-    required this.hours,
-    required this.days,
-    required this.months,
-    required this.setHours,
-    required this.setDays,
-    required this.setMonths,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomNumberPicker(
-          onChanged: setHours,
-          maxValue: 24,
-          minValue: 0,
-          value: hours,
-          title: 'ساعة',
-        ),
-        CustomNumberPicker(
-          onChanged: setDays,
-          maxValue: 29,
-          minValue: 0,
-          value: days,
-          title: 'يوم',
-        ),
-        CustomNumberPicker(
-          onChanged: setMonths,
-          maxValue: 5 * 12,
-          minValue: 0,
-          value: months,
-          title: 'شهر',
-        ),
-      ],
     );
   }
 }
