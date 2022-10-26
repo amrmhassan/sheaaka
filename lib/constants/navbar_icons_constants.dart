@@ -25,8 +25,8 @@ List<NavBarIcon> navBarIconsList(bool loadingData) => [
         CategoriesScreen(),
       ),
       NavBarIcon(
-        'add-friend1',
-        'add-friend',
+        'fire',
+        'fire1',
         TrendScreen(),
       ),
       NavBarIcon(

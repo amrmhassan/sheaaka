@@ -12,6 +12,7 @@ import 'package:project/providers/cart_provider.dart';
 import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
+// import 'package:project/providers/trend_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/signup_store_screen/signup_store_screen.dart';
@@ -34,6 +35,8 @@ Future<void> _reloadData(BuildContext context) async {
       .fetchAllProducts(offers, false);
   await Provider.of<AdsProvider>(context, listen: false)
       .fetchAndUpdateAds(true);
+  // await Provider.of<TrendProvider>(context, listen: false)
+  //     .(true);
 }
 
 //? loading data from firestore

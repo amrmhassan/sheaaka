@@ -34,4 +34,9 @@ class TrendProvider extends ChangeNotifier {
     _trends.add(trendModel);
     notifyListeners();
   }
+
+  //? fetch all trend products
+  // Future<void> fetchAndUpdateTrend()async{
+  //   await FirebaseFirestore.instance.collection(trendsCollectionName).
+  // }
 }

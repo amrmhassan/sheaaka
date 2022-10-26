@@ -1,3 +1,5 @@
+# delete all ads, trends , offers of a product when the store deletes it
+
 # add lazy loading images
 
 # add filter type as search type

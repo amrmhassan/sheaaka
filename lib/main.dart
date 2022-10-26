@@ -12,6 +12,7 @@ import 'package:project/providers/orders_provider.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/search_provider.dart';
 import 'package:project/providers/store_provider.dart';
+import 'package:project/providers/trend_provider.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
@@ -77,6 +78,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (ctx) => TraderProvider()),
         ChangeNotifierProvider(create: (ctx) => ProductsControlProvider()),
         ChangeNotifierProvider(create: (ctx) => AdsProvider()),
+        ChangeNotifierProvider(create: (ctx) => TrendProvider()),
       ],
       child: MaterialApp(
         localizationsDelegates: [
