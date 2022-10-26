@@ -32,13 +32,16 @@ class NavBarItem extends StatelessWidget {
         onTap: () => setActiveIndex(index),
         padding: EdgeInsets.all(largePadding),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(0),
+          borderRadius: BorderRadius.circular(navBarIcon.isMain ? 500 : 0),
+          color: navBarIcon.isMain ? kPrimaryColor : Colors.transparent,
         ),
         child: Image.asset(
           'assets/icons/${active ? navBarIcon.active : navBarIcon.inactive}.png',
-          color: active
-              ? (activeColor ?? kPrimaryColor)
-              : (inactiveColor ?? kSecondaryColor),
+          color: navBarIcon.isMain
+              ? Colors.white
+              : active
+                  ? (activeColor ?? kPrimaryColor)
+                  : (inactiveColor ?? kSecondaryColor),
           width: 30,
         ),
       ),

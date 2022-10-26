@@ -13,37 +13,50 @@ import 'package:project/trader_app/screens/t_stats_screen/t_stats_screen.dart';
 //? normal user nav bar icons
 List<NavBarIcon> navBarIconsList(bool loadingData) => [
       NavBarIcon(
-        'home1',
-        'home',
-        HomeScreen(
+        active: 'home1',
+        inactive: 'home',
+        widget: HomeScreen(
           loadingData: loadingData,
         ),
       ),
       NavBarIcon(
-        'category',
-        'menu',
-        CategoriesScreen(),
+        active: 'category',
+        inactive: 'menu',
+        widget: CategoriesScreen(),
       ),
       NavBarIcon(
-        'fire',
-        'fire1',
-        TrendScreen(),
+        active: 'fire',
+        inactive: 'fire-bold',
+        widget: TrendScreen(),
+        // isMain: true,
       ),
       NavBarIcon(
-        'bookmark',
-        'book-mark',
-        WishlistScreen(),
+        active: 'bookmark',
+        inactive: 'book-mark',
+        widget: WishlistScreen(),
       ),
       NavBarIcon(
-        'nearby',
-        'nearby1',
-        NearbyStoresScreen(),
+        active: 'nearby',
+        inactive: 'nearby1',
+        widget: NearbyStoresScreen(),
       ),
     ];
 
 //? trader nav bar icons
 List<NavBarIcon> traderNavBarIconsList = [
-  NavBarIcon('trend1', 'trend', TStatsScreen()),
-  NavBarIcon('home1', 'home', THomeScreen()),
-  NavBarIcon('shopping-bag1', 'shopping-bag', TOrdersScreen()),
+  NavBarIcon(
+    active: 'trend1',
+    inactive: 'trend',
+    widget: TStatsScreen(),
+  ),
+  NavBarIcon(
+    active: 'home1',
+    inactive: 'home',
+    widget: THomeScreen(),
+  ),
+  NavBarIcon(
+    active: 'shopping-bag1',
+    inactive: 'shopping-bag',
+    widget: TOrdersScreen(),
+  ),
 ];

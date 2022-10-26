@@ -29,13 +29,13 @@ class UserAdsCard extends StatelessWidget {
         Navigator.pushNamed(
           context,
           ProductScreen.routeName,
-          arguments: adsModel.id,
+          arguments: adsModel.productId,
         );
       },
       child: Container(
         clipBehavior: Clip.hardEdge,
         width: getFullCardHeight(context),
-        height: Responsive.getWidth(context) / 1.5,
+        height: Responsive.getWidth(context) / 1.3,
         margin: EdgeInsets.only(left: kHPad / 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(smallBorderRadius),
@@ -47,7 +47,7 @@ class UserAdsCard extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              flex: 4,
+              flex: 6,
               child: FadeInImage(
                 placeholder: loadingImage,
                 height: double.infinity,
@@ -60,9 +60,11 @@ class UserAdsCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: kHPad / 2),
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHPad / 2,
+                ),
                 child: Row(
                   children: [
                     if (adsModel.storeLogo != null)
@@ -82,8 +84,8 @@ class UserAdsCard extends StatelessWidget {
                           ),
                           child: Image.network(
                             adsModel.storeLogo!,
-                            width: mediumIconSize,
-                            height: mediumIconSize,
+                            width: largeIconSize,
+                            height: largeIconSize,
                             fit: BoxFit.cover,
                           ),
                         ),
