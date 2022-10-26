@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
-import 'package:project/global/widgets/post_simmer_loading/post_simmer_loading.dart';
+import 'package:project/global/widgets/shimmer_loaders/post_simmer_loading/post_shimmer_loading.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/types.dart';

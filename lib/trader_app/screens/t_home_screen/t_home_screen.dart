@@ -16,6 +16,7 @@ import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_ads_screen/t_ads_screen.dart';
 import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_element.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
+import 'package:project/trader_app/screens/t_pictures_library_screen/t_pictures_library_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/trader_app/screens/t_tabs_screen/t_tabs_screen.dart';
 import 'package:project/trader_app/screens/t_trends_screen/t_trends_screen.dart';
@@ -105,9 +106,12 @@ class THomeScreen extends StatelessWidget {
                 VSpace(factor: .5),
                 TraderHomeElement(
                   iconName: 'gallery',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, TPicturesLibraryScreen.routeName);
+                  },
                   title: 'مكتبة الصور',
-                  value: '60',
+                  value: ' ',
                 ),
                 Row(
                   children: [

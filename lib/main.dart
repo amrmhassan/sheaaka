@@ -43,6 +43,7 @@ import 'package:project/trader_app/screens/t_ads_screen/t_ads_screen.dart';
 import 'package:project/trader_app/screens/t_choose_multiple_product_screen/t_choose_multiple_product_screen.dart';
 import 'package:project/trader_app/screens/t_choose_single_product_screen/t_choose_single_product_screen.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
+import 'package:project/trader_app/screens/t_pictures_library_screen/t_pictures_library_screen.dart';
 import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
 import 'package:project/trader_app/screens/t_store_profile_screen/t_store_profile_screen.dart';
 import 'package:project/trader_app/screens/t_tab_screen/t_tab_screen.dart';
@@ -141,6 +142,8 @@ class MyApp extends StatelessWidget {
           TAddAdsScreen.routeName: (context) => TAddAdsScreen(),
           TStoreProfileScreen.routeName: (context) => TStoreProfileScreen(),
           TTrendsScreen.routeName: (context) => TTrendsScreen(),
+          TPicturesLibraryScreen.routeName: (context) =>
+              TPicturesLibraryScreen(),
         },
       ),
     );

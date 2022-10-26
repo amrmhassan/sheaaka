@@ -20,3 +20,10 @@ const Color kGreenColor = Colors.green;
 
 //? buttons colors
 const Color kMainButtonColor = Colors.black;
+
+//? shimmer loading
+
+Color shimmerContainerColor = Colors.grey.withOpacity(.5);
+Color shimmerIconsColor = Colors.grey.withOpacity(.8);
+Color shimmerBaseColor = Colors.grey.withOpacity(.8);
+Color shimmerLightColor = Colors.grey.withOpacity(.2);

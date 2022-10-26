@@ -59,7 +59,7 @@ class UserOfferCard extends StatelessWidget {
                           width: largeIconSize * 1.5,
                         ),
                         Text(
-                          '%${doubleToString(
+                          '-%${doubleToString(
                             offerModel.discountPercentage * 100,
                           ).toString()}',
                           style: h3TextStyle.copyWith(
