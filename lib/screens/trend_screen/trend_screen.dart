@@ -2,23 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/genders_constants.dart';
-import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/group_header.dart';
 import 'package:project/global/widgets/h_line.dart';
-import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/helpers/responsive.dart';
-import 'package:project/models/ads_model.dart';
-import 'package:project/models/offer_model.dart';
 import 'package:project/providers/store_provider.dart';
-import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
-import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/screens/trend_screen/widgets/fire_section.dart';
 import 'package:project/screens/trend_screen/widgets/user_ads_card.dart';
 import 'package:project/screens/trend_screen/widgets/user_offer_card.dart';
 import 'package:project/trader_app/providers/ads_provider.dart';
-import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
 //? this screen will have the trending products depending on the gender

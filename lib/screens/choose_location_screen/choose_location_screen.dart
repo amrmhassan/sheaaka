@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:project/constants/colors.dart';
-import 'package:project/constants/models_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
@@ -38,8 +37,6 @@ class ChooseLocationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Placemark> locations =
         ModalRoute.of(context)!.settings.arguments as List<Placemark>;
-    print('object');
-
     return ScreensWrapper(
       child: Column(
         children: [

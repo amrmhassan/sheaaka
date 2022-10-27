@@ -61,6 +61,5 @@ class LocationProvider extends ChangeNotifier {
       }
     }
     return await location.getLocation();
-    ;
   }
 }

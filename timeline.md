@@ -1,3 +1,5 @@
+# fix the error after uploading a new product that happen with the latest product card
+
 # edit a product
 
 # when signing up the user create a key storeCreated and set it to false, set it to true only when the store is signed up successfully

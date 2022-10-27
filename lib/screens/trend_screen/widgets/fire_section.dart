@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/global/widgets/group_header.dart';
 import 'package:project/global/widgets/h_space.dart';
-import 'package:project/models/ads_model.dart';
-import 'package:project/screens/trend_screen/widgets/user_ads_card.dart';
 
 class FireSection extends StatelessWidget {
   final VoidCallback onTap;

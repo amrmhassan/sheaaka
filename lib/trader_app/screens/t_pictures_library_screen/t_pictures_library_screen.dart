@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/firebase_constants.dart';
-import 'package:project/constants/global.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/store_model.dart';

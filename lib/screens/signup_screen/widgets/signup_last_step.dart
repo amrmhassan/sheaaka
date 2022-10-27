@@ -1,22 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:project/constants/colors.dart';
-import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/shimmer_loaders/locating_shimmer_loader/locating_shimmer_loader.dart';
-import 'package:project/global/widgets/shimmer_loaders/post_simmer_loading/post_shimmer_loading.dart';
 import 'package:project/global/widgets/v_space.dart';
-import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
-import 'package:project/providers/location_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
-import 'package:project/screens/choose_location_screen/choose_location_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
@@ -26,7 +19,6 @@ import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/location_utils.dart';
-import 'package:provider/provider.dart';
 
 class SignUpLastStep extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
