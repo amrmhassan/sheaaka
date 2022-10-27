@@ -90,6 +90,7 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
           GestureDetector(
             onTap: locating,
             child: CustomTextField(
+              maxLines: 3,
               padding: EdgeInsets.zero,
               errorText: storeAddressError,
               controller: widget.storeAddressController,

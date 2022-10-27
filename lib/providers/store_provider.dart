@@ -192,6 +192,7 @@ class StoreProvider extends ChangeNotifier {
       rating: 1,
       emails: emails,
       phones: phones,
+      address: addressController.text,
     );
     try {
       await FirebaseFirestore.instance

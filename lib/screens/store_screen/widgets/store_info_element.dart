@@ -7,7 +7,12 @@ import 'package:project/global/widgets/button_wrapper.dart';
 
 class StoreInfoElement extends StatelessWidget {
   final String info;
-  const StoreInfoElement({Key? key, required this.info}) : super(key: key);
+  final bool allowCopy;
+  const StoreInfoElement({
+    Key? key,
+    required this.info,
+    this.allowCopy = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +21,26 @@ class StoreInfoElement extends StatelessWidget {
       children: [
         Text(
           info,
-          style: h4LiteTextStyle.copyWith(decoration: TextDecoration.underline),
+          style: h4LiteTextStyle.copyWith(
+            decoration: allowCopy ? TextDecoration.underline : null,
+          ),
         ),
-        ButtonWrapper(
-          onTap: () {},
-          padding: EdgeInsets.symmetric(
-            horizontal: kHPad / 2,
-            vertical: kVPad / 3,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(smallBorderRadius),
-          ),
-          child: Text(
-            'نسخ',
-            style: h4LiteTextStyle,
-          ),
-        )
+        if (allowCopy)
+          ButtonWrapper(
+            onTap: () {},
+            padding: EdgeInsets.symmetric(
+              horizontal: kHPad / 2,
+              vertical: kVPad / 3,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(smallBorderRadius),
+            ),
+            child: Text(
+              'نسخ',
+              style: h4LiteTextStyle,
+            ),
+          )
       ],
     );
   }

@@ -71,6 +71,16 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
     });
   }
 
+//? to locate the user
+  Future<void> locating() => handleLocating(
+        setLocation: widget.setUserLocation,
+        context: context,
+        callback: (userPlace) {
+          widget.address.text = userPlace.replaceAll('/', ', ');
+        },
+        setStartLoading: () => setLoadingLocation(true),
+        setEndLoading: () => setLoadingLocation(false),
+      );
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -97,33 +107,28 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
           ),
         ),
         VSpace(factor: .2),
-        CustomTextField(
-          autoFocus: true,
-          controller: widget.address,
-          iconName: 'home2',
-          title: 'عنوان المنزل',
-          color: kSecondaryColor,
-          borderColor: kSecondaryColor,
-          // trailingIconName: 'pin',
-          trailingIcon: _loadingLocation
-              ? LocatingShimmerLoader()
-              : GestureDetector(
-                  onTap: () => handleLocating(
-                    setLocation: widget.setUserLocation,
-                    context: context,
-                    callback: (userPlace) {
-                      widget.address.text = userPlace.replaceAll('/', ', ');
-                    },
-                    setStartLoading: () => setLoadingLocation(true),
-                    setEndLoading: () => setLoadingLocation(false),
+        GestureDetector(
+          onTap: locating,
+          child: CustomTextField(
+            autoFocus: true,
+            controller: widget.address,
+            iconName: 'home2',
+            title: 'عنوان المنزل',
+            color: kSecondaryColor,
+            borderColor: kSecondaryColor,
+            // trailingIconName: 'pin',
+            trailingIcon: _loadingLocation
+                ? LocatingShimmerLoader()
+                : GestureDetector(
+                    onTap: locating,
+                    child: Image.asset(
+                      'assets/icons/pin.png',
+                      width: mediumIconSize,
+                      color: kPrimaryColor,
+                    ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/pin.png',
-                    width: mediumIconSize,
-                    color: kPrimaryColor,
-                  ),
-                ),
-          trailingIconColor: kPrimaryColor,
+            trailingIconColor: kPrimaryColor,
+          ),
         ),
         VSpace(),
         PaddingWrapper(

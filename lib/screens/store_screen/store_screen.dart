@@ -102,6 +102,8 @@ class _StoreScreenState extends State<StoreScreen> {
                       StoreInfo(
                         emails: storeModel.emails,
                         phones: storeModel.phones,
+                        address: storeModel.address,
+                        storeLocation: storeModel.location,
                       ),
                       HSpace(factor: .3),
                       FollowStore(),
