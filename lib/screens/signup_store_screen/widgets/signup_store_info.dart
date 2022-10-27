@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/shimmer_loaders/locating_shimmer_loader/locating_shimmer_loader.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -56,6 +57,16 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
     });
   }
 
+//? for locating the store
+  Future<void> locating() => handleLocating(
+        setLocation: widget.setStoreLocation,
+        context: context,
+        callback: (userPlace) {
+          widget.storeAddressController.text = userPlace.replaceAll('/', ', ');
+        },
+        setStartLoading: () => setLoadingLocation(true),
+        setEndLoading: () => setLoadingLocation(false),
+      );
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
@@ -72,35 +83,30 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
             controller: widget.storeNameController,
             iconName: 'shop',
             title: 'اسم المحل',
+            autoFocus: true,
             padding: EdgeInsets.zero,
           ),
           VSpace(),
-          CustomTextField(
-            padding: EdgeInsets.zero,
-            autoFocus: true,
-            controller: widget.storeAddressController,
-            iconName: 'shop',
-            title: 'عنوان المحل',
-            trailingIcon: _loadingLocation
-                ? LocatingShimmerLoader()
-                : GestureDetector(
-                    onTap: () => handleLocating(
-                      setLocation: widget.setStoreLocation,
-                      context: context,
-                      callback: (userPlace) {
-                        widget.storeAddressController.text =
-                            userPlace.replaceAll('/', ', ');
-                      },
-                      setStartLoading: () => setLoadingLocation(true),
-                      setEndLoading: () => setLoadingLocation(false),
+          GestureDetector(
+            onTap: locating,
+            child: CustomTextField(
+              padding: EdgeInsets.zero,
+              errorText: storeAddressError,
+              controller: widget.storeAddressController,
+              iconName: 'shop',
+              title: 'عنوان المحل',
+              trailingIcon: _loadingLocation
+                  ? LocatingShimmerLoader()
+                  : GestureDetector(
+                      onTap: locating,
+                      child: Image.asset(
+                        'assets/icons/pin.png',
+                        width: mediumIconSize,
+                        color: kPrimaryColor,
+                      ),
                     ),
-                    child: Image.asset(
-                      'assets/icons/pin.png',
-                      width: mediumIconSize,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-            trailingIconColor: kPrimaryColor,
+              trailingIconColor: kPrimaryColor,
+            ),
           ),
           VSpace(),
           StoreContactsElement(

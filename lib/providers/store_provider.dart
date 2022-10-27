@@ -119,6 +119,11 @@ class StoreProvider extends ChangeNotifier {
     return [..._stores];
   }
 
+//? add a store
+  void addStore(StoreModel store) {
+    _stores.add(store);
+  }
+
 //? get store by id
   StoreModel getStoreById(String id) {
     return _stores.firstWhere((element) => element.id == id);
@@ -198,6 +203,8 @@ class StoreProvider extends ChangeNotifier {
           .collection(usersCollectionName)
           .doc(s.creatorUserUID)
           .update({userRoleString: UserRole.trader.name});
+      _stores.add(s);
+      notifyListeners();
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorGettingLikedProducts,
