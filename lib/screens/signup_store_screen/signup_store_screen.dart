@@ -33,6 +33,7 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         name: storeNameController.text,
         emails: storeEmails,
         phones: storePhoneNumbers,
+        addressController: storeAddressController,
       );
 
       showSnackBar(

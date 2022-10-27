@@ -16,6 +16,7 @@ class StoreModel {
   List<StoreTabModel> storeTabs;
   final List<String> phones;
   final List<String> emails;
+  final String? address;
 
   List<KeyWordModel>? keywords;
 
@@ -32,6 +33,7 @@ class StoreModel {
     required this.name,
     required this.creatorUserUID,
     required this.phones,
+    this.address,
     required this.emails,
     this.logoImagePath,
     this.location,
@@ -71,6 +73,7 @@ class StoreModel {
       storeTabsString: storeTabsJSON,
       emailsString: emails,
       phonesString: phones,
+      addressString: address,
     };
   }
 
@@ -110,6 +113,7 @@ class StoreModel {
     List<dynamic>? phonesHelper = storeJSON[phonesString];
     List<String> emails = emailsHelper?.map((e) => e.toString()).toList() ?? [];
     List<String> phones = phonesHelper?.map((e) => e.toString()).toList() ?? [];
+    String? address = storeJSON[addressString];
 
     return StoreModel(
       id: idF,
@@ -126,6 +130,7 @@ class StoreModel {
       storeTabs: storeTabs,
       emails: [...emails],
       phones: [...phones],
+      address: address,
     );
   }
 }

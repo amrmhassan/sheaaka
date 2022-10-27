@@ -165,6 +165,7 @@ class StoreProvider extends ChangeNotifier {
     required LatLng? location,
     required List<String> phones,
     required List<String> emails,
+    required TextEditingController addressController,
   }) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {

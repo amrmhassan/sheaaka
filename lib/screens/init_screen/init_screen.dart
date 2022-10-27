@@ -2,9 +2,11 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:project/constants/global.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
+import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/holder_screen/holder_screen.dart';
 import 'package:project/trader_app/screens/t_holder_screen/t_holder_screen.dart';
 import 'package:project/utils/general_utils.dart';
@@ -73,12 +75,27 @@ class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
     bool traderMode = Provider.of<AppStateProvider>(context).traderMode;
-    return traderMode
-        ? THolderScreen(
-            loadingData: loadingData,
-          )
-        : HolderScreen(
-            loadingData: loadingData,
-          );
+    return Stack(
+      children: [
+        traderMode
+            ? THolderScreen(
+                loadingData: loadingData,
+              )
+            : HolderScreen(
+                loadingData: loadingData,
+              ),
+        if (kDebugMode && allowCheatLogout)
+          GestureDetector(
+            onTap: () {
+              Provider.of<UserProvider>(context, listen: false).logOutGoogle();
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              color: Colors.red,
+            ),
+          ),
+      ],
+    );
   }
 }

@@ -3,12 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/shimmer_loaders/locating_shimmer_loader/locating_shimmer_loader.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
 import 'package:project/screens/signup_store_screen/widgets/store_contact_element.dart';
+import 'package:project/utils/location_utils.dart';
 import 'package:project/validation/signup_validation.dart';
 
 class SignUpStoreInfo extends StatefulWidget {
@@ -46,6 +49,13 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
   String? storeAddressError;
   String? phoneNumberError;
 
+  bool _loadingLocation = false;
+  void setLoadingLocation(bool b) {
+    setState(() {
+      _loadingLocation = b;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PaddingWrapper(
@@ -66,13 +76,31 @@ class _SignUpStoreInfoState extends State<SignUpStoreInfo> {
           ),
           VSpace(),
           CustomTextField(
-            errorText: storeAddressError,
-            controller: widget.storeAddressController,
             padding: EdgeInsets.zero,
+            autoFocus: true,
+            controller: widget.storeAddressController,
             iconName: 'shop',
             title: 'عنوان المحل',
+            trailingIcon: _loadingLocation
+                ? LocatingShimmerLoader()
+                : GestureDetector(
+                    onTap: () => handleLocating(
+                      setLocation: widget.setStoreLocation,
+                      context: context,
+                      callback: (userPlace) {
+                        widget.storeAddressController.text =
+                            userPlace.replaceAll('/', ', ');
+                      },
+                      setStartLoading: () => setLoadingLocation(true),
+                      setEndLoading: () => setLoadingLocation(false),
+                    ),
+                    child: Image.asset(
+                      'assets/icons/pin.png',
+                      width: mediumIconSize,
+                      color: kPrimaryColor,
+                    ),
+                  ),
             trailingIconColor: kPrimaryColor,
-            trailingIconName: 'pin',
           ),
           VSpace(),
           StoreContactsElement(

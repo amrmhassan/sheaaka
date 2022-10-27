@@ -9,6 +9,7 @@ import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/global/widgets/shimmer_loaders/locating_shimmer_loader/locating_shimmer_loader.dart';
 import 'package:project/global/widgets/shimmer_loaders/post_simmer_loading/post_shimmer_loading.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/custom_error.dart';
@@ -105,19 +106,13 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
           borderColor: kSecondaryColor,
           // trailingIconName: 'pin',
           trailingIcon: _loadingLocation
-              ? ShimmerWrapper(
-                  child: Image.asset(
-                    'assets/icons/pin.png',
-                    color: kPrimaryColor,
-                    width: mediumIconSize,
-                  ),
-                )
+              ? LocatingShimmerLoader()
               : GestureDetector(
                   onTap: () => handleLocating(
                     setLocation: widget.setUserLocation,
                     context: context,
                     callback: (userPlace) {
-                      widget.address.text = userPlace;
+                      widget.address.text = userPlace.replaceAll('/', ', ');
                     },
                     setStartLoading: () => setLoadingLocation(true),
                     setEndLoading: () => setLoadingLocation(false),
