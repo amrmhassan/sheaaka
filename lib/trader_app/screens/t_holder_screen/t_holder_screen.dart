@@ -3,8 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project/constants/global.dart';
 import 'package:project/constants/navbar_icons_constants.dart';
+import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
@@ -13,6 +15,7 @@ import 'package:project/models/types.dart';
 import 'package:project/providers/app_state_provider.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/global/widgets/trader_nav_bar.dart';
+import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_holder_screen/widgets/show_my_store_button.dart';
 import 'package:provider/provider.dart';
@@ -58,13 +61,24 @@ class _THolderScreenState extends State<THolderScreen> {
 
 //? this will change the appbar of the holder screen according to the current active nav bar index
   Widget appBarGenerator(String storeName) {
+    var pcp = Provider.of<ProductsControlProvider>(context);
     if (activeIndex == 1) {
       return CustomAppBar(
         userRole: UserRole.trader,
         title: storeName,
         home: true,
         leftContent: [
-          ShowMyStoreButton(context: context),
+          !pcp.loading
+              ? ShowMyStoreButton(context: context)
+              : SizedBox(
+                  width: ultraLargeIconSize,
+                  height: ultraLargeIconSize,
+                  child: LottieBuilder.asset(
+                    'assets/animations/upload-edited.json',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                  ),
+                ),
           HSpace(),
         ],
       );

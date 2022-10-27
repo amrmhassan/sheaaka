@@ -1,12 +1,8 @@
-# allow the store to locate itself and the user also
+# edit a product
 
 # when signing up the user create a key storeCreated and set it to false, set it to true only when the store is signed up successfully
 
-# fix locating the user sign up
-
-# allow the user to click a button to delay store sign up
-
-# delete all ads, trends , offers of a product when the store deletes it
+# delete all ads, trends , offers of a product when the store deletes
 
 # add lazy loading images
 

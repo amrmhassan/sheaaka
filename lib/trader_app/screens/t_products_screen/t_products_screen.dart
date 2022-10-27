@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
@@ -74,8 +75,10 @@ class _TProductsScreenState extends State<TProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var storeProducts =
-        ModalRoute.of(context)!.settings.arguments as List<ProductModel>;
+    var pcp = Provider.of<ProductsControlProvider>(context);
+    var traderProvider = Provider.of<TraderProvider>(context, listen: false);
+    var storeProducts = Provider.of<ProductsProvider>(context)
+        .getStoreProducts(traderProvider.myStore!.id);
 
     return ScreensWrapper(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
@@ -105,6 +108,7 @@ class _TProductsScreenState extends State<TProductsScreen> {
           VSpace(factor: .5),
           SectionElementsNumber(number: storeProducts.length),
           VSpace(factor: .5),
+          if (pcp.loading) UploadingProduct(),
           Expanded(
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -119,6 +123,24 @@ class _TProductsScreenState extends State<TProductsScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class UploadingProduct extends StatelessWidget {
+  const UploadingProduct({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      width: double.infinity,
+      height: productImageDimensions,
+      child: Lottie.asset(
+        'assets/animations/upload-edited.json',
       ),
     );
   }

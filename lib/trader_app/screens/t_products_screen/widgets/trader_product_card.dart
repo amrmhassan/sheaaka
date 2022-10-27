@@ -48,6 +48,7 @@ class TraderProductCard extends StatelessWidget {
     // }
     return ButtonWrapper(
       backgroundColor: Colors.transparent,
+      borderRadius: 0,
       onLongPress: enableSelection
           ? null
           : onLongPressed ?? () => removeProduct!(productModel),
@@ -68,18 +69,24 @@ class TraderProductCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FadeInImage(
-                    imageErrorBuilder: (context, error, stackTrace) {
-                      return Image(image: loadingImage);
-                    },
-                    placeholder: loadingImage,
-                    image: NetworkImage(
-                      productModel.imagesPath[0],
-                    ),
+                  SizedBox(
                     width: productImageDimensions,
                     height: productImageDimensions,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
+                    child: FadeInImage(
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image(
+                          image: loadingImage,
+                        );
+                      },
+                      placeholder: loadingImage,
+                      image: NetworkImage(
+                        productModel.imagesPath[0],
+                      ),
+                      width: productImageDimensions,
+                      height: productImageDimensions,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
                   ),
                   Expanded(
                     child: PaddingWrapper(

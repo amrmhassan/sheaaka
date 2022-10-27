@@ -13,6 +13,7 @@ import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/ads_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/trader_app/screens/t_ads_screen/t_ads_screen.dart';
 import 'package:project/trader_app/screens/t_home_screen/widgets/trader_home_element.dart';
 import 'package:project/trader_app/screens/t_offers_screen/t_offers_screen.dart';
@@ -55,8 +56,14 @@ class THomeScreen extends StatelessWidget {
                 TraderHomeElement(
                   iconName: 'wardrobe',
                   onTap: () {
-                    Navigator.pushNamed(context, TProductsScreen.routeName,
-                        arguments: storeProducts);
+                    if (storeProducts.isNotEmpty) {
+                      Navigator.pushNamed(context, TProductsScreen.routeName);
+                    } else {
+                      Navigator.pushNamed(
+                        context,
+                        TAddProductScreen.routeName,
+                      );
+                    }
                   },
                   title: 'المنتجات',
                   value: storeProducts.length.toString(),
