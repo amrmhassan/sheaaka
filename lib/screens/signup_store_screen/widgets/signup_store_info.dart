@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
@@ -20,6 +21,7 @@ class SignUpStoreInfo extends StatefulWidget {
   final bool Function(String email) removeStoreEmail;
   final TextEditingController storeNameController;
   final TextEditingController storeAddressController;
+  final Function(LatLng? location) setStoreLocation;
 
   const SignUpStoreInfo({
     Key? key,
@@ -32,6 +34,7 @@ class SignUpStoreInfo extends StatefulWidget {
     required this.storePhoneNumbers,
     required this.storeAddressController,
     required this.storeNameController,
+    required this.setStoreLocation,
   }) : super(key: key);
 
   @override

@@ -54,7 +54,7 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
 
 //? store location
   LatLng? storeLocation;
-  void setStoreLocation(LatLng latLng) {
+  void setStoreLocation(LatLng? latLng) {
     setState(() {
       storeLocation = latLng;
     });
@@ -144,6 +144,7 @@ class _SignUpStoreScreenState extends State<SignUpStoreScreen> {
         storePhoneNumbers: storePhoneNumbers,
         storeAddressController: storeAddressController,
         storeNameController: storeNameController,
+        setStoreLocation: setStoreLocation,
       );
     } else if (i == 1) {
       //! at this step the store will be signed up then move to the next step

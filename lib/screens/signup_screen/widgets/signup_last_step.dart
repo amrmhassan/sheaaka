@@ -24,6 +24,7 @@ import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart'
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:project/utils/location_utils.dart';
 import 'package:provider/provider.dart';
 
 class SignUpLastStep extends StatefulWidget {
@@ -69,44 +70,6 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
     });
   }
 
-//? for handling locating the user and choose the address
-  Future<void> handleLocating(
-      Function(LatLng? location) setUserLocation) async {
-    try {
-      setLoadingLocation(true);
-      LocationData locationData =
-          await Provider.of<LocationProvider>(context, listen: false)
-              .handleGetLocation(context);
-      if (locationData.latitude == null || locationData.longitude == null) {
-        throw CustomError(errorType: ErrorsTypes.errorGettingLocation);
-      }
-      //* setting the user location
-      LatLng? latlng = LatLng(locationData.latitude!, locationData.longitude!);
-      setUserLocation(latlng);
-
-      //* converting the coordinates to address
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          locationData.latitude!, locationData.longitude!);
-      //* push a new screen to let the user choose from the locations
-      String? userPlace = await Navigator.pushNamed(
-        context,
-        ChooseLocationScreen.routeName,
-        arguments: placemarks,
-      ) as String?;
-      if (userPlace != null) {
-        widget.address.text = userPlace.replaceAll('/', ', ');
-      }
-
-      //! here set the user location for the sign up screen state
-    } catch (e) {
-      showSnackBar(
-          context: context,
-          message: e.toString(),
-          snackBarType: SnackBarType.error);
-    }
-    setLoadingLocation(false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -150,7 +113,15 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
                   ),
                 )
               : GestureDetector(
-                  onTap: () => handleLocating(widget.setUserLocation),
+                  onTap: () => handleLocating(
+                    setLocation: widget.setUserLocation,
+                    context: context,
+                    callback: (userPlace) {
+                      widget.address.text = userPlace;
+                    },
+                    setStartLoading: () => setLoadingLocation(true),
+                    setEndLoading: () => setLoadingLocation(false),
+                  ),
                   child: Image.asset(
                     'assets/icons/pin.png',
                     width: mediumIconSize,
