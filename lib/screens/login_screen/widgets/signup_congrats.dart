@@ -52,14 +52,11 @@ class SignUpCongrats extends StatelessWidget {
                 ),
               )
             : PaddingWrapper(
-                child: Column(
-                children: [
-                  Text(
-                    'حان وقت إنشاء متجرك الخاص',
-                    style: h4TextStyleInactive,
-                  )
-                ],
-              )),
+                child: Text(
+                  'حان وقت إنشاء متجرك الخاص',
+                  style: h4TextStyleInactive,
+                ),
+              ),
         VSpace(factor: .5),
         userRole != UserRole.trader
             ? SubmitFormButton(
@@ -68,13 +65,27 @@ class SignUpCongrats extends StatelessWidget {
                 },
                 title: 'فتح',
               )
-            : SubmitFormButton(
-                onTap: () {
-                  Navigator.pushReplacementNamed(
-                      context, SignUpStoreScreen.routeName,
-                      arguments: userPhoto);
-                },
-                title: 'إنشاء متجرك',
+            : Column(
+                children: [
+                  SubmitFormButton(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, SignUpStoreScreen.routeName,
+                          arguments: userPhoto);
+                    },
+                    title: 'إنشاء متجرك',
+                  ),
+                  VSpace(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'لاحقا',
+                      style: h3TextStyle,
+                    ),
+                  )
+                ],
               ),
       ],
     );

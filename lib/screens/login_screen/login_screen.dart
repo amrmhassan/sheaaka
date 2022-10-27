@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Provider.of<UserProvider>(context, listen: false).logOutGoogle();
         return showSnackBar(
             context: context,
-            message: 'قم بالتسجيل أولا',
+            message: 'قم بتسجيل حساب جديد أولا',
             snackBarType: SnackBarType.error);
       } else {
         var appStateProvider =

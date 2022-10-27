@@ -1,3 +1,9 @@
+# allow the store to locate itself and the user also
+
+# fix locating the user sign up
+
+# allow the user to click a button to delay store sign up
+
 # delete all ads, trends , offers of a product when the store deletes it
 
 # add lazy loading images

@@ -17,6 +17,7 @@ import 'package:project/providers/user_provider.dart';
 import 'package:project/providers/whishlists_provider.dart';
 import 'package:project/screens/cart_screen/cart_screen.dart';
 import 'package:project/screens/category_viewer_screen/category_viewer_screen.dart';
+import 'package:project/screens/choose_location_screen/choose_location_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/init_screen/init_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
@@ -126,6 +127,7 @@ class MyApp extends StatelessWidget {
           ShowSingleImage.routeName: (context) => ShowSingleImage(),
           NoInternetScreen.routeName: (context) => NoInternetScreen(),
           CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
+          ChooseLocationScreen.routeName: (context) => ChooseLocationScreen(),
           //? trader app screens
           // THolderScreen.routeName: (context) => THolderScreen(loadingData: false),
           TProductsScreen.routeName: (context) => TProductsScreen(),

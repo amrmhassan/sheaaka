@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/global.dart';
@@ -9,6 +10,7 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/loading.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/app_state_provider.dart';
 import 'package:project/screens/upload_data_screen/upload_data_screen.dart';
 import 'package:project/trader_app/global/widgets/trader_nav_bar.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
@@ -18,7 +20,6 @@ import 'package:provider/provider.dart';
 class THolderScreen extends StatefulWidget {
   final bool loadingData;
   const THolderScreen({Key? key, required this.loadingData}) : super(key: key);
-  // static const String routeName = '/t-holder-screen';
 
   @override
   State<THolderScreen> createState() => _THolderScreenState();
@@ -36,6 +37,12 @@ class _THolderScreenState extends State<THolderScreen> {
   //# fetching data
   Future<void> fetchStoreData() async {
     toggleLoading();
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      await Provider.of<AppStateProvider>(context, listen: false)
+          .setTraderMode(false);
+      return;
+    }
     await Provider.of<TraderProvider>(context, listen: false)
         .fetchMyStoreData(false);
     toggleLoading();

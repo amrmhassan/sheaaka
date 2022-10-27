@@ -1,14 +1,21 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:project/constants/colors.dart';
+import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/h_space.dart';
+import 'package:project/global/widgets/shimmer_loaders/post_simmer_loading/post_shimmer_loading.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/custom_error.dart';
 import 'package:project/models/types.dart';
+import 'package:project/providers/location_provider.dart';
 import 'package:project/screens/cart_screen/widgets/product_cart_checkbox.dart';
+import 'package:project/screens/choose_location_screen/choose_location_screen.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/login_screen/widgets/custom_text_field.dart';
 import 'package:project/screens/login_screen/widgets/submit_form_button.dart';
@@ -17,20 +24,21 @@ import 'package:project/screens/login_screen/widgets/form_header_with_logo.dart'
 import 'package:project/screens/signup_screen/widgets/back_step_form_button.dart';
 import 'package:project/screens/signup_screen/widgets/user_gender_element.dart';
 import 'package:project/utils/general_utils.dart';
+import 'package:provider/provider.dart';
 
 class SignUpLastStep extends StatefulWidget {
   final VoidCallback incrementActiveIndex;
   final TextEditingController address;
   final DateTime? birthDate;
   final Function(DateTime d) setBirthDate;
-  final LatLng? location;
-  final Function(LatLng l) setLocation;
   final UserGender userGender;
   final Function(UserGender g) setUserGender;
   final bool userAgree;
   final VoidCallback toggleUserAgree;
   final VoidCallback decrementActiveIndex;
   final Future<void> Function() signUserUp;
+  final LatLng? userLocation;
+  final void Function(LatLng? location) setUserLocation;
 
   const SignUpLastStep({
     Key? key,
@@ -43,9 +51,9 @@ class SignUpLastStep extends StatefulWidget {
     required this.toggleUserAgree,
     required this.decrementActiveIndex,
     required this.signUserUp,
-    required this.location,
     required this.setBirthDate,
-    required this.setLocation,
+    required this.userLocation,
+    required this.setUserLocation,
   }) : super(key: key);
 
   @override
@@ -54,6 +62,50 @@ class SignUpLastStep extends StatefulWidget {
 
 class _SignUpLastStepState extends State<SignUpLastStep> {
   final TextEditingController birthDateController = TextEditingController();
+  bool _loadingLocation = false;
+  void setLoadingLocation(bool b) {
+    setState(() {
+      _loadingLocation = b;
+    });
+  }
+
+//? for handling locating the user and choose the address
+  Future<void> handleLocating(
+      Function(LatLng? location) setUserLocation) async {
+    try {
+      setLoadingLocation(true);
+      LocationData locationData =
+          await Provider.of<LocationProvider>(context, listen: false)
+              .handleGetLocation(context);
+      if (locationData.latitude == null || locationData.longitude == null) {
+        throw CustomError(errorType: ErrorsTypes.errorGettingLocation);
+      }
+      //* setting the user location
+      LatLng? latlng = LatLng(locationData.latitude!, locationData.longitude!);
+      setUserLocation(latlng);
+
+      //* converting the coordinates to address
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          locationData.latitude!, locationData.longitude!);
+      //* push a new screen to let the user choose from the locations
+      String? userPlace = await Navigator.pushNamed(
+        context,
+        ChooseLocationScreen.routeName,
+        arguments: placemarks,
+      ) as String?;
+      if (userPlace != null) {
+        widget.address.text = userPlace.replaceAll('/', ', ');
+      }
+
+      //! here set the user location for the sign up screen state
+    } catch (e) {
+      showSnackBar(
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error);
+    }
+    setLoadingLocation(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +121,7 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
           child: Row(
             children: [
               Text(
-                'يمكنك تحديد موقعك تبقائيا من هنا',
+                'يمكنك تحديد موقعك تلقائيا من هنا',
                 style: h5InactiveTextStyle,
               ),
               Image.asset(
@@ -88,7 +140,23 @@ class _SignUpLastStepState extends State<SignUpLastStep> {
           title: 'عنوان المنزل',
           color: kSecondaryColor,
           borderColor: kSecondaryColor,
-          trailingIconName: 'pin',
+          // trailingIconName: 'pin',
+          trailingIcon: _loadingLocation
+              ? ShimmerWrapper(
+                  child: Image.asset(
+                    'assets/icons/pin.png',
+                    color: kPrimaryColor,
+                    width: mediumIconSize,
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () => handleLocating(widget.setUserLocation),
+                  child: Image.asset(
+                    'assets/icons/pin.png',
+                    width: mediumIconSize,
+                    color: kPrimaryColor,
+                  ),
+                ),
           trailingIconColor: kPrimaryColor,
         ),
         VSpace(),

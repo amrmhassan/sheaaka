@@ -32,11 +32,14 @@ class UserModel {
   });
 
   Map<String, dynamic> toJSON() {
+    GeoPoint? userLocation = location == null
+        ? null
+        : GeoPoint(location!.latitude, location!.longitude);
     return {
       idString: id,
       emailString: email,
       addressString: address,
-      locationString: location,
+      locationString: userLocation,
       phoneString: phone,
       userGenderString: userGender.name,
       userRoleString: userRole.name,
@@ -53,7 +56,10 @@ class UserModel {
     String email = userJSON[emailString];
     String? address = userJSON[addressString];
     DateTime? birthDate = (userJSON[birthDateString] as Timestamp?)?.toDate();
-    LatLng? location = userJSON[locationString];
+    GeoPoint? userLocation = userJSON[locationString] as GeoPoint?;
+    LatLng? location = userLocation == null
+        ? null
+        : LatLng(userLocation.latitude, userLocation.longitude);
     String phone = userJSON[phoneString];
     UserGender userGender =
         stringToEnum(userJSON[userGenderString], UserGender.values);

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:location/location.dart';
 import 'package:project/global/widgets/full_loading_screen.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/models/types.dart';
@@ -62,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         phone: phoneNumberController.text,
         address: addressController.text,
         birthDate: birthDate,
-        location: location,
+        location: userLocation,
         userGender: userGender,
         userRole: userRole,
         userProfilePhoto: profileImage,
@@ -119,6 +120,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
+  //? for user location
+  LatLng? userLocation;
+  void setUserLocation(LatLng? location) {
+    setState(() {
+      userLocation = location;
+    });
+  }
+
   //? for user gender
   UserGender userGender = UserGender.male;
   void setUserGender(UserGender g) async {
@@ -140,14 +149,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void setBirthDate(DateTime d) {
     setState(() {
       birthDate = d;
-    });
-  }
-
-//? for location
-  LatLng? location;
-  void setLocation(LatLng l) {
-    setState(() {
-      location;
     });
   }
 
@@ -210,8 +211,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         toggleUserAgree: toggleUserAgree,
         signUserUp: submitUserDate,
         setBirthDate: setBirthDate,
-        setLocation: setLocation,
-        location: location,
+        userLocation: userLocation,
+        setUserLocation: setUserLocation,
       );
     } else {
       return SignUpCongrats(

@@ -16,7 +16,28 @@ class LocationProvider extends ChangeNotifier {
 
 //? getting location and listen to location updates
   Future<void> fetchAndUpdateUserLocation(BuildContext context,
-      [Function(LocationData even)? callback]) async {
+      [Function(LocationData event)? callback]) async {
+    try {
+      locationData = await handleGetLocation(context);
+      notifyListeners();
+    } catch (e, stack) {
+      throw CustomError(
+          errorType: ErrorsTypes.errorGettingLocation, stackTrace: stack);
+    }
+
+    //* stopping the previous listener before creating a new one
+    if (locationSubscription != null) {
+      await locationSubscription!.cancel();
+    }
+    locationSubscription = location.onLocationChanged.listen((event) {
+      locationData = event;
+      if (callback != null) {
+        callback(event);
+      }
+    });
+  }
+
+  Future<LocationData> handleGetLocation(BuildContext context) async {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     //* enabling location service
@@ -39,24 +60,7 @@ class LocationProvider extends ChangeNotifier {
         throw CustomError(errorType: ErrorsTypes.locationPermissionNotGranted);
       }
     }
-
-    try {
-      locationData = await location.getLocation();
-      notifyListeners();
-    } catch (e, stack) {
-      throw CustomError(
-          errorType: ErrorsTypes.errorGettingLocation, stackTrace: stack);
-    }
-
-    //* stopping the previous listener before creating a new one
-    if (locationSubscription != null) {
-      await locationSubscription!.cancel();
-    }
-    locationSubscription = location.onLocationChanged.listen((event) {
-      locationData = event;
-      if (callback != null) {
-        callback(event);
-      }
-    });
+    return await location.getLocation();
+    ;
   }
 }
