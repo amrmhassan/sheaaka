@@ -11,7 +11,7 @@ import 'package:project/providers/store_provider.dart';
 import 'package:project/screens/product_screen/product_screen.dart';
 import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
-import 'package:project/trader_app/screens/t_products_screen/t_products_screen.dart';
+import 'package:project/trader_app/screens/t_products_screen/widgets/operation_modal.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +61,7 @@ class TraderOfferCard extends StatelessWidget {
             context: context,
             backgroundColor: Colors.transparent,
             builder: (ctx) {
-              return DeleteModal(
+              return OperationModal(
                 title: 'هل تريد حذف هذا العرض؟',
                 subTitle: 'سيستفيد من العرض من قام بالحجز من قبل',
                 onRemove: () => handleDeleteOffer(context, offer.id),

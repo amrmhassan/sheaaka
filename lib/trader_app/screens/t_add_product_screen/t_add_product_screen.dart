@@ -10,6 +10,7 @@ import 'package:project/global/widgets/custom_app_bar/widgets/app_bar_icon.dart'
 import 'package:project/global/widgets/h_space.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
@@ -36,6 +37,11 @@ enum PickedDateType {
   trendDate,
 }
 
+enum AddProductMode {
+  add,
+  edit,
+}
+
 class TAddProductScreen extends StatefulWidget {
   static const String routeName = '/t-add-product-screen';
   const TAddProductScreen({super.key});
@@ -45,6 +51,14 @@ class TAddProductScreen extends StatefulWidget {
 }
 
 class _TAddProductScreenState extends State<TAddProductScreen> {
+  //? open mode
+  AddProductMode openMode = AddProductMode.add;
+  //? edited product additional data
+  String? editedProductId;
+  DateTime? editedProductCreatedAt;
+  int? editedProductLovesNumber;
+  String? editedProductBrandId;
+
   //? full desc
   String fullDesc = '';
   void setFullDesc(String v) {
@@ -62,17 +76,17 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
   TextEditingController offerNameController = TextEditingController();
   TextEditingController keywordsController = TextEditingController();
 
-  //? product images
-  List<File> imagesFiles = [];
+  //? product images files
+  List<Object> images = [];
   void addProductImage(File imageFile) {
     setState(() {
-      imagesFiles.add(imageFile);
+      images.add(imageFile);
     });
   }
 
-  void removeProductImage(File imageFile) {
+  void removeProductImage(dynamic image) {
     setState(() {
-      imagesFiles.remove(imageFile);
+      images.remove(image);
     });
   }
 
@@ -204,7 +218,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       );
     }
     //* product images
-    if (imagesFiles.isEmpty) {
+    if (images.isEmpty) {
       return showSnackBar(
         context: context,
         message: 'لابد من إضافة صورة علي الأقل',
@@ -256,7 +270,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
     Provider.of<ProductsControlProvider>(context, listen: false).uploadProduct(
       nameController: nameController,
       myStore: myStore,
-      imagesFiles: imagesFiles,
+      imagesFiles: images,
       offerPriceController: offerPriceController,
       availableColors: availableColors,
       availableSizes: availableSizes,
@@ -271,8 +285,41 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       offerNameController: offerNameController,
       keywordksController: keywordsController,
       storeProvider: storeProvider,
+      addProductMode: openMode,
+      editedProductId: editedProductId,
+      editedProductCreatedAt: editedProductCreatedAt,
+      editedProductLovesNumber: editedProductLovesNumber,
+      editedProductBrandId: editedProductBrandId,
     );
     Navigator.pop(context);
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value) {
+      ProductModel? productModel =
+          ModalRoute.of(context)?.settings.arguments as ProductModel?;
+      if (productModel != null) {
+        openMode = AddProductMode.edit;
+        //? here set the edited product data
+        editedProductId = productModel.id;
+        nameController.text = productModel.name;
+        shortDescController.text = productModel.shortDesc ?? '';
+        keywordsController.text = productModel.keywords?.join('\n') ?? '';
+        fullDesc = productModel.fullDesc ?? '';
+        images = [...productModel.imagesPath];
+        originalPriceController.text = doubleToString(productModel.price);
+        availableColors = productModel.availableColors ?? [];
+        availableSizes = productModel.availableSize ?? [];
+        brandNameController.text = productModel.brand?.name ?? '';
+        editedProductCreatedAt = productModel.createdAt;
+        editedProductLovesNumber = productModel.lovesNumber;
+        editedProductBrandId = productModel.brand?.id;
+
+        setState(() {});
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -289,7 +336,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
               },
               backgroundColor: kTraderLightColor.withOpacity(.5),
               child: Image.asset(
-                'assets/icons/upload1.png',
+                saveChangesIcon,
                 width: mediumIconSize,
                 color: kTraderBlackColor,
               ),
@@ -309,7 +356,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                 ),
                 VSpace(),
                 ProductImages(
-                  imagesPaths: imagesFiles,
+                  imagesPaths: images,
                   addProductImage: addProductImage,
                   removeProductImage: removeProductImage,
                 ),
@@ -374,73 +421,77 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
                         borderRadius: BorderRadius.zero,
                       ),
                       VSpace(),
-                      CheckBoxWithPeriodPicker(
-                        title: 'عرض؟',
-                        checked: isOffer,
-                        dateEnd: offerEnd,
-                        pickDate: () =>
-                            handleDatePicker(PickedDateType.offerDate),
-                        toggleChecked: toggleOffer,
-                      ),
-                      VSpace(factor: .3),
-                      if (isOffer)
-                        Row(
+                      if (openMode == AddProductMode.add)
+                        Column(
                           children: [
-                            Expanded(
-                              child: CustomTextField(
-                                requiredField: true,
-                                controller: offerNameController,
-                                title: 'اسم العرض',
-                                padding: EdgeInsets.zero,
-                                borderColor:
-                                    kTraderSecondaryColor.withOpacity(.5),
-                                borderRadius: BorderRadius.zero,
-                              ),
+                            CheckBoxWithPeriodPicker(
+                              title: 'عرض؟',
+                              checked: isOffer,
+                              dateEnd: offerEnd,
+                              pickDate: () =>
+                                  handleDatePicker(PickedDateType.offerDate),
+                              toggleChecked: toggleOffer,
                             ),
-                            HSpace(factor: .3),
-                            Expanded(
-                              child: CustomTextField(
-                                requiredField: true,
-                                textInputType: TextInputType.number,
-                                title: 'سعر العرض',
-                                controller: offerPriceController,
-                                padding: EdgeInsets.zero,
-                                borderColor:
-                                    kTraderSecondaryColor.withOpacity(.5),
-                                borderRadius: BorderRadius.zero,
+                            VSpace(factor: .3),
+                            if (isOffer)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomTextField(
+                                      requiredField: true,
+                                      controller: offerNameController,
+                                      title: 'اسم العرض',
+                                      padding: EdgeInsets.zero,
+                                      borderColor:
+                                          kTraderSecondaryColor.withOpacity(.5),
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                  HSpace(factor: .3),
+                                  Expanded(
+                                    child: CustomTextField(
+                                      requiredField: true,
+                                      textInputType: TextInputType.number,
+                                      title: 'سعر العرض',
+                                      controller: offerPriceController,
+                                      padding: EdgeInsets.zero,
+                                      borderColor:
+                                          kTraderSecondaryColor.withOpacity(.5),
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                  ),
+                                  // HSpace(factor: .3),
+                                  // Expanded(
+                                  //   child: CustomTextField(
+                                  //     textInputType: TextInputType.number,
+                                  //     title: '0%-',
+                                  //     controller: discount,
+                                  //     padding: EdgeInsets.zero,
+                                  //     borderColor: kTraderSecondaryColor.withOpacity(.5),
+                                  //     borderRadius: BorderRadius.zero,
+                                  //   ),
+                                  // ),
+                                ],
                               ),
+                            VSpace(factor: .5),
+                            CheckBoxWithPeriodPicker(
+                              title: 'ترند؟',
+                              checked: isTrend,
+                              dateEnd: trendEnd,
+                              pickDate: () =>
+                                  handleDatePicker(PickedDateType.trendDate),
+                              toggleChecked: toggleTrend,
                             ),
-                            // HSpace(factor: .3),
-                            // Expanded(
-                            //   child: CustomTextField(
-                            //     textInputType: TextInputType.number,
-                            //     title: '0%-',
-                            //     controller: discount,
-                            //     padding: EdgeInsets.zero,
-                            //     borderColor: kTraderSecondaryColor.withOpacity(.5),
-                            //     borderRadius: BorderRadius.zero,
-                            //   ),
-                            // ),
+                            //! just delete me after finishing
+                            VSpace(factor: 2),
                           ],
                         ),
-                      VSpace(factor: .5),
-                      CheckBoxWithPeriodPicker(
-                        title: 'ترند؟',
-                        checked: isTrend,
-                        dateEnd: trendEnd,
-                        pickDate: () =>
-                            handleDatePicker(PickedDateType.trendDate),
-                        toggleChecked: toggleTrend,
-                      ),
                     ],
                   ),
                 ),
-
-                //! just delete me after finishing
-
-                VSpace(factor: 2),
-                AddingProductAdvice(),
-
+                AddingProductAdvice(
+                  iconPath: saveChangesIcon,
+                ),
                 VSpace(factor: 2),
               ],
             ),
@@ -449,4 +500,7 @@ class _TAddProductScreenState extends State<TAddProductScreen> {
       ),
     );
   }
+
+  String get saveChangesIcon =>
+      'assets/icons/${openMode == AddProductMode.add ? 'upload1' : 'save'}.png';
 }

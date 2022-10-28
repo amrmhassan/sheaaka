@@ -15,6 +15,7 @@ import 'package:project/models/types.dart';
 import 'package:project/providers/products_provider.dart';
 import 'package:project/providers/store_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
+import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:project/utils/photo_utils.dart';
 import 'package:uuid/uuid.dart';
@@ -43,7 +44,7 @@ class ProductsControlProvider extends ChangeNotifier {
   Future<void> uploadProduct({
     required TextEditingController nameController,
     required StoreModel myStore,
-    required List<File> imagesFiles,
+    required List imagesFiles,
     required TextEditingController offerPriceController,
     required List<Color> availableColors,
     required List<Sizes> availableSizes,
@@ -59,6 +60,11 @@ class ProductsControlProvider extends ChangeNotifier {
     required TextEditingController keywordksController,
     //! add the offer to the local state
     required StoreProvider storeProvider,
+    required AddProductMode addProductMode,
+    String? editedProductId,
+    DateTime? editedProductCreatedAt,
+    int? editedProductLovesNumber,
+    String? editedProductBrandId,
   }) async {
     //* uploading images
     List<String> imagesLinks = await uploadImages(
@@ -70,74 +76,112 @@ class ProductsControlProvider extends ChangeNotifier {
     setUploadingProductData(true);
 
     //* uploading product data
-    String productId = Uuid().v4();
+    String productId =
+        addProductMode == AddProductMode.edit ? editedProductId! : Uuid().v4();
     String fullDescText = fullDesc.replaceAll('\n\n', '\n');
     String keywordsString = keywordksController.text;
     List<String> keywords = keywordsString.split('\n');
     String offerId = Uuid().v4();
 
-    ProductModel productModel = ProductModel(
-      id: productId,
-      name: nameController.text,
-      storeId: myStore.id,
-      storeName: myStore.name,
-      imagesPath: imagesLinks,
-      createdAt: DateTime.now(),
-      lovesNumber: 0,
-      price: double.parse(originalPriceController.text),
-      availableColors: availableColors,
-      availableSize: availableSizes,
-      brand: BrandModel(name: brandNameController.text, id: Uuid().v4()),
-      shortDesc: shortDescController.text,
-      storeLogo: myStore.logoImagePath,
-      fullDesc: fullDescText,
-      keywords: keywords,
-    );
-    productModel.offerId = isOffer ? offerId : null;
-    await FirebaseFirestore.instance
-        .collection(productsCollectionName)
-        .doc(productId)
-        .set(productModel.toJSON());
-
-    //* checking if product has offer, then upload it
-    if (isOffer) {
-      double currentPrice = double.parse(offerPriceController.text);
-      double oldPirce = double.parse(originalPriceController.text);
-      double discount = 1 - currentPrice / oldPirce;
-
-      await storeProvider.addOffer(
-        discountPercentage: discount,
-        endAt: offerEnd!,
-        imagePath: imagesLinks[0],
-        productId: productId,
-        productName: nameController.text,
+    if (addProductMode == AddProductMode.add) {
+      //* adding a new product with offers and every thing
+      ProductModel productModel = ProductModel(
+        id: productId,
+        name: nameController.text,
         storeId: myStore.id,
-        title: offerNameController.text,
-        offerId: offerId,
+        storeName: myStore.name,
+        imagesPath: imagesLinks,
+        createdAt: DateTime.now(),
+        lovesNumber: 0,
+        price: double.parse(originalPriceController.text),
+        availableColors: availableColors,
+        availableSize: availableSizes,
+        brand: BrandModel(name: brandNameController.text, id: Uuid().v4()),
+        storeLogo: myStore.logoImagePath,
+        shortDesc: shortDescController.text,
+        fullDesc: fullDescText,
+        keywords: keywords,
       );
+      productModel.offerId = isOffer ? offerId : null;
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(productId)
+          .set(productModel.toJSON());
+
+      //* checking if product has offer, then upload it
+      if (isOffer) {
+        double currentPrice = double.parse(offerPriceController.text);
+        double oldPirce = double.parse(originalPriceController.text);
+        double discount = 1 - currentPrice / oldPirce;
+
+        await storeProvider.addOffer(
+          discountPercentage: discount,
+          endAt: offerEnd!,
+          imagePath: imagesLinks[0],
+          productId: productId,
+          productName: nameController.text,
+          storeId: myStore.id,
+          title: offerNameController.text,
+          offerId: offerId,
+        );
+      }
+      productsProvider.addProduct(productModel);
+    } else {
+      //* editing  a product
+      ProductModel editedProductModel = ProductModel(
+        id: productId,
+        name: nameController.text,
+        storeId: myStore.id,
+        storeName: myStore.name,
+        imagesPath: imagesLinks,
+        createdAt: editedProductCreatedAt!,
+        lovesNumber: editedProductLovesNumber!,
+        price: double.parse(originalPriceController.text),
+        shortDesc: shortDescController.text,
+        fullDesc: fullDescText,
+        keywords: keywords,
+        brand: editedProductBrandId == null
+            ? null
+            : BrandModel(
+                name: brandNameController.text,
+                id: editedProductBrandId,
+              ),
+        availableColors: availableColors,
+        availableSize: availableSizes,
+      );
+      await FirebaseFirestore.instance
+          .collection(productsCollectionName)
+          .doc(productId)
+          .update(editedProductModel.toJSON());
+      productsProvider.editProduct(editedProductModel);
     }
-    productsProvider.addProduct(productModel);
+
     setUploadingProductData(false);
   }
 
   //? upload images
   Future<List<String>> uploadImages({
-    required List<File> files,
+    required List files,
     required String storeId,
     required BuildContext context,
   }) async {
+    //! here check if the image is a file or not , cause it will be either a file or a link of an already uploaded image, that will happen when editing a product
     List<String> uploadedImagesLinks = [];
     setUploadingImages(true);
     for (var imageFile in files) {
-      String? imageLink = await uploadFile(
-        context: context,
-        path: imageFile.path,
-        setStartLoading: () {},
-        setEndLoading: () {},
-        cloudFolderName: '$productsImagesDir/$storeId',
-      );
-      if (imageLink != null) {
-        uploadedImagesLinks.add(imageLink);
+      if (imageFile is File) {
+        String? imageLink = await uploadFile(
+          context: context,
+          path: imageFile.path,
+          setStartLoading: () {},
+          setEndLoading: () {},
+          cloudFolderName: '$productsImagesDir/$storeId',
+        );
+        if (imageLink != null) {
+          uploadedImagesLinks.add(imageLink);
+        }
+      } else {
+        uploadedImagesLinks.add(imageFile);
       }
     }
 

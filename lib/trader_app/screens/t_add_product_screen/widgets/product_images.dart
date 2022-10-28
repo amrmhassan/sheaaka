@@ -11,9 +11,9 @@ import 'package:project/trader_app/screens/t_add_product_screen/widgets/product_
 import 'package:project/utils/photo_utils.dart';
 
 class ProductImages extends StatelessWidget {
-  final List<File> imagesPaths;
+  final List imagesPaths;
   final Function(File imageFile) addProductImage;
-  final Function(File path) removeProductImage;
+  final Function(dynamic path) removeProductImage;
 
   const ProductImages({
     Key? key,

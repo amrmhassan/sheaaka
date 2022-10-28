@@ -1,13 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:project/constants/sizes.dart';
-import 'package:project/constants/styles.dart';
-import 'package:project/global/widgets/button_wrapper.dart';
 import 'package:project/global/widgets/h_line.dart';
-import 'package:project/global/widgets/h_space.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/models/product_model.dart';
@@ -18,9 +13,11 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/trader_app/providers/products_control_provider.dart';
 import 'package:project/trader_app/providers/trader_provider.dart';
 import 'package:project/trader_app/screens/t_add_product_screen/t_add_product_screen.dart';
+import 'package:project/trader_app/screens/t_products_screen/widgets/operation_modal.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/section_element_number.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/t_product_screen_app_bar.dart';
 import 'package:project/trader_app/screens/t_products_screen/widgets/trader_product_card.dart';
+import 'package:project/trader_app/screens/t_products_screen/widgets/uploading_product.dart';
 import 'package:project/utils/general_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -40,12 +37,21 @@ class _TProductsScreenState extends State<TProductsScreen> {
         context: context,
         backgroundColor: Colors.transparent,
         builder: (ctx) {
-          return DeleteModal(
-            title: 'هل تريد حذف هذا المنتج؟',
+          return OperationModal(
+            title: 'هل تريد تعديل أو حذف المنتج ؟',
             onRemove: () {
               handleRemoveProduct(productModel);
             },
-            subTitle: 'سيتم حذف المنتج من جميع الأقسام أيضا',
+            onCancel: () {
+              Navigator.pushNamed(
+                context,
+                TAddProductScreen.routeName,
+                arguments: productModel,
+              );
+            },
+            subTitle: 'سيتم حذف كل ما يتعلق بالمنتج',
+            removeTitle: 'حذف',
+            cancelTitle: 'تعديل',
           );
         });
   }
@@ -122,107 +128,6 @@ class _TProductsScreenState extends State<TProductsScreen> {
               },
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class UploadingProduct extends StatelessWidget {
-  const UploadingProduct({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: productImageDimensions,
-      child: Lottie.asset(
-        'assets/animations/upload-edited.json',
-      ),
-    );
-  }
-}
-
-class DeleteModal extends StatelessWidget {
-  final String title;
-  final String? subTitle;
-  final VoidCallback onRemove;
-  final VoidCallback? onCancel;
-
-  const DeleteModal({
-    Key? key,
-    required this.title,
-    required this.onRemove,
-    this.onCancel,
-    this.subTitle,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ModalWrapper(
-      onApply: () {},
-      showApplyModalButton: false,
-      applyButtonTitle: '',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: double.infinity),
-          Text(
-            title,
-            style: h3TextStyle.copyWith(
-              color: kTraderBlackColor,
-            ),
-          ),
-          if (subTitle != null)
-            Text(
-              subTitle!,
-              style: h4TextStyleInactive.copyWith(
-                color: kTraderSecondaryColor.withOpacity(.9),
-              ),
-            ),
-          VSpace(),
-          Row(
-            children: [
-              Expanded(
-                child: ButtonWrapper(
-                  onTap: () {
-                    onRemove();
-                    Navigator.pop(context);
-                  },
-                  padding: EdgeInsets.symmetric(vertical: kVPad / 2),
-                  backgroundColor: kTraderSecondaryColor.withOpacity(.2),
-                  child: Text(
-                    'نعم',
-                    style: h3LiteTextStyle.copyWith(
-                      color: kTraderBlackColor,
-                    ),
-                  ),
-                ),
-              ),
-              HSpace(),
-              Expanded(
-                child: ButtonWrapper(
-                  onTap: () {
-                    if (onCancel != null) {
-                      onCancel!();
-                    }
-                    Navigator.pop(context);
-                  },
-                  padding: EdgeInsets.symmetric(vertical: kVPad / 2),
-                  backgroundColor: kTraderPrimaryColor,
-                  child: Text(
-                    'لا',
-                    style: h3LiteTextStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );

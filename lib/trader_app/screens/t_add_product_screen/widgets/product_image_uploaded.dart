@@ -10,9 +10,9 @@ import 'package:project/trader_app/constants/colors.dart';
 import 'package:project/utils/general_utils.dart';
 
 class ProductImageUploaded extends StatelessWidget {
-  final File imageFile;
+  final dynamic imageFile;
 
-  final Function(File imageFile) removeImageFile;
+  final Function(dynamic imageFile) removeImageFile;
   const ProductImageUploaded({
     Key? key,
     required this.imageFile,
@@ -43,13 +43,21 @@ class ProductImageUploaded extends StatelessWidget {
                 color: kTraderSecondaryColor.withOpacity(.3),
               ),
             ),
-            child: Image.file(
-              imageFile,
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
+            child: imageFile is File
+                ? Image.file(
+                    imageFile,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  )
+                : Image.network(
+                    imageFile,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
           ),
           Positioned(
             right: largePadding,

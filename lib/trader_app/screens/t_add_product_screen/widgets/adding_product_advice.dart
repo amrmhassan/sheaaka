@@ -7,9 +7,9 @@ import 'package:project/global/widgets/h_space.dart';
 import 'package:project/trader_app/constants/colors.dart';
 
 class AddingProductAdvice extends StatelessWidget {
-  const AddingProductAdvice({
-    Key? key,
-  }) : super(key: key);
+  final String iconPath;
+  const AddingProductAdvice({Key? key, required this.iconPath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class AddingProductAdvice extends StatelessWidget {
         ),
         HSpace(factor: .1),
         Image.asset(
-          'assets/icons/upload.png',
+          iconPath,
           width: smallIconSize,
           color: kTraderSecondaryColor,
         ),

@@ -45,8 +45,18 @@ class ProductsProvider extends ChangeNotifier {
   void editProduct(ProductModel newProductModel) {
     int allProductsIndex =
         _allProducts.indexWhere((element) => element.id == newProductModel.id);
+    ProductModel originalProduct = _allProducts[allProductsIndex];
+    originalProduct.name = newProductModel.name;
+    originalProduct.imagesPath = newProductModel.imagesPath;
+    originalProduct.price = newProductModel.price;
+    originalProduct.shortDesc = newProductModel.shortDesc;
+    originalProduct.fullDesc = newProductModel.fullDesc;
+    originalProduct.keywords = newProductModel.keywords;
+    originalProduct.brand = newProductModel.brand;
+    originalProduct.availableColors = newProductModel.availableColors;
+    originalProduct.availableSize = newProductModel.availableSize;
     _allProducts.removeAt(allProductsIndex);
-    _allProducts.insert(allProductsIndex, newProductModel);
+    _allProducts.insert(allProductsIndex, originalProduct);
 
     // int homeProductsIndex =
     //     _homeProducts.indexWhere((element) => element.id == newProductModel.id);
