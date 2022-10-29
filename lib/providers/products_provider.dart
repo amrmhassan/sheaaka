@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/customer_gender_model.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/product_model.dart';
@@ -105,7 +105,7 @@ class ProductsProvider extends ChangeNotifier {
       throw CustomError(
         errorType: ErrorsTypes.errorLoadingProducts,
         stackTrace: stack,
-        errString: e.toString(),
+        errString: e,
       );
     }
   }

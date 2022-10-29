@@ -1,5 +1,5 @@
 String errorMessage(ErrorsTypes errorType) {
-  return errorsMapping[errorType]!;
+  return errorsMapping[errorType] ?? 'No Readable Error Message For This Error';
 }
 
 const Map<ErrorsTypes, String> errorsMapping = {

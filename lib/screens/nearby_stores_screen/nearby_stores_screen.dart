@@ -91,9 +91,10 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
     } catch (e) {
       try {
         showSnackBar(
-            context: context,
-            message: e.toString(),
-            snackBarType: SnackBarType.error);
+          context: context,
+          message: e.toString(),
+          snackBarType: SnackBarType.error,
+        );
       } catch (e) {
         if (kDebugMode) {
           // print(e.toString());

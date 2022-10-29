@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/global/widgets/profile_image/not_loggedin_user_icon.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/user_provider.dart';
 import 'package:project/screens/profile_screen/profile_screen.dart';
@@ -64,7 +64,7 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
         loading = false;
       });
     } catch (e, s) {
-      CustomError(errString: e.toString(), stackTrace: s);
+      CustomError(errString: e, stackTrace: s);
     }
   }
 

@@ -5,6 +5,7 @@ const String dbName = 'sheaaka_app_db_name.db';
 const String cartItemsTableName = 'cartItemsTable';
 const String wishlistsTableName = 'wishlistsTable';
 const String wishlistItemsTableName = 'wishlistItemsTable';
+const String errorsLoggerTableName = 'errorsLoggerTableName';
 
 //? db types constants
 String dbNull = 'dbNull';

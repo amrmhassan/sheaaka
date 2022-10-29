@@ -1,7 +1,7 @@
 import 'package:project/constants/db_constants.dart';
 import 'package:project/constants/models_constants.dart';
-// import 'package:project/helpers/shared_pref_helper.dart';
 import 'package:project/models/cart_item_model.dart';
+import 'package:project/models/error_logger_model.dart';
 import 'package:project/models/whishlist_model.dart';
 import 'package:project/models/wishlist_item_model.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -22,6 +22,8 @@ class DBHelper {
       finalPath,
       //? this is when creating the database itself so create all your tables here
       onCreate: (db, version) async {
+        //? creating error logger models table
+        await db.execute(ErrorLoggerModel.toSqliteString());
         //? creating wishlist items table
         await db.execute(WishListItemModel.toSqliteString());
         //? creating wishlist  table

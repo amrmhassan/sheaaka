@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/brand_model.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
@@ -202,7 +202,7 @@ class ProductsControlProvider extends ChangeNotifier {
       productsProvider.editProduct(newProduct);
     } catch (e, s) {
       throw CustomError(
-          errString: e.toString(),
+          errString: e,
           stackTrace: s,
           errorType: ErrorsTypes.errorEditingProduct);
     }
@@ -241,7 +241,7 @@ class ProductsControlProvider extends ChangeNotifier {
       throw CustomError(
         errorType: ErrorsTypes.errorRemovingProduct,
         stackTrace: s,
-        errString: e.toString(),
+        errString: e,
       );
     }
   }

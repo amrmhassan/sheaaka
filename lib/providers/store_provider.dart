@@ -9,7 +9,7 @@ import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/offer_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/types.dart';
@@ -38,7 +38,7 @@ class StoreProvider extends ChangeNotifier {
     try {
       notifyListeners();
     } catch (e, s) {
-      CustomError(errString: e.toString(), stackTrace: s);
+      CustomError(errString: e, stackTrace: s);
     }
     try {
       await FirebaseFirestore.instance
@@ -48,7 +48,7 @@ class StoreProvider extends ChangeNotifier {
     } catch (e, s) {
       throw CustomError(
         errorType: ErrorsTypes.errorDeletingOffer,
-        errString: e.toString(),
+        errString: e,
         stackTrace: s,
       );
     }
@@ -92,7 +92,7 @@ class StoreProvider extends ChangeNotifier {
           .set(offerModel.toJSON());
     } catch (e, s) {
       throw CustomError(
-        errString: e.toString(),
+        errString: e,
         stackTrace: s,
         errorType: ErrorsTypes.errorCreatingOffer,
       );
@@ -157,7 +157,7 @@ class StoreProvider extends ChangeNotifier {
       throw CustomError(
         errorType: ErrorsTypes.errorGettingLikedProducts,
         stackTrace: s,
-        errString: e.toString(),
+        errString: e,
       );
     }
   }

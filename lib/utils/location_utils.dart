@@ -5,7 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/location_provider.dart';
 import 'package:project/screens/choose_location_screen/choose_location_screen.dart';

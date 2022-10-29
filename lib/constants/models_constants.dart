@@ -87,3 +87,9 @@ String noteString = 'noteString';
 //? ads model
 String endDateString = 'endDateString';
 String imagePathString = 'imagePathString';
+
+//? error logger model
+String messageString = 'messageString';
+String errorString = 'errorString';
+String stackTraceString = 'stackTraceString';
+String dateString = 'dateString';

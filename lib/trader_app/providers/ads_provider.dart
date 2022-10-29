@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/ads_model.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:uuid/uuid.dart';
 
 class AdsProvider extends ChangeNotifier {
@@ -49,7 +49,7 @@ class AdsProvider extends ChangeNotifier {
           .set(adsModel.toJSON());
     } catch (e, s) {
       throw CustomError(
-        errString: e.toString(),
+        errString: e,
         stackTrace: s,
         errorType: ErrorsTypes.errorCreatingAds,
       );
@@ -68,7 +68,7 @@ class AdsProvider extends ChangeNotifier {
       if (!noStateNotify) notifyListeners();
     } catch (e, s) {
       throw CustomError(
-        errString: e.toString(),
+        errString: e,
         errorType: ErrorsTypes.errorLoadingAds,
         stackTrace: s,
       );

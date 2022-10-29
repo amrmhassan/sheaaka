@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:project/constants/errors_constants.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/types.dart';
 import 'package:project/utils/general_utils.dart';
 
@@ -22,7 +22,10 @@ class LocationProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e, stack) {
       throw CustomError(
-          errorType: ErrorsTypes.errorGettingLocation, stackTrace: stack);
+        errorType: ErrorsTypes.errorGettingLocation,
+        stackTrace: stack,
+        errString: e,
+      );
     }
 
     //* stopping the previous listener before creating a new one
@@ -49,7 +52,10 @@ class LocationProvider extends ChangeNotifier {
           snackBarType: SnackBarType.info);
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        throw CustomError(errorType: ErrorsTypes.locationNotEnabled);
+        throw CustomError(
+          errorType: ErrorsTypes.locationNotEnabled,
+          stackTrace: StackTrace.current,
+        );
       }
     }
     //* granting location permission

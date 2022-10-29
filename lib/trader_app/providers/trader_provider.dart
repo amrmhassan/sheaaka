@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/constants/models_constants.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/product_model.dart';
 import 'package:project/models/store_model.dart';
 import 'package:project/models/store_tab_model.dart';
@@ -55,7 +55,7 @@ class TraderProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e, s) {
       throw CustomError(
-        errString: e.toString(),
+        errString: e,
         errorType: ErrorsTypes.addingStoreTabError,
         stackTrace: s,
       );
@@ -105,7 +105,7 @@ class TraderProvider extends ChangeNotifier {
         storeTabsString: newTabs.map((e) => e.toJSON()).toList(),
       });
     } catch (e, s) {
-      throw CustomError(errString: e.toString(), stackTrace: s);
+      throw CustomError(errString: e, stackTrace: s);
     }
   }
 
@@ -139,7 +139,7 @@ class TraderProvider extends ChangeNotifier {
       throw CustomError(
         errorType: ErrorsTypes.errorAddingProductsToTab,
         stackTrace: s,
-        errString: e.toString(),
+        errString: e,
       );
     }
   }

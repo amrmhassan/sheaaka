@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/constants/firebase_constants.dart';
 import 'package:project/models/cart_item_model.dart';
-import 'package:project/models/custom_error.dart';
+import 'package:project/helpers/custom_error.dart';
 import 'package:project/models/order_model.dart';
 import 'package:uuid/uuid.dart';
 

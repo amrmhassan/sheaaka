@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/constants/global.dart';
+import 'package:project/global/widgets/open_logging_screen.dart';
 import 'package:project/models/types.dart';
 import 'package:project/providers/app_state_provider.dart';
 import 'package:project/providers/products_provider.dart';
@@ -94,6 +95,12 @@ class _InitScreenState extends State<InitScreen> {
               height: 50,
               color: Colors.red,
             ),
+          ),
+        if (showLoggingBanner)
+          Positioned(
+            left: 0,
+            top: 0,
+            child: OpenLoggingScreen(),
           ),
       ],
     );
