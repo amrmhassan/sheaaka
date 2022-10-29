@@ -20,7 +20,6 @@ import 'package:project/screens/category_viewer_screen/category_viewer_screen.da
 import 'package:project/screens/choose_location_screen/choose_location_screen.dart';
 import 'package:project/screens/comments_screen/comments_screen.dart';
 import 'package:project/screens/init_screen/init_screen.dart';
-import 'package:project/screens/logging_screen/logging_screen.dart';
 import 'package:project/screens/logging_screen/sqlite_logging_screen.dart';
 import 'package:project/screens/login_screen/login_screen.dart';
 import 'package:project/screens/no_internet_screen/no_internet_screen.dart';
@@ -130,7 +129,6 @@ class MyApp extends StatelessWidget {
           NoInternetScreen.routeName: (context) => NoInternetScreen(),
           CategoryViewerScreen.routeName: (context) => CategoryViewerScreen(),
           ChooseLocationScreen.routeName: (context) => ChooseLocationScreen(),
-          LoggingScreen.routeName: (context) => LoggingScreen(),
           SqliteLoggingScreen.routeName: (context) => SqliteLoggingScreen(),
           //? trader app screens
           // THolderScreen.routeName: (context) => THolderScreen(loadingData: false),

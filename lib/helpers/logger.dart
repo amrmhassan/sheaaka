@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: prefer_function_declarations_over_variables, prefer_const_constructors
 
 import 'dart:convert';
 import 'dart:io';
@@ -10,6 +10,7 @@ import 'package:project/constants/db_constants.dart';
 import 'package:project/constants/global.dart';
 import 'package:project/helpers/db_helper.dart';
 import 'package:project/models/error_logger_model.dart';
+import 'package:uuid/uuid.dart';
 
 final logger = Logger(
   printer: CustomPrinter(),
@@ -76,7 +77,9 @@ class FileOutPut extends LogOutput {
   Future<void> logToSqlite(OutputEvent event) async {
     try {
       List<String> lines = event.lines;
+      String id = Uuid().v4();
       ErrorLoggerModel errorLoggerModel = ErrorLoggerModel(
+        id: id,
         message: lines[0],
         error: lines[1],
         stackTrace: lines[2],
