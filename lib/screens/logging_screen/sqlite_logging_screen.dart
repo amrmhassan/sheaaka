@@ -2,20 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/db_constants.dart';
-import 'package:project/constants/styles.dart';
 import 'package:project/helpers/db_helper.dart';
 import 'package:project/models/error_logger_model.dart';
+import 'package:project/screens/logging_screen/widgets/empty_logs.dart';
+import 'package:project/screens/logging_screen/widgets/error_expandable_list.dart';
+import 'package:project/screens/logging_screen/widgets/loading_logs.dart';
+import 'package:project/screens/logging_screen/widgets/local_models.dart';
 import 'package:project/utils/general_utils.dart';
-
-class ExpandedItem {
-  final ErrorLoggerModel errorLoggerModel;
-  bool isExpanded;
-
-  ExpandedItem({
-    required this.errorLoggerModel,
-    this.isExpanded = false,
-  });
-}
 
 class SqliteLoggingScreen extends StatefulWidget {
   static const String routeName = '/sqlite-logging-screen';
@@ -106,38 +99,21 @@ class _LoggingScreenState extends State<SqliteLoggingScreen> {
         ],
       ),
       body: _loading
-          ? Text('Loading')
+          ? LoadingLogs()
           : expandedItems.isEmpty
-              ? Center(
-                  child: Text('Logs are empty '),
-                )
+              ? EmptyLogs()
               : SizedBox(
                   height: double.infinity,
                   width: double.infinity,
                   child: SingleChildScrollView(
-                    child: Container(
-                      child: ExpansionPanelList(
-                        expansionCallback: (panelIndex, isExpanded) {
-                          setState(() {
-                            expandedItems[panelIndex].isExpanded = !isExpanded;
-                          });
-                        },
-                        children: expandedItems
-                            .map(
-                              (e) => ExpansionPanel(
-                                headerBuilder: (context, isExpanded) =>
-                                    ListTile(
-                                  title: Text(
-                                    e.errorLoggerModel.message,
-                                    style: h3LiteTextStyle,
-                                  ),
-                                ),
-                                body: Text(e.errorLoggerModel.stackTrace),
-                                isExpanded: e.isExpanded,
-                              ),
-                            )
-                            .toList(),
-                      ),
+                    physics: BouncingScrollPhysics(),
+                    child: ErrorExpandableList(
+                      expansionCallBackParent: (panelIndex, isExpanded) {
+                        setState(() {
+                          expandedItems[panelIndex].isExpanded = !isExpanded;
+                        });
+                      },
+                      expandedItems: expandedItems,
                     ),
                   ),
                 ),
