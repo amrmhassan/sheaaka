@@ -1,4 +1,4 @@
-String errorMessage(ErrorsTypes errorType) {
+String errorMessage(ErrorsTypes? errorType) {
   return errorsMapping[errorType] ?? 'No Readable Error Message For This Error';
 }
 

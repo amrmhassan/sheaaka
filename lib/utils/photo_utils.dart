@@ -126,11 +126,11 @@ Future<String?> uploadFile({
     fileUrl = await result.ref.getDownloadURL();
   } catch (e) {
     showSnackBar(
-        context: context,
-        message: kDebugMode
-            ? 'upload error ${e.toString()}'
-            : 'حدث خطأ في رفع الصورة',
-        snackBarType: SnackBarType.error);
+      context: context,
+      message:
+          kDebugMode ? 'upload error ${e.toString()}' : 'حدث خطأ في رفع الصورة',
+      snackBarType: SnackBarType.error,
+    );
   }
   setEndLoading();
 

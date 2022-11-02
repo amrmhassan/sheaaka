@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:project/constants/errors_constants.dart';
 import 'package:project/helpers/logger.dart';
 
@@ -19,6 +20,11 @@ class CustomError implements Exception {
     if (rethrowError != null && rethrowError == true) {
       throw Exception(toString());
     }
+    if (kDebugMode) {
+      print(errorType);
+      print(errString);
+      print(stackTrace);
+    }
 
     logger.e(
       readableErrorMessage(),
@@ -28,7 +34,7 @@ class CustomError implements Exception {
   }
 
   String readableErrorMessage() {
-    return errorMessage(errorType!);
+    return errorMessage(errorType);
   }
 
   @override

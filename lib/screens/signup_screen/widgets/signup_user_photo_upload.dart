@@ -57,6 +57,8 @@ class _SignUpUserPhotoUploadState extends State<SignUpUserPhotoUpload> {
         setStartLoading: startLoading,
         setEndLoading: endLoading,
         cloudFolderName: profileImagesDir,
+        finalQuality: 50,
+        initialQuality: 20,
       );
 
   @override

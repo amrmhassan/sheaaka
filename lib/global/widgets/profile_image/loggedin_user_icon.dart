@@ -39,14 +39,15 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
   String? userPhoto;
 
   Future<void> fetchUserPhoto() async {
-    setState(() {
-      loading = true;
-    });
+    // setState(() {
+    //   loading = true;
+    // });
     String? userPhotoPath;
     try {
       String userUID = FirebaseAuth.instance.currentUser!.uid;
       userPhotoPath = await Provider.of<UserProvider>(context, listen: false)
           .getUserPhoto(userUID);
+      userPhoto = userPhotoPath;
     } catch (e, stack) {
       String errorMessage = CustomError(
         errorType: ErrorsTypes.uploadPhoto,
@@ -59,10 +60,10 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
     }
 
     try {
-      setState(() {
-        userPhoto = userPhotoPath;
-        loading = false;
-      });
+      // setState(() {
+      //   userPhoto = userPhotoPath;
+      //   loading = false;
+      // });
     } catch (e, s) {
       CustomError(errString: e, stackTrace: s);
     }

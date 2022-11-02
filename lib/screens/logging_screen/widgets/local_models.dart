@@ -1,7 +1,14 @@
 import 'package:project/models/error_logger_model.dart';
 
+enum Code {
+  readableMessage,
+  errorMessage,
+  stackTrace,
+  errorDate,
+}
+
 class ErrorLogModelProps {
-  final String code;
+  final Code code;
   final String title;
   bool isExpanded;
   ErrorLogModelProps({
@@ -21,9 +28,9 @@ class ExpandedItem {
     this.isExpanded = false,
   }) {
     props = [
-      ErrorLogModelProps(title: 'Readable Message', code: 'rm'),
-      ErrorLogModelProps(title: 'Error Message', code: 'em'),
-      ErrorLogModelProps(title: 'Stack Trace', code: 'st'),
+      ErrorLogModelProps(title: 'Error Date', code: Code.errorDate),
+      ErrorLogModelProps(title: 'Error Message', code: Code.errorMessage),
+      ErrorLogModelProps(title: 'Stack Trace', code: Code.stackTrace),
     ];
   }
 }

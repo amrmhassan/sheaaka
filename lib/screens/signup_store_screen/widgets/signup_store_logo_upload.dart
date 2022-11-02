@@ -80,6 +80,8 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
         setStartLoading: startLogoLoading,
         setEndLoading: endLogoLoading,
         cloudFolderName: storeLogoImagesDir,
+        finalQuality: 50,
+        initialQuality: 20,
       );
 //? for handling picking cover image
   void handlePickCoverImage(ImageSource imageSource) => pickImage(
@@ -89,6 +91,8 @@ class _SingUpStoreLogoUploadState extends State<SingUpStoreLogoUpload> {
         setStartLoading: startCoverLoading,
         setEndLoading: endCoverLoading,
         cloudFolderName: storeCoverImagesDir,
+        finalQuality: 50,
+        initialQuality: 20,
         cropAspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
       );
 

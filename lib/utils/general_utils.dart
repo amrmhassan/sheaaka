@@ -35,6 +35,11 @@ String dateToString(DateTime date) {
   return '${date.year}-${date.month}-${date.day}';
 }
 
+//? get exact date with time
+String dateToStringWithTime(DateTime date) {
+  return '${date.year}-${date.month}-${date.day} ${date.hour}:${date.minute}:${date.second}';
+}
+
 //? make random list with random length from a list
 List getRandomList(List originalList, [int? length]) {
   List randomList = [];

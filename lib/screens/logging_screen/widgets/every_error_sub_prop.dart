@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/models/error_logger_model.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 import 'package:project/screens/logging_screen/widgets/local_models.dart';
+import 'package:project/utils/general_utils.dart';
 
 class EveryErrorSubProp extends StatelessWidget {
   final ExpandedItem expandedItem;
@@ -19,8 +20,6 @@ class EveryErrorSubProp extends StatelessWidget {
       children: [
         ...expandedItem.props.map(
           (mainsItems) => ExpansionPanel(
-            backgroundColor:
-                Color.fromARGB(255, 216, 216, 216).withOpacity(.01),
             canTapOnHeader: true,
             isExpanded: mainsItems.isExpanded,
             headerBuilder: (context, isExpanded) =>
@@ -28,7 +27,9 @@ class EveryErrorSubProp extends StatelessWidget {
             body: PaddingWrapper(
               child: Text(
                 getContentFromMainsCode(
-                    mainsItems.code, expandedItem.errorLoggerModel),
+                  mainsItems.code,
+                  expandedItem.errorLoggerModel,
+                ),
               ),
             ),
           ),
@@ -37,11 +38,10 @@ class EveryErrorSubProp extends StatelessWidget {
     );
   }
 
-  String getContentFromMainsCode(
-      String code, ErrorLoggerModel errorLoggerModel) {
-    if (code == 'rm') {
-      return errorLoggerModel.message;
-    } else if (code == 'em') {
+  String getContentFromMainsCode(Code code, ErrorLoggerModel errorLoggerModel) {
+    if (code == Code.errorDate) {
+      return dateToStringWithTime(DateTime.parse(errorLoggerModel.date));
+    } else if (code == Code.errorMessage) {
       return errorLoggerModel.error;
     } else {
       return errorLoggerModel.stackTrace;

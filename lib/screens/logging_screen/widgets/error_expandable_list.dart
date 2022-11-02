@@ -1,7 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:project/screens/logging_screen/widgets/every_error_sub_prop.dart';
 import 'package:project/screens/logging_screen/widgets/local_models.dart';
-import 'package:project/utils/general_utils.dart';
 
 class ErrorExpandableList extends StatefulWidget {
   final Function(int index, bool isExpanded) expansionCallBackParent;
@@ -22,6 +23,7 @@ class _ErrorExpandableListState extends State<ErrorExpandableList> {
   @override
   Widget build(BuildContext context) {
     return ExpansionPanelList(
+      expandedHeaderPadding: EdgeInsets.zero,
       expansionCallback: widget.expansionCallBackParent,
       children: [
         ...widget.expandedItems.map(
@@ -29,11 +31,8 @@ class _ErrorExpandableListState extends State<ErrorExpandableList> {
             isExpanded: e.isExpanded,
             canTapOnHeader: true,
             headerBuilder: (context, isExpanded) => ListTile(
-              title: Text(
-                dateToString(
-                  DateTime.parse(e.errorLoggerModel.date),
-                ),
-              ),
+              tileColor: Color.fromARGB(255, 216, 216, 216).withOpacity(.5),
+              title: Text(e.errorLoggerModel.message),
             ),
             body: EveryErrorSubProp(
               expandedItem: e,
