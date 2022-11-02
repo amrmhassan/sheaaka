@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -48,22 +49,27 @@ class TAdsScreen extends StatelessWidget {
             thickness: 2,
           ),
           VSpace(factor: .5),
-          SectionElementsNumber(
-            number: ads.length,
-            trailingTitle: 'عرض',
-          ),
-          VSpace(factor: .5),
-          Expanded(
-            child: ListView(
-              children: ads
-                  .map(
-                    (e) => AdsCard(
-                      adsModel: e,
-                    ),
-                  )
-                  .toList(),
+          if (ads.isNotEmpty)
+            SectionElementsNumber(
+              number: ads.length,
+              trailingTitle: 'إعلان',
             ),
-          )
+          VSpace(factor: .5),
+          ads.isNotEmpty
+              ? Expanded(
+                  child: ListView(
+                    children: ads
+                        .map(
+                          (e) => AdsCard(
+                            adsModel: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                )
+              : Expanded(
+                  child: EmptyWidget(title: 'لا توجد إعلانات ممولة '),
+                )
         ],
       ),
     );

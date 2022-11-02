@@ -54,9 +54,10 @@ class _LoggedInUserIconState extends State<LoggedInUserIcon> {
         stackTrace: stack,
       ).toString();
       showSnackBar(
-          context: context,
-          message: errorMessage,
-          snackBarType: SnackBarType.error);
+        context: context,
+        message: errorMessage,
+        snackBarType: SnackBarType.error,
+      );
     }
 
     try {

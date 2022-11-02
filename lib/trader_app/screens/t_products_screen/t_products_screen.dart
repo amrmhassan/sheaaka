@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
+import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -112,21 +113,24 @@ class _TProductsScreenState extends State<TProductsScreen> {
             thickness: 2,
           ),
           VSpace(factor: .5),
-          SectionElementsNumber(number: storeProducts.length),
+          if (storeProducts.isNotEmpty)
+            SectionElementsNumber(number: storeProducts.length),
           VSpace(factor: .5),
           if (pcp.loading) UploadingProduct(),
           Expanded(
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: storeProducts.length,
-              itemBuilder: (context, index) {
-                ProductModel productModel = storeProducts[index];
-                return TraderProductCard(
-                  productModel: productModel,
-                  removeProduct: showRemoveProductModal,
-                );
-              },
-            ),
+            child: storeProducts.isNotEmpty
+                ? ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: storeProducts.length,
+                    itemBuilder: (context, index) {
+                      ProductModel productModel = storeProducts[index];
+                      return TraderProductCard(
+                        productModel: productModel,
+                        removeProduct: showRemoveProductModal,
+                      );
+                    },
+                  )
+                : EmptyWidget(title: 'لا توجد منتجات'),
           ),
         ],
       ),

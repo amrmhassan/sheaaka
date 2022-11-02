@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/screens_wrapper.dart';
 import 'package:project/global/widgets/v_space.dart';
@@ -50,29 +51,32 @@ class TOffersScreen extends StatelessWidget {
             thickness: 2,
           ),
           VSpace(factor: .5),
-          SectionElementsNumber(
-            number: offers.length,
-            trailingTitle: 'عرض',
-          ),
+          if (offers.isNotEmpty)
+            SectionElementsNumber(
+              number: offers.length,
+              trailingTitle: 'عرض',
+            ),
           VSpace(factor: .5),
           Expanded(
-            child: GridView.builder(
-              padding:
-                  EdgeInsets.symmetric(horizontal: kHPad / 2, vertical: kVPad),
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: offers.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2 / 3,
-                crossAxisSpacing: kHPad / 2,
-                mainAxisSpacing: kHPad / 2,
-              ),
-              itemBuilder: (context, index) {
-                OfferModel offer = offers[index];
-                return TraderOfferCard(offer: offer);
-              },
-            ),
+            child: offers.isNotEmpty
+                ? GridView.builder(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: kHPad / 2, vertical: kVPad),
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    itemCount: offers.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2 / 3,
+                      crossAxisSpacing: kHPad / 2,
+                      mainAxisSpacing: kHPad / 2,
+                    ),
+                    itemBuilder: (context, index) {
+                      OfferModel offer = offers[index];
+                      return TraderOfferCard(offer: offer);
+                    },
+                  )
+                : EmptyWidget(title: 'لا توجد عروض'),
           ),
         ],
       ),
