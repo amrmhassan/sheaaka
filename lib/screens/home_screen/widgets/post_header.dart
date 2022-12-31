@@ -21,7 +21,6 @@ class PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(logoImagePath);
     return PaddingWrapper(
       child: Row(
         children: [

@@ -3,9 +3,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:project/constants/colors.dart';
 import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/loading.dart';
-import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
+import 'package:project/global/widgets/modals/double_buttons_modal.dart';
 
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
@@ -56,14 +57,36 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
     });
   }
 
+//? to show the ask for location bottom modal
   Future<void> showAskForLocationModal() async {
-    showModalBottomSheet(
-      context: context,
-      builder: (ctx) => ModalWrapper(
-        onApply: () {},
-        applyButtonTitle: 'applyButtonTitle',
-        child: Container(color: Colors.red),
-      ),
+    Future.delayed(Duration.zero).then(
+      (value) async {
+        final Location location = Location();
+        final bool serviceEnabled = await location.serviceEnabled();
+        bool permissionGranted =
+            await location.hasPermission() == PermissionStatus.granted;
+        if (serviceEnabled && permissionGranted) {
+          return loadLocation();
+        }
+
+        showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (ctx) => DoubleButtonsModal(
+            onOk: () {
+              loadLocation();
+            },
+            okText: 'سماح',
+            okColor: kPrimaryColor,
+            cancelColor: kDangerColor,
+            onCancel: () {},
+            cancelText: 'رفض',
+            title: 'من فضلك قم بالسماح لاستخدام الموقع',
+            subTitle:
+                'هذا البرنامج يحتاج إلي خدمة الموقع لمعرفة المحلات القريبة',
+          ),
+        );
+      },
     );
   }
 
@@ -123,7 +146,8 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
   @override
   void initState() {
     addScrollListener();
-    loadLocation();
+    showAskForLocationModal();
+    // loadLocation();
 
     super.initState();
   }
@@ -152,7 +176,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
                 )
               : locationData == null
                   ? NearbyStoresNoLocation(
-                      onTap: loadLocation,
+                      onTap: showAskForLocationModal,
                     )
                   : storesProvider.nearByStores.isEmpty
                       ? Expanded(
