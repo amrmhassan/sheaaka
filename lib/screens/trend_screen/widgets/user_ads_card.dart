@@ -24,90 +24,92 @@ class UserAdsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          ProductScreen.routeName,
-          arguments: adsModel.productId,
-        );
-      },
-      child: Container(
-        clipBehavior: Clip.hardEdge,
-        width: getFullCardHeight(context),
-        height: Responsive.getWidth(context) / 1.3,
-        margin: EdgeInsets.only(left: kHPad / 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(smallBorderRadius),
-          color: Colors.white,
-          boxShadow: [
-            defaultBoxShadow,
-          ],
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 6,
-              child: FadeInImage(
-                placeholder: loadingImage,
-                height: double.infinity,
-                width: double.infinity,
-                alignment: Alignment.topCenter,
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  adsModel.imagePath,
+    return Container(
+      margin: EdgeInsets.only(left: kHPad / 2),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            ProductScreen.routeName,
+            arguments: adsModel.productId,
+          );
+        },
+        child: Container(
+          clipBehavior: Clip.hardEdge,
+          width: getFullCardHeight(context),
+          height: Responsive.getWidth(context) / 1.3,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(smallBorderRadius),
+            color: Colors.white,
+            boxShadow: [
+              defaultBoxShadow,
+            ],
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 6,
+                child: FadeInImage(
+                  placeholder: loadingImage,
+                  height: double.infinity,
+                  width: double.infinity,
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    adsModel.imagePath,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHPad / 2,
-                ),
-                child: Row(
-                  children: [
-                    if (adsModel.storeLogo != null)
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(1000),
-                          border: Border.all(
-                            width: 1,
-                            color: kPrimaryColor,
-                          ),
-                        ),
-                        child: Container(
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: kHPad / 2,
+                  ),
+                  child: Row(
+                    children: [
+                      if (adsModel.storeLogo != null)
+                        Container(
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(1000),
+                            border: Border.all(
+                              width: 1,
+                              color: kPrimaryColor,
+                            ),
                           ),
-                          child: Image.network(
-                            adsModel.storeLogo!,
-                            width: largeIconSize,
-                            height: largeIconSize,
-                            fit: BoxFit.cover,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(1000),
+                            ),
+                            child: Image.network(
+                              adsModel.storeLogo!,
+                              width: largeIconSize,
+                              height: largeIconSize,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
+                      HSpace(factor: .2),
+                      Expanded(
+                        child: Text(
+                          adsModel.storeName,
+                          style: h3TextStyle,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    HSpace(factor: .2),
-                    Expanded(
-                      child: Text(
-                        adsModel.storeName,
-                        style: h3TextStyle,
+                      Text(
+                        adsModel.productName,
+                        style: h4TextStyleInactive,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    Text(
-                      adsModel.productName,
-                      style: h4TextStyleInactive,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

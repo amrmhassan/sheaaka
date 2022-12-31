@@ -26,8 +26,10 @@ class FireSection extends StatelessWidget {
           onTap: onTap,
         ),
         Container(
+          clipBehavior: Clip.none,
           alignment: Alignment.centerRight,
           child: SingleChildScrollView(
+            clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             child: Row(

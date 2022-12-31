@@ -148,6 +148,7 @@ class ProductsControlProvider extends ChangeNotifier {
               ),
         availableColors: availableColors,
         availableSize: availableSizes,
+        storeLogo: myStore.logoImagePath,
       );
       await FirebaseFirestore.instance
           .collection(productsCollectionName)

@@ -45,32 +45,43 @@ class _TrendScreenState extends State<TrendScreen> {
       children: [
         VSpace(factor: .5),
         HLine(),
+        VSpace(),
         Expanded(
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: [
-              FireSection(
-                children: [
-                  ...neededAds.map(
-                    (e) => UserAdsCard(adsModel: e),
-                  ),
-                ],
-                title: 'إعلانات',
-                onTap: () {},
-              ),
-              VSpace(),
-              FireSection(
-                children: [
-                  ...neededOffers.map(
-                    (e) => UserOfferCard(
-                      offerModel: e,
+              if (neededAds.isNotEmpty)
+                Column(
+                  children: [
+                    FireSection(
+                      children: [
+                        ...neededAds.map(
+                          (e) => UserAdsCard(adsModel: e),
+                        ),
+                      ],
+                      title: 'إعلانات',
+                      onTap: () {},
                     ),
-                  ),
-                ],
-                onTap: () {},
-                title: 'أفضل العروض',
-              ),
-              VSpace(),
+                    VSpace(),
+                  ],
+                ),
+              if (neededOffers.isNotEmpty)
+                Column(
+                  children: [
+                    FireSection(
+                      children: [
+                        ...neededOffers.map(
+                          (e) => UserOfferCard(
+                            offerModel: e,
+                          ),
+                        ),
+                      ],
+                      onTap: () {},
+                      title: 'أفضل العروض',
+                    ),
+                    VSpace(),
+                  ],
+                ),
             ],
           ),
         ),
