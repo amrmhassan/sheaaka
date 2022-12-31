@@ -51,7 +51,6 @@ class _AddToWishlistModalState extends State<AddToWishlistModal> {
   Widget build(BuildContext context) {
     var wishlistProvider = Provider.of<WishListsProvider>(context);
     return ModalWrapper(
-      showApplyModalButton: wishlistProvider.wishLists.isNotEmpty,
       onApply: widget.onApply,
       applyButtonTitle: 'إضافة',
       child: wishlistProvider.wishLists.isNotEmpty

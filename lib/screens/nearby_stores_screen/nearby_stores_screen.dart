@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:project/global/widgets/empty_widget.dart';
 import 'package:project/global/widgets/loading.dart';
+import 'package:project/global/widgets/modal_wrapper/modal_wrapper.dart';
 
 import 'package:project/global/widgets/v_space.dart';
 import 'package:project/helpers/responsive.dart';
@@ -53,6 +54,17 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
       }
       currentScrollPosition = s;
     });
+  }
+
+  Future<void> showAskForLocationModal() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => ModalWrapper(
+        onApply: () {},
+        applyButtonTitle: 'applyButtonTitle',
+        child: Container(color: Colors.red),
+      ),
+    );
   }
 
 //? for loading the user location

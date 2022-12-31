@@ -30,9 +30,6 @@ class OperationModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModalWrapper(
-      onApply: () {},
-      showApplyModalButton: false,
-      applyButtonTitle: '',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

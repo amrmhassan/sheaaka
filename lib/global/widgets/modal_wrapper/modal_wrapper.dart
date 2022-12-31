@@ -1,35 +1,38 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/global/widgets/h_line.dart';
 import 'package:project/global/widgets/modal_wrapper/widgets/apply_modal_button.dart';
 import 'package:project/global/widgets/v_space.dart';
+import 'package:flutter/material.dart';
 import 'package:project/screens/home_screen/widgets/padding_wrapper.dart';
 
 class ModalWrapper extends StatelessWidget {
   final Widget child;
-  final VoidCallback onApply;
-  final String applyButtonTitle;
-  final bool showApplyModalButton;
+  final VoidCallback? onApply;
+  final String? applyButtonTitle;
   final Color? color;
   final bool applyActive;
   final double? afterLinePaddingFactor;
+  final double? bottomPaddingFactor;
   final bool showTopLine;
   final Color? applyButtonColor;
+  final double? borderRadius;
+  final EdgeInsets? padding;
 
   const ModalWrapper({
     Key? key,
     required this.child,
-    required this.onApply,
-    required this.applyButtonTitle,
-    this.showApplyModalButton = true,
+    this.onApply,
+    this.applyButtonTitle,
     this.applyActive = true,
     this.color,
     this.afterLinePaddingFactor,
+    this.bottomPaddingFactor,
     this.showTopLine = true,
     this.applyButtonColor,
+    this.borderRadius,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -38,15 +41,16 @@ class ModalWrapper extends StatelessWidget {
 
     return PaddingWrapper(
       margin: EdgeInsets.only(bottom: bottomPadding),
-      padding: EdgeInsets.only(
-        right: kHPad,
-        left: kHPad,
-      ),
+      padding: padding ??
+          EdgeInsets.only(
+            right: kHPad,
+            left: kHPad,
+          ),
       decoration: BoxDecoration(
         color: color ?? Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(largeBorderRadius),
-          topRight: Radius.circular(largeBorderRadius),
+          topLeft: Radius.circular(borderRadius ?? largeBorderRadius),
+          topRight: Radius.circular(borderRadius ?? largeBorderRadius),
         ),
       ),
       child: Column(
@@ -58,7 +62,6 @@ class ModalWrapper extends StatelessWidget {
                 VSpace(),
                 HLine(
                   thickness: 4,
-                  color: kSecondaryColor.withOpacity(.4),
                   borderRadius: 50,
                   widthFactor: .3,
                 ),
@@ -66,17 +69,17 @@ class ModalWrapper extends StatelessWidget {
             ),
           VSpace(factor: afterLinePaddingFactor ?? 2),
           child,
-          VSpace(factor: 2),
-          if (showApplyModalButton)
+          VSpace(factor: bottomPaddingFactor ?? 2),
+          if (onApply != null && applyButtonTitle != null)
             ApplyModalButton(
                 color: applyButtonColor,
                 active: applyActive,
                 onTap: () {
-                  onApply();
+                  onApply!();
                   Navigator.pop(context);
                 },
-                title: applyButtonTitle),
-          if (showApplyModalButton) VSpace(factor: 2),
+                title: applyButtonTitle.toString()),
+          if (onApply != null && applyButtonTitle != null) VSpace(factor: 2),
         ],
       ),
     );

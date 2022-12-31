@@ -149,9 +149,6 @@ void showPickImageOptions(
       backgroundColor: Colors.transparent,
       builder: (context) {
         return ModalWrapper(
-          onApply: () {},
-          applyButtonTitle: 'applyButtonTitle',
-          showApplyModalButton: false,
           afterLinePaddingFactor: title != null ? .5 : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

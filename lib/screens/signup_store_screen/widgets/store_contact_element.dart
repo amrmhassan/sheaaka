@@ -129,10 +129,7 @@ class _StoreContactsElementState extends State<StoreContactsElement> {
       backgroundColor: Colors.transparent,
       builder: (ctx) {
         return ModalWrapper(
-          showApplyModalButton: false,
           afterLinePaddingFactor: .5,
-          applyButtonTitle: 'تم',
-          onApply: () {},
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

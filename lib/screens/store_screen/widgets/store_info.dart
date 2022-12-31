@@ -32,9 +32,6 @@ class StoreInfo extends StatelessWidget {
           context: context,
           builder: (ctx) => ModalWrapper(
             // color: kLightColor,
-            onApply: () {},
-            applyButtonTitle: 'applyButtonTitle',
-            showApplyModalButton: false,
             child: StoreInfoModal(
               emails: emails,
               phones: phones,

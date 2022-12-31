@@ -21,9 +21,6 @@ class ProductDescriptionText extends StatelessWidget {
             context: context,
             builder: (ctx) {
               return ModalWrapper(
-                onApply: () {},
-                applyButtonTitle: 'applyButtonTitle',
-                showApplyModalButton: false,
                 child: Row(
                   children: [
                     Text(

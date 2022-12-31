@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
-import 'package:project/constants/colors.dart';
 import 'package:project/constants/sizes.dart';
 import 'package:project/constants/styles.dart';
 import 'package:project/global/widgets/button_wrapper.dart';
+import 'package:flutter/material.dart';
 
 class ApplyModalButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -25,7 +24,6 @@ class ApplyModalButton extends StatelessWidget {
     return ButtonWrapper(
       active: active,
       width: double.infinity,
-      backgroundColor: color ?? kPrimaryColor,
       padding: EdgeInsets.symmetric(vertical: kVPad / 2),
       onTap: onTap,
       child: Text(
