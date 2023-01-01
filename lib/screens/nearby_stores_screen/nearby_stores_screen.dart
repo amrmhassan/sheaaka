@@ -76,14 +76,16 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
             onOk: () {
               loadLocation();
             },
-            okText: 'سماح',
+            okText: 'Allow',
             okColor: kPrimaryColor,
             cancelColor: kDangerColor,
             onCancel: () {},
-            cancelText: 'رفض',
-            title: 'من فضلك قم بالسماح لاستخدام الموقع',
-            subTitle:
-                'هذا البرنامج يحتاج إلي خدمة الموقع لمعرفة المحلات القريبة',
+            cancelText: 'Reject',
+            title: 'This app need Location Access',
+            subTitle: '''- To get nearby stores
+- Location will always in use
+- Location updates will matter to this app to get nearby stores
+''',
           ),
         );
       },
