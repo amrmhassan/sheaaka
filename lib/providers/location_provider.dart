@@ -32,12 +32,12 @@ class LocationProvider extends ChangeNotifier {
     if (locationSubscription != null) {
       await locationSubscription!.cancel();
     }
-    locationSubscription = location.onLocationChanged.listen((event) {
-      locationData = event;
-      if (callback != null) {
-        callback(event);
-      }
-    });
+    // locationSubscription = location.onLocationChanged.listen((event) {
+    //   locationData = event;
+    //   if (callback != null) {
+    //     callback(event);
+    //   }
+    // });
   }
 
   Future<LocationData> handleGetLocation(BuildContext context) async {
