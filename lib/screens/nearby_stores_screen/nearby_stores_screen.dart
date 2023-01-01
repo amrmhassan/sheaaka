@@ -73,6 +73,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
           backgroundColor: Colors.transparent,
           context: context,
           builder: (ctx) => DoubleButtonsModal(
+            textDirection: TextDirection.ltr,
             onOk: () {
               loadLocation();
             },
@@ -84,7 +85,7 @@ class _NearbyStoresScreenState extends State<NearbyStoresScreen> {
             title: 'This app need Location Access',
             subTitle: '''- To get nearby stores
 - Location will always in use
-- Location updates will matter to this app to get nearby stores
+- Location updates will matter to this app to update nearby stores
 ''',
           ),
         );

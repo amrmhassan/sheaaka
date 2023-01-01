@@ -19,6 +19,7 @@ class DoubleButtonsModal extends StatelessWidget {
   final Color? okColor;
   final Color? cancelColor;
   final bool autoPop;
+  final TextDirection? textDirection;
 
   const DoubleButtonsModal({
     Key? key,
@@ -31,6 +32,7 @@ class DoubleButtonsModal extends StatelessWidget {
     this.okColor,
     this.cancelColor,
     this.autoPop = true,
+    this.textDirection,
   }) : super(key: key);
 
   @override
@@ -40,24 +42,32 @@ class DoubleButtonsModal extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            textDirection: textDirection,
             children: [
               Text(
                 title,
                 style: h3TextStyle,
+                textDirection: textDirection,
               ),
             ],
           ),
           if (subTitle != null)
             Row(
+              textDirection: textDirection,
               children: [
-                Text(
-                  subTitle.toString(),
-                  style: h4TextStyleInactive,
+                Expanded(
+                  child: Text(
+                    subTitle.toString(),
+                    style: h4TextStyleInactive,
+                    textDirection: textDirection,
+                    softWrap: true,
+                  ),
                 ),
               ],
             ),
           VSpace(),
           Row(
+            textDirection: textDirection,
             children: [
               Expanded(
                 child: ButtonWrapper(
