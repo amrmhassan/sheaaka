@@ -40,7 +40,11 @@ class LocationProvider extends ChangeNotifier {
     // });
   }
 
-  Future<LocationData> handleGetLocation(BuildContext context) async {
+  Future<LocationData?> handleGetLocation(BuildContext context) async {
+    //! this code will stop getting location data, just to upload the app to google play(cause i don't understand their privacy policy)
+    if (5 == 5) {
+      return null;
+    }
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     //* enabling location service
@@ -50,6 +54,7 @@ class LocationProvider extends ChangeNotifier {
           context: context,
           message: 'من فضلك قم بتفعيل خدمة الموقع',
           snackBarType: SnackBarType.info);
+
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
         throw CustomError(

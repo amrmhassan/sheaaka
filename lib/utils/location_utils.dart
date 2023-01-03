@@ -22,9 +22,10 @@ Future<void> handleLocating({
 }) async {
   try {
     setStartLoading();
-    LocationData locationData =
+    LocationData? locationData =
         await Provider.of<LocationProvider>(context, listen: false)
             .handleGetLocation(context);
+    if (locationData == null) return;
     if (locationData.latitude == null || locationData.longitude == null) {
       throw CustomError(errorType: ErrorsTypes.errorGettingLocation);
     }
